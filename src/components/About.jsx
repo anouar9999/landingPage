@@ -13,31 +13,32 @@ const About = () => {
       name: "Free fire",
       image:
         "https://wallpapers.com/images/hd/garena-free-fire-nulla-poster-5mjqiwdfn0enjq8f.jpg",
-      font: "free-fire",
-      size: "9xl",
+      fontClass: "font-free-fire",
+      size: "text-9xl",
     },
     {
       id: 2,
       name: "street fighter",
       image:
         "https://i.pinimg.com/474x/75/83/a6/7583a628590046beff3b5086ce60ed81.jpg",
-      font: "street-fighter",
+      fontClass: "font-street-fighter",
+      size: "text-7xl",
     },
     {
       id: 3,
       name: "valorant",
       image:
         "https://4kwallpapers.com/images/wallpapers/valorant-harbor-1280x1280-8910.png",
-      font: "valorant",
-      size: "9xl",
+      fontClass: "font-valorant",
+      size: "text-9xl",
     },
     {
       id: 4,
       name: "fc football",
       image:
         "https://4kwallpapers.com/images/wallpapers/ea-sports-fc-25-720x1280-17732.jpg",
-      font: "ea-football",
-      size: "9xl",
+      fontClass: "font-ea-football",
+      size: "text-9xl",
     },
   ];
 
@@ -181,7 +182,7 @@ const About = () => {
               <div className="absolute top-0 left-1 h-full flex items-start z-10">
                 <div className="writing-vertical">
                   <h3
-                    className={`activity-name font-${activity.font}  text-5xl md:${activity.size && "text-8xl"} text-[#D7C6AF] uppercase`}
+                    className={`activity-name ${activity.fontClass} ${activity.size} text-[#D7C6AF] uppercase`}
                   >
                     {activity.name}
                   </h3>
@@ -193,19 +194,19 @@ const About = () => {
 
         {/* Mobile Version - Vertical Stack with Gaps */}
         <div className="md:hidden w-full px-4 space-y-4">
-  {activities.map((activity) => (
-    <div
-      key={activity.id}
-      className="activity-panel relative w-full h-[150px] overflow-hidden flex justify-center items-center"
-    >
-      <h3
-        className={`activity-name font-${activity.font} text-center text-6xl md:text-6xl text-[#D7C6AF] uppercase`}
-      >
-        {activity.name}
-      </h3>
-    </div>
-  ))}
-</div>
+          {activities.map((activity) => (
+            <div
+              key={activity.id}
+              className="activity-panel relative w-full h-[150px] overflow-hidden flex justify-center items-center"
+            >
+              <h3
+                className={`activity-name ${activity.fontClass} text-center text-6xl text-[#D7C6AF] uppercase`}
+              >
+                {activity.name}
+              </h3>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Add this style to your CSS or as a style tag */}
