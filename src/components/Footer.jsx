@@ -7,7 +7,7 @@ const GamingFooter = () => {
     <footer className="bg-black text-white p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-8 mb-8">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Logo_inwi.svg/2560px-Logo_inwi.svg.png" alt="UFL Logo" className="h-14" />
+          <img src="https://moroccogamingexpo.ma/wp-content/uploads/2024/02/Logo-MGE-2025-white.svg" alt="UFL Logo" className="h-14" />
         </div>
 
         <p className="text-gray-400 text-sm mb-8 max-w-5xl">

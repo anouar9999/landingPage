@@ -12,21 +12,8 @@ function App() {
       <NavBar />
       
       <Hero />
-
-      {/* About Section */}
-      <div style={{ marginBottom: "-2px" }}>
-        <div className="relative">
-          <About />
-          <div 
-            className="absolute bottom-0 left-0 right-0" 
-            style={{ 
-              height: "150px",
-              background: "linear-gradient(to bottom, rgba(20, 20, 31, 0), rgb(20, 20, 31))",
-              transform: "translateY(2px)"
-            }} 
-          />
-        </div>
-      </div>
+      <About />
+     
 
       {/* Tri9lGlory Section */}
       <div style={{ marginBottom: "-2px" }}>

@@ -4,6 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        "ea-football": ['ea-football', 'sans-serif'],
+        "street-fighter": ['street-fighter', 'sans-serif'],
+        "free-fire": ['free-fire', 'sans-serif'],
         nightWarrior: ['nightWarrior', 'sans-serif'],
         valorant: ['valorant', 'sans-serif'],
         zentry: ["zentry", "sans-serif"],
@@ -15,7 +18,7 @@ export default {
       colors: {
         "brand-valorant": "#EF384B",
         "brand-valorant-second": "#021120",
-        'primary': '#AE2085',
+        'primary': '#ff3d08',
         blue: {
           50: "#DFDFF0",
           75: "#dfdff2",

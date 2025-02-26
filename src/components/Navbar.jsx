@@ -64,7 +64,7 @@ const NavBar = () => {
   return (
     <nav 
       ref={navContainerRef}
-      className="fixed w-full z-50 transition-all duration-300"
+      className="absolute w-full z-50 transition-all duration-300"
       style={{
         transform: `translateY(${isNavVisible ? '0' : '-100%'})`,
         backdropFilter: currentScrollY > 0 ? 'blur(10px)' : 'none'
@@ -96,9 +96,9 @@ const NavBar = () => {
           {/* Logo */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Logo_inwi.svg/2560px-Logo_inwi.svg.png"
+              src="https://moroccogamingexpo.ma/wp-content/uploads/2024/02/Logo-MGE-2025-white.svg"
               alt="Inwi Logo"
-              className="h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105"
+              className="h-12 md:h-16 w-auto transition-transform duration-300 hover:scale-105"
             />
           </div>
 

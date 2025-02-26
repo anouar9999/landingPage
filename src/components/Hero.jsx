@@ -4,7 +4,6 @@ import { ScrollTrigger } from "gsap/all";
 import { useEffect, useRef, useState } from "react";
 import VideoPreview from "./VideoPreview";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
@@ -25,7 +24,7 @@ const Hero = () => {
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
   };
-
+  
   useEffect(() => {
     if (isAudioPlaying) {
       audioElementRef.current.play();
@@ -181,12 +180,14 @@ const Hero = () => {
           onClick={toggleAudioIndicator}
           className="absolute bottom-12 left-3 z-[9999999] flex items-center space-x-0.5 sm:bottom-10 sm:left-6 md:bottom-28 md:left-8 lg:bottom-24 lg:left-10"
         >
-          <audio
-            ref={audioElementRef}
-            className="hidden"
-            src="/audio/loop.mp3"
-            loop
-          />
+       <audio
+  ref={audioElementRef}
+  className="hidden"
+  src="/audio/loop.mp3"
+  loop
+  preload="auto"
+  autoPlay
+/>
           {[1, 2, 3, 4, 5].map((bar) => (
             <div
               key={bar}
@@ -203,7 +204,8 @@ const Hero = () => {
               <h1 className="font-nightWarrior text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl">
                 L3eb M3ana{" "}
                 <span className="mt-2 block font-nightWarrior sm:mt-3 md:mt-4 lg:mt-0 lg:inline">
-                  f INWI ELEAGUE
+                  f <br/>Morocco
+                  gaming expo
                 </span>
               </h1>
               <div className="absolute -bottom-2 left-0 h-0.5 w-16 bg-gradient-to-r from-purple-500 to-transparent sm:h-1 sm:w-20 md:w-24 lg:-bottom-3 lg:w-32"></div>

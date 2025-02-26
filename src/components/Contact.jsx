@@ -18,7 +18,7 @@ const sections = [
   {
     title: "CHOOSE YOUR GAME",
     tag: "STRATEGIST",
-    content: "Select your battlefield: Free Fire or Valorant.",
+    content: "Select your battlefield and conquer your destiny.",
     details: "Master one or dominate both!",
     color: "#FF4A8D",
     glowColor: "rgba(255, 74, 141, 0.4)",
@@ -116,7 +116,7 @@ const SignupFlow = () => {
         />
       </div>
 
-      <div className="absolute top-0 left-0 w-full z-50 py-6 sm:py-8">
+      <div className="absolute top-0 left-0 w-full z-10 py-6 sm:py-8">
         <h1 className="text-center font-nightWarrior text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest text-white">
           JOIN THE ADVENTURE
         </h1>
@@ -142,14 +142,14 @@ const SignupFlow = () => {
                 >
                   <div className="relative">
                     <div
-                      className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold opacity-10 absolute -top-10 sm:-top-16 lg:-top-20 left-1/2 sm:-left-8 transform -translate-x-1/2 sm:translate-x-0"
+                      className="text-6xl sm:text-7xl  md:text-8xl lg:text-9xl font-nightWarrior opacity-10 absolute -top-10 sm:-top-16 lg:-top-20 left-1/2 sm:-left-8 transform -translate-x-1/2 sm:translate-x-0"
                       style={{ color: sections[currentSection].color }}
                     >
                       {sections[currentSection].step}
                     </div>
                     <div className="relative">
                       <span
-                        className="text-sm sm:text-base tracking-widest"
+                        className="text-sm sm:text-base tracking-widest font-valorant"
                         style={{ color: sections[currentSection].color }}
                       >
                         {sections[currentSection].tag}
@@ -158,10 +158,10 @@ const SignupFlow = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none">
+                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-valorant text-white  ">
                       {sections[currentSection].title}
                     </h2>
-                    <p className="text-lg sm:text-xl text-gray-400">
+                    <p className="text-lg sm:text-xl text-gray-400 font-general">
                       {sections[currentSection].content}
                     </p>
                     <p className="text-base sm:text-lg text-gray-500">

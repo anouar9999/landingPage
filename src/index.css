@@ -13,8 +13,23 @@ body {
 
 @layer base {
   @font-face {
+    font-family: 'ea-football';
+    src: url('/fonts/EASPORTS15.ttf') format('opentype');
+    
+  }
+  @font-face {
+    font-family: 'street-fighter';
+    src: url('/fonts/BrushKing.otf') format('opentype');
+    
+  }
+  @font-face {
+    font-family: 'free-fire';
+    src: url('/fonts/UrbanJungleDEMO.otf') format('opentype');
+    
+  }
+  @font-face {
     font-family: 'valorant';
-    src: url('/fonts/Valorant\ Font.ttf') format('opentype');
+    src: url('/fonts/ValorantFont.ttf') format('opentype');
     
   }
   @font-face {

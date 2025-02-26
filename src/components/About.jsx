@@ -6,6 +6,41 @@ import AnimatedTitle from "./AnimatedTitle";
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
+  // Activities data for the panels
+  const activities = [
+    {
+      id: 1,
+      name: "Free fire",
+      image:
+        "https://wallpapers.com/images/hd/garena-free-fire-nulla-poster-5mjqiwdfn0enjq8f.jpg",
+      font: "free-fire",
+      size: "9xl",
+    },
+    {
+      id: 2,
+      name: "street fighter",
+      image:
+        "https://i.pinimg.com/474x/75/83/a6/7583a628590046beff3b5086ce60ed81.jpg",
+      font: "street-fighter",
+    },
+    {
+      id: 3,
+      name: "valorant",
+      image:
+        "https://4kwallpapers.com/images/wallpapers/valorant-harbor-1280x1280-8910.png",
+      font: "valorant",
+      size: "9xl",
+    },
+    {
+      id: 4,
+      name: "fc football",
+      image:
+        "https://4kwallpapers.com/images/wallpapers/ea-sports-fc-25-720x1280-17732.jpg",
+      font: "ea-football",
+      size: "9xl",
+    },
+  ];
+
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
@@ -25,10 +60,39 @@ const About = () => {
       clipAnimation.to(".mask-clip-path", {
         width: "100vw",
         height: "100vh",
-      
         right: 0,
         borderRadius: 0,
       });
+
+      // Title 360 rotation animation
+      gsap.to(".rotate-title", {
+        rotation: 360,
+        duration: 2,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: "#activities-section",
+          start: "top 80%",
+        },
+      });
+
+      // Staggered appearance of panels
+      gsap.fromTo(
+        ".activity-panel",
+        {
+          scale: 0.9,
+          opacity: 0,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.5,
+          scrollTrigger: {
+            trigger: "#activities-section",
+            start: "top 80%",
+          },
+        }
+      );
     });
 
     // Tablet animation with stacked layout
@@ -36,7 +100,7 @@ const About = () => {
       gsap.to(".mask-clip-path-mobile", {
         width: "100vw",
         height: "100vh",
-        paddingRight:"0px",
+        paddingRight: "0px",
         scrollTrigger: {
           trigger: "#clip",
           start: "top center",
@@ -44,14 +108,48 @@ const About = () => {
           scrub: 1,
         },
       });
+
+      // Title 360 rotation animation for mobile
+      gsap.to(".rotate-title", {
+        rotation: 360,
+        duration: 2,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: "#activities-section",
+          start: "top 90%",
+        },
+      });
+
+      // Mobile animation for activity panels
+      gsap.fromTo(
+        ".activity-panel",
+        {
+          x: -50,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: "#activities-section",
+            start: "top 90%",
+            end: "center center",
+          },
+        }
+      );
     });
   });
 
   return (
-    <div id="Discover" className="relative min-h-screen w-full overflow-x-hidden bg-[#F0F0FF]  sm:px-0 md:px-0 lg:px-0">
+    <div
+      id="Discover"
+      className="relative min-h-screen w-full overflow-x-hidden bg-[#F0F0FF] sm:px-0 md:px-0 lg:px-0"
+    >
       <div className="relative text-center mt-8 sm:mt-12 md:mt-20 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         <p className="font-valorant text-xs sm:text-sm md:text-base lg:text-lg uppercase px-2 md:px-4 max-w-2xl mx-auto">
-          Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno 3andkom f Valorant.
+          Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno
+          3andkom f Valorant.
         </p>
 
         <AnimatedTitle
@@ -60,58 +158,65 @@ const About = () => {
         />
       </div>
 
-      <div className="relative lg:h-screen" id="clip">
-        {/* Mobile and Tablet Layout */}
-        <div className="flex flex-col gap-6 lg:hidden mt-8">
-          <div className="px-4">
-            <p className="font-zentry text-lg md:text-2xl font-extrabold leading-relaxed text-brand-valorant-second tracking-wide">
-              <span className="text-brand-valorant">5V5 3LA PC.</span> <br />
-              Khasek tkoun mzyan f <span className="text-purple-500">l'aim</span>{" "}
-              w <span className="text-teal-500">strategy</span>. 
-              Ghadi t9dar tfahem w tchouf les meilleurs joueurs fi l'
-              <span className="text-yellow-400">Maghrib</span>.
-              <br className="hidden md:block" />
-              <span className="hidden md:inline">
-                Dir l'effort f coordination m3a l'equipe dyalek w{" "}
-                <span className="text-pink-500">3rf</span> tariq l'adversaire bash t'koun fi l'awwal fi kol duel.
-              </span>
-            </p>
-          </div>
-          <div className="w-full h-[300px] md:h-[400px] overflow-hidden rounded-xl mask-clip-path-mobile transform-gpu">
-            <img
-              src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/c30d7b14a6969df89073245b66eb702141299add-1920x1080.jpg"
-              alt="Background"
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
+      {/* Activities Section - Horizontal Panels */}
+      <div id="activities-section" className="relative bg-black w-full py-8">
+        {/* Desktop Version - Horizontal Strip with Gaps */}
+        <div className="hidden md:flex w-full h-[110dvh] px-4 gap-4">
+          {activities.map((activity) => (
+            <div
+              key={activity.id}
+              className="activity-panel relative flex-1 h-full overflow-hidden cursor-pointer transition-all duration-300 group"
+            >
+              {/* Background Image */}
+              <img
+                src={activity.image}
+                alt={activity.name}
+                className="size-full object-cover object-center transition-transform duration-500"
+              />
+
+              {/* Left Side Light Overlay - gradient that fades from left to right */}
+              <div className="absolute inset-y-0 left-0 w-64 bg-gradient-to-r from-black/80 to-transparent pointer-events-none"></div>
+
+              {/* Vertical Text - Top Left, reading top to bottom */}
+              <div className="absolute top-0 left-1 h-full flex items-start z-10">
+                <div className="writing-vertical">
+                  <h3
+                    className={`activity-name font-${activity.font}  text-5xl md:${activity.size && "text-8xl"} text-[#D7C6AF] uppercase`}
+                  >
+                    {activity.name}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:block">
-          <div className="relative  left-24 top-20 w-full max-w-xl px-2">
-            <p className="font-zentry text-4xl font-extrabold leading-relaxed text-brand-valorant-second mb-6 tracking-wide">
-              <span className="text-brand-valorant">5V5 3LA PC.</span> <br />
-              Khasek tkoun mzyan f <span className="text-purple-500">l'aim</span>{" "}
-              w <span className="text-teal-500">strategy</span>. 
-              Ghadi t9dar tfahem w tchouf les meilleurs joueurs fi l'
-              <span className="text-yellow-400">Maghrib</span>.
-              <br /> 
-              Dir l'effort f coordination m3a l'equipe dyalek w{" "}
-              <span className="text-pink-500">3rf</span> tariq l'adversaire bash t'koun fi l'awwal fi kol duel.
-            </p>
-          </div>
-
-          <div className="mask-clip-path absolute right-0 top-0 h-screen w-[500px] overflow-hidden z-10">
-            <img
-              src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/c30d7b14a6969df89073245b66eb702141299add-1920x1080.jpg"
-              alt="Background"
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-        </div>
+        {/* Mobile Version - Vertical Stack with Gaps */}
+        <div className="md:hidden w-full px-4 space-y-4">
+  {activities.map((activity) => (
+    <div
+      key={activity.id}
+      className="activity-panel relative w-full h-[150px] overflow-hidden flex justify-center items-center"
+    >
+      <h3
+        className={`activity-name font-${activity.font} text-center text-6xl md:text-6xl text-[#D7C6AF] uppercase`}
+      >
+        {activity.name}
+      </h3>
+    </div>
+  ))}
+</div>
       </div>
-      <div className="absolute bottom-0 w-full h-20 sm:h-24 md:h-32 bg-gradient-to-b from-transparent to-[#14141f]" />
 
+      {/* Add this style to your CSS or as a style tag */}
+      <style jsx>{`
+        .writing-vertical {
+          writing-mode: vertical-lr;
+          text-orientation: mixed;
+        }
+      `}</style>
+
+      <div className="absolute bottom-0 w-full h-20 sm:h-24 md:h-32 bg-gradient-to-b from-transparent to-[#14141f]" />
     </div>
   );
 };
