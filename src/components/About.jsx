@@ -6,8 +6,8 @@ import AnimatedTitle from "./AnimatedTitle";
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
-  // Activities data for the panels
-  const activities = [
+  // Games data for the panels
+  const Games = [
     {
       id: 1,
       name: "Free fire",
@@ -18,7 +18,7 @@ const About = () => {
     },
     {
       id: 2,
-      name: "street fighter",
+      name: "street \t fighter",
       image:
         "https://i.pinimg.com/474x/75/83/a6/7583a628590046beff3b5086ce60ed81.jpg",
       fontClass: "font-street-fighter",
@@ -30,7 +30,10 @@ const About = () => {
       image:
         "https://4kwallpapers.com/images/wallpapers/valorant-harbor-1280x1280-8910.png",
       fontClass: "font-valorant",
-      size: "text-9xl",
+
+      size: "text-7xl",
+
+
     },
     {
       id: 4,
@@ -38,7 +41,8 @@ const About = () => {
       image:
         "https://4kwallpapers.com/images/wallpapers/ea-sports-fc-25-720x1280-17732.jpg",
       fontClass: "font-ea-football",
-      size: "text-9xl",
+      size: "text-7xl",
+ 
     },
   ];
 
@@ -71,7 +75,7 @@ const About = () => {
         duration: 2,
         ease: "power1.inOut",
         scrollTrigger: {
-          trigger: "#activities-section",
+          trigger: "#Games-section",
           start: "top 80%",
         },
       });
@@ -89,7 +93,7 @@ const About = () => {
           stagger: 0.1,
           duration: 0.5,
           scrollTrigger: {
-            trigger: "#activities-section",
+            trigger: "#Games-section",
             start: "top 80%",
           },
         }
@@ -116,7 +120,7 @@ const About = () => {
         duration: 2,
         ease: "power1.inOut",
         scrollTrigger: {
-          trigger: "#activities-section",
+          trigger: "#Games-section",
           start: "top 90%",
         },
       });
@@ -133,7 +137,7 @@ const About = () => {
           opacity: 1,
           stagger: 0.1,
           scrollTrigger: {
-            trigger: "#activities-section",
+            trigger: "#Games-section",
             start: "top 90%",
             end: "center center",
           },
@@ -148,7 +152,7 @@ const About = () => {
       className="relative min-h-screen w-full overflow-x-hidden bg-[#F0F0FF] sm:px-0 md:px-0 lg:px-0"
     >
       <div className="relative text-center mt-8 sm:mt-12 md:mt-20 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
-        <p className="font-valorant text-xs sm:text-sm md:text-base lg:text-lg uppercase px-2 md:px-4 max-w-2xl mx-auto">
+        <p className="font-valorant text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
           Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno
           3andkom f Valorant.
         </p>
@@ -159,11 +163,11 @@ const About = () => {
         />
       </div>
 
-      {/* Activities Section - Horizontal Panels */}
-      <div id="activities-section" className="relative bg-black w-full py-8">
+      {/* Games Section - Horizontal Panels */}
+      <div id="Games-section" className="relative bg-black w-full py-8">
         {/* Desktop Version - Horizontal Strip with Gaps */}
         <div className="hidden md:flex w-full h-[110dvh] px-4 gap-4">
-          {activities.map((activity) => (
+          {Games.map((activity) => (
             <div
               key={activity.id}
               className="activity-panel relative flex-1 h-full overflow-hidden cursor-pointer transition-all duration-300 group"
@@ -194,7 +198,10 @@ const About = () => {
 
         {/* Mobile Version - Vertical Stack with Gaps */}
         <div className="md:hidden w-full px-4 space-y-4">
-          {activities.map((activity) => (
+          {Games.map((activity) => (
+
+            
+
             <div
               key={activity.id}
               className="activity-panel relative w-full h-[150px] overflow-hidden flex justify-center items-center"
