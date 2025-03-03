@@ -7,7 +7,7 @@ const PrizeCard = ({ place, amount, className = "" }) => {
   return (
     <div className={`w-full bg-black/20 backdrop-blur-sm rounded-xl p-8 ${className}`}>
       <div className="text-center">
-      <p className="font-nightWarrior text-5xl font-bold text-primary mt-4">{amount}<small className=" text-2xl">DH</small></p>
+      <p className="font-nightWarrior text-5xl font-bold text-[#D7C6AF] mt-4">{amount}<small className=" text-2xl">DH</small></p>
 
         <p className="font-valorant text-md uppercase text-gray-400">{place}</p>
       </div>
@@ -69,7 +69,7 @@ const PrizePool = () => {
 
   return (
     <div id="PrizePool" className="min-h-dvh w-screen bg-black text-blue-50 relative">
-      <div className="absolute top-0 pb-20 w-full h-32 bg-gradient-to-t from-transparent to-[#14141f]" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
 
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center py-10 pb-24">
@@ -98,7 +98,7 @@ const PrizePool = () => {
                 </h2>
               </div>
               
-              <div className="absolute -z-10 size-[500px] rounded-full bg-gradient-to-r from-primary/20 to-primary/20 blur-3xl" />
+              <div className="absolute -z-10 size-[500px] rounded-full bg-gradient-to-r from-primary/10 to-primary/10 blur-3xl" />
             </div>
 
             {/* Prize Distribution */}
