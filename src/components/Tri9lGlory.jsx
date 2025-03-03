@@ -79,9 +79,9 @@ const Tri9lGlory = () => {
   return (
     <section id="Tri9Lglory" className="bg-brand-valorant-second min-h-screen relative" ref={sectionRef}>
       <div className="absolute top-0 pb-20 w-full h-32 bg-gradient-to-t from-transparent to-[#14141f]" />
-      <div className="container mx-auto px-4 md:px-10">
+      <div className="container mx-auto px-4 pt-9 md:px-10">
         <div className="px-4 md:px-5 pb-16 md:pb-32" ref={headerRef}>
-          <h1 className="text-7xl md:text-8xl lg:text-8xl font-nightWarrior text-brand-valorant">
+          <h1 className="text-7xl md:text-8xl lg:text-8xl font-nightWarrior text-primary">
             TrI9 l glory
           </h1>
           <p className="max-w-md tracking-wide font-zentry text-lg md:text-2xl text-blue-50 opacity-50 mt-4">
