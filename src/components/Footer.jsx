@@ -17,28 +17,7 @@ const GamingFooter = () => {
           registered trademarks of Valve Corporation in the U.S. and/or other countries.
         </p>
 
-        <div className="flex flex-wrap justify-between items-center">
-          <div className="flex items-center gap-6">
-              <div className="flex gap-4 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white">Game Policies</a>
-              <a href="#" className="text-gray-400 hover:text-white">Web Policies</a>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {regions.map((region, index) => (
-              <a 
-                key={index} 
-                href="#" 
-                className="text-xs text-gray-400 hover:text-white"
-              >
-                {region}
-              </a>
-            ))}
-          </div>
-
-        
-        </div>
+     
       </div>
     </footer>
   );
