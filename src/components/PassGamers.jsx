@@ -12,66 +12,78 @@ const PassGamers = () => {
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
 
-  // Animation de la carte et des éléments au scroll
+  // Ajout d'un console.log pour débogage
   useEffect(() => {
+    console.log('PassGamers component mounted! Debugging GSAP:', { 
+      gsap: !!gsap, 
+      ScrollTrigger: !!ScrollTrigger,
+      sectionRef: !!sectionRef.current,
+      cardRef: !!cardRef.current
+    });
+    
+    // Animation de la carte et des éléments au scroll
     if (sectionRef.current && cardRef.current) {
       // Animation du titre et du texte
-      gsap.fromTo(
-        '.pass-text-content',
-        { 
-          opacity: 0,
-          y: 50
-        },
-        { 
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 70%',
+      try {
+        gsap.fromTo(
+          '.pass-text-content',
+          { 
+            opacity: 0,
+            y: 50
+          },
+          { 
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 70%',
+            }
           }
-        }
-      );
+        );
 
-      // Animation de la carte
-      gsap.fromTo(
-        cardRef.current,
-        { 
-          opacity: 0,
-          scale: 0.8,
-          rotationY: -15
-        },
-        { 
-          opacity: 1,
-          scale: 1,
-          rotationY: 0,
-          duration: 1.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 60%',
+        // Animation de la carte
+        gsap.fromTo(
+          cardRef.current,
+          { 
+            opacity: 0,
+            scale: 0.8,
+            rotationY: -15
+          },
+          { 
+            opacity: 1,
+            scale: 1,
+            rotationY: 0,
+            duration: 1.2,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 60%',
+            }
           }
-        }
-      );
+        );
 
-      // Animation des avantages
-      gsap.fromTo(
-        '.pass-feature',
-        { 
-          opacity: 0,
-          x: -30
-        },
-        { 
-          opacity: 1,
-          x: 0,
-          duration: 0.5,
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: '.pass-features',
-            start: 'top 75%',
+        // Animation des avantages
+        gsap.fromTo(
+          '.pass-feature',
+          { 
+            opacity: 0,
+            x: -30
+          },
+          { 
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: '.pass-features',
+              start: 'top 75%',
+            }
           }
-        }
-      );
+        );
+      } catch (error) {
+        console.error('Error in GSAP animations:', error);
+      }
     }
   }, []);
 
