@@ -7,6 +7,7 @@ import Tri9lGlory from "./components/Tri9lGlory";
 import PrizePool from "./components/PrizePool";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import PassGamers from "./components/PassGamers";
 
 function App() {
   const lenisRef = useRef();
@@ -45,6 +46,7 @@ function App() {
 
       <Hero />
       <About />
+      <PassGamers />
       <Tri9lGlory />
 
       {/* PrizePool Section */}

@@ -5,6 +5,7 @@ import gsap from "gsap";
 
 const navItems = [
   { name: "Discover", link: "#Discover" },
+  { name: "Pass Gamers", link: "#pass-gamers" },
   { name: "Tri9 l glory", link: "#Tri9Lglory" },
   { name: "Prize Pool", link: "#PrizePool" },
   { name: "Join Us", link: "#welliMchhorm" }
