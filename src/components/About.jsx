@@ -1,13 +1,29 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import AnimatedTitle from "./AnimatedTitle";
+import GameDetailPopup from "./GameDetailPopup";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const GamingShowcase = () => {
+  // État pour gérer le popup
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // Fonction pour ouvrir le popup
+  const handleGameClick = (game) => {
+    setSelectedGame(game);
+    setIsPopupOpen(true);
+  };
+
+  // Fonction pour fermer le popup
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   // Games data for the panels
   const Games = [
     {
@@ -156,7 +172,8 @@ const GamingShowcase = () => {
               key={game.id}
               className={`desktop-game-panel relative flex-1 ${
                 index % 2 === 0 ? "mt-0" : "mt-16"
-              } h-[450px] lg:h-[500px] max-w-[180px] lg:max-w-[200px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-300`}
+              } h-[450px] lg:h-[500px] max-w-[180px] lg:max-w-[200px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:scale-105`}
+              onClick={() => handleGameClick(game)}
             >
               {/* Background image */}
               <img
@@ -195,7 +212,8 @@ const GamingShowcase = () => {
                 key={game.id}
                 className={`mobile-game-panel relative ${
                   index % 2 === 0 ? "mt-0" : "mt-16"
-                } w-[200px] h-[350px] mr-3 flex-shrink-0 overflow-hidden rounded-xl`}
+                } w-[200px] h-[350px] mr-3 flex-shrink-0 overflow-hidden rounded-xl cursor-pointer hover:shadow-lg hover:shadow-primary/10`}
+                onClick={() => handleGameClick(game)}
               >
                 {/* Background image */}
                 <img
@@ -227,6 +245,13 @@ const GamingShowcase = () => {
           </div>
         </div>
       </div>
+      
+      {/* Popup pour les détails du tournoi */}
+      <GameDetailPopup 
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        game={selectedGame}
+      />
     </div>
   );
 };
