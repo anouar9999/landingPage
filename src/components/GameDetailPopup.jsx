@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, Trophy, Users, Calendar, Book, Sparkles, Gamepad2, Medal } from "lucide-react";
 import gsap from "gsap";
 
@@ -107,50 +107,158 @@ const tournamentInfo = {
   }
 };
 
+// Styles CSS pour la scrollbar personnalisée
+const scrollbarStyles = `
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(10, 10, 20, 0.2);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #D7C6AF 0%, rgba(215, 198, 175, 0.5) 100%);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #D7C6AF 20%, rgba(215, 198, 175, 0.8) 100%);
+    background-clip: content-box;
+  }
+`;
+
 const GameDetailPopup = ({ isOpen, onClose, game }) => {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
   const progressRef = useRef(null);
+  const timelineRef = useRef(null);
+  const prizesRef = useRef(null);
+  const rulesRef = useRef(null);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  
+  // Injecter les styles de scrollbar au montage du composant
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = scrollbarStyles;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+  
+  // Réinitialiser l'état d'animation lorsque le popup se ferme
+  useEffect(() => {
+    if (!isOpen) {
+      setAnimationComplete(false);
+    }
+  }, [isOpen]);
   
   // Animation à l'ouverture et fermeture
   useEffect(() => {
     if (isOpen && contentRef.current && overlayRef.current) {
-      // Animation d'entrée
-      gsap.to(overlayRef.current, {
+      // Créer une timeline pour séquencer les animations
+      const tl = gsap.timeline({
+        onComplete: () => setAnimationComplete(true)
+      });
+      
+      // Animation du fond avec un léger effet de flou qui s'intensifie
+      tl.to(overlayRef.current, {
         opacity: 1,
-        duration: 0.3,
+        backdropFilter: "blur(12px)",
+        duration: 0.4,
         ease: "power2.inOut"
       });
       
-      gsap.fromTo(contentRef.current, 
+      // Animation du conteneur principal avec un effet de rebond léger
+      tl.fromTo(contentRef.current, 
         { 
           y: 50,
           scale: 0.95,
-          opacity: 0
+          opacity: 0,
+          borderRadius: "16px",
         }, 
         { 
           y: 0,
           scale: 1,
           opacity: 1,
-          duration: 0.4,
-          ease: "power3.out",
-          delay: 0.1
-        }
+          borderRadius: "8px",
+          duration: 0.5,
+          ease: "back.out(1.2)",
+        },
+        "-=0.2" // Commencer légèrement avant que l'animation du fond soit terminée
       );
       
-      // Animation des éléments internes
+      // Animation de la barre de progression
       if (progressRef.current) {
-        gsap.fromTo(progressRef.current.children,
-          {
-            width: 0
-          },
-          {
-            width: "100%",
-            duration: 0.8,
-            stagger: 0.2,
-            delay: 0.5,
+        tl.fromTo(progressRef.current.querySelector(".progress-bar"), 
+          { width: 0 },
+          { 
+            width: "100%", 
+            duration: 1,
             ease: "power2.inOut"
-          }
+          },
+          "-=0.2"
+        );
+      }
+      
+      // Animation séquentielle des étapes de la timeline
+      if (timelineRef.current) {
+        tl.fromTo(timelineRef.current.querySelectorAll(".timeline-item"),
+          { 
+            opacity: 0,
+            x: -20,
+          },
+          { 
+            opacity: 1,
+            x: 0,
+            stagger: 0.15,
+            duration: 0.5,
+            ease: "power2.out"
+          },
+          "-=0.5"
+        );
+      }
+      
+      // Animation des cartes de prix
+      if (prizesRef.current) {
+        tl.fromTo(prizesRef.current.querySelectorAll(".prize-card"),
+          { 
+            opacity: 0,
+            y: 20,
+            scale: 0.95
+          },
+          { 
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            stagger: 0.1,
+            duration: 0.4,
+            ease: "power2.out"
+          },
+          "-=0.8"
+        );
+      }
+      
+      // Animation des règles et conditions
+      if (rulesRef.current) {
+        tl.fromTo(rulesRef.current.querySelectorAll(".rules-card"),
+          { 
+            opacity: 0,
+            y: 15,
+          },
+          { 
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+            duration: 0.4,
+            ease: "power2.out"
+          },
+          "-=0.6"
         );
       }
     }
@@ -159,20 +267,28 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
   // Gestion de la fermeture avec animation
   const handleClose = () => {
     if (contentRef.current && overlayRef.current) {
-      gsap.to(contentRef.current, {
+      // Timeline pour la séquence de fermeture
+      const tl = gsap.timeline({
+        onComplete: onClose
+      });
+      
+      // Animation du conteneur principal
+      tl.to(contentRef.current, {
         y: 30,
         opacity: 0,
-        scale: 0.95,
+        scale: 0.96,
+        borderRadius: "16px",
         duration: 0.3,
         ease: "power2.in"
       });
       
-      gsap.to(overlayRef.current, {
+      // Animation du fond
+      tl.to(overlayRef.current, {
         opacity: 0,
-        duration: 0.4,
-        ease: "power2.inOut",
-        onComplete: onClose
-      });
+        backdropFilter: "blur(0px)",
+        duration: 0.3,
+        ease: "power2.inOut"
+      }, "-=0.15");
     } else {
       onClose();
     }
@@ -197,12 +313,12 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
   return (
     <div 
       ref={overlayRef}
-      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0"
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 opacity-0"
       onClick={handleClose}
     >
       <div 
         ref={contentRef}
-        className="relative w-full max-w-5xl max-h-[90vh] overflow-auto bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
+        className="relative w-full max-w-5xl max-h-[85vh] overflow-auto custom-scrollbar bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header avec image et titre */}
@@ -216,26 +332,16 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a14]"></div>
           
           <div className="absolute bottom-0 left-0 w-full p-6 flex items-end justify-between">
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl"></div>
-                <img 
-                  src={game.game} 
-                  alt={`${game.name} logo`}
-                  className="h-20 relative z-10 object-contain drop-shadow-lg"
-                />
-              </div>
-              <div>
-                <span className="text-xs text-primary font-valorant uppercase tracking-wider">MGE Championship 2025</span>
-                <h2 className={`${game.fontClass || "font-nightWarrior"} text-4xl text-white uppercase flex items-center gap-2`}>
-                  {game.name} <span className="text-2xl">{gameInfo.icon}</span>
-                </h2>
-              </div>
+            <div>
+              <span className="text-xs text-primary font-valorant uppercase tracking-wider">MGE Championship 2025</span>
+              <h2 className={`${game.fontClass || "font-nightWarrior"} text-4xl text-white uppercase flex items-center gap-2`}>
+                {game.name} <span className="text-2xl">{gameInfo.icon}</span>
+              </h2>
             </div>
             
             <button
               onClick={handleClose}
-              className="p-2 rounded-full bg-black/40 hover:bg-primary/30 text-white transition-colors"
+              className="p-2 rounded-full bg-black/40 hover:bg-primary/30 text-white transition-all duration-300 hover:scale-110"
               aria-label="Fermer"
             >
               <X size={24} />
@@ -246,7 +352,7 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
         {/* Contenu */}
         <div className="p-6">
           {/* Description et format du tournoi */}
-          <div className="mb-8 bg-black/30 p-5 rounded-lg backdrop-blur-sm border-l-4 border-primary">
+          <div className="mb-8 bg-black/30 p-5 rounded-lg backdrop-blur-sm border-l-4 border-primary transform transition-transform duration-500 hover:translate-x-1 hover:shadow-lg hover:shadow-primary/20">
             <p className="text-white/90 italic leading-relaxed">{gameInfo.description}</p>
             
             <div className="mt-4 flex items-center gap-2">
@@ -264,24 +370,24 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
             
             {/* Barre de progression */}
             <div className="relative h-2 bg-gray-800 rounded-full mb-6 overflow-hidden">
-              <div className={`h-full ${gameInfo.color} rounded-full w-0`}></div>
+              <div className={`progress-bar h-full ${gameInfo.color} rounded-full`}></div>
             </div>
             
             {/* Timeline des étapes */}
-            <div className="relative ml-4">
+            <div className="relative ml-4" ref={timelineRef}>
               {/* Ligne verticale */}
               <div className="absolute top-0 bottom-0 left-3 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20"></div>
               
               {/* Étapes */}
               {gameInfo.rounds.map((round, index) => (
-                <div key={index} className="relative pl-10 pb-10">
+                <div key={index} className="timeline-item relative pl-10 pb-10 opacity-0">
                   {/* Point sur la timeline */}
-                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-[#0a0a14] border-2 border-primary flex items-center justify-center">
-                    <div className="h-2 w-2 rounded-full bg-primary"></div>
+                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-[#0a0a14] border-2 border-primary flex items-center justify-center transform transition-transform duration-300 hover:scale-125">
+                    <div className="h-2 w-2 rounded-full bg-primary transform transition-all duration-300 group-hover:scale-150"></div>
                   </div>
                   
                   {/* Contenu de l'étape */}
-                  <div className="bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-white/10 hover:border-primary/30 transition-colors group">
+                  <div className="bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-md hover:shadow-primary/10 hover:translate-x-1 group">
                     <h4 className="font-valorant text-white text-md uppercase group-hover:text-primary transition-colors flex items-center gap-2">
                       <span className="inline-block h-5 w-5 rounded-full bg-gradient-to-br from-primary to-primary/60 text-xs flex items-center justify-center">
                         {index + 1}
@@ -299,7 +405,7 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
           </div>
           
           {/* Section des prix */}
-          <div className="mb-8">
+          <div className="mb-8" ref={prizesRef}>
             <h3 className="text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2">
               <Trophy className="h-5 w-5" /> Prize Pool
             </h3>
@@ -308,12 +414,12 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
               {gameInfo.prizes && gameInfo.prizes.map((prize, index) => (
                 <div 
                   key={index} 
-                  className={`relative overflow-hidden rounded-lg p-4 bg-black/40 backdrop-blur-sm border border-white/10 hover:border-primary/30 transition-all ${index === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+                  className={`prize-card relative overflow-hidden rounded-lg p-4 bg-black/40 backdrop-blur-sm border border-white/10 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 ${index === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
                 >
                   <div className={`absolute top-0 right-0 w-12 h-12 -mr-6 -mt-6 rounded-full bg-gradient-to-br ${index === 0 ? 'from-yellow-400 to-amber-600' : index === 1 ? 'from-gray-300 to-gray-500' : index === 2 ? 'from-amber-700 to-amber-900' : 'from-blue-400 to-blue-600'} opacity-50`}></div>
                   
                   <div className="flex items-start gap-3">
-                    <div className={`rounded-full p-2 ${index === 0 ? 'bg-yellow-500/20 text-yellow-400' : index === 1 ? 'bg-gray-500/20 text-gray-300' : index === 2 ? 'bg-amber-800/20 text-amber-700' : 'bg-blue-600/20 text-blue-400'}`}>
+                    <div className={`rounded-full p-2 ${index === 0 ? 'bg-yellow-500/20 text-yellow-400' : index === 1 ? 'bg-gray-500/20 text-gray-300' : index === 2 ? 'bg-amber-800/20 text-amber-700' : 'bg-blue-600/20 text-blue-400'} transition-transform duration-300 hover:scale-110`}>
                       <Medal size={index === 0 ? 22 : 18} />
                     </div>
                     <div>
@@ -330,24 +436,24 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
           </div>
           
           {/* Conditions et règles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" ref={rulesRef}>
             {/* Conditions de participation */}
-            <div className="bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10">
+            <div className="rules-card bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/10">
               <h3 className="text-primary font-valorant text-lg uppercase mb-3 flex items-center gap-2">
                 <Users className="h-5 w-5" /> Conditions de participation
               </h3>
               <ul className="space-y-2">
                 {gameInfo.requirements && gameInfo.requirements.map((req, index) => (
-                  <li key={index} className="flex items-start gap-2 text-white/80">
-                    <span className="inline-block mt-1 h-2 w-2 rounded-full bg-primary flex-shrink-0"></span>
-                    <span>{req}</span>
+                  <li key={index} className="flex items-start gap-2 text-white/80 group">
+                    <span className="inline-block mt-1 h-2 w-2 rounded-full bg-primary flex-shrink-0 transition-transform duration-300 group-hover:scale-150"></span>
+                    <span className="transition-colors duration-300 group-hover:text-white">{req}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
             {/* Règlement */}
-            <div className="bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10">
+            <div className="rules-card bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/10">
               <h3 className="text-primary font-valorant text-lg uppercase mb-3 flex items-center gap-2">
                 <Book className="h-5 w-5" /> Règlement
               </h3>
@@ -358,12 +464,12 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
           {/* Bouton d'inscription */}
           <div className="mt-10 text-center">
             <div className="relative inline-block group">
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary via-primary/80 to-primary opacity-70 blur-lg group-hover:opacity-100 transition-all duration-300"></div>
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary via-primary/80 to-primary opacity-70 blur-lg group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
               <a 
                 href="http://109.120.179.6:3001/auth/auth1/login"
-                className="relative inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-valorant px-8 py-3 uppercase transition-colors rounded-lg"
+                className="relative inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-valorant px-8 py-3 uppercase transition-all duration-300 hover:scale-105 rounded-lg"
               >
-                <Sparkles size={18} />
+                <Sparkles size={18} className="animate-pulse" />
                 S'inscrire au tournoi
               </a>
             </div>
