@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 import AnimatedTitle from "./AnimatedTitle";
 import GameDetailPopup from "./GameDetailPopup";
 
+
+
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
