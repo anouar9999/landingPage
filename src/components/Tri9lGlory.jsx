@@ -28,6 +28,11 @@ const BentoTilt = forwardRef(({ children, className = "" }, ref) => {
     setTransformStyle("");
   };
 
+  // Combine les transformations si nécessaire
+  const finalTransform = transformStyle 
+    ? `${transformStyle} translateX(-20px)` 
+    : "translateX(-20px)";
+
   return (
     <div
       ref={ref}
@@ -35,9 +40,8 @@ const BentoTilt = forwardRef(({ children, className = "" }, ref) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: transformStyle,
+        transform: finalTransform,
         opacity: 0,
-        transform: "translateX(-20px)",
       }}
     >
       {children}
