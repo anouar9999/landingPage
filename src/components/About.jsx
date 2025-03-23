@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import AnimatedTitle from "./AnimatedTitle";
 import GameDetailPopup from "./GameDetailPopup";
 
@@ -12,6 +12,10 @@ const GamingShowcase = () => {
   // État pour gérer le popup
   const [selectedGame, setSelectedGame] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // État pour la position du curseur personnalisé
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const cursorRef = useRef(null);
 
   // Fonction pour ouvrir le popup
   const handleGameClick = (game) => {
@@ -29,74 +33,98 @@ const GamingShowcase = () => {
     {
       id: 1,
       name: "Free fire",
-      image:
-        "https://wallpapers.com/images/hd/garena-free-fire-nulla-poster-5mjqiwdfn0enjq8f.jpg",
+      image: "https://wallpapers.com/images/hd/garena-free-fire-nulla-poster-5mjqiwdfn0enjq8f.jpg",
       fontClass: "font-free-fire",
-      game: "public/img/images-removebg-preview (1).png",
+      tournamentMode: "Battle Royale",
+      tournamentPlayers: "4 vs 4 vs 4"
     },
     {
       id: 2,
-      name: "street \t fighter",
-      image:
-        "https://i.pinimg.com/474x/75/83/a6/7583a628590046beff3b5086ce60ed81.jpg",
+      name: "street fighter",
+      image: "https://i.pinimg.com/474x/75/83/a6/7583a628590046beff3b5086ce60ed81.jpg",
       fontClass: "font-street-fighter",
       size: "text-xl",
-      game: "public/img/street-fighter-fan-casting-poster-149631-medium-removebg-preview.png",
+      tournamentMode: "1v1 Élimination",
+      tournamentPlayers: "Solo"
     },
     {
       id: 3,
       name: "valorant",
-      image:
-        "https://4kwallpapers.com/images/wallpapers/valorant-harbor-1280x1280-8910.png",
+      image: "https://4kwallpapers.com/images/wallpapers/valorant-harbor-1280x1280-8910.png",
       fontClass: "font-valorant",
-      size: "text-xl",
-      game: "public/img/hd-valorant-white-official-logo-with-symbol-png-701751694788076hx3eqqqtmc-removebg-preview.png",
+      tournamentMode: "Compétitif",
+      tournamentPlayers: "5 vs 5"
     },
     {
       id: 4,
-      name: "fc football",
-      image:
-        "https://4kwallpapers.com/images/wallpapers/ea-sports-fc-25-720x1280-17732.jpg",
-      fontClass: "font-ea-football",
-      size: "text-xl",
-      game: "public/img/uncommon_ea_sports_fc_visual_identity__8_-removebg-preview.png",
+      name: "pes 2024",
+      image: "https://pbs.twimg.com/media/Fy-EOI_XgAAWBLO?format=jpg&name=4096x4096",
+      fontClass: "font-pes",
+      tournamentMode: "Ligue & Knockout",
+      tournamentPlayers: "1 vs 1"
     },
+    {
+      id: 5,
+      name: "tekken 8",
+      image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1778820/ss_6b3c0f3236b5d84fd7e62a67cdee2638104cb616.1920x1080.jpg?t=1700738972",
+      fontClass: "font-tekken",
+      size: "text-lg",
+      tournamentMode: "Double Élimination",
+      tournamentPlayers: "Solo"
+    }
   ];
-
+  
+  // Référence pour le conteneur de la section et la piste de défilement horizontal
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
+  // Gérer la position du curseur personnalisé
+  useEffect(() => {
+    const mouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
 
-    // Desktop and tablet animations
-    mm.add("(min-width: 768px)", () => {
-      // Staggered appearance of panels
-      gsap.fromTo(
-        ".desktop-game-panel",
-        {
-          y: 50,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.15,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: "#games-section",
-            start: "top 80%",
-          },
-        }
-      );
+    const handleMouseEnter = () => {
+      setCursorVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+      setCursorVisible(false);
+    };
+
+    // Ajouter des écouteurs pour les éléments cliquables
+    const gameElements = document.querySelectorAll('.game-panel-clickable');
+    gameElements.forEach(element => {
+      element.addEventListener('mouseenter', handleMouseEnter);
+      element.addEventListener('mouseleave', handleMouseLeave);
     });
 
-    // Mobile pinned scroll animations
-    mm.add("(max-width: 767px)", () => {
-      if (!sectionRef.current || !trackRef.current) return;
+    window.addEventListener('mousemove', mouseMove);
 
-      // Get elements and calculate dimensions
+    return () => {
+      window.removeEventListener('mousemove', mouseMove);
+      gameElements.forEach(element => {
+        element.removeEventListener('mouseenter', handleMouseEnter);
+        element.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
+  }, []);
+
+  // Animation du curseur
+  useEffect(() => {
+    if (cursorRef.current) {
+      gsap.to(cursorRef.current, {
+        x: mousePosition.x,
+        y: mousePosition.y,
+        duration: 0.2,
+        ease: "power2.out"
+      });
+    }
+  }, [mousePosition]);
+
+  // Animation de défilement horizontal pour la version mobile
+  useGSAP(() => {
+    if (sectionRef.current && trackRef.current) {
       const section = sectionRef.current;
       const track = trackRef.current;
 
@@ -143,7 +171,7 @@ const GamingShowcase = () => {
           },
         }
       );
-    });
+    }
   }, []);
 
   return (
@@ -151,6 +179,22 @@ const GamingShowcase = () => {
       id="Discover"
       className="relative min-h-screen w-full overflow-x-hidden bg-[#F0F0FF]"
     >
+      {/* Curseur personnalisé */}
+      <div 
+        ref={cursorRef}
+        className={`fixed w-16 h-16 pointer-events-none z-50 flex items-center justify-center transition-opacity duration-300 ${cursorVisible ? 'opacity-100' : 'opacity-0'}`}
+        style={{ 
+          left: -32, 
+          top: -32,
+          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`
+        }}
+      >
+        <div className="w-full h-full rounded-full border-2 border-primary flex items-center justify-center">
+          <div className="w-2/3 h-2/3 rounded-full border border-primary animate-pulse"></div>
+          <div className="absolute text-primary text-xs font-bold">CLIQUEZ</div>
+        </div>
+      </div>
+
       <div className="relative text-center mt-8 sm:mt-12 md:mt-20 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         <p className="font-valorant text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
           Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno
@@ -170,7 +214,7 @@ const GamingShowcase = () => {
           {Games.map((game, index) => (
             <div
               key={game.id}
-              className={`desktop-game-panel relative flex-1 ${
+              className={`desktop-game-panel game-panel-clickable relative flex-1 ${
                 index % 2 === 0 ? "mt-0" : "mt-16"
               } h-[450px] lg:h-[500px] max-w-[180px] lg:max-w-[200px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:scale-105`}
               onClick={() => handleGameClick(game)}
@@ -192,13 +236,10 @@ const GamingShowcase = () => {
                 }}
               ></div>
               
-              {/* Game logo positioned at bottom */}
+              {/* Tournament mode instead of game logo */}
               <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-center">
-                <img 
-                  src={game.game} 
-                  alt={`${game.name} logo`}
-                  className="w-full h-auto max-h-20 object-contain mx-auto"
-                />
+                <h3 className="text-white font-bold text-base lg:text-lg mb-1">{game.tournamentMode}</h3>
+                <p className="text-white text-xs lg:text-sm opacity-80">{game.tournamentPlayers}</p>
               </div>
             </div>
           ))}
@@ -210,7 +251,7 @@ const GamingShowcase = () => {
             {Games.map((game, index) => (
               <div
                 key={game.id}
-                className={`mobile-game-panel relative ${
+                className={`mobile-game-panel game-panel-clickable relative ${
                   index % 2 === 0 ? "mt-0" : "mt-16"
                 } w-[200px] h-[350px] mr-3 flex-shrink-0 overflow-hidden rounded-xl cursor-pointer hover:shadow-lg hover:shadow-primary/10`}
                 onClick={() => handleGameClick(game)}
@@ -232,13 +273,10 @@ const GamingShowcase = () => {
                   }}
                 ></div>
                 
-                {/* Game logo for mobile */}
+                {/* Tournament mode instead of game logo for mobile */}
                 <div className="absolute bottom-0 left-0 w-full px-2 pb-4 text-center">
-                  <img 
-                    src={game.game} 
-                    alt={`${game.name} logo`}
-                    className="w-full h-auto max-h-20 object-contain mx-auto"
-                  />
+                  <h3 className="text-white font-bold text-sm mb-1">{game.tournamentMode}</h3>
+                  <p className="text-white text-xs opacity-80">{game.tournamentPlayers}</p>
                 </div>
               </div>
             ))}
