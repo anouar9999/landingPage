@@ -154,7 +154,7 @@ const GamingShowcase = () => {
       <div className="relative text-center mt-8 sm:mt-12 md:mt-20 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         <p className="font-valorant text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
           Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno
-          3andkom f Valorant.
+          3andkom fl Game likinasbkum.
         </p>
 
         <AnimatedTitle
