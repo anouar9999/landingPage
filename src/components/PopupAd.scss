@@ -1,0 +1,355 @@
+.popup-ad-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.popup-ad-content {
+  width: 100%;
+  max-width: 900px;
+  background: #0a0a14;
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 90vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    max-height: 95vh;
+  }
+}
+
+.popup-ad-header {
+  background: linear-gradient(to right, rgba(109, 40, 217, 0.3), rgba(20, 20, 40, 0.7));
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(109, 40, 217, 0.2);
+  
+  h2 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    
+    &:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.popup-ad-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  overflow-y: auto;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .ad-info-section {
+    flex: 1;
+    min-width: 280px;
+    
+    h3 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+      }
+    }
+    
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  .ad-formats-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    
+    .format-tab {
+      padding: 0.5rem 1rem;
+      background-color: rgba(20, 20, 30, 0.7);
+      border: 1px solid rgba(109, 40, 217, 0.2);
+      border-radius: 4px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: rgba(109, 40, 217, 0.2);
+      }
+      
+      &.active {
+        background-color: #6d28d9;
+        border-color: #6d28d9;
+        color: white;
+      }
+    }
+  }
+  
+  .ad-demo-info {
+    background-color: rgba(20, 20, 30, 0.7);
+    border: 1px solid rgba(109, 40, 217, 0.2);
+    border-radius: 6px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    
+    .format-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      
+      .format-name {
+        font-weight: 600;
+        color: white;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .format-dimensions {
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.5);
+          font-weight: normal;
+        }
+      }
+      
+      .format-price {
+        background-color: rgba(109, 40, 217, 0.2);
+        color: #8b5cf6;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+    }
+    
+    .format-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    
+    .format-metrics {
+      display: flex;
+      gap: 2rem;
+      
+      .metric {
+        display: flex;
+        flex-direction: column;
+        
+        .metric-label {
+          font-size: 0.7rem;
+          color: rgba(255, 255, 255, 0.5);
+          margin-bottom: 0.2rem;
+        }
+        
+        .metric-value {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #8b5cf6;
+        }
+      }
+    }
+  }
+  
+  .ad-demo-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+    
+    .primary-button, .secondary-button {
+      padding: 0.7rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+    }
+    
+    .primary-button {
+      background-color: #6d28d9;
+      color: white;
+      border: none;
+      
+      &:hover {
+        background-color: #5b21b6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
+      }
+    }
+    
+    .secondary-button {
+      background-color: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+  
+  .ad-preview {
+    flex: 0 0 auto;
+    
+    @media (max-width: 768px) {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .ad-placeholder {
+      position: relative;
+      background: rgba(30, 30, 50, 0.6);
+      border: 2px dashed rgba(109, 40, 217, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      
+      .ad-tag {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        border-radius: 3px;
+        z-index: 10;
+      }
+      
+      .ad-size {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 0.6rem;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      
+      .ad-content {
+        text-align: center;
+        padding: 1rem;
+        
+        .ad-logo {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #6d28d9;
+          margin-bottom: 0.5rem;
+        }
+        
+        .ad-message {
+          color: white;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    &.rectangle .ad-placeholder {
+      width: 300px;
+      height: 250px;
+    }
+    
+    &.leaderboard .ad-placeholder {
+      width: 728px;
+      height: 90px;
+      
+      @media (max-width: 768px) {
+        width: 100%;
+        max-width: 728px;
+      }
+    }
+    
+    &.skyscraper .ad-placeholder {
+      width: 160px;
+      height: 600px;
+      
+      @media (max-width: 768px) {
+        width: 160px;
+        height: 400px;
+      }
+    }
+    
+    &.interstitial .ad-placeholder {
+      width: 300px;
+      height: 300px;
+      
+      @media (max-width: 768px) {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  }
+}
+
+.popup-ad-footer {
+  background-color: rgba(10, 10, 20, 0.8);
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(109, 40, 217, 0.1);
+  text-align: center;
+  
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
+  }
+} 

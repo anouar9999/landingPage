@@ -1,38 +1,65 @@
-import React from 'react';
-import { useAds } from '../context/AdContext';
+import React, { useEffect, useRef } from 'react';
+import { useAdContext } from '../contexts/AdContext';
+import gsap from 'gsap';
+import './FooterAd.scss';
 
 /**
  * Composant pour un emplacement publicitaire dans le footer
  */
 const FooterAd = () => {
-  const { showAds } = useAds();
+  const { adsVisible } = useAdContext();
+  const adRef = useRef(null);
   
-  if (!showAds) return null;
+  useEffect(() => {
+    if (adRef.current) {
+      if (adsVisible) {
+        // Animation d'entrée
+        gsap.fromTo(
+          adRef.current,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+        );
+      } else {
+        // Animation de sortie
+        gsap.to(
+          adRef.current,
+          { y: 30, opacity: 0, duration: 0.3, ease: "power2.in" }
+        );
+      }
+    }
+  }, [adsVisible]);
+  
+  // Si les publicités ne sont pas visibles, ne rien rendre
+  if (!adsVisible) return null;
   
   return (
-    <div className="w-full py-6 bg-gradient-to-r from-black/80 via-primary/10 to-black/80">
-      <div className="container mx-auto px-4">
-        <div 
-          className="w-full rounded-lg border-2 border-dashed border-primary/40 py-4 px-6 flex flex-col md:flex-row items-center justify-between"
-          style={{
-            background: 'rgba(20, 20, 30, 0.7)',
-            backdropFilter: 'blur(5px)',
-          }}
-        >
-          <div className="mb-4 md:mb-0 text-center md:text-left">
-            <p className="text-primary font-valorant text-sm uppercase mb-1">Emplacement sponsorisé</p>
-            <h3 className="text-white text-lg md:text-xl">Votre message publicitaire peut apparaître ici</h3>
+    <div className="footer-ad-container" ref={adRef}>
+      <div className="footer-ad-content">
+        <div className="ad-label">Publicité</div>
+        
+        <div className="ad-banner">
+          <div className="ad-info">
+            <h3>Emplacement Publicitaire Premium</h3>
+            <p>Format Leaderboard (728×90) - Idéal pour une visibilité optimale avant le pied de page</p>
           </div>
           
-          <div className="flex space-x-4">
-            <div className="bg-primary/20 backdrop-blur-sm px-3 py-2 rounded text-white text-sm flex items-center justify-center">
-              <span className="font-valorant">Réservez cet espace</span>
+          <div className="ad-metrics">
+            <div className="metric">
+              <span className="metric-value">+95%</span>
+              <span className="metric-label">Visibilité</span>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm px-3 py-2 rounded text-white text-sm flex items-center justify-center">
-              <span className="font-valorant">Tarifs & Info</span>
+            <div className="metric">
+              <span className="metric-value">+80%</span>
+              <span className="metric-label">Taux de complétion</span>
             </div>
           </div>
+          
+          <a href="mailto:contact@mge.ma" className="ad-cta">
+            Réserver
+          </a>
         </div>
+        
+        <div className="ad-dimensions">728 × 90</div>
       </div>
     </div>
   );
