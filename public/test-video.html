@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Vidéo Hero</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0a0a14;
+      color: white;
+      padding: 20px;
+    }
+    .video-container {
+      max-width: 800px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+    video {
+      width: 100%;
+      border: 1px solid #333;
+      border-radius: 8px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: rgba(0, 128, 0, 0.2);
+      border: 1px solid green;
+    }
+    .error {
+      background-color: rgba(255, 0, 0, 0.2);
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test de chargement des vidéos Hero</h1>
+
+  <div id="results">Vérification des vidéos en cours...</div>
+
+  <h2>Vidéo 1</h2>
+  <div class="video-container">
+    <video id="video1" controls>
+      <source src="/videos/hero-1.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <div id="status1" class="status">Chargement...</div>
+  </div>
+
+  <h2>Vidéo 2</h2>
+  <div class="video-container">
+    <video id="video2" controls>
+      <source src="/videos/hero-2.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <div id="status2" class="status">Chargement...</div>
+  </div>
+
+  <h2>Vidéo 3</h2>
+  <div class="video-container">
+    <video id="video3" controls>
+      <source src="/videos/hero-3.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <div id="status3" class="status">Chargement...</div>
+  </div>
+
+  <h2>Test d'autres chemins</h2>
+  <div id="pathTests"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Vérifier vidéo 1
+      const video1 = document.getElementById('video1');
+      const status1 = document.getElementById('status1');
+      
+      video1.addEventListener('loadeddata', function() {
+        status1.textContent = 'Vidéo 1 chargée avec succès';
+        status1.className = 'status success';
+      });
+      
+      video1.addEventListener('error', function() {
+        status1.textContent = 'Erreur de chargement de la vidéo 1';
+        status1.className = 'status error';
+      });
+      
+      // Vérifier vidéo 2
+      const video2 = document.getElementById('video2');
+      const status2 = document.getElementById('status2');
+      
+      video2.addEventListener('loadeddata', function() {
+        status2.textContent = 'Vidéo 2 chargée avec succès';
+        status2.className = 'status success';
+      });
+      
+      video2.addEventListener('error', function() {
+        status2.textContent = 'Erreur de chargement de la vidéo 2';
+        status2.className = 'status error';
+      });
+      
+      // Vérifier vidéo 3
+      const video3 = document.getElementById('video3');
+      const status3 = document.getElementById('status3');
+      
+      video3.addEventListener('loadeddata', function() {
+        status3.textContent = 'Vidéo 3 chargée avec succès';
+        status3.className = 'status success';
+      });
+      
+      video3.addEventListener('error', function() {
+        status3.textContent = 'Erreur de chargement de la vidéo 3';
+        status3.className = 'status error';
+      });
+      
+      // Tester différents chemins d'accès
+      const pathTests = document.getElementById('pathTests');
+      const paths = [
+        '/videos/hero-1.mp4',
+        'videos/hero-1.mp4',
+        './videos/hero-1.mp4',
+        '../videos/hero-1.mp4'
+      ];
+      
+      paths.forEach(function(path, index) {
+        const div = document.createElement('div');
+        div.innerHTML = `<p>Test du chemin: <code>${path}</code> <span id="pathResult${index}">...</span></p>`;
+        pathTests.appendChild(div);
+        
+        fetch(path, { method: 'HEAD' })
+          .then(function(response) {
+            const result = document.getElementById(`pathResult${index}`);
+            if (response.ok) {
+              result.textContent = '✅ OK';
+              result.style.color = 'green';
+            } else {
+              result.textContent = '❌ Erreur ' + response.status;
+              result.style.color = 'red';
+            }
+          })
+          .catch(function(error) {
+            const result = document.getElementById(`pathResult${index}`);
+            result.textContent = '❌ Erreur: ' + error.message;
+            result.style.color = 'red';
+          });
+      });
+      
+      // Résumé
+      setTimeout(function() {
+        const results = document.getElementById('results');
+        const success = document.querySelectorAll('.success').length;
+        
+        if (success === 3) {
+          results.innerHTML = '<div class="status success">✅ Toutes les vidéos se chargent correctement!</div>';
+        } else {
+          results.innerHTML = `<div class="status error">❌ Problème: ${success}/3 vidéos chargées correctement</div>`;
+        }
+      }, 5000);
+    });
+  </script>
+</body>
+</html> 
