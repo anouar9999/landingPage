@@ -5,12 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import VideoPreview from "./VideoPreview";
 import HeroAdOverlay from "./HeroAdOverlay";
 import clsx from "clsx";
-import { useAds } from "../context/AdContext";
-
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const { showAds } = useAds();
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const audioElementRef = useRef(null);
@@ -87,7 +84,7 @@ const Hero = () => {
         height: "100%",
         duration: 1,
         ease: "power1.inOut",
-        onStart: () => nextVdRef.current && nextVdRef.current.play(),
+        onStart: () => nextVdRef.current.play(),
       });
       gsap.from("#current-video", {
         transformOrigin: "center center",
@@ -119,12 +116,7 @@ const Hero = () => {
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-t from-[#0a0a0a] to-[#080818] border-4 border-transparent">
-      <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-indigo-700/20 blur-[100px]"></div>
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-primary/10 blur-[100px]"></div>
-      </div>
-
+    <div id="hero" className="relative h-screen w-full overflow-hidden">
       {loading && (
         <div className="absolute z-50 flex h-screen w-full items-center justify-center bg-violet-50">
           <div className="three-body">
@@ -141,7 +133,7 @@ const Hero = () => {
       >
         <div className="relative h-full">
           {/* Video Preview Container */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
             <div className="aspect-video cursor-pointer overflow-hidden rounded-lg">
               <VideoPreview>
                 <div
@@ -149,6 +141,7 @@ const Hero = () => {
                   className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
                 >
                   <video
+                    ref={nextVdRef}
                     src={getVideoSrc((currentIndex % totalVideos) + 1)}
                     loop
                     muted
@@ -171,7 +164,6 @@ const Hero = () => {
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 invisible z-20 h-full w-full object-cover"
             onLoadedData={handleVideoLoad}
           />
-          
           <video
             src={getVideoSrc(
               currentIndex === totalVideos - 1 ? 1 : currentIndex
@@ -187,7 +179,7 @@ const Hero = () => {
         {/* Audio Controls */}
         <button
           onClick={toggleAudioIndicator}
-          className="absolute bottom-12 left-3 z-[50] flex items-center space-x-0.5 sm:bottom-10 sm:left-6 md:bottom-28 md:left-8 lg:bottom-24 lg:left-10"
+          className="absolute bottom-12 left-3 z-[9999999] flex items-center space-x-0.5 sm:bottom-10 sm:left-6 md:bottom-28 md:left-8 lg:bottom-24 lg:left-10"
         >
           <audio
             ref={audioElementRef}
@@ -206,8 +198,8 @@ const Hero = () => {
           ))}
         </button>
 
-        {/* HeroAdOverlay - Conditionnellement rendu seulement si showAds est vrai */}
-        {showAds && <HeroAdOverlay />}
+        {/* HeroAdOverlay - Composant pour afficher les emplacements publicitaires */}
+        <HeroAdOverlay />
 
         {/* Content */}
         <div className="absolute left-0 top-0 z-40 h-full w-full">
@@ -251,6 +243,24 @@ const Hero = () => {
       <div className="absolute bottom-0 inset-x-0 z-10 mb-4 sm:mb-6 md:mb-8">
         <div className="flex items-center justify-center w-full px-4 md:px-16">
           <div className="h-px flex-1 bg-gradient-to-r from-[#FF4757]/30 to-[#AE2085]/30"></div>
+
+          <div className="mx-2 sm:mx-4">
+            <a
+              target="_blank"
+              href="http://109.120.179.6:3001/auth/auth1/login"
+              className="group relative"
+            >
+              <div className="absolute inset-0 -skew-x-12 bg-white"></div>
+              <span className="relative flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8">
+                <div className="absolute inset-0 -skew-x-12 border border-white"></div>
+                <span className="relative z-10 text-xs sm:text-sm md:text-base text-black font-valorant uppercase">
+                  Play Now
+                </span>
+              </span>
+            </a>
+          </div>
+
+          <div className="h-px flex-1 bg-gradient-to-r from-[#AE2085]/30 to-[#FF4757]/30"></div>
         </div>
       </div>
     </div>

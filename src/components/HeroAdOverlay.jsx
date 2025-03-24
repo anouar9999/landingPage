@@ -1,121 +1,63 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React from 'react';
 import { useAds } from '../context/AdContext';
 
 /**
- * Composant d'overlay publicitaire pour la section Hero
- * Affiche des points d'information sur les positions publicitaires disponibles
+ * Composant pour afficher une publicité en fond ou en overlay sur le Hero
  */
 const HeroAdOverlay = () => {
-  // État pour le point d'info actif
-  const [activePoint, setActivePoint] = useState(null);
-  // Référence pour l'animation
-  const overlayRef = useRef(null);
-  const pointsRef = useRef([]);
-  const { isAdminMode } = useAds();
+  const { showAds } = useAds();
   
-  // Points d'information sur les positions publicitaires
-  const infoPoints = [
-    { id: 'hero-top', x: '20%', y: '15%', label: 'Header Premium', desc: 'Visibilité maximale sur la partie supérieure' },
-    { id: 'hero-center', x: '50%', y: '40%', label: 'Centre Vidéo', desc: 'Intégration à l\'expérience vidéo' },
-    { id: 'hero-bottom', x: '65%', y: '85%', label: 'Footer Hero', desc: 'Position stratégique de fin de section' },
-    { id: 'hero-side', x: '85%', y: '30%', label: 'Side Rail', desc: 'Accompagne le scrolling utilisateur' },
-  ];
-
-  // Initialisation des animations
-  useEffect(() => {
-    // Animation d'entrée du watermark
-    gsap.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 0.8, duration: 1.5, ease: 'power2.inOut' }
-    );
-    
-    // Animation séquentielle des points d'information
-    pointsRef.current.forEach((point, index) => {
-      gsap.fromTo(
-        point,
-        { opacity: 0, scale: 0 },
-        { 
-          opacity: 1, 
-          scale: 1, 
-          duration: 0.4, 
-          delay: 1 + index * 0.2,
-          ease: 'back.out(2)'
-        }
-      );
-    });
-  }, []);
-  
-  // Animation des tooltips au survol
-  const handlePointHover = (id) => {
-    setActivePoint(id);
-  };
-  
-  const handlePointLeave = () => {
-    setActivePoint(null);
-  };
+  if (!showAds) return null;
   
   return (
-    <div className="absolute inset-0 z-20 pointer-events-none">
-      {/* Watermark */}
+    <div className="absolute inset-0 pointer-events-none z-30">
+      {/* Watermark en fond */}
       <div 
-        ref={overlayRef}
-        className="absolute bottom-5 right-5 font-bold text-lg opacity-60 text-white/50"
-        style={{ fontFamily: 'monospace' }}
+        className="absolute inset-0 flex items-center justify-center opacity-15"
+        style={{ 
+          fontFamily: "'Valorant', sans-serif",
+          fontSize: '120px',
+          color: '#D7C6AF',
+          textTransform: 'uppercase',
+          letterSpacing: '10px',
+          transform: 'rotate(-5deg)',
+          mixBlendMode: 'overlay',
+          userSelect: 'none'
+        }}
       >
-        MGE Ad Experience
+        <span>Publicité</span>
       </div>
       
-      {/* Points d'information */}
-      {infoPoints.map((point, index) => (
-        <div 
-          key={point.id}
-          ref={el => pointsRef.current[index] = el}
-          className="absolute w-6 h-6 flex items-center justify-center pointer-events-auto cursor-pointer"
-          style={{ 
-            left: point.x, 
-            top: point.y,
-            zIndex: 25
+      {/* Advertorial corner */}
+      <div 
+        className="absolute top-5 right-5 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-md border border-primary/20"
+        style={{ 
+          fontFamily: "'Valorant', sans-serif",
+          fontSize: '12px',
+          color: '#D7C6AF',
+        }}
+      >
+        Publicité ➔ Sponsorisé
+      </div>
+      
+      {/* Bandeau horizontal bas */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-20 backdrop-blur-sm bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center z-[25]"
+      >
+        <div
+          className="h-16 w-full max-w-5xl mx-4 border-2 border-dashed border-primary/40 rounded flex items-center justify-center"
+          style={{
+            background: 'rgba(20, 20, 30, 0.7)',
+            fontFamily: "'Valorant', sans-serif",
+            color: '#D7C6AF',
           }}
-          onMouseEnter={() => handlePointHover(point.id)}
-          onMouseLeave={handlePointLeave}
         >
-          {/* Point pulsant */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-50"></div>
-            <div className="relative w-4 h-4 bg-white rounded-full border-2 border-primary"></div>
+          <div className="flex flex-col items-center">
+            <div className="text-lg">Emplacement Publicitaire Premium</div>
+            <div className="text-xs">Bandeau Hero (1200×120)</div>
           </div>
-          
-          {/* Tooltip d'information */}
-          {activePoint === point.id && (
-            <div 
-              className="absolute z-30 bg-black/80 backdrop-blur-sm text-white p-3 rounded-lg shadow-lg"
-              style={{ 
-                minWidth: '180px', 
-                transform: 'translateX(-50%)',
-                left: '50%',
-                bottom: '150%'
-              }}
-            >
-              <div className="font-bold text-primary mb-1">{point.label}</div>
-              <div className="text-xs text-white/90">{point.desc}</div>
-              <div className="text-[10px] mt-2 text-white/60">
-                {isAdminMode ? 'Cliquez pour sélectionner' : 'Contactez-nous pour réserver'}
-              </div>
-              
-              {/* Flèche du tooltip */}
-              <div 
-                className="absolute w-3 h-3 bg-black/80 rotate-45"
-                style={{ 
-                  bottom: '-6px', 
-                  left: 'calc(50% - 6px)',
-                }}
-              ></div>
-            </div>
-          )}
         </div>
-      ))}
+      </div>
     </div>
   );
 };
