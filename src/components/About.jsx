@@ -60,6 +60,16 @@ const GamingShowcase = () => {
       tournamentPlayers: "5 vs 5",
       prizePool: "60 000 DH",
       color: "from-blue-500 to-indigo-600"
+    },
+    {
+      id: 4,
+      name: "FC 25",
+      image: "https://i.pinimg.com/originals/d6/f2/9e/d6f29e65d1c2d82a5011d0d0a8fb9f6f.jpg",
+      fontClass: "font-nightWarrior",
+      tournamentMode: "1v1 Swiss System",
+      tournamentPlayers: "Solo",
+      prizePool: "30 000 DH",
+      color: "from-green-500 to-blue-600"
     }
   ];
   

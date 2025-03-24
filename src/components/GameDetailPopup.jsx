@@ -80,6 +80,32 @@ const tournamentInfo = {
     color: "from-red-500 to-blue-700",
     icon: "🎯"
   },
+  "FC 25": {
+    format: "1v1 Swiss System + Playoffs",
+    description: "Le tournoi FC 25 est LA référence pour les fans de football virtuel au Maroc. Affrontez les meilleurs joueurs du pays dans des matchs palpitants où tactique, skill et sang-froid seront vos meilleurs atouts pour décrocher le titre de champion!",
+    requirements: [
+      "Âge minimum: 16 ans",
+      "Posséder le jeu FC 25 sur PlayStation 5 ou Xbox Series X",
+      "Apporter sa propre manette compatible",
+      "Connaissance du règlement officiel",
+      "Résidence marocaine obligatoire"
+    ],
+    rounds: [
+      { name: "Phase de groupes", date: "16-21 Juin 2025", description: "64 joueurs répartis en 16 groupes de 4. Les 2 premiers de chaque groupe se qualifient pour les playoffs." },
+      { name: "Seizièmes & Huitièmes", date: "28-29 Juin 2025", description: "32 joueurs qualifiés s'affrontent en matchs à élimination directe (BO3). Les 8 vainqueurs avancent à la phase LAN." },
+      { name: "Quarts & Demi-finales (LAN)", date: "7 Juillet 2025", description: "8 joueurs s'affrontent sur scène en format BO3. Commentaires en direct et analyse des experts." },
+      { name: "Grande Finale (LAN)", date: "14 Juillet 2025", description: "Finale spectaculaire en BO5 sur la scène principale du MGE, avec présentation spéciale des finalistes." }
+    ],
+    prizes: [
+      { position: "1ère place", amount: "15 000 DH", extra: "+ PS5 Pro + Qualification pour le tournoi international" },
+      { position: "2ème place", amount: "8 000 DH", extra: "+ Manette Pro Elite personnalisée" },
+      { position: "3ème place", amount: "5 000 DH", extra: "+ Abonnement Ultimate 1 an" },
+      { position: "4ème place", amount: "2 000 DH", extra: "" }
+    ],
+    rules: "• Tous les clubs et équipes nationales autorisés.\n• Mode de jeu: Matchs amicaux 1v1 en ligne (Online) ou sur PS5/Xbox (LAN).\n• Durée des mi-temps: 6 minutes.\n• Pause autorisée uniquement entre mi-temps.\n• Comportement anti-sportif sanctionné par disqualification immédiate.",
+    color: "from-green-500 to-blue-600",
+    icon: "⚽"
+  },
   "fc football": {
     format: "1v1 Swiss System + Playoffs",
     description: "Le FC Championship est LA référence des tournois de simulation de football au Maroc. Montrez votre maîtrise tactique, votre talent technique et votre sang-froid pour être couronné champion national!",

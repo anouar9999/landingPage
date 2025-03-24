@@ -236,7 +236,7 @@ const PassGamers = () => {
             >
               {/* Image de la main tenant la carte */}
               <img 
-                src="https://gamiusgroup.com/wp-content/uploads/2025/03/23222923-R%C3%A9cup%C3%A9r%C3%A9.png" 
+                src="/img/pass-gamers-card.png" 
                 alt="Pass Gamer Card" 
                 className="w-full h-auto rounded-lg shadow-2xl"
               />
