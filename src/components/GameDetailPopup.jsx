@@ -158,12 +158,18 @@ const scrollbarStyles = `
   
   .modal-open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
   }
   
   .popup-content {
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #D7C6AF rgba(10, 10, 20, 0.2);
+    max-height: 85vh;
+    position: relative;
+    overscroll-behavior: contain;
   }
 `;
 
@@ -175,6 +181,7 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
   const prizesRef = useRef(null);
   const rulesRef = useRef(null);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   
   // Injecter les styles de scrollbar au montage du composant
   useEffect(() => {
@@ -190,15 +197,92 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
   // Gérer le scroll lorsque le popup est ouvert ou fermé
   useEffect(() => {
     if (isOpen) {
+      // Sauvegarder la position de défilement actuelle
+      setScrollPosition(window.scrollY);
+      
       // Bloquer le scroll de la page quand le popup est ouvert
       document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '6px'; // Compenser la barre de défilement
+      document.body.classList.add('modal-open');
+      document.body.style.top = `-${scrollPosition}px`;
     } else {
       // Réactiver le scroll quand le popup est fermé
       document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      
+      // Restaurer la position de défilement
+      window.scrollTo(0, scrollPosition);
       setAnimationComplete(false);
     }
+  }, [isOpen, scrollPosition]);
+
+  // Gestionnaire pour contenir le défilement à l'intérieur du popup
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (!contentRef.current || !contentRef.current.contains(e.target)) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+      const isScrollingUp = e.deltaY < 0;
+      const isScrollingDown = e.deltaY > 0;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      
+      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
+      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+        e.preventDefault();
+      }
+    };
+
+    // Gestionnaire pour les événements tactiles
+    const handleTouchMove = (e) => {
+      if (!contentRef.current || !contentRef.current.contains(e.target)) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+      const touch = e.touches[0];
+      
+      // Stocker la position tactile actuelle et précédente
+      if (!contentRef.current.lastTouchY) {
+        contentRef.current.lastTouchY = touch.clientY;
+        return;
+      }
+      
+      const deltaY = contentRef.current.lastTouchY - touch.clientY;
+      contentRef.current.lastTouchY = touch.clientY;
+      
+      const isScrollingUp = deltaY < 0;
+      const isScrollingDown = deltaY > 0;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      
+      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
+      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+        e.preventDefault();
+      }
+    };
+    
+    const handleTouchEnd = () => {
+      if (contentRef.current) {
+        contentRef.current.lastTouchY = undefined;
+      }
+    };
+    
+    // Ajouter les gestionnaires d'événements
+    const content = contentRef.current;
+    if (content && isOpen) {
+      content.addEventListener('wheel', handleWheel, { passive: false });
+      content.addEventListener('touchmove', handleTouchMove, { passive: false });
+      content.addEventListener('touchend', handleTouchEnd);
+      content.addEventListener('touchcancel', handleTouchEnd);
+    }
+    
+    return () => {
+      if (content) {
+        content.removeEventListener('wheel', handleWheel);
+        content.removeEventListener('touchmove', handleTouchMove);
+        content.removeEventListener('touchend', handleTouchEnd);
+        content.removeEventListener('touchcancel', handleTouchEnd);
+      }
+    };
   }, [isOpen]);
   
   // Animation à l'ouverture et fermeture
@@ -361,8 +445,9 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
     >
       <div 
         ref={contentRef}
-        className="relative w-full max-w-5xl max-h-[85vh] overflow-auto custom-scrollbar popup-content bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
+        className="relative w-full max-w-5xl overflow-auto custom-scrollbar popup-content bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
+        style={{ overscrollBehavior: 'contain' }}
       >
         {/* Header avec image et titre */}
         <div className="relative h-48 overflow-hidden rounded-t-lg">

@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useEffect, useRef, useState } from "react";
 import VideoPreview from "./VideoPreview";
+import HeroAdOverlay from "./HeroAdOverlay";
 import clsx from "clsx";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,7 +116,12 @@ const Hero = () => {
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
   return (
-    <div id="hero" className="relative h-screen w-full overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-t from-[#0a0a0a] to-[#080818] border-4 border-transparent">
+      <div className="absolute inset-0 overflow-hidden z-0">
+        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-indigo-700/20 blur-[100px]"></div>
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-primary/10 blur-[100px]"></div>
+      </div>
+
       {loading && (
         <div className="absolute z-50 flex h-screen w-full items-center justify-center bg-violet-50">
           <div className="three-body">
@@ -196,6 +202,9 @@ const Hero = () => {
             />
           ))}
         </button>
+
+        {/* HeroAdOverlay */}
+        <HeroAdOverlay />
 
         {/* Content */}
         <div className="absolute left-0 top-0 z-40 h-full w-full">

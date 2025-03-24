@@ -6,11 +6,56 @@ import AnimatedTitle from './AnimatedTitle';
 // Initialiser les plugins GSAP
 gsap.registerPlugin(ScrollTrigger);
 
+// Styles CSS pour la modal
+const modalStyles = `
+  .modal-content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    overscroll-behavior: contain;
+    max-height: 85vh;
+  }
+  
+  .modal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .modal-content::-webkit-scrollbar-track {
+    background: rgba(10, 10, 20, 0.2);
+    border-radius: 10px;
+  }
+  
+  .modal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #D7C6AF 0%, rgba(215, 198, 175, 0.5) 100%);
+    border-radius: 10px;
+    background-clip: content-box;
+  }
+  
+  .modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const PassGamers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState('conditions');
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
+  const modalContentRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  // Injecter les styles de la modal
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = modalStyles;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
 
   // Ajout d'un console.log pour débogage
   useEffect(() => {
@@ -134,15 +179,98 @@ const PassGamers = () => {
 
   // Ouvrir le modal d'inscription
   const openModal = () => {
-    setIsModalOpen(true);
+    // Sauvegarder la position de défilement actuelle
+    setScrollPosition(window.scrollY);
+    
+    // Bloquer le scroll de la page
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
+    document.body.style.top = `-${scrollPosition}px`;
+    
+    setIsModalOpen(true);
   };
 
   // Fermer le modal d'inscription
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'auto';
+    
+    // Réactiver le scroll
+    document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    
+    // Restaurer la position de défilement
+    window.scrollTo(0, scrollPosition);
   };
+
+  // Gérer le défilement à l'intérieur du modal
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (!modalContentRef.current || !modalContentRef.current.contains(e.target)) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = modalContentRef.current;
+      const isScrollingUp = e.deltaY < 0;
+      const isScrollingDown = e.deltaY > 0;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      
+      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
+      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+        e.preventDefault();
+      }
+    };
+
+    // Gestionnaire pour les événements tactiles
+    const handleTouchMove = (e) => {
+      if (!modalContentRef.current || !modalContentRef.current.contains(e.target)) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = modalContentRef.current;
+      const touch = e.touches[0];
+      
+      // Stocker la position tactile actuelle et précédente
+      if (!modalContentRef.current.lastTouchY) {
+        modalContentRef.current.lastTouchY = touch.clientY;
+        return;
+      }
+      
+      const deltaY = modalContentRef.current.lastTouchY - touch.clientY;
+      modalContentRef.current.lastTouchY = touch.clientY;
+      
+      const isScrollingUp = deltaY < 0;
+      const isScrollingDown = deltaY > 0;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      
+      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
+      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+        e.preventDefault();
+      }
+    };
+    
+    const handleTouchEnd = () => {
+      if (modalContentRef.current) {
+        modalContentRef.current.lastTouchY = undefined;
+      }
+    };
+    
+    // Ajouter les gestionnaires d'événements
+    const content = modalContentRef.current;
+    if (content && isModalOpen) {
+      content.addEventListener('wheel', handleWheel, { passive: false });
+      content.addEventListener('touchmove', handleTouchMove, { passive: false });
+      content.addEventListener('touchend', handleTouchEnd);
+      content.addEventListener('touchcancel', handleTouchEnd);
+    }
+    
+    return () => {
+      if (content) {
+        content.removeEventListener('wheel', handleWheel);
+        content.removeEventListener('touchmove', handleTouchMove);
+        content.removeEventListener('touchend', handleTouchEnd);
+        content.removeEventListener('touchcancel', handleTouchEnd);
+      }
+    };
+  }, [isModalOpen]);
 
   // Changer l'onglet du modal
   const changeTab = (tab) => {
@@ -152,8 +280,9 @@ const PassGamers = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-br from-[#0a0a20] to-[#1a0a2e] overflow-hidden"
+      className="relative py-16 md:py-24 bg-gradient-to-br from-[#0a0a20] to-[#1a0a2e] overflow-hidden border-4 border-red-500"
       id="pass-gamers"
+      style={{ minHeight: '100vh', zIndex: 10 }}
     >
       {/* Fond avec effets lumineux */}
       <div className="absolute inset-0 w-full h-full">
@@ -236,9 +365,14 @@ const PassGamers = () => {
             >
               {/* Image de la main tenant la carte */}
               <img 
-                src="/img/pass-gamers-card.png" 
+                src="/img/pass-gamers-card.png.png" 
                 alt="Pass Gamer Card" 
                 className="w-full h-auto rounded-lg shadow-2xl"
+                onError={(e) => {
+                  console.error('Image failed to load:', e);
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/400x250?text=Pass+Gamer+Card';
+                }}
               />
               
               {/* Overlay d'effet holographique */}
@@ -301,7 +435,11 @@ const PassGamers = () => {
             </div>
             
             {/* Contenu des onglets */}
-            <div className="p-6 text-white max-h-[70vh] overflow-y-auto">
+            <div 
+              ref={modalContentRef}
+              className="p-6 text-white max-h-[70vh] overflow-y-auto modal-content"
+              style={{ overscrollBehavior: 'contain' }}
+            >
               {/* Conditions */}
               {modalTab === 'conditions' && (
                 <div className="space-y-6">
