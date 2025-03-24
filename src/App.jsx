@@ -10,9 +10,12 @@ import Footer from "./components/Footer";
 import PassGamers from "./components/PassGamers";
 import AdController from "./components/AdController";
 import AdSpot from "./components/AdSpot";
+import HeroAdOverlay from "./components/HeroAdOverlay";
 import FooterAd from "./components/FooterAd";
 import PopupAd from "./components/PopupAd";
-import { AdProvider, useAds } from "./context/AdContext";
+import { AdContextProvider, useAds } from "./context/AdContext";
+import AdAdmin from './components/AdAdmin';
+import './components/debug.css';
 
 // Composant qui utilise le contexte pour les emplacements publicitaires
 const AdSpots = () => {
@@ -145,9 +148,13 @@ const SectionAdSpot = ({ type, width, height, className }) => {
   );
 };
 
+/**
+ * Composant principal de l'application
+ */
 function AppContent() {
   const lenisRef = useRef();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showAds } = useAds();
 
   // Fonction pour détecter si un modal est ouvert
   const checkModalState = () => {
@@ -175,7 +182,7 @@ function AppContent() {
     // Initialize Lenis smooth scrolling
     lenisRef.current = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: "vertical",
       gestureDirection: "vertical",
       smooth: true,
@@ -204,107 +211,96 @@ function AppContent() {
   }, [isModalOpen]);
 
   return (
-    <main className="relative min-h-screen w-screen overflow-x-hidden">
+    <div className="relative min-h-screen w-screen overflow-x-hidden bg-background text-white">
       <NavBar />
       
-      {/* Emplacements publicitaires fixes */}
-      <AdSpots />
-      
-      <Hero />
-      {/* Séparateur subtil au lieu d'une bande visible */}
-      <div className="w-full h-px bg-gray-300/10" />
-      
-      <SectionAdSpot 
-        type="After Hero"
-        width="728px"
-        height="90px"
-        className="mx-auto my-5"
-      />
-      
-      <About />
-      <div className="w-full h-px bg-gray-300/10" />
-      
-      <SectionAdSpot 
-        type="After About"
-        width="300px"
-        height="250px"
-        className="mx-auto my-5"
-      />
-      
-      <PassGamers />
-      <div className="w-full h-px bg-gray-300/10" />
-      
-      <SectionAdSpot 
-        type="After PassGamers"
-        width="728px"
-        height="90px"
-        className="mx-auto my-5"
-      />
-      
-      <Tri9lGlory />
-
-      <SectionAdSpot 
-        type="After Tri9lGlory"
-        width="300px"
-        height="250px"
-        className="mx-auto my-5"
-      />
-
-      {/* PrizePool Section */}
-      <div style={{ marginBottom: "-2px" }}>
-        <div className="relative">
-          <PrizePool />
-          <div
-            className="absolute bottom-0 left-0 right-0"
-            style={{
-              height: "150px",
-              background:
-                "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(10, 10, 10))",
-              transform: "translateY(2px)",
-            }}
-          />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          {/* Hero Section */}
+          <Hero />
+          {showAds && <HeroAdOverlay />}
+          
+          {/* Séparateur subtil */}
+          <div className="w-full h-px bg-gray-300/10" />
+          
+          {/* Bannière après Hero */}
+          {showAds && <AdSpot 
+            width="728" 
+            height="90" 
+            className="mx-auto my-5" 
+            spotId="inContent"
+            data-ad-spot="inContent"
+          />}
+          
+          {/* About Section */}
+          <About />
+          
+          {/* Séparateur subtil */}
+          <div className="w-full h-px bg-gray-300/10" />
+          
+          {/* Bannière latérale */}
+          {showAds && <AdSpot 
+            width="300" 
+            height="600" 
+            className="fixed right-4 top-1/4 hidden lg:block" 
+            spotId="sidebar"
+            data-ad-spot="sidebar"
+          />}
+          
+          {/* PassGamers Section */}
+          <PassGamers />
+          
+          {/* Séparateur subtil */}
+          <div className="w-full h-px bg-gray-300/10" />
+          
+          {/* Tri9lGlory Section */}
+          <Tri9lGlory />
+          
+          {/* PrizePool Section */}
+          <div style={{ marginBottom: "-2px" }}>
+            <div className="relative">
+              <PrizePool />
+              <div
+                className="absolute bottom-0 left-0 right-0"
+                style={{
+                  height: "150px",
+                  background:
+                    "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(10, 10, 10))",
+                  transform: "translateY(2px)",
+                }}
+              />
+            </div>
+          </div>
+          
+          {/* Contact Section */}
+          <Contact />
+          
+          {/* Footer Ad Before Footer */}
+          {showAds && <FooterAd />}
+          
+          {/* Footer */}
+          <Footer />
         </div>
       </div>
-
-      <SectionAdSpot 
-        type="After PrizePool"
-        width="728px"
-        height="90px"
-        className="mx-auto my-5"
-      />
-
-      {/* Contact Section */}
-      <div>
-        <Contact />
-      </div>
-
-      <SectionAdSpot 
-        type="After Contact"
-        width="970px"
-        height="90px"
-        className="mx-auto my-5"
-      />
-
-      {/* Footer Ad Section */}
-      <FooterAd />
-
-      <Footer />
       
-      {/* Popup publicitaire après délai */}
-      <PopupAd />
+      {/* Popup Ad */}
+      {showAds && <PopupAd />}
       
-      {/* Contrôleur des publicités */}
+      {/* Controls */}
       <AdController />
-    </main>
+      <AdAdmin />
+    </div>
   );
 }
 
-// Composant App avec le provider
+/**
+ * Wrapper de l'application avec le Provider d'annonces
+ */
 function App() {
   return (
-    <AdProvider>
+    <AdContextProvider>
       <AppContent />
-    </AdProvider>
+    </AdContextProvider>
   );
 }
 
