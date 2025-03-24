@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 import PassGamers from "./components/PassGamers";
 import AdController from "./components/AdController";
 import AdSpot from "./components/AdSpot";
-import HeroAdOverlay from "./components/HeroAdOverlay";
 import FooterAd from "./components/FooterAd";
 import PopupAd from "./components/PopupAd";
 import { AdContextProvider, useAds } from "./context/AdContext";
@@ -216,9 +215,8 @@ function AppContent() {
       
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          {/* Hero Section */}
+          {/* Hero Section - Restauré comme avant */}
           <Hero />
-          {showAds && <HeroAdOverlay />}
           
           {/* Séparateur subtil */}
           <div className="w-full h-px bg-gray-300/10" />
