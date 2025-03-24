@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const PassGamers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState('conditions');
+  const modalContentRef = useRef(null);
   
   // Ouvrir le modal d'inscription
   const openModal = () => {
@@ -20,6 +21,68 @@ const PassGamers = () => {
   const changeTab = (tab) => {
     setModalTab(tab);
   };
+  
+  // Gérer le défilement à l'intérieur du modal
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (!modalContentRef.current || !modalContentRef.current.contains(e.target)) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = modalContentRef.current;
+      const isScrollingUp = e.deltaY < 0;
+      const isScrollingDown = e.deltaY > 0;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      
+      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
+      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+        e.preventDefault();
+      }
+    };
+
+    // Ajouter les gestionnaires d'événements
+    const content = modalContentRef.current;
+    if (content && isModalOpen) {
+      content.addEventListener('wheel', handleWheel, { passive: false });
+    }
+    
+    return () => {
+      if (content) {
+        content.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [isModalOpen]);
+  
+  // Injecter les styles globaux pour la modale
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = `
+      .modal-open {
+        overflow: hidden !important;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .modal-content::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      .modal-content::-webkit-scrollbar-track {
+        background: rgba(10, 10, 20, 0.2);
+        border-radius: 10px;
+      }
+      
+      .modal-content::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #ff3d08 0%, rgba(255, 61, 8, 0.5) 100%);
+        border-radius: 10px;
+      }
+    `;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
 
   return (
     <section 
@@ -105,12 +168,12 @@ const PassGamers = () => {
             >
               {/* Image de la carte */}
               <img 
-                src="/img/pass-gamers-card.png.png" 
+                src="/img/pass-gamers-card.png" 
                 alt="Pass Gamer Card" 
                 className="w-full h-auto rounded-lg shadow-2xl"
                 onError={(e) => {
                   console.error('Image failed to load:', e);
-                  e.target.src = 'https://via.placeholder.com/400x250?text=Pass+Gamer+Card';
+                  e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250" fill="none"%3E%3Crect width="400" height="250" fill="%23ff3d08"%3E%3C/rect%3E%3Ctext x="50%25" y="50%25" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle"%3EPass Gamer Card%3C/text%3E%3C/svg%3E';
                 }}
               />
               
@@ -174,8 +237,9 @@ const PassGamers = () => {
             
             {/* Contenu des onglets */}
             <div 
-              className="p-6 text-white max-h-[70vh] overflow-y-auto"
+              className="p-6 text-white max-h-[70vh] overflow-y-auto modal-content"
               style={{ overscrollBehavior: 'contain' }}
+              ref={modalContentRef}
             >
               {/* Conditions */}
               {modalTab === 'conditions' && (
