@@ -1,276 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import AnimatedTitle from './AnimatedTitle';
-
-// Initialiser les plugins GSAP
-gsap.registerPlugin(ScrollTrigger);
-
-// Styles CSS pour la modal
-const modalStyles = `
-  .modal-content {
-    overflow-y: auto;
-    scrollbar-width: thin;
-    overscroll-behavior: contain;
-    max-height: 85vh;
-  }
-  
-  .modal-content::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .modal-content::-webkit-scrollbar-track {
-    background: rgba(10, 10, 20, 0.2);
-    border-radius: 10px;
-  }
-  
-  .modal-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #D7C6AF 0%, rgba(215, 198, 175, 0.5) 100%);
-    border-radius: 10px;
-    background-clip: content-box;
-  }
-  
-  .modal-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-  }
-`;
+import React, { useState } from 'react';
 
 const PassGamers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState('conditions');
-  const sectionRef = useRef(null);
-  const cardRef = useRef(null);
-  const modalContentRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  // Injecter les styles de la modal
-  useEffect(() => {
-    const styleElement = document.createElement('style');
-    styleElement.innerHTML = modalStyles;
-    document.head.appendChild(styleElement);
-    
-    return () => {
-      document.head.removeChild(styleElement);
-    };
-  }, []);
-
-  // Ajout d'un console.log pour débogage
-  useEffect(() => {
-    console.log('PassGamers component mounted! Debugging GSAP:', { 
-      gsap: !!gsap, 
-      ScrollTrigger: !!ScrollTrigger,
-      sectionRef: !!sectionRef.current,
-      cardRef: !!cardRef.current
-    });
-    
-    // Animation de la carte et des éléments au scroll
-    if (sectionRef.current && cardRef.current) {
-      // Animation du titre et du texte
-      try {
-        gsap.fromTo(
-          '.pass-text-content',
-          { 
-            opacity: 0,
-            y: 50
-          },
-          { 
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 70%',
-            }
-          }
-        );
-
-        // Animation de la carte
-        gsap.fromTo(
-          cardRef.current,
-          { 
-            opacity: 0,
-            scale: 0.8,
-            rotationY: -15
-          },
-          { 
-            opacity: 1,
-            scale: 1,
-            rotationY: 0,
-            duration: 1.2,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 60%',
-            }
-          }
-        );
-
-        // Animation des avantages
-        gsap.fromTo(
-          '.pass-feature',
-          { 
-            opacity: 0,
-            x: -30
-          },
-          { 
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            stagger: 0.15,
-            scrollTrigger: {
-              trigger: '.pass-features',
-              start: 'top 75%',
-            }
-          }
-        );
-      } catch (error) {
-        console.error('Error in GSAP animations:', error);
-      }
-    }
-  }, []);
-
-  // Effet de survol sur la carte
-  useEffect(() => {
-    if (cardRef.current) {
-      const card = cardRef.current;
-      
-      const handleMouseMove = (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
-        gsap.to(card, {
-          rotateX: rotateX,
-          rotateY: rotateY,
-          duration: 0.5,
-          ease: 'power2.out',
-          transformPerspective: 1000,
-          transformStyle: 'preserve-3d'
-        });
-      };
-      
-      const handleMouseLeave = () => {
-        gsap.to(card, {
-          rotateX: 0,
-          rotateY: 0,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      };
-      
-      card.addEventListener('mousemove', handleMouseMove);
-      card.addEventListener('mouseleave', handleMouseLeave);
-      
-      return () => {
-        card.removeEventListener('mousemove', handleMouseMove);
-        card.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }
-  }, []);
-
+  
   // Ouvrir le modal d'inscription
   const openModal = () => {
-    // Sauvegarder la position de défilement actuelle
-    setScrollPosition(window.scrollY);
-    
-    // Bloquer le scroll de la page
-    document.body.style.overflow = 'hidden';
     document.body.classList.add('modal-open');
-    document.body.style.top = `-${scrollPosition}px`;
-    
     setIsModalOpen(true);
   };
 
   // Fermer le modal d'inscription
   const closeModal = () => {
-    setIsModalOpen(false);
-    
-    // Réactiver le scroll
-    document.body.style.overflow = '';
     document.body.classList.remove('modal-open');
-    document.body.style.top = '';
-    
-    // Restaurer la position de défilement
-    window.scrollTo(0, scrollPosition);
+    setIsModalOpen(false);
   };
-
-  // Gérer le défilement à l'intérieur du modal
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (!modalContentRef.current || !modalContentRef.current.contains(e.target)) return;
-      
-      const { scrollTop, scrollHeight, clientHeight } = modalContentRef.current;
-      const isScrollingUp = e.deltaY < 0;
-      const isScrollingDown = e.deltaY > 0;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      
-      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
-      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
-        e.preventDefault();
-      }
-    };
-
-    // Gestionnaire pour les événements tactiles
-    const handleTouchMove = (e) => {
-      if (!modalContentRef.current || !modalContentRef.current.contains(e.target)) return;
-      
-      const { scrollTop, scrollHeight, clientHeight } = modalContentRef.current;
-      const touch = e.touches[0];
-      
-      // Stocker la position tactile actuelle et précédente
-      if (!modalContentRef.current.lastTouchY) {
-        modalContentRef.current.lastTouchY = touch.clientY;
-        return;
-      }
-      
-      const deltaY = modalContentRef.current.lastTouchY - touch.clientY;
-      modalContentRef.current.lastTouchY = touch.clientY;
-      
-      const isScrollingUp = deltaY < 0;
-      const isScrollingDown = deltaY > 0;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      
-      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
-      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
-        e.preventDefault();
-      }
-    };
-    
-    const handleTouchEnd = () => {
-      if (modalContentRef.current) {
-        modalContentRef.current.lastTouchY = undefined;
-      }
-    };
-    
-    // Ajouter les gestionnaires d'événements
-    const content = modalContentRef.current;
-    if (content && isModalOpen) {
-      content.addEventListener('wheel', handleWheel, { passive: false });
-      content.addEventListener('touchmove', handleTouchMove, { passive: false });
-      content.addEventListener('touchend', handleTouchEnd);
-      content.addEventListener('touchcancel', handleTouchEnd);
-    }
-    
-    return () => {
-      if (content) {
-        content.removeEventListener('wheel', handleWheel);
-        content.removeEventListener('touchmove', handleTouchMove);
-        content.removeEventListener('touchend', handleTouchEnd);
-        content.removeEventListener('touchcancel', handleTouchEnd);
-      }
-    };
-  }, [isModalOpen]);
 
   // Changer l'onglet du modal
   const changeTab = (tab) => {
@@ -279,10 +23,9 @@ const PassGamers = () => {
 
   return (
     <section 
-      ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-br from-[#0a0a20] to-[#1a0a2e] overflow-hidden border-4 border-red-500"
+      className="relative py-16 md:py-24 bg-gradient-to-br from-[#0a0a20] to-[#1a0a2e] overflow-hidden"
       id="pass-gamers"
-      style={{ minHeight: '100vh', zIndex: 10 }}
+      style={{ position: 'relative', zIndex: 10 }}
     >
       {/* Fond avec effets lumineux */}
       <div className="absolute inset-0 w-full h-full">
@@ -295,15 +38,14 @@ const PassGamers = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
           {/* Colonne gauche - Texte */}
           <div className="w-full lg:w-1/2 text-white">
-            <h5 className="pass-text-content font-valorant text-primary text-sm md:text-base mb-3 tracking-wider">
-              Section 1 : Pass Gamers – Votre Passeport vers l'Élite
+            <h5 className="font-valorant text-primary text-sm md:text-base mb-3 tracking-wider">
+              Pass Gamers – Votre Passeport vers l'Élite
             </h5>
             
-            <div className="pass-text-content mb-8">
-              <AnimatedTitle 
-                title="Devenez un Gamer <b>V.I.P.</b> – <b>Décuplez</b> Votre Expérience !"
-                containerClass="text-white font-nightWarrior text-3xl sm:text-4xl md:text-5xl mb-6"
-              />
+            <div className="mb-8">
+              <h2 className="text-white font-nightWarrior text-3xl sm:text-4xl md:text-5xl mb-6">
+                Devenez un Gamer <span className="text-primary">V.I.P.</span> – <span className="text-primary">Décuplez</span> Votre Expérience !
+              </h2>
               
               <p className="text-gray-300 text-lg mb-6">
                 Rejoignez un cercle privilégié et profitez d'avantages exclusifs, de récompenses uniques… et bien plus encore !
@@ -311,8 +53,8 @@ const PassGamers = () => {
             </div>
 
             {/* Liste des avantages */}
-            <div className="pass-features space-y-5 mb-10">
-              <div className="pass-feature flex items-start gap-4">
+            <div className="space-y-5 mb-10">
+              <div className="flex items-start gap-4">
                 <div className="text-3xl text-primary">🏆</div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Badges Édition Limitée</h3>
@@ -320,7 +62,7 @@ const PassGamers = () => {
                 </div>
               </div>
               
-              <div className="pass-feature flex items-start gap-4">
+              <div className="flex items-start gap-4">
                 <div className="text-3xl text-primary">💎</div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Avantages Concrets</h3>
@@ -328,25 +70,25 @@ const PassGamers = () => {
                 </div>
               </div>
               
-              <div className="pass-feature flex items-start gap-4">
+              <div className="flex items-start gap-4">
                 <div className="text-3xl text-primary">🚀</div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Level Up Permanent</h3>
-                  <p className="text-gray-300">Gagnez des points à chaque action quand vous participez à un tournoi et débloquez des paliers légendaires.</p>
+                  <p className="text-gray-300">Gagnez des points à chaque action et débloquez des paliers légendaires.</p>
                 </div>
               </div>
               
-              <div className="pass-feature flex items-start gap-4">
+              <div className="flex items-start gap-4">
                 <div className="text-3xl text-primary">🎁</div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Contenu Exclusif</h3>
-                  <p className="text-gray-300">Guides stratégiques et cadeaux surprises chaque mois, des promotions bancaires et sur les produits gaming.</p>
+                  <p className="text-gray-300">Guides stratégiques et cadeaux surprises chaque mois.</p>
                 </div>
               </div>
             </div>
 
             {/* CTA */}
-            <div className="pass-text-content">
+            <div>
               <button 
                 onClick={openModal}
                 className="bg-primary text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-primary/80 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
@@ -359,18 +101,15 @@ const PassGamers = () => {
           {/* Colonne droite - Carte */}
           <div className="w-full lg:w-1/2 flex justify-center items-center">
             <div 
-              ref={cardRef}
-              className="relative max-w-md transform-gpu will-change-transform"
-              style={{ transformStyle: 'preserve-3d' }}
+              className="relative max-w-md transform hover:scale-105 transition-transform duration-300"
             >
-              {/* Image de la main tenant la carte */}
+              {/* Image de la carte */}
               <img 
                 src="/img/pass-gamers-card.png.png" 
                 alt="Pass Gamer Card" 
                 className="w-full h-auto rounded-lg shadow-2xl"
                 onError={(e) => {
                   console.error('Image failed to load:', e);
-                  e.target.onerror = null;
                   e.target.src = 'https://via.placeholder.com/400x250?text=Pass+Gamer+Card';
                 }}
               />
@@ -378,13 +117,12 @@ const PassGamers = () => {
               {/* Overlay d'effet holographique */}
               <div 
                 className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-primary/20 rounded-lg mix-blend-overlay pointer-events-none"
-                style={{ transform: 'translateZ(10px)' }}
               ></div>
               
               {/* Points lumineux sur la carte */}
               <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-              <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -403,7 +141,7 @@ const PassGamers = () => {
           <div className="relative bg-[#0a0a20] border border-primary/30 rounded-2xl overflow-hidden w-full max-w-3xl mx-4 shadow-2xl shadow-primary/20 transform transition-all">
             {/* En-tête du modal */}
             <div className="flex justify-between items-center bg-gradient-to-r from-[#1a0a2e] to-[#0a0a20] px-6 py-4 border-b border-primary/20">
-              <h2 className="text-2xl font-bold text-white font-nightWarrior">Pass Gamer V.I.P.</h2>
+              <h2 className="text-2xl font-bold text-white">Pass Gamer V.I.P.</h2>
               <button 
                 onClick={closeModal}
                 className="text-gray-400 hover:text-white text-2xl"
@@ -436,8 +174,7 @@ const PassGamers = () => {
             
             {/* Contenu des onglets */}
             <div 
-              ref={modalContentRef}
-              className="p-6 text-white max-h-[70vh] overflow-y-auto modal-content"
+              className="p-6 text-white max-h-[70vh] overflow-y-auto"
               style={{ overscrollBehavior: 'contain' }}
             >
               {/* Conditions */}
@@ -457,26 +194,13 @@ const PassGamers = () => {
                   
                   <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
                     <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
-                      <span className="text-primary">🔄</span> Procédure d'inscription
-                    </h3>
-                    <ol className="list-decimal list-inside space-y-2 text-gray-300">
-                      <li>Remplir le formulaire d'inscription avec vos informations personnelles</li>
-                      <li>Vérifier votre adresse email via le lien de confirmation</li>
-                      <li>Compléter votre profil de gamer avec vos jeux préférés et niveau</li>
-                      <li>Recevoir votre Pass Gamer numérique immédiatement</li>
-                      <li>Votre carte physique sera livrée sous 7 à 10 jours ouvrables</li>
-                    </ol>
-                  </div>
-                  
-                  <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                    <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
                       <span className="text-primary">⚠️</span> Importantes conditions
                     </h3>
                     <ul className="list-disc list-inside space-y-2 text-gray-300">
                       <li>Le Pass Gamer est strictement personnel et non-transférable</li>
-                      <li>L'activité du compte est requise pour maintenir les avantages (participation à au moins un tournoi tous les 3 mois)</li>
-                      <li>Tout comportement antisportif ou non conforme à notre code de conduite peut entraîner la suspension ou révocation des privilèges</li>
-                      <li>Le programme Pass Gamer peut être modifié ou discontinué avec un préavis de 30 jours</li>
+                      <li>L'activité du compte est requise pour maintenir les avantages</li>
+                      <li>Tout comportement antisportif peut entraîner la suspension des privilèges</li>
+                      <li>Le programme Pass Gamer peut être modifié avec un préavis de 30 jours</li>
                     </ul>
                   </div>
                 </div>
@@ -502,10 +226,6 @@ const PassGamers = () => {
                         <span className="text-primary">✓</span>
                         <span>Trophées virtuels pour chaque tournoi terminé</span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Médailles physiques pour les compétitions majeures</span>
-                      </li>
                     </ul>
                   </div>
                   
@@ -525,62 +245,6 @@ const PassGamers = () => {
                       <li className="flex items-start gap-2">
                         <span className="text-primary">✓</span>
                         <span>1 session de coaching gratuite par trimestre</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Places VIP lors des événements physiques</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Ligne d'assistance prioritaire</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                    <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
-                      <span className="text-primary">🚀</span> Système de Progression
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Points XP pour chaque participation à un tournoi</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Bonus pour victoires et top 3</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>5 niveaux de progression avec avantages croissants</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Statut légendaire après 1 an d'activité régulière</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                    <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
-                      <span className="text-primary">🎁</span> Contenu & Cadeaux Exclusifs
-                    </h3>
-                    <ul className="space-y-3 text-gray-300">
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Guide stratégique mensuel pour les jeux populaires</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Box surprise trimestrielle avec goodies gaming</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Offres exclusives des banques partenaires (cartes bancaires gaming)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">✓</span>
-                        <span>Accès prioritaire aux bêta-tests de jeux</span>
                       </li>
                     </ul>
                   </div>
@@ -626,55 +290,6 @@ const PassGamers = () => {
                         className="w-full px-4 py-2 rounded-lg bg-[#1a0a2e] border border-primary/30 text-white focus:outline-none focus:border-primary"
                         placeholder="+212 XXXXXXXXX"
                       />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-gray-300 mb-1">Date de naissance</label>
-                      <input 
-                        type="date" 
-                        className="w-full px-4 py-2 rounded-lg bg-[#1a0a2e] border border-primary/30 text-white focus:outline-none focus:border-primary"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-gray-300 mb-1">Jeux préférés</label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game1" className="mr-2" />
-                          <label htmlFor="game1">Valorant</label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game2" className="mr-2" />
-                          <label htmlFor="game2">Free Fire</label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game3" className="mr-2" />
-                          <label htmlFor="game3">Street Fighter</label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game4" className="mr-2" />
-                          <label htmlFor="game4">Tekken 8</label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game5" className="mr-2" />
-                          <label htmlFor="game5">PES 2024</label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="checkbox" id="game6" className="mr-2" />
-                          <label htmlFor="game6">Autres</label>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-gray-300 mb-1">Niveau</label>
-                      <select className="w-full px-4 py-2 rounded-lg bg-[#1a0a2e] border border-primary/30 text-white focus:outline-none focus:border-primary">
-                        <option value="">Sélectionnez votre niveau</option>
-                        <option value="debutant">Débutant</option>
-                        <option value="intermediaire">Intermédiaire</option>
-                        <option value="avance">Avancé</option>
-                        <option value="pro">Pro / Compétitif</option>
-                      </select>
                     </div>
                     
                     <div className="flex items-start mt-4">

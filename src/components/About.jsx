@@ -1,9 +1,11 @@
+import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useRef, useState, useEffect } from "react";
 import AnimatedTitle from "./AnimatedTitle";
 import GameDetailPopup from "./GameDetailPopup";
+import GamePanelAd from "./GamePanelAd";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -210,97 +212,197 @@ const GamingShowcase = () => {
       <div id="games-section" className="relative w-full py-8">
         {/* Desktop/Tablet Version - Fixed layout with alternating margins */}
         <div className="hidden md:flex w-full h-[600px] px-4 md:px-8 lg:px-16 gap-6 lg:gap-10 justify-center items-start">
-          {Games.map((game, index) => (
-            <div
-              key={game.id}
-              className={`desktop-game-panel game-panel-clickable relative flex-1 ${
-                index % 2 === 0 ? "mt-0" : "mt-16"
-              } h-[450px] lg:h-[500px] max-w-[270px] lg:max-w-[350px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 hover:scale-105 group`}
-              onClick={() => handleGameClick(game)}
-            >
-              {/* Background image */}
-              <img
-                src={game.image}
-                alt={game.name}
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-              />
-              
-              {/* Bottom gradient overlay with game-specific colors */}
-              <div 
-                className={`absolute left-0 right-0 bottom-0 pointer-events-none h-2/3 bg-gradient-to-t ${game.color}`}
-                style={{
-                  opacity: 0.9,
-                  background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)`
-                }}
-              ></div>
-              
-              {/* Game name badge */}
-              <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <h2 className={`text-white uppercase ${game.fontClass} text-sm lg:text-base`}>{game.name}</h2>
-              </div>
-              
-              {/* Tournament info */}
-              <div className="absolute bottom-0 left-0 w-full px-6 pb-8 text-center">
-                <div className="flex flex-col gap-2">
-                  <p className="text-white text-sm lg:text-base opacity-90 bg-black/30 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
-                  <p className="text-primary font-bold text-base lg:text-lg bg-white/10 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
-                </div>
-                
-                {/* Call to action button */}
-                <div className="mt-4 transition-transform duration-300 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
-                  <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">Détails</button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile Version - Pinned section with horizontal scrolling */}
-        <div ref={sectionRef} className="md:hidden relative w-full h-[520px]">
-          <div ref={trackRef} className="absolute top-0 left-0 flex pl-4 pr-16">
-            {Games.map((game, index) => (
+          {Games.map((game, index) => {
+            if (index === 2) {
+              return (
+                <React.Fragment key={`ad-desktop-${index}`}>
+                  <GamePanelAd index={index} />
+                  <div
+                    key={game.id}
+                    className={`desktop-game-panel game-panel-clickable relative flex-1 ${
+                      index % 2 === 0 ? "mt-0" : "mt-16"
+                    } h-[450px] lg:h-[500px] max-w-[270px] lg:max-w-[350px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 hover:scale-105 group`}
+                    onClick={() => handleGameClick(game)}
+                  >
+                    {/* Background image */}
+                    <img
+                      src={game.image}
+                      alt={game.name}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    {/* Bottom gradient overlay with game-specific colors */}
+                    <div 
+                      className={`absolute left-0 right-0 bottom-0 pointer-events-none h-2/3 bg-gradient-to-t ${game.color}`}
+                      style={{
+                        opacity: 0.9,
+                        background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)`
+                      }}
+                    ></div>
+                    
+                    {/* Game name badge */}
+                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+                      <h2 className={`text-white uppercase ${game.fontClass} text-sm lg:text-base`}>{game.name}</h2>
+                    </div>
+                    
+                    {/* Tournament info */}
+                    <div className="absolute bottom-0 left-0 w-full px-6 pb-8 text-center">
+                      <div className="flex flex-col gap-2">
+                        <p className="text-white text-sm lg:text-base opacity-90 bg-black/30 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
+                        <p className="text-primary font-bold text-base lg:text-lg bg-white/10 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
+                      </div>
+                      
+                      {/* Call to action button */}
+                      <div className="mt-4 transition-transform duration-300 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
+                        <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">Détails</button>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            }
+            return (
               <div
                 key={game.id}
-                className={`mobile-game-panel game-panel-clickable relative ${
+                className={`desktop-game-panel game-panel-clickable relative flex-1 ${
                   index % 2 === 0 ? "mt-0" : "mt-16"
-                } w-[280px] h-[420px] mr-5 flex-shrink-0 overflow-hidden rounded-xl cursor-pointer hover:shadow-lg hover:shadow-primary/10 group`}
+                } h-[450px] lg:h-[500px] max-w-[270px] lg:max-w-[350px] overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 hover:scale-105 group`}
                 onClick={() => handleGameClick(game)}
               >
                 {/* Background image */}
                 <img
                   src={game.image}
                   alt={game.name}
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
                 />
-                
-                {/* Game name badge */}
-                <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg">
-                  <h2 className={`text-white uppercase ${game.fontClass} text-sm`}>{game.name}</h2>
-                </div>
                 
                 {/* Bottom gradient overlay with game-specific colors */}
                 <div 
-                  className="absolute left-0 right-0 bottom-0 pointer-events-none" 
+                  className={`absolute left-0 right-0 bottom-0 pointer-events-none h-2/3 bg-gradient-to-t ${game.color}`}
                   style={{
-                    height: "60%",
+                    opacity: 0.9,
                     background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)`
                   }}
                 ></div>
                 
+                {/* Game name badge */}
+                <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+                  <h2 className={`text-white uppercase ${game.fontClass} text-sm lg:text-base`}>{game.name}</h2>
+                </div>
+                
                 {/* Tournament info */}
-                <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-center">
+                <div className="absolute bottom-0 left-0 w-full px-6 pb-8 text-center">
                   <div className="flex flex-col gap-2">
-                    <p className="text-white text-sm opacity-90 bg-black/30 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
-                    <p className="text-primary font-bold text-sm bg-white/10 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
+                    <p className="text-white text-sm lg:text-base opacity-90 bg-black/30 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
+                    <p className="text-primary font-bold text-base lg:text-lg bg-white/10 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
                   </div>
                   
-                  {/* Mobile CTA indicator */}
-                  <div className="mt-3">
-                    <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">Appuyez pour plus d'infos</span>
+                  {/* Call to action button */}
+                  <div className="mt-4 transition-transform duration-300 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
+                    <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">Détails</button>
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Mobile Version - Pinned section with horizontal scrolling */}
+        <div ref={sectionRef} className="md:hidden relative w-full h-[520px]">
+          <div ref={trackRef} className="absolute top-0 left-0 flex pl-4 pr-16">
+            {Games.map((game, index) => {
+              if (index === 2) {
+                return (
+                  <React.Fragment key={`ad-mobile-${index}`}>
+                    <GamePanelAd isMobile={true} index={index} />
+                    <div
+                      key={game.id}
+                      className={`mobile-game-panel game-panel-clickable relative ${
+                        index % 2 === 0 ? "mt-0" : "mt-16"
+                      } w-[280px] h-[420px] mr-5 flex-shrink-0 overflow-hidden rounded-xl cursor-pointer hover:shadow-lg hover:shadow-primary/10 group`}
+                      onClick={() => handleGameClick(game)}
+                    >
+                      {/* Background image */}
+                      <img
+                        src={game.image}
+                        alt={game.name}
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                      
+                      {/* Game name badge */}
+                      <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg">
+                        <h2 className={`text-white uppercase ${game.fontClass} text-sm`}>{game.name}</h2>
+                      </div>
+                      
+                      {/* Bottom gradient overlay with game-specific colors */}
+                      <div 
+                        className="absolute left-0 right-0 bottom-0 pointer-events-none" 
+                        style={{
+                          height: "60%",
+                          background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)`
+                        }}
+                      ></div>
+                      
+                      {/* Tournament info */}
+                      <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-center">
+                        <div className="flex flex-col gap-2">
+                          <p className="text-white text-sm opacity-90 bg-black/30 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
+                          <p className="text-primary font-bold text-sm bg-white/10 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
+                        </div>
+                        
+                        {/* Mobile CTA indicator */}
+                        <div className="mt-3">
+                          <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">Appuyez pour plus d'infos</span>
+                        </div>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                );
+              }
+              return (
+                <div
+                  key={game.id}
+                  className={`mobile-game-panel game-panel-clickable relative ${
+                    index % 2 === 0 ? "mt-0" : "mt-16"
+                  } w-[280px] h-[420px] mr-5 flex-shrink-0 overflow-hidden rounded-xl cursor-pointer hover:shadow-lg hover:shadow-primary/10 group`}
+                  onClick={() => handleGameClick(game)}
+                >
+                  {/* Background image */}
+                  <img
+                    src={game.image}
+                    alt={game.name}
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                  
+                  {/* Game name badge */}
+                  <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg">
+                    <h2 className={`text-white uppercase ${game.fontClass} text-sm`}>{game.name}</h2>
+                  </div>
+                  
+                  {/* Bottom gradient overlay with game-specific colors */}
+                  <div 
+                    className="absolute left-0 right-0 bottom-0 pointer-events-none" 
+                    style={{
+                      height: "60%",
+                      background: `linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)`
+                    }}
+                  ></div>
+                  
+                  {/* Tournament info */}
+                  <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-center">
+                    <div className="flex flex-col gap-2">
+                      <p className="text-white text-sm opacity-90 bg-black/30 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
+                      <p className="text-primary font-bold text-sm bg-white/10 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
+                    </div>
+                    
+                    {/* Mobile CTA indicator */}
+                    <div className="mt-3">
+                      <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">Appuyez pour plus d'infos</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
