@@ -1,0 +1,82 @@
+/* 
+ * debug.css - Styles pour le mode débogage
+ * Ce fichier contient des styles utilisés uniquement pendant le développement
+ */
+
+/* Indication visuelle des zones de débogage */
+.debug-area {
+  border: 2px dashed red;
+  position: relative;
+}
+
+.debug-area::before {
+  content: attr(data-debug);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-family: monospace;
+  z-index: 9999;
+}
+
+/* Style pour visualiser les grilles et les marges */
+.debug-grid {
+  background-image: linear-gradient(
+    rgba(255, 0, 0, 0.1) 1px, 
+    transparent 1px
+  ),
+  linear-gradient(
+    90deg, 
+    rgba(255, 0, 0, 0.1) 1px, 
+    transparent 1px
+  );
+  background-size: 10px 10px;
+}
+
+/* Style pour visualiser les éléments publicitaires en mode développement */
+.ad-debug-outline {
+  outline: 2px dashed rgba(234, 76, 137, 0.5);
+  outline-offset: -2px;
+  position: relative;
+}
+
+.ad-debug-outline::after {
+  content: 'Ad Spot';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(234, 76, 137, 0.8);
+  color: white;
+  padding: 2px 5px;
+  font-size: 9px;
+  border-radius: 3px;
+  z-index: 100;
+}
+
+/* Styles pour les éléments d'administration des publicités */
+.admin-debug-controls {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 12px;
+  z-index: 9999;
+}
+
+/* Visualisation des z-index pour débogage */
+.debug-z-index-10 { box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 0.3); }
+.debug-z-index-20 { box-shadow: inset 0 0 0 1px rgba(0, 255, 0, 0.3); }
+.debug-z-index-30 { box-shadow: inset 0 0 0 1px rgba(0, 0, 255, 0.3); }
+.debug-z-index-40 { box-shadow: inset 0 0 0 1px rgba(255, 255, 0, 0.3); }
+.debug-z-index-50 { box-shadow: inset 0 0 0 1px rgba(255, 0, 255, 0.3); }
+
+/* Classes utilitaires pour le débogage */
+.debug-outline { outline: 1px solid rgba(255, 0, 0, 0.5); }
+.debug-bg { background-color: rgba(255, 0, 0, 0.1); } 
