@@ -15,7 +15,6 @@ import FooterAd from "./components/FooterAd";
 import PopupAd from "./components/PopupAd";
 import { AdContextProvider, useAds } from "./context/AdContext";
 import AdAdmin from './components/AdAdmin';
-import './components/debug.css';
 
 // Composant qui utilise le contexte pour les emplacements publicitaires
 const AdSpots = () => {

@@ -3,7 +3,6 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useEffect, useRef, useState } from "react";
 import VideoPreview from "./VideoPreview";
-import HeroAdOverlay from "./HeroAdOverlay";
 import clsx from "clsx";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,27 +17,99 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [loadedVideos, setLoadedVideos] = useState(0);
+  const [loadError, setLoadError] = useState(false);
 
-  const totalVideos = 4;
+  const totalVideos = 3;
   const nextVdRef = useRef(null);
+  const mainVideoRef = useRef(null);
+  
+  const [videoPath, setVideoPath] = useState(`/videos/hero-1.mp4`);
+  
+  // Test des chemins et sélection du premier qui fonctionne
+  const findWorkingPath = async () => {
+    const paths = [
+      `/videos/hero-1.mp4`,
+      `videos/hero-1.mp4`,
+      `./videos/hero-1.mp4`,
+      `${process.env.PUBLIC_URL}/videos/hero-1.mp4`
+    ];
+    
+    for (let i = 0; i < paths.length; i++) {
+      try {
+        const response = await fetch(paths[i], { method: 'HEAD' });
+        if (response.ok) {
+          console.log(`Found working path: ${paths[i]}`);
+          setVideoPath(paths[i].replace('hero-1', 'hero-$'));
+          return true;
+        }
+      } catch (error) {
+        console.error(`Error checking path ${paths[i]}:`, error);
+      }
+    }
+    
+    console.error("No working video path found");
+    setLoadError(true);
+    return false;
+  };
+  
+  // Utiliser le chemin détecté
+  const getVideoSrc = (index) => {
+    return videoPath.replace('$', index);
+  };
+  
+  // Trouver le bon chemin au montage et forcer l'arrêt du chargement après 2 secondes
+  useEffect(() => {
+    console.log("Hero component mounted");
+    
+    findWorkingPath().then(success => {
+      if (!success) {
+        setLoading(false);
+      }
+    });
+    
+    // Forcer l'arrêt du chargement après 2 secondes que la vidéo se charge ou non
+    const timer = setTimeout(() => {
+      if (loading) {
+        console.log("Forcing loading to stop after timeout (2s)");
+        setLoading(false);
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
+    console.log("Vidéo chargée avec succès");
+    setLoading(false);
+  };
+  
+  const handleVideoError = (e) => {
+    console.error("Erreur de chargement vidéo:", e);
+    setLoadError(true);
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (isAudioPlaying) {
-      audioElementRef.current.play();
-    } else {
+    if (isAudioPlaying && audioElementRef.current) {
+      // Essayer de jouer l'audio et gérer l'erreur si l'autoplay n'est pas autorisé
+      const playPromise = audioElementRef.current.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          // L'audio a démarré avec succès
+          console.log("Audio started successfully");
+        })
+        .catch(error => {
+          // L'autoplay n'est pas autorisé
+          console.error("Audio autoplay prevented:", error);
+          setIsAudioPlaying(false);
+          setIsIndicatorActive(false);
+        });
+      }
+    } else if (audioElementRef.current) {
       audioElementRef.current.pause();
     }
   }, [isAudioPlaying]);
-
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
@@ -84,7 +155,9 @@ const Hero = () => {
         height: "100%",
         duration: 1,
         ease: "power1.inOut",
-        onStart: () => nextVdRef.current.play(),
+        onStart: () => {
+          if (nextVdRef.current) nextVdRef.current.play();
+        }
       });
       gsap.from("#current-video", {
         transformOrigin: "center center",
@@ -113,8 +186,6 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
-
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-t from-[#0a0a0a] to-[#080818] border-4 border-transparent">
       <div className="absolute inset-0 overflow-hidden z-0">
@@ -122,12 +193,25 @@ const Hero = () => {
         <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-primary/10 blur-[100px]"></div>
       </div>
 
-      {loading && (
+      {loading && !loadError && (
         <div className="absolute z-50 flex h-screen w-full items-center justify-center bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
+          </div>
+        </div>
+      )}
+
+      {/* Afficher un fond de secours en cas d'erreur */}
+      {loadError && (
+        <div className="absolute z-10 h-screen w-full bg-gradient-to-b from-[#0E0E18] to-[#16162D]">
+          <div className="absolute inset-0 opacity-30">
+            {/* Fallback d'image ou dégradé si l'image n'existe pas */}
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#121236] via-[#19193d] to-[#0c0c24]"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-white/30 font-bold text-2xl">MOROCCO GAMING EXPO</div>
+            </div>
           </div>
         </div>
       )}
@@ -146,13 +230,13 @@ const Hero = () => {
                   className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
                 >
                   <video
-                    ref={nextVdRef}
                     src={getVideoSrc((currentIndex % totalVideos) + 1)}
                     loop
                     muted
                     id="current-video"
                     className="h-full w-full object-cover"
                     onLoadedData={handleVideoLoad}
+                    onError={handleVideoError}
                   />
                 </div>
               </VideoPreview>
@@ -168,16 +252,17 @@ const Hero = () => {
             id="next-video"
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 invisible z-20 h-full w-full object-cover"
             onLoadedData={handleVideoLoad}
+            onError={handleVideoError}
           />
           <video
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
-            )}
+            ref={mainVideoRef}
+            src={getVideoSrc(currentIndex)}
             autoPlay
             loop
             muted
             className="absolute left-0 top-0 h-full w-full object-cover"
             onLoadedData={handleVideoLoad}
+            onError={handleVideoError}
           />
         </div>
 
@@ -192,7 +277,7 @@ const Hero = () => {
             src="/audio/loop.mp3"
             loop
             preload="auto"
-            autoPlay
+            muted={!isAudioPlaying}
           />
           {[1, 2, 3, 4, 5].map((bar) => (
             <div
@@ -202,9 +287,6 @@ const Hero = () => {
             />
           ))}
         </button>
-
-        {/* HeroAdOverlay */}
-        <HeroAdOverlay />
 
         {/* Content */}
         <div className="absolute left-0 top-0 z-40 h-full w-full">
