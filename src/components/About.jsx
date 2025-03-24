@@ -64,7 +64,7 @@ const GamingShowcase = () => {
     {
       id: 4,
       name: "FC 25",
-      image: "https://i.pinimg.com/originals/d6/f2/9e/d6f29e65d1c2d82a5011d0d0a8fb9f6f.jpg",
+      image: "/img/EGS_EASPORT.jpeg",
       fontClass: "font-nightWarrior",
       tournamentMode: "1v1 Swiss System",
       tournamentPlayers: "Solo",
@@ -241,7 +241,6 @@ const GamingShowcase = () => {
               
               {/* Tournament info */}
               <div className="absolute bottom-0 left-0 w-full px-6 pb-8 text-center">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2">{game.tournamentMode}</h3>
                 <div className="flex flex-col gap-2">
                   <p className="text-white text-sm lg:text-base opacity-90 bg-black/30 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
                   <p className="text-primary font-bold text-base lg:text-lg bg-white/10 rounded-full px-4 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>
@@ -288,9 +287,8 @@ const GamingShowcase = () => {
                   }}
                 ></div>
                 
-                {/* Tournament mode instead of game logo for mobile */}
+                {/* Tournament info */}
                 <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-center">
-                  <h3 className="text-white font-bold text-lg mb-2">{game.tournamentMode}</h3>
                   <div className="flex flex-col gap-2">
                     <p className="text-white text-sm opacity-90 bg-black/30 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.tournamentPlayers}</p>
                     <p className="text-primary font-bold text-sm bg-white/10 rounded-full px-3 py-1 backdrop-blur-sm inline-block mx-auto">{game.prizePool}</p>

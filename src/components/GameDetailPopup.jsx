@@ -155,6 +155,16 @@ const scrollbarStyles = `
     background: linear-gradient(to bottom, #D7C6AF 20%, rgba(215, 198, 175, 0.8) 100%);
     background-clip: content-box;
   }
+  
+  .modal-open {
+    overflow: hidden;
+  }
+  
+  .popup-content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #D7C6AF rgba(10, 10, 20, 0.2);
+  }
 `;
 
 const GameDetailPopup = ({ isOpen, onClose, game }) => {
@@ -177,9 +187,16 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
     };
   }, []);
   
-  // Réinitialiser l'état d'animation lorsque le popup se ferme
+  // Gérer le scroll lorsque le popup est ouvert ou fermé
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      // Bloquer le scroll de la page quand le popup est ouvert
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '6px'; // Compenser la barre de défilement
+    } else {
+      // Réactiver le scroll quand le popup est fermé
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
       setAnimationComplete(false);
     }
   }, [isOpen]);
@@ -344,7 +361,7 @@ const GameDetailPopup = ({ isOpen, onClose, game }) => {
     >
       <div 
         ref={contentRef}
-        className="relative w-full max-w-5xl max-h-[85vh] overflow-auto custom-scrollbar bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
+        className="relative w-full max-w-5xl max-h-[85vh] overflow-auto custom-scrollbar popup-content bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header avec image et titre */}
