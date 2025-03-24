@@ -14,6 +14,7 @@ import FooterAd from "./components/FooterAd";
 import PopupAd from "./components/PopupAd";
 import { AdContextProvider, useAds } from "./context/AdContext";
 import AdAdmin from './components/AdAdmin';
+// Styles pour le débogage visuel des composants (grilles, outlines, etc.)
 import './components/debug.css';
 
 // Composant qui utilise le contexte pour les emplacements publicitaires
