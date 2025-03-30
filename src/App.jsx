@@ -27,6 +27,7 @@ function MainPage() {
   const lastLanguageRef = useRef(language); // Référence pour suivre la dernière langue
   const rafIdRef = useRef(null); // Référence pour l'animation frame
   const [adVisible, setAdVisible] = useState(true); // État pour contrôler la visibilité de l'annonce
+  const [showDomainNotice, setShowDomainNotice] = useState(true); // État pour la notification de domaine
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -118,8 +119,40 @@ function MainPage() {
     }
   }, [language]);
   
+  // Effet pour masquer automatiquement la notification de domaine après 15 secondes
+  useEffect(() => {
+    if (showDomainNotice) {
+      const timer = setTimeout(() => {
+        setShowDomainNotice(false);
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [showDomainNotice]);
+  
   return (
     <main className="relative min-h-screen w-screen" style={{ overflow: 'visible' }}>
+      {/* Notification de changement de domaine */}
+      {showDomainNotice && (
+        <div className="fixed top-0 left-0 w-full bg-primary text-black z-[1001] shadow-md">
+          <div className="container mx-auto py-2 px-4 flex items-center justify-between">
+            <p className="text-sm md:text-base font-medium">
+              Notre plateforme est désormais accessible via <strong>mgexpo.ma</strong>! 
+              Les dashboards sont disponibles sur <strong>user.mgexpo.ma</strong> et <strong>admin.mgexpo.ma</strong>
+            </p>
+            <button 
+              onClick={() => setShowDomainNotice(false)}
+              className="ml-2 text-black hover:text-black/70 transition-colors"
+              aria-label="Fermer la notification"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+      
       <NavBar />
       
       {/* Section Hero */}

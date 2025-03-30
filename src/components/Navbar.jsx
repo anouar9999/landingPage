@@ -396,8 +396,8 @@ const NavBar = () => {
 
             {/* Auth button - Style complètement amélioré */}
             <a 
-              href="http://109.120.179.6:3001/auth/auth1/login"
-              onClick={(e) => handleLinkClick(e, "http://109.120.179.6:3001/auth/auth1/login")}
+              href="https://user.mgexpo.ma/auth/auth1/login"
+              onClick={(e) => handleLinkClick(e, "https://user.mgexpo.ma/auth/auth1/login")}
               target="_blank"
               rel="noopener noreferrer"
               className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
@@ -533,8 +533,8 @@ const NavBar = () => {
             {/* CTA button - style amélioré */}
             <div className="mt-8">
               <a 
-                href="http://109.120.179.6:3001/auth/auth1/login"
-                onClick={(e) => handleLinkClick(e, "http://109.120.179.6:3001/auth/auth1/login")}
+                href="https://user.mgexpo.ma/auth/auth1/login"
+                onClick={(e) => handleLinkClick(e, "https://user.mgexpo.ma/auth/auth1/login")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`group relative block w-full text-center bg-[#e10000] overflow-hidden py-4 text-white font-bold text-sm uppercase hover:bg-[#c00] transition-all duration-300 rounded-md shadow-lg ${getTextClass()}`}

@@ -30,7 +30,8 @@ const GamingFooter = () => {
     { name: t('nav.proPath'), path: '#pro-path' },
     { name: t('nav.passGamers'), path: '#PassGamers' },
     { name: t('nav.documentation'), path: '/downloads' },
-    { name: t('nav.faq'), path: '#faq' }
+    { name: t('nav.faq'), path: '#faq' },
+    { name: t('footer.dashboard'), path: 'https://user.mgexpo.ma' },
   ];
   
   const legalLinks = [
@@ -74,6 +75,15 @@ const GamingFooter = () => {
                     {link.path.startsWith('#') ? (
                       <a 
                         href={link.path} 
+                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                      >
+                        {link.name}
+                      </a>
+                    ) : link.path.startsWith('http') ? (
+                      <a 
+                        href={link.path} 
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-gray-400 hover:text-white transition-colors text-sm"
                       >
                         {link.name}

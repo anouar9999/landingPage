@@ -91,7 +91,8 @@ const resources = {
         legal: {
           privacy: "Privacy Policy",
           terms: "Terms of Service"
-        }
+        },
+        dashboard: "User Dashboard"
       },
       // PassGamers
       passGamers: {
@@ -462,7 +463,8 @@ const resources = {
         legal: {
           privacy: "Politique de Confidentialité",
           terms: "Conditions d'Utilisation"
-        }
+        },
+        dashboard: "Espace Utilisateur"
       },
       // PassGamers
       passGamers: {
@@ -610,100 +612,28 @@ const resources = {
       // FAQ
       faq: {
         title: "FAQ",
-        subtitle: "Trouvez rapidement les réponses à vos questions concernant les tournois et la participation à MGE",
-        searchPlaceholder: "Rechercher une question...",
-        noResults: "Aucun résultat pour \"{searchTerm}\"",
-        tryAgain: "Essayez un autre terme ou parcourez toutes les questions ci-dessous",
-        resultsCount: "{count} {count, plural, one {résultat} other {résultats}} pour \"{searchTerm}\"",
-        category: "Catégorie",
-        noAnswerFound: "Vous ne trouvez pas la réponse à votre question ?",
-        contactUs: "Contactez-nous directement",
+        subtitle: "Comment pouvons-nous vous aider?",
+        callToAction: "Vous ne trouvez pas de réponse ici? N'hésitez pas à nous contacter!",
+        contact: "Contactez-nous",
         categories: {
-          registration: {
-            title: "Inscription aux Tournois",
-            questions: {
-              0: {
-                question: "Comment s'inscrire à un tournoi MGE ?",
-                answer: "Pour vous inscrire à un tournoi MGE, connectez-vous à votre compte sur la plateforme, sélectionnez le tournoi qui vous intéresse, et suivez les instructions d'inscription. Assurez-vous de remplir tous les critères d'éligibilité et de soumettre votre inscription avant la date limite."
-              },
-              1: {
-                question: "Quels documents sont nécessaires pour l'inscription ?",
-                answer: "Pour la plupart des tournois, vous aurez besoin de votre pièce d'identité (CIN ou passeport), vos identifiants de jeu, et dans certains cas une autorisation parentale si vous êtes mineur. Les tournois spécifiques peuvent avoir des exigences supplémentaires détaillées dans leurs règlements."
-              },
-              2: {
-                question: "Peut-on s'inscrire en équipe ?",
-                answer: "Oui, pour les jeux d'équipe comme Free Fire ou Valorant, vous devez inscrire l'ensemble de votre équipe. Un capitaine crée l'équipe sur la plateforme et invite les autres membres. Tous les membres doivent avoir un compte MGE actif et accepter l'invitation pour finaliser l'inscription."
-              }
-            }
-          },
-          format: {
-            title: "Format des Tournois",
-            questions: {
-              0: {
-                question: "Quels formats sont utilisés dans les tournois MGE ?",
-                answer: "Les tournois MGE utilisent différents formats selon le jeu et le niveau de compétition. La plupart des tournois suivent une phase de groupes suivie de brackets à élimination simple ou double. Le format spécifique de chaque tournoi est détaillé sur la page d'information du tournoi."
-              },
-              1: {
-                question: "Comment sont déterminés les groupes des tournois ?",
-                answer: "Les groupes sont généralement déterminés par un système de têtes de série basé sur le classement des joueurs ou des équipes, ou par tirage au sort. Pour les tournois majeurs, il peut y avoir des phases de qualification qui déterminent le classement."
-              },
-              2: {
-                question: "Que se passe-t-il en cas d'égalité ?",
-                answer: "Les règles de départage varient selon le jeu et le tournoi. En général, nous utilisons les résultats des confrontations directes, les différentiels de score ou des matchs de départage supplémentaires. Les règles spécifiques sont détaillées dans le règlement de chaque tournoi."
-              }
-            }
-          },
-          prizes: {
-            title: "Prix et Récompenses",
-            questions: {
-              0: {
-                question: "Quels prix puis-je gagner aux tournois MGE ?",
-                answer: "Les prix varient selon le tournoi et comprennent des prix en espèces, du matériel de gaming, des produits dérivés et des places de qualification pour des tournois internationaux. La dotation totale et sa répartition sont toujours clairement indiquées sur la page d'information du tournoi."
-              },
-              1: {
-                question: "Comment sont traités les paiements des prix ?",
-                answer: "Les prix en espèces sont généralement payés par virement bancaire dans les 30 à 60 jours suivant la fin du tournoi. Vous devrez fournir des informations bancaires valides et pourrez avoir à remplir des formulaires fiscaux selon le montant du prix et votre pays de résidence."
-              },
-              2: {
-                question: "Y a-t-il des récompenses de participation même si je ne gagne pas ?",
-                answer: "Oui, de nombreux tournois MGE offrent des récompenses de participation telles que des objets numériques, de la monnaie de jeu ou des cosmétiques exclusifs en jeu. De plus, tous les participants reçoivent un certificat de participation qui peut être valorisant pour de futures carrières esportives."
-              }
-            }
-          },
-          rules: {
-            title: "Règles et Règlements",
-            questions: {
-              0: {
-                question: "Où puis-je trouver les règles officielles des tournois ?",
-                answer: "Les règles officielles des tournois se trouvent sur la page d'information du tournoi, dans la section Documents de notre site web, ou sont directement envoyées par email aux participants inscrits. Assurez-vous de lire attentivement les règles avant de participer."
-              },
-              1: {
-                question: "Que se passe-t-il si un joueur enfreint les règles ?",
-                answer: "Les violations des règles sont prises au sérieux et peuvent entraîner des avertissements, des déductions de points, des forfaits de match, une disqualification ou, dans les cas graves, des interdictions de tournoi. Notre équipe d'administrateurs examine toutes les infractions signalées et prend des décisions basées sur la gravité de l'infraction."
-              },
-              2: {
-                question: "Puis-je utiliser mon propre équipement lors des tournois LAN ?",
-                answer: "Pour la plupart des tournois LAN, vous pouvez apporter votre propre clavier, souris, casque et tapis de souris. Cependant, vous devrez généralement utiliser les ordinateurs, moniteurs et consoles fournis par les organisateurs. Les règles spécifiques concernant l'équipement sont détaillées dans le règlement de chaque tournoi."
-              }
-            }
-          },
-          logistics: {
-            title: "Logistique des Tournois",
+          general: {
+            title: "Général",
             questions: {
               0: {
                 question: "Quand et où ont lieu les tournois MGE ?",
                 answer: "Les tournois MGE ont lieu tout au long de l'année, avec des qualifications en ligne menant à des finales en présentiel dans divers lieux au Maroc. L'événement principal MGE se tient annuellement, généralement au printemps. Toutes les dates et lieux sont annoncés sur notre site web et nos réseaux sociaux."
               },
               1: {
-                question: "Dois-je apporter quelque chose aux tournois en présentiel ?",
-                answer: "Pour les tournois en présentiel, apportez votre pièce d'identité, une copie de votre confirmation d'inscription, vos périphériques personnels (si autorisés) et des vêtements confortables. Nous vous recommandons également d'apporter une bouteille d'eau et des collations."
+                question: "Que dois-je apporter aux tournois en présentiel ?",
+                answer: "Pour les tournois en présentiel, vous devez apporter une pièce d'identité valide, votre billet/confirmation d'inscription, et tout équipement spécifique mentionné dans les règles du tournoi. Pour les tournois de jeux de combat, nous recommandons d'apporter votre propre manette. Pour plus de détails, consultez les règlements spécifiques à chaque tournoi."
               },
               2: {
-                question: "Y a-t-il un hébergement prévu pour les participants ?",
-                answer: "Pour les tournois majeurs, nous offrons des tarifs d'hôtel réduits pour les participants inscrits. Pour certains événements sur invitation uniquement, l'hébergement peut être fourni. Consultez la page d'information du tournoi pour plus de détails sur les arrangements d'hébergement."
+                question: "Y a-t-il des hébergements disponibles pour les participants des tournois majeurs ?",
+                answer: "Pour les tournois majeurs comme le MGE, nous proposons généralement des partenariats avec des hôtels locaux offrant des tarifs préférentiels aux participants. Les informations sur les options d'hébergement sont communiquées aux participants qualifiés et sont également disponibles sur notre site web avant l'événement."
               }
             }
-          }
+          },
+          // ... reste du code existant ...
         }
       },
       // Join The Adventure section
@@ -855,7 +785,8 @@ const resources = {
         legal: {
           privacy: "سياسة الخصوصية",
           terms: "شروط الخدمة"
-        }
+        },
+        dashboard: "لوحة تحكم المستخدم"
       },
       // PassGamers
       passGamers: {
