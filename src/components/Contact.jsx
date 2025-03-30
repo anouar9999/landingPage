@@ -118,7 +118,7 @@ const SignupFlow = () => {
 
       <div className="absolute top-0 left-0 w-full z-10 py-6 sm:py-8">
         <h1 className="text-center font-nightWarrior text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest text-white">
-          JOIN THE ADVENTURE
+          CONTACTEZ-NOUS
         </h1>
       </div>
 

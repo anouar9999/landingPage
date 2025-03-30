@@ -1,137 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { X, Trophy, Users, Calendar, Book, Sparkles, Gamepad2, Medal } from "lucide-react";
-import gsap from "gsap";
-
-// Informations des tournois par jeu
-const tournamentInfo = {
-  "Free fire": {
-    format: "Battle Royale - Équipes de 4",
-    description: "Affrontez les meilleurs joueurs du Maroc dans une compétition intense où stratégie d'équipe et skills individuels détermineront les vainqueurs. Chaque match est une nouvelle chance de prouver votre valeur!",
-    requirements: [
-      "Âge minimum: 16 ans",
-      "Compte Free Fire niveau 40+",
-      "Équipe de 4 joueurs + 1 remplaçant (optionnel)",
-      "Résidence marocaine obligatoire"
-    ],
-    rounds: [
-      { name: "Qualifications Online", date: "15-20 Juin 2025", description: "64 équipes s'affrontent en 8 groupes. Les 4 meilleures équipes de chaque groupe se qualifient pour la phase suivante." },
-      { name: "Quarts de finale", date: "27-28 Juin 2025", description: "32 équipes réparties en 4 groupes. Format points sur 5 matchs. Top 4 de chaque groupe qualifié." },
-      { name: "Demi-finales (LAN)", date: "4 Juillet 2025", description: "16 équipes en compétition sur scène au Morocco Gaming Expo. Les 8 meilleures équipes avancent à la finale." },
-      { name: "Grande Finale (LAN)", date: "10 Juillet 2025", description: "8 équipes finalistes s'affrontent en 6 matchs sur différentes cartes pour le titre de champion national." }
-    ],
-    prizes: [
-      { position: "1ère place", amount: "25 000 DH", extra: "+ Qualification directe pour la MENA Cup" },
-      { position: "2ème place", amount: "15 000 DH", extra: "+ 4 Gaming Phones" },
-      { position: "3ème place", amount: "8 000 DH", extra: "+ Équipement gaming" },
-      { position: "4ème place", amount: "2 000 DH", extra: "" }
-    ],
-    rules: "• Chaque équipe doit avoir 4 joueurs titulaires et peut inclure 1 remplaçant optionnel.\n• Les joueurs doivent arriver 1h avant le début des matchs en phase LAN.\n• Utilisation de tout logiciel de triche = disqualification immédiate et bannissement des futures compétitions.\n• Streaming autorisé avec délai de 5 minutes minimum.",
-    color: "from-orange-500 to-red-600",
-    icon: "🔥"
-  },
-  "street \t fighter": {
-    format: "1v1 Double Élimination",
-    description: "Le tournoi Street Fighter rassemblera les meilleurs combattants du royaume dans une compétition de haut niveau. Que vous soyez un vétéran des jeux de combat ou un talent émergent, c'est l'occasion de montrer vos combos et votre maîtrise technique!",
-    requirements: [
-      "Âge minimum: 16 ans",
-      "Apporter sa propre manette/stick arcade (PS5/PC)",
-      "Connaissance du règlement EVO",
-      "Résidence marocaine obligatoire"
-    ],
-    rounds: [
-      { name: "Qualifications Online", date: "22-25 Juin 2025", description: "128 joueurs répartis en brackets online. Double élimination, matchs en FT2 (premier à 2 victoires)." },
-      { name: "Phase Intermédiaire", date: "30 Juin 2025", description: "64 joueurs qualifiés continuent en double élimination. Matchs en FT2, diffusés en streaming officiel." },
-      { name: "Top 32 (LAN)", date: "6 Juillet 2025", description: "32 joueurs s'affrontent en présentiel. Format FT3 pour le winner bracket, FT2 pour le loser bracket." },
-      { name: "Top 8 (LAN)", date: "11 Juillet 2025", description: "La grande finale avec les 8 meilleurs joueurs. Format FT3, finale en FT5 sur la scène principale du MGE." }
-    ],
-    prizes: [
-      { position: "1ère place", amount: "20 000 DH", extra: "+ Stick Arcade Pro édition limitée" },
-      { position: "2ème place", amount: "10 000 DH", extra: "+ Fightstick premium" },
-      { position: "3ème place", amount: "6 000 DH", extra: "+ Manette Pro" },
-      { position: "4ème place", amount: "4 000 DH", extra: "" }
-    ],
-    rules: "• Tous les personnages et stages sont autorisés.\n• Temps par round: 99 secondes.\n• Pause non autorisée sauf urgence (validation par un arbitre obligatoire).\n• Les macros et turbo fonctions sont interdits.\n• En cas d'égalité, un match décisif sera joué.",
-    color: "from-red-600 to-purple-700",
-    icon: "👊"
-  },
-  "valorant": {
-    format: "5v5 Double Élimination",
-    description: "VALORANT MGE Championship est la compétition esport la plus prestigieuse du Maroc pour ce FPS tactique. Les équipes s'affronteront dans des matchs intenses où précision, stratégie et coordination seront les clés de la victoire!",
-    requirements: [
-      "Âge minimum: 16 ans",
-      "Compte VALORANT rang minimum Diamant 1",
-      "Équipe de 5 joueurs + 1 coach (optionnel)",
-      "Anti-cheat obligatoire durant les qualifications",
-      "Résidence marocaine obligatoire"
-    ],
-    rounds: [
-      { name: "Open Qualifiers", date: "17-22 Juin 2025", description: "32 équipes en double élimination. Matchs en BO1 jusqu'aux quarts, puis BO3. Les 16 meilleures équipes se qualifient." },
-      { name: "Closed Qualifiers", date: "29 Juin 2025", description: "16 équipes s'affrontent en BO3. Double élimination complète. Les 8 meilleures équipes avancent à la phase LAN." },
-      { name: "Playoffs (LAN)", date: "5-6 Juillet 2025", description: "8 équipes en compétition au Morocco Gaming Expo. Double élimination en BO3, avec veto de cartes." },
-      { name: "Grand Final (LAN)", date: "12 Juillet 2025", description: "Finale épique en BO5 sur la scène principale, avec show d'ouverture et analyse des experts." }
-    ],
-    prizes: [
-      { position: "1ère place", amount: "50 000 DH", extra: "+ Invitation au VALORANT MENA Challengers" },
-      { position: "2ème place", amount: "25 000 DH", extra: "+ Setup gaming complet pour l'équipe" },
-      { position: "3ème place", amount: "15 000 DH", extra: "+ Périphériques gaming" },
-      { position: "4ème place", amount: "10 000 DH", extra: "" }
-    ],
-    rules: "• Les équipes doivent arriver 90 minutes avant leur match en LAN.\n• Les joueurs doivent utiliser leurs propres périphériques (clavier, souris, tapis, écouteurs).\n• PC et écrans fournis par l'organisation.\n• Communication vocale surveillée durant les matchs LAN.\n• Pause technique limitée à 10 minutes par équipe et par match.",
-    color: "from-red-500 to-blue-700",
-    icon: "🎯"
-  },
-  "FC 25": {
-    format: "1v1 Swiss System + Playoffs",
-    description: "Le tournoi FC 25 est LA référence pour les fans de football virtuel au Maroc. Affrontez les meilleurs joueurs du pays dans des matchs palpitants où tactique, skill et sang-froid seront vos meilleurs atouts pour décrocher le titre de champion!",
-    requirements: [
-      "Âge minimum: 16 ans",
-      "Posséder le jeu FC 25 sur PlayStation 5 ou Xbox Series X",
-      "Apporter sa propre manette compatible",
-      "Connaissance du règlement officiel",
-      "Résidence marocaine obligatoire"
-    ],
-    rounds: [
-      { name: "Phase de groupes", date: "16-21 Juin 2025", description: "64 joueurs répartis en 16 groupes de 4. Les 2 premiers de chaque groupe se qualifient pour les playoffs." },
-      { name: "Seizièmes & Huitièmes", date: "28-29 Juin 2025", description: "32 joueurs qualifiés s'affrontent en matchs à élimination directe (BO3). Les 8 vainqueurs avancent à la phase LAN." },
-      { name: "Quarts & Demi-finales (LAN)", date: "7 Juillet 2025", description: "8 joueurs s'affrontent sur scène en format BO3. Commentaires en direct et analyse des experts." },
-      { name: "Grande Finale (LAN)", date: "14 Juillet 2025", description: "Finale spectaculaire en BO5 sur la scène principale du MGE, avec présentation spéciale des finalistes." }
-    ],
-    prizes: [
-      { position: "1ère place", amount: "15 000 DH", extra: "+ PS5 Pro + Qualification pour le tournoi international" },
-      { position: "2ème place", amount: "8 000 DH", extra: "+ Manette Pro Elite personnalisée" },
-      { position: "3ème place", amount: "5 000 DH", extra: "+ Abonnement Ultimate 1 an" },
-      { position: "4ème place", amount: "2 000 DH", extra: "" }
-    ],
-    rules: "• Tous les clubs et équipes nationales autorisés.\n• Mode de jeu: Matchs amicaux 1v1 en ligne (Online) ou sur PS5/Xbox (LAN).\n• Durée des mi-temps: 6 minutes.\n• Pause autorisée uniquement entre mi-temps.\n• Comportement anti-sportif sanctionné par disqualification immédiate.",
-    color: "from-green-500 to-blue-600",
-    icon: "⚽"
-  },
-  "fc football": {
-    format: "1v1 Swiss System + Playoffs",
-    description: "Le FC Championship est LA référence des tournois de simulation de football au Maroc. Montrez votre maîtrise tactique, votre talent technique et votre sang-froid pour être couronné champion national!",
-    requirements: [
-      "Âge minimum: 16 ans",
-      "Posséder le jeu sur PlayStation 5 ou Xbox Series X",
-      "Apporter sa propre manette",
-      "Résidence marocaine obligatoire"
-    ],
-    rounds: [
-      { name: "Swiss Stage", date: "20-24 Juin 2025", description: "64 joueurs en système suisse sur 5 rondes. Chaque joueur affronte des adversaires ayant un score similaire. Les 16 meilleurs au classement avancent." },
-      { name: "Top 16 (Bracket)", date: "1-2 Juillet 2025", description: "Élimination directe en BO3 (meilleur des 3 matchs). Les 8 gagnants se qualifient pour la phase LAN." },
-      { name: "Quarts & Demi-finales (LAN)", date: "7-8 Juillet 2025", description: "Matchs à élimination directe en BO3 sur la scène secondaire du MGE, avec commentaires en direct." },
-      { name: "Finale (LAN)", date: "13 Juillet 2025", description: "Grande finale en BO5 sur la scène principale. Une cérémonie spéciale et des invités surprises seront présents!" }
-    ],
-    prizes: [
-      { position: "1ère place", amount: "30 000 DH", extra: "+ PS5 Pro + Qualification pour la eWorld Cup Qualifiers" },
-      { position: "2ème place", amount: "15 000 DH", extra: "+ Manettes pro premium" },
-      { position: "3ème place", amount: "10 000 DH", extra: "+ Abonnement Game Pass 1 an" },
-      { position: "4ème place", amount: "5 000 DH", extra: "" }
-    ],
-    rules: "• Tous les clubs et équipes nationales sont autorisés.\n• Les transferts personnalisés sont interdits, seuls les effectifs officiels peuvent être utilisés.\n• Durée des mi-temps: 6 minutes.\n• En phase LAN, les joueurs doivent rester assis jusqu'à la fin du match.\n• Les célébrations prolongées et comportements antisportifs peuvent entraîner des sanctions.",
-    color: "from-green-500 to-blue-600",
-    icon: "⚽"
-  }
-};
+import React, { useEffect, useRef, useState } from 'react';
+import { X, Calendar, Users, Gamepad2, ScrollText, Trophy, Medal } from 'lucide-react';
+import gsap from 'gsap';
+import { useTranslation } from '../hooks/useTranslation';
+import tournamentInfo from '../data/tournamentInfo';
 
 // Styles CSS pour la scrollbar personnalisée
 const scrollbarStyles = `
@@ -171,441 +42,433 @@ const scrollbarStyles = `
     position: relative;
     overscroll-behavior: contain;
   }
+  
+  .backdrop-blur-effect {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .prize-card {
+    transition: all 0.3s ease;
+  }
+  
+  .prize-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px -10px rgba(215, 198, 175, 0.4);
+  }
+  
+  .game-popup-icon {
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px rgba(215, 198, 175, 0.6);
+    animation: pulse-glow 2s infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from {
+      opacity: 0.8;
+      text-shadow: 0 0 10px rgba(215, 198, 175, 0.4);
+    }
+    to {
+      opacity: 1;
+      text-shadow: 0 0 20px rgba(215, 198, 175, 0.8);
+    }
+  }
+  
+  .close-button {
+    transition: all 0.3s ease;
+  }
+  
+  .close-button:hover {
+    background-color: rgba(215, 198, 175, 0.3);
+    transform: rotate(90deg);
+  }
+  
+  .timeline-dot {
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-dot:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(215, 198, 175, 0.4);
+  }
+  
+  .phase-item {
+    transition: all 0.3s ease;
+  }
+  
+  .phase-item:hover {
+    background-color: rgba(215, 198, 175, 0.05);
+    transform: translateX(5px);
+  }
 `;
 
-const GameDetailPopup = ({ isOpen, onClose, game }) => {
+const GameDetailPopup = ({ game, onClose }) => {
+  // Vérifier si le composant est appelé sans données de jeu
+  if (!game) {
+    console.warn('GameDetailPopup a été appelé sans données de jeu valides');
+    return null;
+  }
+
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
-  const progressRef = useRef(null);
-  const timelineRef = useRef(null);
+  const formatRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const requirementsRef = useRef(null);
+  const prizeRef = useRef(null);
   const prizesRef = useRef(null);
   const rulesRef = useRef(null);
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
   
-  // Injecter les styles de scrollbar au montage du composant
+  const { t, language } = useTranslation();
+  const [showBackdropBlur, setShowBackdropBlur] = useState(false);
+  
+  // Fonction pour obtenir la classe de texte basée sur la langue
+  const getTextClass = () => {
+    if (language === 'ar') return 'text-right';
+    if (language === 'tz') return 'tamazight-text';
+    return '';
+  };
+  
+  // Ajouter une classe pour bloquer le scroll du body
   useEffect(() => {
-    const styleElement = document.createElement('style');
-    styleElement.innerHTML = scrollbarStyles;
-    document.head.appendChild(styleElement);
+    // Ajouter la classe au body au mount
+    document.body.classList.add('modal-open');
     
+    // Effet de flou progressif
+    setTimeout(() => {
+      setShowBackdropBlur(true);
+    }, 100);
+    
+    // Nettoyer en enlevant la classe au unmount
     return () => {
-      document.head.removeChild(styleElement);
+      document.body.classList.remove('modal-open');
     };
   }, []);
   
-  // Gérer le scroll lorsque le popup est ouvert ou fermé
+  // Animations à l'ouverture
   useEffect(() => {
-    if (isOpen) {
-      // Sauvegarder la position de défilement actuelle
-      setScrollPosition(window.scrollY);
-      
-      // Bloquer le scroll de la page quand le popup est ouvert
-      document.body.style.overflow = 'hidden';
-      document.body.classList.add('modal-open');
-      document.body.style.top = `-${scrollPosition}px`;
-    } else {
-      // Réactiver le scroll quand le popup est fermé
-      document.body.style.overflow = '';
-      document.body.classList.remove('modal-open');
-      document.body.style.top = '';
-      
-      // Restaurer la position de défilement
-      window.scrollTo(0, scrollPosition);
-      setAnimationComplete(false);
-    }
-  }, [isOpen, scrollPosition]);
-
-  // Gestionnaire pour contenir le défilement à l'intérieur du popup
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (!contentRef.current || !contentRef.current.contains(e.target)) return;
-      
-      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-      const isScrollingUp = e.deltaY < 0;
-      const isScrollingDown = e.deltaY > 0;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      
-      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
-      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
-        e.preventDefault();
-      }
-    };
-
-    // Gestionnaire pour les événements tactiles
-    const handleTouchMove = (e) => {
-      if (!contentRef.current || !contentRef.current.contains(e.target)) return;
-      
-      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-      const touch = e.touches[0];
-      
-      // Stocker la position tactile actuelle et précédente
-      if (!contentRef.current.lastTouchY) {
-        contentRef.current.lastTouchY = touch.clientY;
-        return;
-      }
-      
-      const deltaY = contentRef.current.lastTouchY - touch.clientY;
-      contentRef.current.lastTouchY = touch.clientY;
-      
-      const isScrollingUp = deltaY < 0;
-      const isScrollingDown = deltaY > 0;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-      
-      // Si on est en haut et qu'on défile vers le haut OU en bas et qu'on défile vers le bas
-      if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
-        e.preventDefault();
-      }
-    };
-    
-    const handleTouchEnd = () => {
-      if (contentRef.current) {
-        contentRef.current.lastTouchY = undefined;
-      }
-    };
-    
-    // Ajouter les gestionnaires d'événements
-    const content = contentRef.current;
-    if (content && isOpen) {
-      content.addEventListener('wheel', handleWheel, { passive: false });
-      content.addEventListener('touchmove', handleTouchMove, { passive: false });
-      content.addEventListener('touchend', handleTouchEnd);
-      content.addEventListener('touchcancel', handleTouchEnd);
-    }
-    
-    return () => {
-      if (content) {
-        content.removeEventListener('wheel', handleWheel);
-        content.removeEventListener('touchmove', handleTouchMove);
-        content.removeEventListener('touchend', handleTouchEnd);
-        content.removeEventListener('touchcancel', handleTouchEnd);
-      }
-    };
-  }, [isOpen]);
-  
-  // Animation à l'ouverture et fermeture
-  useEffect(() => {
-    if (isOpen && contentRef.current && overlayRef.current) {
-      // Créer une timeline pour séquencer les animations
-      const tl = gsap.timeline({
-        onComplete: () => setAnimationComplete(true)
-      });
-      
-      // Animation du fond avec un léger effet de flou qui s'intensifie
-      tl.to(overlayRef.current, {
-        opacity: 1,
-        backdropFilter: "blur(12px)",
-        duration: 0.4,
-        ease: "power2.inOut"
-      });
-      
-      // Animation du conteneur principal avec un effet de rebond léger
-      tl.fromTo(contentRef.current, 
-        { 
-          y: 50,
-          scale: 0.95,
-          opacity: 0,
-          borderRadius: "16px",
-        }, 
-        { 
-          y: 0,
-          scale: 1,
-          opacity: 1,
-          borderRadius: "8px",
-          duration: 0.5,
-          ease: "back.out(1.2)",
-        },
-        "-=0.2" // Commencer légèrement avant que l'animation du fond soit terminée
+    if (overlayRef.current && contentRef.current) {
+      // Animation d'entrée
+      gsap.fromTo(overlayRef.current, 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.4, ease: "power2.out" }
       );
       
-      // Animation de la barre de progression
-      if (progressRef.current) {
-        tl.fromTo(progressRef.current.querySelector(".progress-bar"), 
-          { width: 0 },
-          { 
-            width: "100%", 
-            duration: 1,
-            ease: "power2.inOut"
-          },
-          "-=0.2"
-        );
-      }
+      gsap.fromTo(contentRef.current, 
+        { y: 50, opacity: 0, scale: 0.95 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)", delay: 0.2 }
+      );
       
-      // Animation séquentielle des étapes de la timeline
-      if (timelineRef.current) {
-        tl.fromTo(timelineRef.current.querySelectorAll(".timeline-item"),
-          { 
-            opacity: 0,
-            x: -20,
-          },
-          { 
-            opacity: 1,
-            x: 0,
-            stagger: 0.15,
-            duration: 0.5,
-            ease: "power2.out"
-          },
-          "-=0.5"
-        );
-      }
+      // Animations staggered des sections de contenu
+      const sections = [
+        formatRef.current,
+        descriptionRef.current,
+        requirementsRef.current,
+        prizeRef.current,
+        prizesRef.current,
+        rulesRef.current
+      ].filter(Boolean);
       
-      // Animation des cartes de prix
-      if (prizesRef.current) {
-        tl.fromTo(prizesRef.current.querySelectorAll(".prize-card"),
-          { 
-            opacity: 0,
-            y: 20,
-            scale: 0.95
-          },
-          { 
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            stagger: 0.1,
-            duration: 0.4,
-            ease: "power2.out"
-          },
-          "-=0.8"
-        );
-      }
-      
-      // Animation des règles et conditions
-      if (rulesRef.current) {
-        tl.fromTo(rulesRef.current.querySelectorAll(".rules-card"),
-          { 
-            opacity: 0,
-            y: 15,
-          },
-          { 
-            opacity: 1,
-            y: 0,
-            stagger: 0.15,
-            duration: 0.4,
-            ease: "power2.out"
-          },
-          "-=0.6"
-        );
-      }
+      gsap.fromTo(sections, 
+        { y: 30, opacity: 0 }, 
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power2.out", delay: 0.4 }
+      );
     }
-  }, [isOpen]);
-
-  // Gestion de la fermeture avec animation
-  const handleClose = () => {
-    if (contentRef.current && overlayRef.current) {
-      // Timeline pour la séquence de fermeture
-      const tl = gsap.timeline({
-        onComplete: onClose
-      });
-      
-      // Animation du conteneur principal
-      tl.to(contentRef.current, {
-        y: 30,
-        opacity: 0,
-        scale: 0.96,
-        borderRadius: "16px",
-        duration: 0.3,
-        ease: "power2.in"
-      });
-      
-      // Animation du fond
-      tl.to(overlayRef.current, {
-        opacity: 0,
-        backdropFilter: "blur(0px)",
-        duration: 0.3,
-        ease: "power2.inOut"
-      }, "-=0.15");
-    } else {
-      onClose();
+  }, []);
+  
+  // Gérer le clic à l'extérieur pour fermer
+  const handleOverlayClick = (e) => {
+    // S'assurer que le clic est sur l'overlay et non sur son contenu
+    if (e.target === overlayRef.current) {
+      handleClose();
     }
   };
-
-  // Si popup fermé ou pas de jeu sélectionné
-  if (!isOpen || !game) return null;
+  
+  // Fermeture avec animation
+  const handleClose = () => {
+    if (typeof onClose === 'function') {
+      if (overlayRef.current && contentRef.current) {
+        // Désactiver le flou
+        setShowBackdropBlur(false);
+        
+        // Animation de fermeture
+        const tl = gsap.timeline({
+          onComplete: onClose
+        });
+        
+        // Animation du contenu
+        tl.to(contentRef.current, {
+          y: 30,
+          opacity: 0,
+          scale: 0.95,
+          duration: 0.4,
+          ease: "power2.in"
+        });
+        
+        // Animation de l'overlay
+        tl.to(overlayRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in"
+        }, "-=0.2");
+      } else {
+        // Si les refs ne sont pas disponibles, appeler directement onClose
+        onClose();
+      }
+    }
+  };
+  
+  // Ajouter le support de la touche Escape pour fermer
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscapeKey);
+    
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, []);
+  
+  // Vérifier si le jeu est défini et récupérer les informations
+  const getGameInfo = () => {
+    if (!game) {
+      console.warn('GameDetailPopup - getGameInfo: game is null or undefined');
+      // Retourner les informations par défaut
+      return {
+        format: t('gameDetails.unavailable'),
+        description: t('gameDetails.comingSoon'),
+        requirements: [],
+        rounds: [],
+        prizes: [],
+        prize: t('gameDetails.tbd'),
+        rules: t('gameDetails.rulesComingSoon'),
+        color: "from-blue-500 to-purple-500",
+        icon: "🎮"
+      };
+    }
+    
+    try {
+      // Utiliser le nom du jeu comme clé pour récupérer les infos s'il existe
+      if (game.name && tournamentInfo[game.name]) {
+        return tournamentInfo[game.name];
+      }
+      
+      // Fallback: essayer de trouver une correspondance basée sur l'ID
+      if (game.id) {
+        const gameNames = Object.keys(tournamentInfo);
+        for (const gameName of gameNames) {
+          if (gameName.toLowerCase().includes(game.id.toString().toLowerCase())) {
+            return tournamentInfo[gameName];
+          }
+        }
+      }
+      
+      // Si aucune correspondance n'est trouvée, retourner les infos par défaut
+      return {
+        format: t('gameDetails.unavailable'),
+        description: t('gameDetails.comingSoon'),
+        requirements: [],
+        rounds: [],
+        prizes: [],
+        prize: t('gameDetails.tbd'),
+        rules: t('gameDetails.rulesComingSoon'),
+        color: "from-blue-500 to-purple-500",
+        icon: "🎮"
+      };
+    } catch (error) {
+      console.error('Error in getGameInfo:', error);
+      // En cas d'erreur, retourner les infos par défaut
+      return {
+        format: t('gameDetails.unavailable'),
+        description: t('gameDetails.comingSoon'),
+        requirements: [],
+        rounds: [],
+        prizes: [],
+        prize: t('gameDetails.tbd'),
+        rules: t('gameDetails.rulesComingSoon'),
+        color: "from-blue-500 to-purple-500",
+        icon: "🎮"
+      };
+    }
+  };
   
   // Récupérer les infos du tournoi pour ce jeu
-  const gameInfo = tournamentInfo[game.name] || {
-    format: "Information non disponible",
-    description: "Détails à venir prochainement.",
-    requirements: [],
-    rounds: [],
-    prizes: [],
-    prize: "À déterminer",
-    rules: "Règles à venir",
-    color: "from-blue-500 to-purple-500",
-    icon: "🎮"
-  };
+  const gameInfo = getGameInfo();
+  
+  // Si aucun jeu n'est défini ou si gameInfo est null, ne rien afficher
+  if (!game || !gameInfo) {
+    return null;
+  }
 
   return (
-    <div 
-      ref={overlayRef}
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 opacity-0"
-      onClick={handleClose}
-    >
+    <>
+      {/* Style pour la scrollbar et les animations */}
+      <style>{scrollbarStyles}</style>
+      
       <div 
-        ref={contentRef}
-        className="relative w-full max-w-5xl overflow-auto custom-scrollbar popup-content bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-        style={{ overscrollBehavior: 'contain' }}
+        ref={overlayRef}
+        className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 opacity-0 transition-all duration-300 ${showBackdropBlur ? 'backdrop-blur-effect' : ''}`}
+        onClick={handleOverlayClick}
       >
-        {/* Header avec image et titre */}
-        <div className="relative h-48 overflow-hidden rounded-t-lg">
-          <div className={`absolute inset-0 bg-gradient-to-br ${gameInfo.color} opacity-20`}></div>
-          <img 
-            src={game.image} 
-            alt={game.name} 
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a14]"></div>
-          
-          <div className="absolute bottom-0 left-0 w-full p-6 flex items-end justify-between">
-            <div>
-              <span className="text-xs text-primary font-valorant uppercase tracking-wider">MGE Championship 2025</span>
-              <h2 className={`${game.fontClass || "font-nightWarrior"} text-4xl text-white uppercase flex items-center gap-2`}>
-                {game.name} <span className="text-2xl">{gameInfo.icon}</span>
-              </h2>
-            </div>
+        <div 
+          ref={contentRef}
+          className="relative w-full max-w-5xl overflow-hidden custom-scrollbar popup-content bg-[#0a0a14] border border-primary/30 rounded-lg shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+          style={{ 
+            overscrollBehavior: 'contain',
+            boxShadow: '0 20px 60px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(215, 198, 175, 0.2)' 
+          }}
+        >
+          {/* Header avec image et titre */}
+          <div className="relative h-48 overflow-hidden rounded-t-lg">
+            <div className={`absolute inset-0 bg-gradient-to-br ${gameInfo.color || 'from-blue-500 to-purple-500'} opacity-20`}></div>
+            <img 
+              src={game.image || '/img/placeholder-game.jpg'} 
+              alt="" 
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a14]"></div>
             
-            <button
-              onClick={handleClose}
-              className="p-2 rounded-full bg-black/40 hover:bg-primary/30 text-white transition-all duration-300 hover:scale-110"
-              aria-label="Fermer"
-            >
-              <X size={24} />
-            </button>
-          </div>
-        </div>
-        
-        {/* Contenu */}
-        <div className="p-6">
-          {/* Description et format du tournoi */}
-          <div className="mb-8 bg-black/30 p-5 rounded-lg backdrop-blur-sm border-l-4 border-primary transform transition-transform duration-500 hover:translate-x-1 hover:shadow-lg hover:shadow-primary/20">
-            <p className="text-white/90 italic leading-relaxed">{gameInfo.description}</p>
-            
-            <div className="mt-4 flex items-center gap-2">
-              <Gamepad2 size={18} className="text-primary" />
-              <span className="text-primary font-valorant text-sm uppercase">Format:</span>
-              <span className="text-white/90">{gameInfo.format}</span>
-            </div>
-          </div>
-          
-          {/* Progress bar de progression du tournoi */}
-          <div className="mb-8" ref={progressRef}>
-            <h3 className="text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2">
-              <Calendar className="h-5 w-5" /> Progression du tournoi
-            </h3>
-            
-            {/* Barre de progression */}
-            <div className="relative h-2 bg-gray-800 rounded-full mb-6 overflow-hidden">
-              <div className={`progress-bar h-full ${gameInfo.color} rounded-full`}></div>
-            </div>
-            
-            {/* Timeline des étapes */}
-            <div className="relative ml-4" ref={timelineRef}>
-              {/* Ligne verticale */}
-              <div className="absolute top-0 bottom-0 left-3 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20"></div>
+            <div className="absolute bottom-0 left-0 w-full p-6 flex items-end justify-between">
+              <div>
+                <span className={`text-xs text-primary font-valorant uppercase tracking-wider ${getTextClass()}`}>{t('gameDetails.championship')}</span>
+                <h2 className={`${game.fontClass || "font-nightWarrior"} text-4xl text-white uppercase flex items-center gap-2`}>
+                  <span className="game-popup-icon">{gameInfo.icon}</span>
+                </h2>
+              </div>
               
-              {/* Étapes */}
-              {gameInfo.rounds.map((round, index) => (
-                <div key={index} className="timeline-item relative pl-10 pb-10 opacity-0">
-                  {/* Point sur la timeline */}
-                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-[#0a0a14] border-2 border-primary flex items-center justify-center transform transition-transform duration-300 hover:scale-125">
-                    <div className="h-2 w-2 rounded-full bg-primary transform transition-all duration-300 group-hover:scale-150"></div>
-                  </div>
-                  
-                  {/* Contenu de l'étape */}
-                  <div className="bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/50 hover:shadow-md hover:shadow-primary/10 hover:translate-x-1 group">
-                    <h4 className="font-valorant text-white text-md uppercase group-hover:text-primary transition-colors flex items-center gap-2">
-                      <span className="inline-block h-5 w-5 rounded-full bg-gradient-to-br from-primary to-primary/60 text-xs flex items-center justify-center">
-                        {index + 1}
-                      </span>
-                      {round.name}
-                    </h4>
-                    <p className="text-primary/80 text-sm mt-2 flex items-center gap-1">
-                      <Calendar size={14} /> {round.date}
-                    </p>
-                    <p className="text-white/70 mt-3">{round.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Section des prix */}
-          <div className="mb-8" ref={prizesRef}>
-            <h3 className="text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2">
-              <Trophy className="h-5 w-5" /> Prize Pool
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {gameInfo.prizes && gameInfo.prizes.map((prize, index) => (
-                <div 
-                  key={index} 
-                  className={`prize-card relative overflow-hidden rounded-lg p-4 bg-black/40 backdrop-blur-sm border border-white/10 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 ${index === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
-                >
-                  <div className={`absolute top-0 right-0 w-12 h-12 -mr-6 -mt-6 rounded-full bg-gradient-to-br ${index === 0 ? 'from-yellow-400 to-amber-600' : index === 1 ? 'from-gray-300 to-gray-500' : index === 2 ? 'from-amber-700 to-amber-900' : 'from-blue-400 to-blue-600'} opacity-50`}></div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className={`rounded-full p-2 ${index === 0 ? 'bg-yellow-500/20 text-yellow-400' : index === 1 ? 'bg-gray-500/20 text-gray-300' : index === 2 ? 'bg-amber-800/20 text-amber-700' : 'bg-blue-600/20 text-blue-400'} transition-transform duration-300 hover:scale-110`}>
-                      <Medal size={index === 0 ? 22 : 18} />
-                    </div>
-                    <div>
-                      <p className="text-white/60 text-sm">{prize.position}</p>
-                      <p className="text-white text-xl font-nightWarrior mt-1">{prize.amount}</p>
-                      {prize.extra && (
-                        <p className="text-primary/80 text-xs mt-2">{prize.extra}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Conditions et règles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" ref={rulesRef}>
-            {/* Conditions de participation */}
-            <div className="rules-card bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/10">
-              <h3 className="text-primary font-valorant text-lg uppercase mb-3 flex items-center gap-2">
-                <Users className="h-5 w-5" /> Conditions de participation
-              </h3>
-              <ul className="space-y-2">
-                {gameInfo.requirements && gameInfo.requirements.map((req, index) => (
-                  <li key={index} className="flex items-start gap-2 text-white/80 group">
-                    <span className="inline-block mt-1 h-2 w-2 rounded-full bg-primary flex-shrink-0 transition-transform duration-300 group-hover:scale-150"></span>
-                    <span className="transition-colors duration-300 group-hover:text-white">{req}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Règlement */}
-            <div className="rules-card bg-black/20 backdrop-blur-sm p-5 rounded-lg border border-white/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/10">
-              <h3 className="text-primary font-valorant text-lg uppercase mb-3 flex items-center gap-2">
-                <Book className="h-5 w-5" /> Règlement
-              </h3>
-              <div className="text-white/80 whitespace-pre-line">{gameInfo.rules}</div>
-            </div>
-          </div>
-          
-          {/* Bouton d'inscription */}
-          <div className="mt-10 text-center">
-            <div className="relative inline-block group">
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary via-primary/80 to-primary opacity-70 blur-lg group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
-              <a 
-                href="http://109.120.179.6:3001/auth/auth1/login"
-                className="relative inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white font-valorant px-8 py-3 uppercase transition-all duration-300 hover:scale-105 rounded-lg"
+              <button
+                onClick={handleClose}
+                className="p-2 rounded-full bg-black/40 hover:bg-primary/30 text-white transition-all duration-300 hover:scale-110 close-button"
+                aria-label={t('gameDetails.close')}
               >
-                <Sparkles size={18} className="animate-pulse" />
-                S'inscrire au tournoi
-              </a>
+                <X size={24} />
+              </button>
             </div>
-            <p className="text-white/50 text-sm mt-3">Date limite d'inscription: 10 juin 2025</p>
+          </div>
+          
+          {/* Contenu */}
+          <div className="p-6 pt-2">
+            {/* Format du tournoi */}
+            <div className="mb-8" ref={formatRef}>
+              <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                <Calendar className="h-5 w-5" /> {t('gameDetails.tournamentFormat')}
+              </h3>
+              <p className={`text-white/90 leading-relaxed ${getTextClass()}`}>{gameInfo.format}</p>
+            </div>
+            
+            {/* Description et détails */}
+            <div className="mb-8" ref={descriptionRef}>
+              <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                <Gamepad2 className="h-5 w-5" /> {t('gameDetails.description')}
+              </h3>
+              <p className={`text-white/90 leading-relaxed ${getTextClass()}`}>{gameInfo.description}</p>
+            </div>
+            
+            {/* Exigences */}
+            {gameInfo.requirements && gameInfo.requirements.length > 0 && (
+              <div className="mb-8" ref={requirementsRef}>
+                <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                  <Users className="h-5 w-5" /> {t('gameDetails.requirements')}
+                </h3>
+                <ul className="list-disc list-inside space-y-2 text-white/90 ml-2">
+                  {gameInfo.requirements.map((req, index) => (
+                    <li key={index} className={`${getTextClass()} hover:text-white transition-colors duration-200`}>{req}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {/* Phases et rounds */}
+            {gameInfo.rounds && gameInfo.rounds.length > 0 && (
+              <div className="mb-8" ref={prizeRef}>
+                <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                  <ScrollText className="h-5 w-5" /> {t('gameDetails.phases')}
+                </h3>
+                
+                <div className="relative">
+                  <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20"></div>
+                  {gameInfo.rounds.map((round, index) => (
+                    <div key={index} className="flex mb-6 phase-item p-2 rounded-lg relative">
+                      <div className="mr-6 flex-shrink-0">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center timeline-dot ${index === 0 ? 'bg-primary/20 animate-pulse' : 'bg-black/40'} border ${index === 0 ? 'border-primary' : 'border-primary/30'}`}>
+                          <span className="text-white font-bold">{index + 1}</span>
+                        </div>
+                      </div>
+                      <div className="flex-grow">
+                        <h4 className={`text-white font-valorant mb-1 ${getTextClass()}`}>{round.name || ''}</h4>
+                        <p className={`text-white/70 text-sm ${getTextClass()}`}>{round.date || ''}</p>
+                        <p className={`text-white/90 mt-2 ${getTextClass()}`}>{round.description || ''}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Prize pool */}
+            <div className="mb-8" ref={prizesRef}>
+              <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                <Trophy className="h-5 w-5" /> {t('gameDetails.prizePool')}
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {gameInfo.prizes && gameInfo.prizes.length > 0 ? (
+                  gameInfo.prizes.map((prize, index) => (
+                    <div 
+                      key={index} 
+                      className={`prize-card relative overflow-hidden rounded-lg p-4 bg-black/40 backdrop-blur-sm border border-white/10 ${index === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+                    >
+                      <div className={`absolute top-0 right-0 w-16 h-16 -mr-8 -mt-8 rounded-full bg-gradient-to-br ${index === 0 ? 'from-yellow-400 to-amber-600' : index === 1 ? 'from-gray-300 to-gray-500' : index === 2 ? 'from-amber-700 to-amber-900' : 'from-blue-400 to-blue-600'} opacity-50`}></div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className={`rounded-full p-2 ${index === 0 ? 'bg-yellow-500/20 text-yellow-400' : index === 1 ? 'bg-gray-500/20 text-gray-300' : index === 2 ? 'bg-amber-800/20 text-amber-700' : 'bg-blue-600/20 text-blue-400'} transition-transform duration-300 hover:scale-110`}>
+                          <Medal size={index === 0 ? 22 : 18} />
+                        </div>
+                        <div>
+                          <p className={`text-white/60 text-sm ${getTextClass()}`}>{prize.position || ''}</p>
+                          <p className={`text-white text-xl font-nightWarrior mt-1 ${getTextClass()}`}>{prize.amount || ''}</p>
+                          {prize.extra && (
+                            <p className={`text-primary/80 text-xs mt-2 ${getTextClass()}`}>{prize.extra}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="sm:col-span-2 lg:col-span-4 p-4 bg-black/40 rounded-lg border border-white/10">
+                    <p className={`text-white/70 text-center ${getTextClass()}`}>{t('gameDetails.prizePoolTBA')}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Conditions et règles */}
+            <div className="mb-4" ref={rulesRef}>
+              <h3 className={`text-primary font-valorant text-lg uppercase mb-4 flex items-center gap-2 ${getTextClass()}`}>
+                <ScrollText className="h-5 w-5" /> {t('gameDetails.rules')}
+              </h3>
+              <div className={`text-white/90 leading-relaxed p-4 bg-black/40 rounded-lg border border-white/10 ${getTextClass()} whitespace-pre-line`}>
+                {gameInfo.rules}
+              </div>
+            </div>
+            
+            {/* Bouton de fermeture */}
+            <div className="text-center mt-8">
+              <button
+                onClick={handleClose}
+                className={`bg-primary text-white font-valorant px-6 py-2 rounded-md hover:bg-primary/80 transition-all hover:scale-105 ${getTextClass()}`}
+              >
+                {t('gameDetails.close')}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,31 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useAds } from '../context/AdContext';
+import { useAds } from '../contexts/AdContext';
 import gsap from 'gsap';
+import { Info, X } from 'lucide-react';
 
 /**
  * Composant pour un popup publicitaire modal avec design gaming avancé
+ * Intégré avec le mode de démonstration
  */
 const PopupAd = () => {
   const { showAds } = useAds();
   const [isVisible, setIsVisible] = useState(false);
+  const [adOptions, setAdOptions] = useState({ popups: true });
   const popupRef = useRef(null);
   const contentRef = useRef(null);
   const adContainerRef = useRef(null);
   
-  // Montrer le popup après un délai
+  // Écouter les changements d'options de publicité
   useEffect(() => {
-    let timeoutId;
+    const handleOptionsChange = (event) => {
+      setAdOptions(event.detail.options);
+    };
     
-    if (showAds) {
-      timeoutId = setTimeout(() => {
-        setIsVisible(true);
-      }, 15000); // 15 secondes
+    window.addEventListener('adOptionsChanged', handleOptionsChange);
+    
+    // Charger les options au montage
+    const storedOptions = localStorage.getItem('mge_ad_options');
+    if (storedOptions) {
+      try {
+        setAdOptions(JSON.parse(storedOptions));
+      } catch (e) {
+        console.error('Erreur lors du chargement des options de publicité:', e);
+      }
     }
     
     return () => {
-      if (timeoutId) clearTimeout(timeoutId);
+      window.removeEventListener('adOptionsChanged', handleOptionsChange);
     };
-  }, [showAds]);
+  }, []);
   
   // Animation d'entrée et sortie
   useEffect(() => {
@@ -68,17 +79,6 @@ const PopupAd = () => {
         { opacity: 0, y: 10 },
         { opacity: 1, y: 0, duration: 0.5, delay: 0.4, ease: "power3.out" }
       );
-      
-      // Animation des lignes autour du contenu
-      gsap.fromTo(".line-anim-h", 
-        { width: 0 },
-        { width: "100%", duration: 0.8, delay: 0.6, ease: "power1.inOut" }
-      );
-      
-      gsap.fromTo(".line-anim-v", 
-        { height: 0 },
-        { height: "100%", duration: 0.8, delay: 0.6, ease: "power1.inOut" }
-      );
     }
   }, [isVisible]);
   
@@ -106,13 +106,29 @@ const PopupAd = () => {
     }
   };
   
-  if (!showAds || !isVisible) return null;
+  // Ouvrir manuellement le popup via le contexte global
+  useEffect(() => {
+    const handleOpenPopup = () => {
+      if (showAds && adOptions.popups) {
+        setIsVisible(true);
+      }
+    };
+    
+    window.addEventListener('openDemoPopup', handleOpenPopup);
+    
+    return () => {
+      window.removeEventListener('openDemoPopup', handleOpenPopup);
+    };
+  }, [showAds, adOptions.popups]);
+  
+  // Si publicités désactivées ou popups spécifiquement désactivés, ne rien afficher
+  if (!showAds || !adOptions.popups || !isVisible) return null;
   
   return (
     <div 
       ref={popupRef}
       className="fixed inset-0 flex items-center justify-center z-[1000]"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
       onClick={(e) => {
         if (e.target === popupRef.current) closePopup();
       }}
@@ -138,44 +154,33 @@ const PopupAd = () => {
         className="relative bg-gradient-to-br from-[#0a0a14] to-[#1a1a2e] rounded-lg shadow-2xl max-w-md w-full mx-4 overflow-hidden"
         style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 25px rgba(106, 90, 205, 0.15)' }}
       >
-        {/* Effet de bordure brillante */}
-        <div className="border-glow absolute -inset-[1px] rounded-lg z-0 opacity-0" style={{ 
-          background: 'linear-gradient(45deg, #6a5acd, transparent, #6a5acd, transparent, #6a5acd)',
-          filter: 'blur(2px)',
-          backgroundSize: '400% 400%',
-          animation: 'gradient-shift 3s ease infinite'
-        }}></div>
+        {/* Bannière mode démo */}
+        <div className="absolute top-0 left-0 right-0 bg-blue-600 text-white text-xs text-center py-1 z-50">
+          Mode Démonstration - Exemple de Popup
+        </div>
         
         {/* Bouton de fermeture */}
         <button 
           onClick={closePopup}
-          className="absolute top-3 right-3 text-gray-400 hover:text-white p-1 z-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-primary/30"
+          className="absolute top-8 right-3 text-gray-400 hover:text-white p-1 z-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-blue-600/30"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <X size={20} />
         </button>
         
         {/* En-tête */}
-        <div className="relative p-4 border-b border-primary/20">
+        <div className="relative p-4 mt-6 border-b border-blue-500/20">
           <div className="flex items-center">
-            <div className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse"></div>
-            <h2 className="text-primary font-valorant text-lg uppercase tracking-wider">Publicité Premium</h2>
+            <div className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
+            <h2 className="text-blue-500 font-bold text-lg uppercase tracking-wider">Espace Publicitaire</h2>
           </div>
-          <div className="text-white/60 text-xs mt-1">Sponsorisé par nos partenaires</div>
-          
-          {/* Lignes décoratives */}
-          <div className="line-anim-h absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+          <div className="text-white/60 text-xs mt-1">Exemple de popup pour démonstration</div>
         </div>
         
         {/* Contenu */}
         <div className="p-6 relative">
-          <div className="line-anim-v absolute top-0 left-0 w-[1px] h-0 bg-gradient-to-b from-transparent via-primary/50 to-transparent"></div>
-          <div className="line-anim-v absolute top-0 right-0 w-[1px] h-0 bg-gradient-to-b from-transparent via-primary/50 to-transparent"></div>
-          
           <div 
             ref={adContainerRef}
-            className="bg-gradient-to-br from-black/60 to-primary/10 p-6 rounded-lg flex flex-col items-center mb-4 relative overflow-hidden"
+            className="bg-gradient-to-br from-black/60 to-blue-500/10 p-6 rounded-lg flex flex-col items-center mb-4 relative overflow-hidden"
           >
             {/* Effet de scan light */}
             <div 
@@ -187,24 +192,26 @@ const PopupAd = () => {
               }}
             ></div>
             
-            <span className="text-primary text-xs font-valorant uppercase mb-2 tracking-widest">Offre Spéciale</span>
-            <div className="relative h-[250px] w-full border border-primary/30 rounded-lg flex items-center justify-center overflow-hidden"
+            <div className="relative h-[220px] w-full border border-blue-500/30 rounded-lg flex items-center justify-center overflow-hidden"
               style={{ 
-                background: 'linear-gradient(135deg, rgba(10, 10, 20, 0.8), rgba(40, 25, 90, 0.4))',
+                background: 'linear-gradient(135deg, rgba(10, 10, 20, 0.8), rgba(25, 40, 90, 0.4))',
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3) inset'
               }}
             >
-              {/* Coins avec accents */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-primary/70"></div>
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-primary/70"></div>
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-primary/70"></div>
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-primary/70"></div>
-              
               <div className="text-center p-4 relative z-10">
-                <h3 className="text-primary font-valorant text-xl mb-2">ESPACE PUBLICITAIRE</h3>
-                <p className="text-white/80 text-sm mb-3">Format Rectangle (300×250)</p>
-                <div className="inline-block bg-primary/20 backdrop-blur-sm px-3 py-1 rounded text-white text-sm border border-primary/30 hover:bg-primary/30 transition-colors duration-300 cursor-pointer">
-                  <span className="font-valorant text-xs">RÉSERVER CET ESPACE</span>
+                <div className="flex items-center justify-center mb-4">
+                  <Info size={40} className="text-blue-400" />
+                </div>
+                
+                <h3 className="text-white font-bold text-xl mb-2">DÉMONSTRATION</h3>
+                <p className="text-white/80 text-sm mb-4">
+                  Cet espace est prévu pour les communications importantes du Ministère.
+                  <br /><br />
+                  Pas de publicités commerciales sur ce site.
+                </p>
+                
+                <div className="inline-block bg-blue-500/20 backdrop-blur-sm px-3 py-1 rounded text-white text-sm border border-blue-500/30 hover:bg-blue-500/30 transition-colors duration-300 cursor-pointer">
+                  <span className="text-xs font-bold">FERMER</span>
                 </div>
               </div>
             </div>
@@ -215,26 +222,15 @@ const PopupAd = () => {
               onClick={closePopup}
               className="text-white/70 text-sm hover:text-white bg-black/30 px-3 py-1 rounded-md transition-colors duration-300 hover:bg-black/50"
             >
-              Fermer
+              Fermer la démo
             </button>
-            <p className="text-xs text-gray-500">Apparaît après 15s de navigation</p>
+            <p className="text-xs text-gray-500">Mode démonstration uniquement</p>
           </div>
-        </div>
-        
-        {/* Bas de page avec ligne décorative */}
-        <div className="relative">
-          <div className="line-anim-h absolute top-0 left-0 h-[1px] w-0 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
         </div>
       </div>
       
       {/* Styles globaux pour les animations */}
       <style jsx="true">{`
-        @keyframes gradient-shift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
         @keyframes scanlight {
           0% { transform: skewX(-20deg) translateX(-100%); }
           100% { transform: skewX(-20deg) translateX(300%); }

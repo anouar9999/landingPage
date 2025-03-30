@@ -6,11 +6,14 @@ import { useRef, useState, useEffect } from "react";
 import AnimatedTitle from "./AnimatedTitle";
 import GameDetailPopup from "./GameDetailPopup";
 import GamePanelAd from "./GamePanelAd";
+import { useTranslation } from "../hooks/useTranslation";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const GamingShowcase = () => {
+  const { t, isRtl } = useTranslation();
+  
   // État pour gérer le popup
   const [selectedGame, setSelectedGame] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -177,8 +180,9 @@ const GamingShowcase = () => {
 
   return (
     <div
-      id="Discover"
+      id="about"
       className="relative min-h-screen w-full overflow-x-hidden bg-[#F0F0FF]"
+      dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* Curseur personnalisé */}
       <div 
@@ -192,18 +196,17 @@ const GamingShowcase = () => {
       >
         <div className="w-full h-full rounded-full border-2 border-primary flex items-center justify-center">
           <div className="w-2/3 h-2/3 rounded-full border border-primary animate-pulse"></div>
-          <div className="absolute text-primary text-xs font-bold">CLIQUEZ</div>
+          <div className="absolute text-primary text-xs font-bold">{t('about.clickPrompt')}</div>
         </div>
       </div>
 
       <div className="relative text-center mt-8 sm:mt-12 md:mt-20 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         <p className="font-valorant text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
-          Marhba bikom f akbar tournoi dyal e-sport f lMaghrib. Werriw lina chno
-          3andkom fl Game likinasbkum.
+          {t('about.subtitle')}
         </p>
 
         <AnimatedTitle
-          title="Disc<b>o</b>ver the world's <br /> largest shared <b>a</b>dventure"
+          title={t('about.title')}
           containerClass="my-2 sm:my-3 md:my-5 !text-black text-center font-nightWarrior text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
         />
       </div>
@@ -254,7 +257,7 @@ const GamingShowcase = () => {
                       
                       {/* Call to action button */}
                       <div className="mt-4 transition-transform duration-300 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
-                        <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">Détails</button>
+                        <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">{t('about.details')}</button>
                       </div>
                     </div>
                   </div>
@@ -299,7 +302,7 @@ const GamingShowcase = () => {
                   
                   {/* Call to action button */}
                   <div className="mt-4 transition-transform duration-300 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
-                    <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">Détails</button>
+                    <button className="bg-primary text-white text-sm px-6 py-2 rounded-full hover:bg-primary/80 transition-all">{t('about.details')}</button>
                   </div>
                 </div>
               </div>
@@ -352,7 +355,7 @@ const GamingShowcase = () => {
                         
                         {/* Mobile CTA indicator */}
                         <div className="mt-3">
-                          <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">Appuyez pour plus d'infos</span>
+                          <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">{t('about.tapForInfo')}</span>
                         </div>
                       </div>
                     </div>
@@ -397,7 +400,7 @@ const GamingShowcase = () => {
                     
                     {/* Mobile CTA indicator */}
                     <div className="mt-3">
-                      <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">Appuyez pour plus d'infos</span>
+                      <span className="inline-block text-white text-xs bg-primary/70 px-3 py-1 rounded-full">{t('about.tapForInfo')}</span>
                     </div>
                   </div>
                 </div>
@@ -408,11 +411,12 @@ const GamingShowcase = () => {
       </div>
       
       {/* Popup pour les détails du tournoi */}
-      <GameDetailPopup 
-        isOpen={isPopupOpen}
-        onClose={handleClosePopup}
-        game={selectedGame}
-      />
+      {isPopupOpen && selectedGame && (
+        <GameDetailPopup 
+          game={selectedGame}
+          onClose={handleClosePopup}
+        />
+      )}
     </div>
   );
 };

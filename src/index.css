@@ -1,4 +1,9 @@
 @import url("https://fonts.cdnfonts.com/css/general-sans");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh:wght@400;500;600;700&display=swap');
+
+/* Import direct PRIORITAIRE pour police Tifinagh */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh:wght@400;600;700&display=swap&text=ⴰⴱⴳⴴⴵⴶⴷⴸⴹⴺⴻⴼⴽⴾⴿⵀⵁⵂⵃⵄⵅⵆⵇⵈⵉⵊⵋⵌⵍⵎⵏⵐⵑⵒⵓⵔⵕⵖⵗⵘⵙⵚⵛⵜⵝⵞⵟⵠⵡⵢⵣⵤⵥⵦⵧ');
 
 @tailwind base;
 @tailwind components;
@@ -61,6 +66,170 @@ body {
     font-family: "zentry";
     src: url("/fonts/zentry-regular.woff2") format("woff2");
   }
+
+  @font-face {
+    font-family: 'Tifinagh';
+    src: local('Noto Sans Tifinagh'),
+         url('/fonts/Tifinagh.ttf') format('truetype'),
+         url('https://fonts.gstatic.com/s/notosanstifinagh/v12/1_PTUG5xwfLYhWLbZTgyCYI87JlmyJz5i3Xk.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+2D30-2D7F;
+  }
+  
+  /* Définition explicite avec différents poids */
+  @font-face {
+    font-family: 'Tifinagh';
+    src: local('Noto Sans Tifinagh'),
+         url('https://fonts.gstatic.com/s/notosanstifinagh/v12/1_PTUG5xwfLYhWLbZTgyCYI87JlmyJz5i3Xk.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+2D30-2D7F;
+  }
+  
+  @font-face {
+    font-family: 'Tifinagh';
+    src: local('Noto Sans Tifinagh Bold'),
+         url('https://fonts.gstatic.com/s/notosanstifinagh/v12/1_PTUG5xwfLYhWLbZTgyCYI87JlmyJz5i3Xk.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+2D30-2D7F;
+  }
+  
+  /* Secours générique pour tous navigateurs */
+  @font-face {
+    font-family: 'Tifinagh-Fallback';
+    src: local('Noto Sans Tifinagh'), local('Arial Unicode MS');
+    font-display: swap;
+  }
+}
+
+/* Styles personnalisés pour les polices */
+.font-valorant, .font-circular {
+  font-family: 'Montserrat', 'circular-web', 'Arial', sans-serif;
+  /* La police Montserrat gère bien les caractères accentués */
+}
+
+/* Style amélioré pour les textes français */
+.french-text {
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.01em;
+  /* Police avec bon support des caractères accentués */
+}
+
+/* Styles spécifiques pour améliorer les titres en français */
+.french-title {
+  font-family: 'robert-medium', 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Support des caractères accentués pour les titres en français */
+html[lang="fr"] .font-nightWarrior {
+  font-family: 'robert-medium', 'Montserrat', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+  /* Style qui imite l'aspect de nightWarrior mais avec support des accents */
+}
+
+/* Améliorations spécifiques pour différents types de texte en français */
+html[lang="fr"] h1:not(.french-title):not(.tamazight-text):not(.arabic-text) {
+  font-family: 'robert-medium', 'Montserrat', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+html[lang="fr"] .text-primary {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+/* Amélioration de l'apparence des boutons et éléments d'interface en français */
+html[lang="fr"] button,
+html[lang="fr"] .button,
+html[lang="fr"] a.button,
+html[lang="fr"] .nav-item {
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  letter-spacing: 0.01em;
+  font-feature-settings: "kern";
+  text-rendering: optimizeLegibility;
+}
+
+/* Support spécifique des accents pour les grands titres qui utilisent nightWarrior */
+html[lang="fr"] h1.font-nightWarrior,
+html[lang="fr"] h2.font-nightWarrior,
+html[lang="fr"] .text-primary.font-nightWarrior {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3) !important;
+  letter-spacing: 0.03em !important;
+}
+
+/* Style ultra-agressif pour la classe tamazight-text */
+.tamazight-text {
+  font-family: 'Tifinagh', 'Noto Sans Tifinagh', system-ui, sans-serif !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.07em !important;
+  font-weight: 600 !important;
+  font-size: 1.15em !important; /* Plus grand pour meilleure visibilité */
+  text-rendering: optimizeLegibility !important;
+  font-feature-settings: "kern" !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/* Classe spécifique encore plus agressive */
+.font-tifinagh {
+  font-family: 'Tifinagh', 'Noto Sans Tifinagh', 'Tifinagh-Fallback', sans-serif !important;
+  font-weight: 700 !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.07em !important;
+}
+
+/* Sélecteur global pour toute la page quand langue=tz */
+html[lang="tz"] * {
+  font-family: 'Tifinagh', 'Noto Sans Tifinagh', sans-serif !important;
+  letter-spacing: 0.07em !important;
+  font-weight: 600 !important;
+}
+
+/* Redéfinir les exceptions après la règle globale */
+html[lang="tz"] .font-nightWarrior,
+html[lang="tz"] .nightWarrior {
+  font-family: 'nightWarrior', sans-serif !important; 
+}
+
+html[lang="tz"] [class^="lucide-"], 
+html[lang="tz"] [class*=" lucide-"] {
+  font-family: inherit !important;
+}
+
+/* Styles pour garantir l'affichage correct des caractères accentués en français */
+.french-text {
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  text-rendering: optimizeLegibility;
+  /* Police avec bon support des caractères accentués */
+}
+
+/* Ajustements RTL pour l'arabe */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
 }
 
 @layer utilities {
@@ -302,6 +471,33 @@ body {
   100% { opacity: 0.1; }
 }
 
+/* Header overlay styles */
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease-in-out;
+}
+
+.header-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.header-compact {
+  height: 60px;
+}
+
+.header-expanded {
+  height: 90px;
+}
+
 /* Add to your index.css */
 .section-wrapper {
   position: relative;
@@ -315,20 +511,78 @@ body {
   z-index: 1;
 }
 
-/* Remove absolute positioned gradients if they exist */
-.section-wrapper > div > div[class*="absolute"][class*="gradient"],
-.section-wrapper > div > div[class*="absolute"][class*="bg-gradient"] {
-  display: none;
-}
-.section-overlay {
-  opacity: 0;
-  will-change: opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* Garantir la visibilité des sections importantes */
+#PassGamers, #pro-path, #faq, #Tri9lGlory, #hero, #PrizePool {
+  scroll-margin-top: 80px; /* Add space for the fixed navigation bar */
+  position: relative;
+  z-index: 1;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
 }
 
-/* Remove any existing transition gradients from components */
-[class*="bg-gradient-to-b"],
-[class*="bg-gradient-to-t"] {
-  display: none !important;
+#PassGamers-content, #pro-path-content, #faq-content, #Tri9lGlory-content {
+  position: relative;
+  z-index: 1;
+  min-height: 80vh; /* Ensure minimum height for visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* Styles pour améliorer la lisibilité */
+p, div, span {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Debug styles */
+.debug-section {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 9999;
+}
+
+/* Styles spécifiques pour les titres en tamazight */
+html[lang="tz"] h1:not(.font-nightWarrior), 
+html[lang="tz"] h2:not(.font-nightWarrior), 
+html[lang="tz"] h3:not(.font-nightWarrior) {
+  font-family: 'Tifinagh', 'Noto Sans Tifinagh', sans-serif !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 700 !important;
+  font-size: 1.2em !important;
+}
+
+/* Assurer que toutes les traductions s'affichent correctement */
+[data-i18n], 
+[data-translation], 
+.i18n-text {
+  transition: all 0.3s ease;
+}
+
+/* Fix pour éviter les textes tronqués */
+html[lang="tz"] .text-truncate,
+html[lang="tz"] .truncate {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  max-width: none !important;
+}
+
+/* Force le preloading de la police */
+html::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  font-family: 'Tifinagh', 'Noto Sans Tifinagh';
 }

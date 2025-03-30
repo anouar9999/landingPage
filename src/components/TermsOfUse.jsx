@@ -152,7 +152,7 @@ const TermsOfUse = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-primary font-valorant">Dernière mise à jour : Mai 2024</p>
+          <p className="text-primary font-valorant">Dernière mise à jour : Mai 2025</p>
         </div>
       </div>
       

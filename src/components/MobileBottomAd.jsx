@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useAds } from '../context/AdContext';
+import { useAds } from '../contexts/AdContext';
 import gsap from 'gsap';
 
 /**

@@ -1,10 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="tifinagh-font-initialized">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/img/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Morocco Gaming Expo 2025 | MGE Championship</title>
+    
+    <!-- Optimisation des connexions Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Pré-chargement de la police Tifinagh directement depuis le CDN Google -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/notosanstifinagh/v15/QldJNTJJrfvt4f4aMXP3Ei7nEUwJ6AmK5xaC.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Feuille de style Tifinagh -->
+    <link rel="stylesheet" href="/fonts/tifinagh.css" />
+    
+    <!-- Tifinagh font via Google Fonts avec stratégie display=swap pour améliorer les performances -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tifinagh:wght@400;700&display=swap" />
   </head>
   <body>
     <div id="root"></div>

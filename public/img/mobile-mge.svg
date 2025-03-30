@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="600" viewBox="0 0 300 600">
+  <rect width="300" height="600" fill="#181830" />
+  <rect x="50" y="50" width="200" height="400" rx="20" ry="20" stroke="#d7c6af" stroke-width="4" fill="#0a0a14" />
+  <rect x="70" y="90" width="160" height="300" rx="8" ry="8" fill="#d7c6af" opacity="0.2" />
+  <text x="150" y="240" font-size="18" text-anchor="middle" fill="#d7c6af" dominant-baseline="middle">Mobile MGE</text>
+  <text x="150" y="270" font-size="14" text-anchor="middle" fill="#d7c6af" dominant-baseline="middle">Image de remplacement</text>
+  <circle cx="150" cy="500" r="20" fill="#d7c6af" opacity="0.5" />
+</svg> 

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+  <circle cx="30" cy="30" r="30" fill="#c1272d"/>
+  <g fill="#006233">
+    <path d="M30,20 L35.65,37.7 L20.57,26.91 L39.43,26.91 L24.35,37.7 Z"/>
+    <!-- Symbole Tifinagh simplifié -->
+    <path d="M22,14 L24,12 L28,12 L30,14 L30,17 L22,17 Z M36,14 L38,12 L42,12 L44,14 L44,17 L36,17 Z M30,19 L36,19 L36,21 L30,21 Z" fill="#ffce00" stroke="none"/>
+  </g>
+</svg> 
