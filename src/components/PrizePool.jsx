@@ -216,7 +216,7 @@ const PrizePool = () => {
               
               <div className="relative mt-4">
                 <h2 className="font-nightWarrior text-8xl font-bold text-primary">
-                  250 000 <small className="text-3xl">DH</small>
+                  250K <small className="text-3xl">DH</small>
                 </h2>
                 
                 {/* Animation de brillance */}
@@ -239,21 +239,37 @@ const PrizePool = () => {
             <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
               <PrizeCard 
                 place={t('prizePool.places.first')} 
-                amount="100 000 "
+                amount="100K "
                 index={0}
                 className="transform transition-all duration-500 hover:scale-105 z-30"
               />
               <PrizeCard 
                 place={t('prizePool.places.second')} 
-                amount="30 000 "
+                amount="30K "
                 index={1}
                 className="transform transition-all duration-500 hover:scale-105 z-20"
               />
               <PrizeCard 
                 place={t('prizePool.places.third')} 
-                amount="20 000 "
+                amount="15K "
                 index={2}
                 className="transform transition-all duration-500 hover:scale-105 z-10"
+              />
+            </div>
+            
+            {/* Prix supplémentaires */}
+            <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <PrizeCard 
+                place={t('prizePool.places.fourth')} 
+                amount="10K " 
+                index={3} 
+                className="col-span-1"
+              />
+              <PrizeCard 
+                place={t('prizePool.places.fifth')} 
+                amount="5K " 
+                index={4} 
+                className="col-span-1"
               />
             </div>
             

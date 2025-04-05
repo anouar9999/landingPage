@@ -586,3 +586,164 @@ html::before {
   z-index: -1;
   font-family: 'Tifinagh', 'Noto Sans Tifinagh';
 }
+
+/* Styles Responsifs Améliorés */
+@media screen and (max-width: 1280px) {
+  .font-nightWarrior {
+    font-size: calc(1rem + 3vw) !important;
+    line-height: 1.1 !important;
+  }
+  
+  /* Réduire les marges sur écrans moyens */
+  .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Adaptations pour écrans de tablette */
+  #PrizePool .font-nightWarrior {
+    font-size: calc(0.9rem + 3vw) !important;
+  }
+  
+  h2 {
+    font-size: calc(1.2rem + 2vw) !important;
+  }
+  
+  /* Réduire les marges internes */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Augmenter la visibilité des boutons */
+  button, .button {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Adaptations pour smartphones */
+  .font-nightWarrior {
+    font-size: calc(0.8rem + 3vw) !important;
+    line-height: 1 !important;
+  }
+  
+  h2 {
+    font-size: calc(1rem + 2vw) !important;
+  }
+  
+  /* Réduire les espacements verticaux */
+  .py-16 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  
+  .my-16 {
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+  
+  /* Centrer le texte sur mobile */
+  .text-left {
+    text-align: center !important;
+  }
+  
+  /* Marges spéciales pour le composant PrizePool */
+  #PrizePool .mb-20 {
+    margin-bottom: 2.5rem !important;
+  }
+  
+  #PrizePool .mb-24 {
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Ajustement des tailles de texte pour le PrizePool */
+  #PrizePool .text-8xl {
+    font-size: 4.5rem !important;
+  }
+  
+  #PrizePool .text-6xl {
+    font-size: 3rem !important;
+  }
+  
+  #PrizePool .text-3xl {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Optimisations pour les emplacements publicitaires */
+.ad-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.ad-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour les emplacements publicitaires fixes en bas */
+.fixed-bottom-ad {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 40;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(0);
+  transition: transform 0.5s ease-in-out;
+}
+
+.fixed-bottom-ad.hidden {
+  transform: translateY(100%);
+}
+
+/* Styles pour panneau publicitaire flottant */
+.floating-ad {
+  position: fixed;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 40;
+  transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .floating-ad {
+    right: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .floating-ad {
+    display: none; /* Cacher l'annonce flottante sur les très petits écrans */
+  }
+}
+
+/* Style amélioré pour le panneau publicitaire qui apparaît dans le MainPage */
+@media screen and (max-width: 768px) {
+  [class*="fixed right-4 top-[40%]"] {
+    right: 0.5rem !important;
+    top: 35% !important;
+    transform: scale(0.85) translateY(-1/2) !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  [class*="fixed right-4 top-[40%]"] {
+    right: 0.25rem !important;
+    top: 30% !important;
+    transform: scale(0.75) translateY(-1/2) !important;
+  }
+}

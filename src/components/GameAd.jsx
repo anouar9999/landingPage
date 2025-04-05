@@ -151,7 +151,7 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
   return (
     <div 
       ref={adRef}
-      className={`relative overflow-hidden rounded-lg border border-primary/30 bg-gradient-to-br from-[#0a0a14] to-[#16213e] ${className}`}
+      className={`relative overflow-hidden rounded-lg border border-primary/30 bg-gradient-to-br from-[#0a0a14] to-[#16213e] ad-container ${className}`}
       style={{ 
         width: `${width}px`, 
         height: `${height}px`,
@@ -162,14 +162,14 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
       {/* Style block for animations */}
       <style>{createKeyframes()}</style>
       
-      {/* Label Pub */}
-      <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/50 backdrop-blur-sm z-30">
+      {/* Label Pub amélioré */}
+      <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm z-30 border-l-2 border-primary">
         <span className={`text-white text-xs font-valorant ${getTextClass()}`}>ADVERGAME</span>
       </div>
       
-      {/* Bouton de fermeture */}
+      {/* Bouton de fermeture amélioré */}
       <button 
-        className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1 z-30 text-white/70 hover:text-white transition-colors"
+        className="absolute top-2 right-2 bg-black/60 hover:bg-primary text-white/90 hover:text-black rounded-full p-1.5 z-30 transition-all duration-300 transform hover:scale-110"
         onClick={(e) => {
           e.stopPropagation();
           if (adRef.current && adRef.current.parentNode) {
@@ -188,29 +188,45 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
           }
         }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
       
-      {/* Fond grille */}
-      <div className="absolute inset-0 opacity-10" 
+      {/* Fond amélioré avec animation */}
+      <div className="absolute inset-0 opacity-10 animate-pulse-slow" 
         style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(106, 90, 205, 0.3) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(106, 90, 205, 0.5) 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         }}
       ></div>
+      <div className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: 'linear-gradient(to right, transparent, rgba(106, 90, 205, 0.3), transparent)',
+          backgroundSize: '200% 100%',
+          animation: 'gradientMove 8s linear infinite'
+        }}
+      ></div>
+      <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
       
       {/* Écran d'accueil */}
       {!gameStarted && !gameEnded && (
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-20">
-          <h3 className={`text-primary font-valorant text-lg mb-2 ${getTextClass()}`}>{t('gameAd.title')}</h3>
+          <h3 className={`text-primary font-valorant text-lg mb-2 drop-shadow-glow ${getTextClass()}`}>{t('gameAd.title')}</h3>
           <p className={`text-white text-sm text-center mb-4 ${getTextClass()}`}>{t('gameAd.instructions')}</p>
           
           <button 
             onClick={startGame}
-            className={`bg-primary text-white font-valorant text-sm px-5 py-2 rounded-md hover:bg-primary/80 transition-all ${getTextClass()}`}
+            className={`bg-primary hover:bg-primary/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-glow ${getTextClass()}`}
+            style={{
+              boxShadow: '0 0 15px rgba(106, 90, 205, 0.4)'
+            }}
           >
             {t('gameAd.play')}
           </button>
@@ -262,24 +278,30 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
       
       {/* Écran de fin de jeu */}
       {gameEnded && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-20 bg-black/70 backdrop-blur-sm">
-          <h3 className={`text-primary font-valorant text-lg mb-2 ${getTextClass()}`}>{t('gameAd.gameOver')}</h3>
-          <p className={`text-white text-md mb-1 ${getTextClass()}`}>{t('gameAd.yourScore')}:</p>
-          <div className="text-primary font-valorant text-3xl mb-3">{score}</div>
+        <div 
+          ref={ctaRef}
+          className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm p-4 z-30"
+        >
+          <h3 className={`text-primary font-valorant text-xl mb-2 ${getTextClass()}`}>{t('gameAd.gameOver')}</h3>
+          <p className={`text-white text-center mb-4 ${getTextClass()}`}>
+            {t('gameAd.finalScore')}: <span className="text-primary font-bold text-xl">{score}</span>
+          </p>
           
-          <div ref={ctaRef} className="flex flex-col items-center">
+          <div className="flex gap-3 mt-2">
             <button 
               onClick={restartGame}
-              className={`bg-primary/70 text-white font-valorant text-sm px-4 py-1.5 rounded-md hover:bg-primary/90 transition-all mb-3 ${getTextClass()}`}
+              className={`bg-primary hover:bg-primary/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
             >
               {t('gameAd.playAgain')}
             </button>
             
             <a 
-              href="#" 
-              className={`bg-white text-primary font-valorant text-sm px-5 py-2 rounded-md hover:bg-white/90 transition-all ${getTextClass()}`}
+              href="https://mgexpo.ma" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={`bg-white hover:bg-white/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
             >
-              {t('gameAd.viewOffer')}
+              {t('gameAd.visitSite')}
             </a>
           </div>
         </div>

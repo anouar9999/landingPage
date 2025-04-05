@@ -28,6 +28,7 @@ function MainPage() {
   const rafIdRef = useRef(null); // Référence pour l'animation frame
   const [adVisible, setAdVisible] = useState(true); // État pour contrôler la visibilité de l'annonce
   const [showDomainNotice, setShowDomainNotice] = useState(true); // État pour la notification de domaine
+  const [showAds, setShowAds] = useState(true); // État pour contrôler la visibilité des annonces globalement
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -190,16 +191,17 @@ function MainPage() {
       
       {/* Panneau publicitaire flottant - amélioré avec position et animation */}
       {adVisible && (
-        <div className="fixed right-4 top-[40%] transform -translate-y-1/2 z-50 transition-all duration-500 hover:scale-105">
+        <div className="fixed right-4 top-[40%] transform -translate-y-1/2 z-50 transition-all duration-500 hover:scale-105 floating-ad">
           <div className="relative">
             {/* Étiquette */}
-            <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-primary text-black text-xs px-2 py-1 rounded-t-md font-bold">
+            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-primary text-black text-xs px-3 py-1 rounded-t-md font-bold shadow-lg">
               Publicité
             </div>
             {/* Bouton de fermeture personnalisé */}
             <button 
               onClick={() => setAdVisible(false)}
-              className="absolute -top-8 -right-2 bg-black/80 hover:bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center transition-colors duration-300"
+              className="absolute -top-8 -right-2 bg-black/80 hover:bg-primary text-white hover:text-black rounded-full w-7 h-7 flex items-center justify-center transition-colors duration-300 transform hover:scale-110 shadow-lg"
+              aria-label="Fermer la publicité"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -207,9 +209,57 @@ function MainPage() {
               </svg>
             </button>
             {/* Annonce avec effet d'ombre amélioré */}
-            <div className="transform transition-transform duration-700 hover:rotate-1">
+            <div className="transform transition-transform duration-700 hover:rotate-1 ad-container">
               <GameAd width={280} height={230} className="shadow-2xl ring-1 ring-primary/30" />
             </div>
+            
+            {/* Effet de brillance */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300"></div>
+          </div>
+        </div>
+      )}
+      
+      {/* Nouvelle bannière publicitaire fixe en bas */}
+      {showAds && (
+        <div className="fixed bottom-0 left-0 w-full z-40 bg-black/70 backdrop-blur-md border-t border-primary/30 py-2 fixed-bottom-ad">
+          <div className="container mx-auto flex items-center justify-center relative">
+            {/* Label */}
+            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-primary text-black text-xs px-3 py-1 rounded-t-md font-bold">
+              Publicité
+            </div>
+            
+            {/* Annonce */}
+            <div className="ad-container">
+              <img 
+                src="/ads/banner-wide.jpg" 
+                alt="Publicité" 
+                className="h-16 md:h-20 w-auto object-contain rounded shadow-lg"
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/728x90?text=MGExpo";
+                  e.target.alt = "Publicité MGExpo";
+                }}
+              />
+            </div>
+            
+            {/* Bouton de fermeture */}
+            <button 
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/60 hover:bg-primary text-white hover:text-black rounded-full p-1.5 transition-all duration-300"
+              aria-label="Fermer la publicité"
+              onClick={() => {
+                const adElement = document.querySelector('.fixed-bottom-ad');
+                if (adElement) {
+                  adElement.classList.add('hidden');
+                  setTimeout(() => {
+                    adElement.style.display = 'none';
+                  }, 500);
+                }
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
           </div>
         </div>
       )}
