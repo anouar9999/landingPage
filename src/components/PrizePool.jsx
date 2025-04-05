@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useTranslation } from "../hooks/useTranslation";
@@ -90,202 +90,260 @@ const PrizeCard = ({ place, amount, index, className = "" }) => {
 };
 
 const PrizePool = () => {
-  const { t, isRtl, language } = useTranslation();
-  const frameRef = useRef(null);
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
+  const { t, language, isRtl } = useTranslation();
+  const [anim, setAnim] = useState(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const containerRef = useRef(null);
   
-  // Fonction locale pour déterminer la classe de texte
-  const getTextClass = () => {
-    if (language === 'tz') return 'tamazight-text';
-    if (language === 'fr') return 'french-text';
-    return '';
-  };
-
-  const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const element = frameRef.current;
-
-    if (!element) return;
-
-    const rect = element.getBoundingClientRect();
-    const xPos = clientX - rect.left;
-    const yPos = clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((yPos - centerY) / centerY) * -5;
-    const rotateY = ((xPos - centerX) / centerX) * 5;
-
-    gsap.to(element, {
-      duration: 0.5,
-      rotateX,
-      rotateY,
-      transformPerspective: 800,
-      ease: "power2.out",
-    });
-  };
+  // Vérifier la taille d'écran pour adaptation
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    
+    // Vérifier au chargement
+    checkScreenSize();
+    
+    // Vérifier au redimensionnement
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
   
-  useGSAP(() => {
-    if (titleRef.current) {
-      gsap.from(titleRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          end: "top 60%",
-          toggleActions: "play none none reverse"
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Créer un nouveau contexte d'animation GSAP pour faciliter le nettoyage
+          const animContext = gsap.context(() => {
+            // Animation des titres
+            gsap.fromTo('.prize-title',
+              { y: 50, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'back.out(1.7)' }
+            );
+    
+            // Animation des prix
+            gsap.fromTo('.prize-item',
+              { scale: 0.8, opacity: 0 },
+              { 
+                scale: 1, 
+                opacity: 1, 
+                duration: 0.6, 
+                stagger: isSmallScreen ? 0.2 : 0.3,
+                ease: 'back.out(1.7)',
+                delay: 0.4
+              }
+            );
+    
+            // Animation des étiquettes
+            gsap.fromTo('.prize-label',
+              { y: 30, opacity: 0 },
+              { 
+                y: 0, 
+                opacity: 1, 
+                duration: 0.5, 
+                stagger: 0.15, 
+                ease: 'power3.out',
+                delay: 0.6
+              }
+            );
+          }, containerRef);
+    
+          setAnim(animContext);
+          
+          // Arrêter d'observer une fois que l'animation est déclenchée
+          observer.disconnect();
         }
-      });
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
     
-    // Effet parallaxe pour le fond
-    if (sectionRef.current) {
-      gsap.to(".prize-background-glow", {
-        y: "-20%",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    }
-  });
+    return () => {
+      if (anim) {
+        anim.revert();
+      }
+      observer.disconnect();
+    };
+  }, [isSmallScreen]);
   
-  const handleMouseLeave = () => {
-    const element = frameRef.current;
-
-    if (element) {
-      gsap.to(element, {
-        duration: 0.5,
-        rotateX: 0,
-        rotateY: 0,
-        ease: "power2.out",
-      });
+  // Format de monnaie adapté
+  const formatCurrency = (value) => {
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(0)}K`;
     }
+    return value.toString();
   };
-
+  
+  // Données des prix - montants adaptés pour l'affichage
+  const prizes = [
+    { rank: "1", amount: 250000, label: "DH" },
+    { rank: "2", amount: 100000, label: "DH" },
+    { rank: "3", amount: 50000, label: "DH" }
+  ];
+  
   return (
-    <div 
-      id="PrizePool" 
-      ref={sectionRef}
-      className="min-h-dvh w-screen bg-black text-blue-50 relative overflow-hidden py-16" 
-      dir={isRtl ? 'rtl' : 'ltr'}
-    >
-      {/* Effet de fond et décoration */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-      <div className="prize-background-glow absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[100px] opacity-70"></div>
-      <div className="prize-background-glow absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[80px] opacity-50"></div>
-      
-      {/* Élément décoratif */}
-      <div className="absolute top-0 right-0 w-64 h-64 opacity-20">
-        <Trophy className="w-full h-full text-primary" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col items-center">
-          {/* Titre et description */}
-          <div ref={titleRef} className="mb-20 text-center max-w-2xl mx-auto">
-            <div className="inline-block bg-primary/10 backdrop-blur-sm px-4 py-1 rounded-full mb-4">
-              <span className={`text-primary font-valorant text-sm uppercase tracking-wider ${getTextClass()}`}>
-                {t('prizePool.description')}
-              </span>
-            </div>
-            
-            <h2 className="mt-4 font-nightWarrior text-7xl md:text-8xl text-center text-primary relative">
-              {t('prizePool.title')}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 w-24 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+    <section id="PrizePool">
+      <div className="relative min-h-screen w-full py-16 md:py-24 lg:py-32 bg-slate-800 overflow-hidden" dir={isRtl ? 'rtl' : 'ltr'} ref={containerRef}>
+        {/* Arrière-plan et décoration */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/5 blur-3xl rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-primary/5 blur-3xl rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          {/* En-tête */}
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="prize-title text-primary text-4xl md:text-5xl lg:text-6xl font-nightWarrior mb-4">
+              {t('prizePool.title', "Prize Pool")}
             </h2>
+            <p className={`prize-title text-white/70 text-lg md:text-xl max-w-2xl mx-auto ${isRtl ? 'tamazight-text' : ''}`}>
+              {t('prizePool.subtitle', "Compétition à la hauteur du talent marocain avec des prix exceptionnels pour les meilleurs joueurs")}
+            </p>
           </div>
           
-          {/* Main Prize avec animation sur hover */}
-          <div 
-            ref={frameRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="relative p-10 flex flex-col items-center justify-center transform-gpu bg-black/30 backdrop-blur-md rounded-2xl border border-white/10 mb-24 hover:border-primary/30 transition-all duration-300"
-          >
-            <div className="text-center relative z-10">
-              <span className={`font-valorant text-2xl uppercase text-gray-300 ${getTextClass()}`}>
-                {t('prizePool.totalPrizePool')}
-              </span>
+          {/* Conteneur de prix - adapté pour mobile */}
+          <div className="prize-container flex flex-col md:flex-row justify-center items-center md:items-end gap-6 md:gap-8 lg:gap-12 mb-8 md:mb-16">
+            {prizes.map((prize, index) => {
+              const isFirst = index === 0;
+              const displayAmount = formatCurrency(prize.amount);
               
-              <div className="relative mt-4">
-                <h2 className="font-nightWarrior text-8xl font-bold text-primary">
-                  250K <small className="text-3xl">DH</small>
-                </h2>
-                
-                {/* Animation de brillance */}
-                <div className="absolute inset-0 bg-primary/10 blur-2xl rounded-full animate-pulse-slow opacity-70"></div>
-              </div>
-              
-              <div className="mt-4 px-4 py-2 rounded-full bg-primary/10 inline-block">
-                <span className={`text-white/80 text-sm ${getTextClass()}`}>
-                  {t('prizePool.seasonRewards')}
-                </span>
-              </div>
-            </div>
-            
-            {/* Effet de lumière radiale */}
-            <div className="absolute -z-10 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 blur-3xl animate-pulse-slow" />
+              return (
+                <div 
+                  key={index} 
+                  className={`prize-item flex flex-col items-center ${
+                    isFirst 
+                      ? 'order-1 md:order-2' 
+                      : index === 1 
+                        ? 'order-2 md:order-1' 
+                        : 'order-3 md:order-3'
+                  }`}
+                >
+                  {/* Trophée */}
+                  <div className={`relative ${
+                    isFirst
+                      ? 'w-32 h-32 md:w-40 md:h-40'
+                      : 'w-24 h-24 md:w-32 md:h-32'
+                  }`}>
+                    <div className={`absolute inset-0 rounded-full ${
+                      isFirst 
+                        ? 'bg-yellow-500' 
+                        : index === 1 
+                          ? 'bg-gray-300' 
+                          : 'bg-yellow-700'
+                    } opacity-20 animate-pulse`}></div>
+                    <div className={`flex items-center justify-center w-full h-full rounded-full border-2 ${
+                      isFirst 
+                        ? 'border-yellow-500 bg-yellow-500/10' 
+                        : index === 1 
+                          ? 'border-gray-300 bg-gray-300/10' 
+                          : 'border-yellow-700 bg-yellow-700/10'
+                    }`}>
+                      <span className={`text-2xl md:text-3xl font-bold ${
+                        isFirst 
+                          ? 'text-yellow-500' 
+                          : index === 1 
+                            ? 'text-gray-300' 
+                            : 'text-yellow-700'
+                      }`}>
+                        {prize.rank}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Montant */}
+                  <div className={`text-center mt-4 ${isFirst ? 'mt-6' : ''}`}>
+                    <div className="flex items-baseline justify-center">
+                      <span className={`text-white font-bold ${
+                        isFirst 
+                          ? 'text-4xl md:text-6xl lg:text-8xl' 
+                          : index === 1 
+                            ? 'text-3xl md:text-5xl lg:text-6xl'
+                            : 'text-2xl md:text-4xl lg:text-5xl'
+                      }`}>
+                        {displayAmount}
+                      </span>
+                      <span className={`prize-label text-primary ml-1 ${
+                        isFirst 
+                          ? 'text-xl md:text-2xl' 
+                          : 'text-lg md:text-xl'
+                      }`}>
+                        {prize.label}
+                      </span>
+                    </div>
+                    
+                    {/* Étiquette du rang */}
+                    <div className={`prize-label mt-2 px-4 py-1 rounded-full ${
+                      isFirst 
+                        ? 'bg-yellow-500/20 text-yellow-500' 
+                        : index === 1 
+                          ? 'bg-gray-500/20 text-gray-300' 
+                          : 'bg-yellow-700/20 text-yellow-700'
+                    }`}>
+                      <span className="text-sm font-medium">
+                        {index === 0 
+                          ? t('prizePool.champion', "Champion") 
+                          : index === 1 
+                            ? t('prizePool.runnerUp', "Finaliste") 
+                            : t('prizePool.thirdPlace', "3ᵉ Place")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-
-          {/* Prize Distribution avec animation séquentielle */}
-          <div className="w-full">
-            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
-              <PrizeCard 
-                place={t('prizePool.places.first')} 
-                amount="100K "
-                index={0}
-                className="transform transition-all duration-500 hover:scale-105 z-30"
-              />
-              <PrizeCard 
-                place={t('prizePool.places.second')} 
-                amount="30K "
-                index={1}
-                className="transform transition-all duration-500 hover:scale-105 z-20"
-              />
-              <PrizeCard 
-                place={t('prizePool.places.third')} 
-                amount="15K "
-                index={2}
-                className="transform transition-all duration-500 hover:scale-105 z-10"
-              />
-            </div>
+          
+          {/* Prix additionnels - format accordéon pour mobile */}
+          <div className="text-center mt-8 md:mt-12">
+            <h3 className={`prize-title text-2xl md:text-3xl text-white font-bold mb-4 ${isRtl ? 'tamazight-text' : ''}`}>
+              {t('prizePool.additionalPrizes', "Prix Additionnels")}
+            </h3>
             
-            {/* Prix supplémentaires */}
-            <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <PrizeCard 
-                place={t('prizePool.places.fourth')} 
-                amount="10K " 
-                index={3} 
-                className="col-span-1"
-              />
-              <PrizeCard 
-                place={t('prizePool.places.fifth')} 
-                amount="5K " 
-                index={4} 
-                className="col-span-1"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto text-center">
+              <div className="prize-label bg-slate-700 rounded-xl p-4 transform hover:scale-105 transition-transform duration-300">
+                <div className="text-primary text-xl md:text-2xl font-bold">10K</div>
+                <div className="text-white text-sm mt-1">{t('prizePool.bestNewcomer', "Meilleur Espoir")}</div>
+              </div>
+              
+              <div className="prize-label bg-slate-700 rounded-xl p-4 transform hover:scale-105 transition-transform duration-300">
+                <div className="text-primary text-xl md:text-2xl font-bold">15K</div>
+                <div className="text-white text-sm mt-1">{t('prizePool.mvp', "MVP du Tournoi")}</div>
+              </div>
+              
+              <div className="prize-label bg-slate-700 rounded-xl p-4 transform hover:scale-105 transition-transform duration-300">
+                <div className="text-primary text-xl md:text-2xl font-bold">5K</div>
+                <div className="text-white text-sm mt-1">{t('prizePool.bestPlay', "Meilleure Action")}</div>
+              </div>
+              
+              <div className="prize-label bg-slate-700 rounded-xl p-4 transform hover:scale-105 transition-transform duration-300">
+                <div className="text-primary text-xl md:text-2xl font-bold">20K</div>
+                <div className="text-white text-sm mt-1">{t('prizePool.teamAward', "Prix d'Équipe")}</div>
+              </div>
             </div>
-            
-            {/* Informations supplémentaires */}
-            <div className="mt-12 text-center">
-              <p className={`text-white/70 max-w-lg mx-auto ${getTextClass()}`}>
-                {t('prizePool.additionalInfo')}
-              </p>
-            </div>
+          </div>
+          
+          {/* Appel à l'action - adapté pour mobile */}
+          <div className="text-center mt-12 md:mt-20">
+            <a 
+              href="#inscription" 
+              className="prize-label inline-block px-6 md:px-8 py-3 md:py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg text-base md:text-lg transition-all duration-300 transform hover:scale-105"
+            >
+              {t('prizePool.registerNow', "Inscrivez-vous maintenant")}
+            </a>
+            <p className="text-white/50 text-xs md:text-sm mt-4">
+              {t('prizePool.registrationInfo', "Les inscriptions sont ouvertes jusqu'au 15 juin 2023")}
+            </p>
           </div>
         </div>
       </div>
-      
-      {/* Gradient de transition en bas */}
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent via-black/50 to-[#0A0A0A] pointer-events-none" style={{ zIndex: 5 }} />
-    </div>
+    </section>
   );
 };
 

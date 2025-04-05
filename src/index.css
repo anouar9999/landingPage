@@ -14,6 +14,8 @@ body {
   overflow-x: hidden;
   background-color: #dfdff0;
   font-family: "General Sans", sans-serif;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 @layer base {
@@ -949,4 +951,312 @@ body.has-top-ad {
 .game-section .ad-container:hover {
   border-color: rgba(255, 215, 0, 0.5);
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+/* Améliorations générales du responsive design */
+html, body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimisation des sections pour différentes tailles d'écran */
+section {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+/* Améliorations responsive par section */
+#hero {
+  min-height: calc(100vh - 70px);
+}
+
+@media screen and (max-width: 768px) {
+  #hero {
+    min-height: auto;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+}
+
+/* Adaptation des textes et titres selon la taille d'écran */
+h1, .h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1.1;
+}
+
+h2, .h2 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.2;
+}
+
+h3, .h3 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.3;
+}
+
+p {
+  font-size: clamp(1rem, 3vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Grille responsive améliorée */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.5rem;
+}
+
+/* Optimisation du layout pour les appareils mobiles */
+@media screen and (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .py-16 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .py-12 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .my-16 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .my-12 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .gap-8 {
+    gap: 1.5rem;
+  }
+  
+  .gap-6 {
+    gap: 1rem;
+  }
+}
+
+/* Optimisations specifiques pour les très petits écrans */
+@media screen and (max-width: 480px) {
+  :root {
+    --content-padding: 1rem;
+  }
+  
+  .container {
+    padding-left: var(--content-padding);
+    padding-right: var(--content-padding);
+  }
+  
+  .py-16 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  
+  .gap-4 {
+    gap: 0.75rem;
+  }
+  
+  .text-xl {
+    font-size: 1.1rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.4rem;
+  }
+}
+
+/* Adaptation spécifique pour la section PrizePool */
+#PrizePool {
+  overflow: hidden;
+}
+
+#PrizePool .prize-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  #PrizePool .prize-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #PrizePool .prize-item {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 2rem;
+  }
+}
+
+/* Adaptation spécifique pour la section PassGamers */
+#pass-gamers-section .benefit-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#pass-gamers-section .benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+  #pass-gamers-section .benefit-card {
+    margin-bottom: 1rem;
+  }
+  
+  #pass-gamers-section .card-3d-container {
+    max-width: 250px;
+    height: 140px;
+  }
+}
+
+/* Adaptation de la navigation sur mobile */
+@media screen and (max-width: 768px) {
+  nav {
+    padding: 0.75rem 1rem;
+  }
+  
+  nav .logo {
+    max-width: 120px;
+  }
+}
+
+/* Support amélioré des appareils à ratio élevé (iPhone X, etc.) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: min(0vmin, env(safe-area-inset-left));
+    padding-right: min(0vmin, env(safe-area-inset-right));
+    padding-bottom: min(0vmin, env(safe-area-inset-bottom));
+  }
+}
+
+/* Optimisation pour les appareils avec notch */
+@media screen and (max-width: 896px) and (min-height: 414px) {
+  .fixed.top-0 {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .fixed.bottom-0 {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Adaptation pour les grands écrans */
+@media screen and (min-width: 1920px) {
+  .container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  p {
+    font-size: 1.125rem;
+  }
+}
+
+/* Optimisation de la section FAQ sur écrans moyens et petits */
+@media screen and (max-width: 768px) {
+  #faq .faq-container {
+    grid-template-columns: 1fr;
+  }
+  
+  #faq .faq-item {
+    padding: 1rem;
+  }
+}
+
+/* Meilleure gestion des panneaux publicitaires flottants sur petits écrans */
+@media screen and (max-width: 768px) {
+  .ad-controller {
+    bottom: 5.5rem;
+  }
+  
+  .fixed-bottom-ad {
+    padding: 0.5rem 0;
+  }
+  
+  .floating-ad {
+    width: calc(100% - 2rem);
+    max-width: 300px;
+    right: 1rem;
+    top: auto;
+    bottom: 5rem;
+    transform: none !important;
+  }
+}
+
+/* Panneau de contrôle des publicités - optimisation responsive */
+@media screen and (max-width: 480px) {
+  .ad-controller {
+    left: 0.75rem;
+    bottom: 4.5rem;
+  }
+}
+
+/* Animation du panneau de contrôle adaptée aux préférences de réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .ad-controller-handle,
+  .ad-controller {
+    transition: none !important;
+  }
+  
+  .animate-bounce {
+    animation: none !important;
+  }
+  
+  .pulse-attention {
+    animation: none !important;
+  }
+}
+
+/* Amélioration du contraste pour l'accessibilité */
+@media (prefers-contrast: more) {
+  body {
+    --primary-color: hsl(250, 60%, 50%);
+  }
+  
+  .text-white\/70, .text-white\/60 {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .bg-black\/70, .bg-black\/60 {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+}
+
+/* Adaptation spécifique pour écran large */
+@media screen and (min-width: 1400px) {
+  .benefits-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Adaptation spécifique pour la section ProPath */
+#pro-path {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  #pro-path .step-container {
+    flex-direction: column;
+  }
+  
+  #pro-path .step-item {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Correction pour le mode RTL sur mobile */
+@media screen and (max-width: 768px) {
+  [dir="rtl"] .flex-col {
+    align-items: flex-start;
+  }
 }

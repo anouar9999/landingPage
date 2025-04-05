@@ -33,17 +33,18 @@ function MainPage() {
   const { language } = useLanguage(); // Accéder à la langue actuelle
   const lastLanguageRef = useRef(language); // Référence pour suivre la dernière langue
   const rafIdRef = useRef(null); // Référence pour l'animation frame
-  const [adVisible, setAdVisible] = useState(true); // État pour contrôler la visibilité de l'annonce
+  const [adVisible, setAdVisible] = useState(false); // État pour contrôler la visibilité de l'annonce - désactivé par défaut
   const [showDomainNotice, setShowDomainNotice] = useState(true); // État pour la notification de domaine
-  const [showAds, setShowAds] = useState(true); // État pour contrôler la visibilité des annonces globalement
-  const [showSmallBanner, setShowSmallBanner] = useState(true); // État pour le petit bandeau
-  const [showLeftSidebar, setShowLeftSidebar] = useState(true); // État pour la sidebar gauche
-  const [showRightSidebar, setShowRightSidebar] = useState(true); // État pour la sidebar droite
-  const [showFloatingAd, setShowFloatingAd] = useState(true);
+  const [showAds, setShowAds] = useState(false); // État pour contrôler la visibilité des annonces globalement - désactivé par défaut
+  const [showSmallBanner, setShowSmallBanner] = useState(false); // État pour le petit bandeau - désactivé par défaut
+  const [showLeftSidebar, setShowLeftSidebar] = useState(false); // État pour la sidebar gauche - désactivé par défaut
+  const [showRightSidebar, setShowRightSidebar] = useState(false); // État pour la sidebar droite - désactivé par défaut
+  const [showFloatingAd, setShowFloatingAd] = useState(false); // État pour l'annonce flottante - désactivé par défaut
   const [hasSeenFloatingAd, setHasSeenFloatingAd] = useState(false);
   const scrollRef = useRef(null);
   const [performanceScore, setPerformanceScore] = useState(0);
   const [adBlocked, setAdBlocked] = useState(false);
+  const [adControllerExpanded, setAdControllerExpanded] = useState(false); // État pour contrôler l'expansion du panneau de contrôle
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -218,7 +219,9 @@ function MainPage() {
       const adDensity = adLoader.getOptimalAdDensity();
       console.log(`Score de performance: ${score}/10, Densité de publicités: ${adDensity}`);
       
-      // Ajuster dynamiquement l'affichage des publicités
+      // Ne pas ajuster automatiquement les publicités au chargement - utilisateur doit les activer manuellement
+      // Les commentaires ci-dessous sont conservés pour référence sur le comportement précédent
+      /*
       if (adDensity === 'low') {
         // En cas de performances faibles, réduire le nombre de publicités
         setShowLeftSidebar(false);
@@ -228,6 +231,7 @@ function MainPage() {
         // Réduire légèrement
         setShowFloatingAd(false);
       }
+      */
       
       if (isBlocked) {
         // Message discret pour les utilisateurs avec bloqueur de pub
@@ -237,6 +241,26 @@ function MainPage() {
     
     initializeAds();
   }, []);
+  
+  // Fonction pour activer toutes les publicités
+  const activateAllAds = () => {
+    setShowAds(true);
+    setShowSmallBanner(true);
+    setShowLeftSidebar(true);
+    setShowRightSidebar(true);
+    setShowFloatingAd(true);
+    setAdVisible(true);
+  };
+  
+  // Fonction pour désactiver toutes les publicités
+  const deactivateAllAds = () => {
+    setShowAds(false);
+    setShowSmallBanner(false);
+    setShowLeftSidebar(false);
+    setShowRightSidebar(false);
+    setShowFloatingAd(false);
+    setAdVisible(false);
+  };
 
   return (
     <main className="relative min-h-screen w-screen" style={{ overflow: 'visible' }}>
@@ -414,10 +438,15 @@ function MainPage() {
         onToggleLeftSidebar={() => setShowLeftSidebar(!showLeftSidebar)}
         onToggleRightSidebar={() => setShowRightSidebar(!showRightSidebar)}
         onToggleFloatingAd={() => setShowFloatingAd(!showFloatingAd)}
+        onActivateAll={activateAllAds}
+        onDeactivateAll={deactivateAllAds}
         showSmallBanner={showSmallBanner}
         showLeftSidebar={showLeftSidebar}
         showRightSidebar={showRightSidebar}
         showFloatingAd={showFloatingAd}
+        showAllAds={showAds}
+        setAdControllerExpanded={setAdControllerExpanded}
+        adControllerExpanded={adControllerExpanded}
       />
     </main>
   );
