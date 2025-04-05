@@ -13,14 +13,58 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(() => {
+    // Récupérer le meilleur score du localStorage s'il existe
+    try {
+      const saved = localStorage.getItem('advergame_highscore');
+      return saved ? parseInt(saved, 10) : 0;
+    } catch (e) {
+      return 0;
+    }
+  });
   const [timeLeft, setTimeLeft] = useState(15); // 15 secondes de jeu
   const [targets, setTargets] = useState([]);
+  const [comboMultiplier, setComboMultiplier] = useState(1); // Multiplicateur de combo
+  const [lastClickTime, setLastClickTime] = useState(0); // Temps du dernier clic
+  const [showTutorial, setShowTutorial] = useState(true); // Afficher le tutoriel
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
   const [difficulty, setDifficulty] = useState('medium'); // 'easy', 'medium', 'hard'
   const gameAreaRef = useRef(null);
   const timerRef = useRef(null);
   const adRef = useRef(null);
   const ctaRef = useRef(null);
+  const comboTimerRef = useRef(null);
+  
+  // Sauvegarder le meilleur score
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+      try {
+        localStorage.setItem('advergame_highscore', score.toString());
+      } catch (e) {
+        console.warn('Impossible de sauvegarder le meilleur score dans localStorage');
+      }
+    }
+  }, [score, highScore]);
+
+  // Gestion des combos
+  useEffect(() => {
+    if (gameStarted && !gameEnded) {
+      // Réduire le combo s'il n'y a pas de clic pendant 1.5 secondes
+      comboTimerRef.current = setInterval(() => {
+        const now = Date.now();
+        if (now - lastClickTime > 1500 && comboMultiplier > 1) {
+          setComboMultiplier(prev => Math.max(1, prev - 0.5));
+        }
+      }, 500);
+    }
+    
+    return () => {
+      if (comboTimerRef.current) {
+        clearInterval(comboTimerRef.current);
+      }
+    };
+  }, [gameStarted, gameEnded, lastClickTime, comboMultiplier]);
   
   // Détecter les changements d'orientation pour adapter l'interface
   useEffect(() => {
@@ -156,8 +200,17 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
   
   // Cliquer sur une cible
   const handleTargetClick = (targetId, points) => {
+    // Mettre à jour le temps du dernier clic
+    setLastClickTime(Date.now());
+    
+    // Gérer le combo
+    setComboMultiplier(prev => Math.min(3, prev + 0.2));
+    
+    // Calculer les points avec le multiplicateur
+    const earnedPoints = Math.floor(points * comboMultiplier);
+    
     // Mettre à jour le score
-    setScore(prev => prev + points);
+    setScore(prev => prev + earnedPoints);
     
     // Retirer la cible cliquée
     setTargets(prev => prev.filter(target => target.id !== targetId));
@@ -170,6 +223,38 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
         { scale: 1.2, color: '#6a5acd' },
         { scale: 1, color: 'white', duration: 0.3 }
       );
+    }
+    
+    // Afficher un indicateur de points gagnés
+    if (gameAreaRef.current) {
+      const indicator = document.createElement('div');
+      indicator.className = 'absolute z-40 font-bold text-[10px] text-white';
+      indicator.style.left = `${event.clientX - gameAreaRef.current.getBoundingClientRect().left}px`;
+      indicator.style.top = `${event.clientY - gameAreaRef.current.getBoundingClientRect().top - 20}px`;
+      indicator.textContent = `+${earnedPoints}`;
+      
+      // Appliquer une couleur en fonction du multiplicateur
+      if (comboMultiplier >= 2.5) {
+        indicator.style.color = '#ff4500'; // Orange vif pour les gros combos
+        indicator.style.textShadow = '0 0 5px rgba(255, 69, 0, 0.7)';
+      } else if (comboMultiplier >= 1.5) {
+        indicator.style.color = '#ffd700'; // Or pour les combos moyens
+        indicator.style.textShadow = '0 0 5px rgba(255, 215, 0, 0.7)';
+      }
+      
+      gameAreaRef.current.appendChild(indicator);
+      
+      gsap.to(indicator, {
+        y: -30,
+        opacity: 0,
+        duration: 1,
+        ease: 'power1.out',
+        onComplete: () => {
+          if (gameAreaRef.current && gameAreaRef.current.contains(indicator)) {
+            gameAreaRef.current.removeChild(indicator);
+          }
+        }
+      });
     }
   };
   
@@ -240,6 +325,15 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
       <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-sm z-30 border-l-2 border-primary">
         <span className={`text-white text-xs font-valorant ${getTextClass()}`}>ADVERGAME</span>
       </div>
+      
+      {/* Compteur de meilleur score persistant */}
+      {highScore > 0 && !gameStarted && !gameEnded && (
+        <div className="absolute top-2 right-2 px-2 py-1 rounded bg-black/70 backdrop-blur-sm z-30">
+          <div className={`text-primary ${styles.scoreClass} font-bold ${getTextClass()}`}>
+            {t('gameAd.highScore')}: <span>{highScore}</span>
+          </div>
+        </div>
+      )}
       
       {/* Bouton de fermeture amélioré */}
       <button 
@@ -321,7 +415,10 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
           </div>
           
           <button 
-            onClick={startGame}
+            onClick={() => {
+              setShowTutorial(false);
+              startGame();
+            }}
             className={`bg-primary hover:bg-primary/80 text-black font-valorant ${styles.buttonClass} rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-glow ${getTextClass()}`}
             style={{
               boxShadow: '0 0 15px rgba(106, 90, 205, 0.4)'
@@ -336,8 +433,29 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
         </div>
       )}
       
+      {/* Tutoriel rapide - affiché brièvement au début du jeu */}
+      {gameStarted && showTutorial && (
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-40">
+          <div className="text-center p-4">
+            <h3 className={`text-primary ${styles.titleClass} mb-3`}>{t('gameAd.howToPlay')}</h3>
+            <p className={`text-white ${styles.textClass} mb-2`}>{t('gameAd.clickTargets')}</p>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <div className="w-4 h-4 rounded-full bg-purple-500"></div>
+              <span className="text-white text-[10px]">{t('gameAd.smallerTargets')}</span>
+            </div>
+            <p className={`text-primary ${styles.textClass} mb-3`}>{t('gameAd.combosIncrease')}</p>
+          </div>
+          <button
+            className="bg-primary text-black px-4 py-2 rounded-md text-sm mt-2"
+            onClick={() => setShowTutorial(false)}
+          >
+            {t('gameAd.gotIt')}
+          </button>
+        </div>
+      )}
+      
       {/* Zone de jeu */}
-      {gameStarted && (
+      {gameStarted && !showTutorial && (
         <div 
           ref={gameAreaRef}
           className="absolute inset-0 overflow-hidden z-10"
@@ -349,7 +467,18 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
               {t('gameAd.score')}: <span id="score-display" className="font-bold">{score}</span>
             </div>
             <div className={`text-white ${styles.scoreClass} ${getTextClass()}`}>
-              {t('gameAd.time')}: <span className={`font-bold ${timeLeft <= 5 ? 'text-red-500' : ''}`}>{timeLeft}s</span>
+              {t('gameAd.time')}: <span className={`font-bold ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : ''}`}>{timeLeft}s</span>
+            </div>
+          </div>
+          
+          {/* Indicateur de combo */}
+          <div className="absolute top-2 left-28 bg-black/70 backdrop-blur-sm px-2 py-1 rounded z-30">
+            <div className={`${styles.scoreClass} ${
+              comboMultiplier >= 2.5 ? 'text-red-400' : 
+              comboMultiplier >= 1.5 ? 'text-yellow-400' : 
+              'text-white/70'
+            }`}>
+              {t('gameAd.combo')}: <span className="font-bold">{comboMultiplier.toFixed(1)}x</span>
             </div>
           </div>
           
@@ -399,6 +528,13 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
           <p className={`text-white text-center mb-2 ${styles.textClass} ${getTextClass()}`}>
             {t('gameAd.finalScore')}: <span className="text-primary font-bold text-xl">{score}</span>
           </p>
+          
+          {/* Indication nouveau record */}
+          {score > highScore && (
+            <div className="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-md mb-2 animate-pulse">
+              {t('gameAd.newHighScore')}!
+            </div>
+          )}
           
           {/* Badge de difficulté */}
           <div className={`mb-3 px-3 py-1 rounded-full ${

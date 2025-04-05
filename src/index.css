@@ -752,6 +752,10 @@ html::before {
 .small-banner-ad {
   transition: all 0.3s ease;
   z-index: 1000;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
 }
 
 /* Position correcte sous le header pour éviter qu'il soit caché */
@@ -767,169 +771,182 @@ html::before {
   }
 }
 
-/* Assurer que la bannière ne soit pas cachée par le header */
-.fixed.top-\[70px\] {
+/* Assurer que la bannière ne soit pas cachée par le header - positionnement amélioré */
+.fixed.top-\[80px\] {
   z-index: 50;
   margin-top: 5px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Styles pour les emplacements publicitaires responsives */
-@media screen and (max-width: 1400px) {
-  .sidebar-ad {
-    transform: scale(0.9);
-  }
-  
-  .fixed.left-2.top-1\/2,
-  .fixed.right-2.top-1\/2 {
-    z-index: 30;
+/* Solution optimisée pour éviter le chevauchement avec le header fixe */
+body.has-top-ad {
+  scroll-padding-top: 150px; /* Aide à ce que les ancrages ne soient pas masqués par la bannière */
+}
+
+/* Animation pour les annonces intégrées dans le contenu */
+.inline-ad-integrated {
+  position: relative;
+  overflow: hidden;
+  transform-origin: center center;
+}
+
+.inline-ad-integrated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--primary-color, #6a5acd), transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.inline-ad-integrated:hover::before {
+  opacity: 1;
+}
+
+/* Animation de clignotement subtile pour attirer l'attention */
+@keyframes subtle-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(106, 90, 205, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(106, 90, 205, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(106, 90, 205, 0); }
+}
+
+/* Optimisation des performances de rendu pour les animations */
+.ad-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Sélecteur optimisé pour une meilleure performance */
+.ad-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(106, 90, 205, 0.2);
+  border-color: rgba(106, 90, 205, 0.5);
+}
+
+/* Indicateur visuel pour les nouveaux emplacements publicitaires */
+.new-ad {
+  position: relative;
+}
+
+.new-ad::after {
+  content: 'NEW';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff5722;
+  color: white;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 4px;
+  z-index: 10;
+  transform: rotate(10deg);
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(10deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+/* Optimisation pour les appareils haute densité */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .ad-container img {
+    image-rendering: -webkit-optimize-contrast;
   }
 }
 
-@media screen and (max-width: 1200px) {
-  /* Réduire davantage les sidebars sur tablette large */
-  .sidebar-ad {
-    transform: scale(0.8);
-  }
-  
-  .fixed.left-2.top-1\/2 {
-    left: 0;
-  }
-  
-  .fixed.right-2.top-1\/2 {
-    right: 0;
+/* Mode sombre adaptatif pour les publicités */
+@media (prefers-color-scheme: dark) {
+  .ad-container {
+    /* Déjà adaptée pour le mode sombre */
   }
 }
 
-/* Améliorations UX pour les composants jeux */
+/* Style pour emplacement publicitaire vide */
+.ad-placeholder {
+  background: linear-gradient(135deg, #0a0a14 0%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Support étendu pour le mode RTL */
+[dir="rtl"] .ad-container {
+  direction: rtl;
+}
+
+/* Effets visuels pour le jeu publicitaire */
 .touch-manipulation {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Adaptation pour les bannières publicitaires inline */
-.inline-ad {
-  width: 100%;
-  max-width: 728px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-@media screen and (max-width: 768px) {
-  .inline-ad {
-    height: auto !important;
-    min-height: 90px;
-    padding: 0.5rem 0;
-  }
-  
-  .inline-ad .w-16 {
-    width: 3rem !important;
-    height: 3rem !important;
-  }
-  
-  .inline-ad .text-sm {
-    font-size: 0.75rem !important;
-  }
-  
-  .inline-ad .text-xs {
-    font-size: 0.65rem !important;
+/* Style du curseur personnalisé pour le jeu */
+@media (hover: hover) {
+  .ad-container [style*="cursor: crosshair"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236a5acd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='22' y1='12' x2='18' y2='12'%3E%3C/line%3E%3Cline x1='6' y1='12' x2='2' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='6' x2='12' y2='2'%3E%3C/line%3E%3Cline x1='12' y1='22' x2='12' y2='18'%3E%3C/line%3E%3C/svg%3E") 12 12, crosshair;
   }
 }
 
-/* Ajout d'un effet de surbrillance pour les CTA dans les publicités */
-.ad-container a, 
-.ad-container button {
+/* Adaptation pour les écrans tactiles et appareils mobiles */
+@media (hover: none) {
+  .ad-container button, 
+  .ad-container a {
+    /* Augmenter la zone de tap pour une meilleure accessibilité tactile */
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Supprimer les effets hover qui ne fonctionnent pas sur écran tactile */
+  .ad-container:hover {
+    transform: none;
+  }
+}
+
+/* Optimisation des transitions pour des performances améliorées */
+@media (prefers-reduced-motion: reduce) {
+  .ad-container,
+  .ad-container *,
+  .ad-fade-in,
+  .small-banner-ad,
+  .floating-ad {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+.ad-container button,
+.ad-container a {
   position: relative;
-  overflow: hidden;
 }
 
-.ad-container a::after, 
-.ad-container button::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transform: rotate(30deg);
-  transition: all 0.5s;
-  opacity: 0;
+.ad-container button:focus,
+.ad-container a:focus {
+  outline: 2px solid rgba(106, 90, 205, 0.8);
+  outline-offset: 2px;
 }
 
-.ad-container a:hover::after, 
-.ad-container button:hover::after {
-  animation: sheen 1.5s forwards;
+/* Effet spécial pour les publicités sur la section jeux */
+.game-section .ad-container {
+  border-color: rgba(255, 215, 0, 0.2);
 }
 
-@keyframes sheen {
-  0% {
-    opacity: 0;
-    transform: translateX(-100%) rotate(30deg);
-  }
-  40% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(100%) rotate(30deg);
-  }
-}
-
-/* Ajout d'un effet de glow pour les conteneurs publicitaires lors du hover */
-.ad-container {
-  transition: all 0.3s ease;
-}
-
-.ad-container:hover {
-  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(106, 90, 205, 0.2);
-  border-color: rgba(106, 90, 205, 0.5);
-}
-
-/* Style spécifique pour les jeux publicitaires */
-.ad-container.GameAd {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.ad-container.GameAd:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(106, 90, 205, 0.3);
-}
-
-/* Espace supplémentaire pour les publicités sous le header */
-body.has-top-ad {
-  padding-top: 70px;
-}
-
-@media screen and (max-width: 768px) {
-  body.has-top-ad {
-    padding-top: 60px;
-  }
-}
-
-/* Animation pour les nouveaux emplacements publicitaires */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.ad-fade-in {
-  animation: fadeInDown 0.5s ease forwards;
-}
-
-/* Pour s'assurer que les publicités ne se chevauchent pas sur des écrans très petits */
-@media screen and (max-height: 500px) {
-  .fixed.bottom-0 {
-    position: static;
-    margin-top: 1rem;
-  }
-  
-  .fixed.right-4.top-\[40\%\] {
-    display: none;
-  }
+.game-section .ad-container:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
 }

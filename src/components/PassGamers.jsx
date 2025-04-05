@@ -2,6 +2,11 @@ import React, { useRef, useEffect } from 'react';
 import { Check, Users, Ticket, BadgeCheck, Gift, Medal, Award, Shield, ChevronRight } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Star, Download } from 'lucide-react';
+import InlineAd from './InlineAd';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Version modernisée avec carte animée en code
 const PassGamers = () => {
@@ -108,10 +113,9 @@ const PassGamers = () => {
   ];
 
   return (
-    <div 
-      id="PassGamers" 
-      className="relative py-16 bg-gradient-to-b from-[#090914] to-[#0a0a14] border-t border-yellow-500/20" 
-      ref={sectionRef}
+    <section 
+      id="pass-gamers-section" 
+      className="relative min-h-screen w-full bg-black py-16 overflow-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* Éléments décoratifs en arrière-plan */}
@@ -269,6 +273,42 @@ const PassGamers = () => {
         </div>
       </div>
       
+      {/* Emplacement publicitaire intégré au contenu */}
+      <div className="max-w-7xl mx-auto px-4 mt-16 mb-10">
+        <div className="w-full relative">
+          {/* Indicateur publicitaire */}
+          <div className="flex justify-center mb-2">
+            <div className="inline-block px-3 py-1 bg-primary/20 rounded-full">
+              <span className={`text-primary text-xs font-bold ${getTextClass()}`}>
+                {t('passGamers.sponsoredContent')}
+              </span>
+            </div>
+          </div>
+          
+          {/* Publicité intégrée */}
+          <InlineAd 
+            className="inline-ad-integrated rounded-xl border-2 border-primary/20 transform hover:scale-[1.01] transition-transform duration-300" 
+            onClose={() => {
+              // Animation spéciale pour la fermeture intégrée dans le contenu
+              const adElement = document.querySelector('.inline-ad-integrated');
+              if (adElement) {
+                gsap.to(adElement, {
+                  height: 0,
+                  opacity: 0,
+                  marginTop: 0,
+                  marginBottom: 0,
+                  padding: 0,
+                  duration: 0.5,
+                  onComplete: () => {
+                    adElement.style.display = 'none';
+                  }
+                });
+              }
+            }}
+          />
+        </div>
+      </div>
+      
       {/* Styles pour les effets visuels */}
       <style jsx="true">{`
         .perspective-1000 {
@@ -285,7 +325,7 @@ const PassGamers = () => {
           background-size: 10px 10px;
         }
       `}</style>
-    </div>
+    </section>
   );
 };
 

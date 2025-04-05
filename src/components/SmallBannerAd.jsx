@@ -20,8 +20,40 @@ const SmallBannerAd = ({ className = "", onClose }) => {
         { y: -20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
       );
+      
+      // Animation de pulsation pour attirer l'attention
+      const pulseTimeline = gsap.timeline({repeat: 2});
+      pulseTimeline.to(adRef.current, {
+        scale: 1.03,
+        duration: 0.5,
+        ease: "power1.inOut"
+      }).to(adRef.current, {
+        scale: 1,
+        duration: 0.5,
+        ease: "power1.inOut"
+      });
     }
   }, [isAdTypeEnabled]);
+  
+  // Animation pour le texte défilant
+  useEffect(() => {
+    const textElements = document.querySelectorAll('.scrolling-text');
+    if (textElements.length > 0) {
+      textElements.forEach(el => {
+        // Vérifier si le texte est plus large que son conteneur
+        if (el.scrollWidth > el.clientWidth) {
+          gsap.to(el, {
+            x: -(el.scrollWidth - el.clientWidth + 10),
+            duration: 5,
+            ease: "linear",
+            repeat: -1,
+            repeatDelay: 1,
+            yoyo: true
+          });
+        }
+      });
+    }
+  }, []);
   
   // Si le type d'annonce est désactivé, ne rien afficher
   if (!isAdTypeEnabled('small')) return null;
@@ -69,8 +101,8 @@ const SmallBannerAd = ({ className = "", onClose }) => {
       
       {/* Contenu de l'annonce avec effet de brillance */}
       <div className="w-full h-full flex items-center p-2">
-        {/* Logo ou image */}
-        <div className="w-10 h-10 rounded bg-primary/20 flex items-center justify-center overflow-hidden">
+        {/* Logo ou image avec rotation subtile au survol */}
+        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden transform transition-transform duration-300 hover:rotate-12">
           <img 
             src="/logo.svg" 
             alt="Logo" 
@@ -81,24 +113,29 @@ const SmallBannerAd = ({ className = "", onClose }) => {
           />
         </div>
         
-        {/* Texte */}
+        {/* Texte avec animation de défilement si trop long */}
         <div className="flex-1 ml-2 overflow-hidden">
           <h4 className="text-white text-xs font-bold truncate">
-            {t('ads.sponsoredMessage')}
+            <span className="scrolling-text inline-block whitespace-nowrap">
+              {t('ads.sponsoredMessage')}
+            </span>
           </h4>
           <p className="text-white/70 text-[10px] truncate">
-            {t('ads.checkOurNewOffers')}
+            <span className="scrolling-text inline-block whitespace-nowrap">
+              {t('ads.checkOurNewOffers')}
+            </span>
           </p>
         </div>
         
-        {/* CTA */}
+        {/* CTA avec effet de brillance */}
         <a 
           href="https://mgexpo.ma" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-primary hover:bg-primary/80 text-black text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap transition-colors duration-300"
+          className="bg-primary hover:bg-primary/90 text-black text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap transition-all duration-300 relative overflow-hidden cta-shine-effect"
         >
           {t('ads.learnMore')}
+          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent shine-overlay"></span>
         </a>
       </div>
       
@@ -113,6 +150,22 @@ const SmallBannerAd = ({ className = "", onClose }) => {
         @keyframes shine {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
+        }
+        
+        .shine-overlay {
+          opacity: 0;
+          transform: translateX(-100%);
+        }
+        
+        .cta-shine-effect:hover .shine-overlay {
+          animation: shine-slide 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes shine-slide {
+          0% { opacity: 0; transform: translateX(-100%); }
+          20% { opacity: 1; }
+          40% { opacity: 0; transform: translateX(100%); }
+          100% { opacity: 0; transform: translateX(100%); }
         }
       `}</style>
     </div>

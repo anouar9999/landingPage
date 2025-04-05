@@ -19,11 +19,13 @@ import Contact from "./pages/Contact";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import TifinaghFontLoader from './components/TifinaghFontLoader';
 import './utils/latinToTifinagh'; // S'assurer que les utilitaires Tifinagh sont chargés
+import adLoader from './utils/adLoader';
 
 // Importation des nouveaux composants publicitaires
 import SmallBannerAd from './components/SmallBannerAd';
 import SidebarAd from './components/SidebarAd';
 import InlineAd from './components/InlineAd';
+import FloatingAd from './components/FloatingAd';
 
 // Composant principal de l'application
 function MainPage() {
@@ -37,6 +39,11 @@ function MainPage() {
   const [showSmallBanner, setShowSmallBanner] = useState(true); // État pour le petit bandeau
   const [showLeftSidebar, setShowLeftSidebar] = useState(true); // État pour la sidebar gauche
   const [showRightSidebar, setShowRightSidebar] = useState(true); // État pour la sidebar droite
+  const [showFloatingAd, setShowFloatingAd] = useState(true);
+  const [hasSeenFloatingAd, setHasSeenFloatingAd] = useState(false);
+  const scrollRef = useRef(null);
+  const [performanceScore, setPerformanceScore] = useState(0);
+  const [adBlocked, setAdBlocked] = useState(false);
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -138,6 +145,99 @@ function MainPage() {
     }
   }, [showDomainNotice]);
   
+  // Effet pour gérer la classe du body
+  useEffect(() => {
+    if (showSmallBanner) {
+      document.body.classList.add('has-top-ad');
+    } else {
+      document.body.classList.remove('has-top-ad');
+    }
+    
+    // Initialiser ScrollTrigger une seule fois
+    if (scrollRef.current === null) {
+      scrollRef.current = true;
+    }
+    
+    return () => {
+      document.body.classList.remove('has-top-ad');
+    };
+  }, [showSmallBanner]);
+  
+  // Méthode optimisée pour fermer la petite bannière
+  const handleCloseSmallBanner = () => {
+    const bannerElement = document.querySelector('.small-banner-ad');
+    if (bannerElement) {
+      bannerElement.style.opacity = '0';
+      bannerElement.style.transform = 'translateY(-20px)';
+      
+      setTimeout(() => {
+        setShowSmallBanner(false);
+      }, 300);
+    } else {
+      setShowSmallBanner(false);
+    }
+  };
+  
+  // Gestion de la fermeture de l'annonce flottante avec mémoire
+  const handleCloseFloatingAd = () => {
+    setShowFloatingAd(false);
+    setHasSeenFloatingAd(true);
+    
+    // Sauvegarder dans localStorage pour 24h
+    const now = new Date();
+    localStorage.setItem('floatingAdClosed', now.toString());
+  };
+  
+  // Vérifier si l'annonce flottante a déjà été fermée récemment
+  useEffect(() => {
+    const lastClosed = localStorage.getItem('floatingAdClosed');
+    if (lastClosed) {
+      const closedTime = new Date(lastClosed);
+      const now = new Date();
+      const hoursSinceClosed = (now - closedTime) / (1000 * 60 * 60);
+      
+      // Si fermée depuis moins de 24h, ne pas afficher
+      if (hoursSinceClosed < 24) {
+        setShowFloatingAd(false);
+        setHasSeenFloatingAd(true);
+      }
+    }
+  }, []);
+  
+  // Gestion optimisée des publicités basée sur les performances de l'appareil
+  useEffect(() => {
+    const initializeAds = async () => {
+      // Vérifier si l'utilisateur a un bloqueur de publicités
+      const isBlocked = await adLoader.detectAdBlocker();
+      setAdBlocked(isBlocked);
+      
+      // Optimiser la densité des publicités en fonction des performances de l'appareil
+      const score = adLoader.optimizeAdLoad();
+      setPerformanceScore(score);
+      
+      const adDensity = adLoader.getOptimalAdDensity();
+      console.log(`Score de performance: ${score}/10, Densité de publicités: ${adDensity}`);
+      
+      // Ajuster dynamiquement l'affichage des publicités
+      if (adDensity === 'low') {
+        // En cas de performances faibles, réduire le nombre de publicités
+        setShowLeftSidebar(false);
+        setShowRightSidebar(false);
+        setShowFloatingAd(false);
+      } else if (adDensity === 'medium') {
+        // Réduire légèrement
+        setShowFloatingAd(false);
+      }
+      
+      if (isBlocked) {
+        // Message discret pour les utilisateurs avec bloqueur de pub
+        console.log('Pour une expérience optimale de la démo, veuillez désactiver votre bloqueur de publicités');
+      }
+    };
+    
+    initializeAds();
+  }, []);
+
   return (
     <main className="relative min-h-screen w-screen" style={{ overflow: 'visible' }}>
       {/* Notification de changement de domaine */}
@@ -164,10 +264,10 @@ function MainPage() {
       
       <NavBar />
       
-      {/* Petit bandeau publicitaire sous le header - format 300x60 */}
+      {/* Petit bandeau publicitaire sous le header - format 300x60 avec meilleur positionnement */}
       {showSmallBanner && (
-        <div className="fixed top-[70px] left-1/2 transform -translate-x-1/2 z-40 mt-2">
-          <SmallBannerAd onClose={() => setShowSmallBanner(false)} />
+        <div className="fixed top-[80px] left-0 right-0 mt-4 z-50 small-banner-ad ad-fade-in">
+          <SmallBannerAd onClose={handleCloseSmallBanner} />
         </div>
       )}
       
@@ -303,8 +403,22 @@ function MainPage() {
         </div>
       )}
       
-      {/* Contrôleur de publicités pour la démonstration */}
-      <AdController />
+      {/* Floating Ad avec suppression intelligente */}
+      {showFloatingAd && !hasSeenFloatingAd && (
+        <FloatingAd onClose={handleCloseFloatingAd} autoHideTime={20000} />
+      )}
+      
+      {/* Contrôleur de publicités amélioré pour la démonstration */}
+      <AdController 
+        onToggleSmallBanner={() => setShowSmallBanner(!showSmallBanner)}
+        onToggleLeftSidebar={() => setShowLeftSidebar(!showLeftSidebar)}
+        onToggleRightSidebar={() => setShowRightSidebar(!showRightSidebar)}
+        onToggleFloatingAd={() => setShowFloatingAd(!showFloatingAd)}
+        showSmallBanner={showSmallBanner}
+        showLeftSidebar={showLeftSidebar}
+        showRightSidebar={showRightSidebar}
+        showFloatingAd={showFloatingAd}
+      />
     </main>
   );
 }
