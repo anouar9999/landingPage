@@ -20,6 +20,11 @@ import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import TifinaghFontLoader from './components/TifinaghFontLoader';
 import './utils/latinToTifinagh'; // S'assurer que les utilitaires Tifinagh sont chargés
 
+// Importation des nouveaux composants publicitaires
+import SmallBannerAd from './components/SmallBannerAd';
+import SidebarAd from './components/SidebarAd';
+import InlineAd from './components/InlineAd';
+
 // Composant principal de l'application
 function MainPage() {
   const lenisRef = useRef();
@@ -29,6 +34,9 @@ function MainPage() {
   const [adVisible, setAdVisible] = useState(true); // État pour contrôler la visibilité de l'annonce
   const [showDomainNotice, setShowDomainNotice] = useState(true); // État pour la notification de domaine
   const [showAds, setShowAds] = useState(true); // État pour contrôler la visibilité des annonces globalement
+  const [showSmallBanner, setShowSmallBanner] = useState(true); // État pour le petit bandeau
+  const [showLeftSidebar, setShowLeftSidebar] = useState(true); // État pour la sidebar gauche
+  const [showRightSidebar, setShowRightSidebar] = useState(true); // État pour la sidebar droite
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -156,11 +164,37 @@ function MainPage() {
       
       <NavBar />
       
+      {/* Petit bandeau publicitaire sous le header - format 300x60 */}
+      {showSmallBanner && (
+        <div className="fixed top-[70px] left-1/2 transform -translate-x-1/2 z-40 mt-2">
+          <SmallBannerAd onClose={() => setShowSmallBanner(false)} />
+        </div>
+      )}
+      
+      {/* Sidebar publicitaire de gauche */}
+      {showLeftSidebar && (
+        <div className="fixed left-2 top-1/2 transform -translate-y-1/2 z-30 hidden xl:block">
+          <SidebarAd position="left" onClose={() => setShowLeftSidebar(false)} />
+        </div>
+      )}
+      
+      {/* Sidebar publicitaire de droite */}
+      {showRightSidebar && (
+        <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-30 hidden xl:block">
+          <SidebarAd position="right" onClose={() => setShowRightSidebar(false)} />
+        </div>
+      )}
+      
       {/* Section Hero */}
       <Hero />
       
       {/* Section À propos */}
       <About />
+      
+      {/* Publicité en ligne entre les sections */}
+      <div className="container mx-auto px-4">
+        <InlineAd />
+      </div>
       
       {/* Section Road to Glory */}
       <Tri9lGlory />
@@ -171,6 +205,11 @@ function MainPage() {
       {/* Section ProPath */}
       <div id="pro-path">
         <ProPath />
+      </div>
+      
+      {/* Publicité en ligne entre les sections */}
+      <div className="container mx-auto px-4">
+        <InlineAd />
       </div>
       
       {/* Section Pass Gamers */}

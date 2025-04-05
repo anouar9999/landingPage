@@ -15,19 +15,59 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15); // 15 secondes de jeu
   const [targets, setTargets] = useState([]);
+  const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
+  const [difficulty, setDifficulty] = useState('medium'); // 'easy', 'medium', 'hard'
   const gameAreaRef = useRef(null);
   const timerRef = useRef(null);
   const adRef = useRef(null);
   const ctaRef = useRef(null);
   
-  // Générer une cible avec position et taille aléatoires
+  // Détecter les changements d'orientation pour adapter l'interface
+  useEffect(() => {
+    const handleResize = () => {
+      setOrientation(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  // Générer une cible avec position et taille aléatoires adaptée à l'orientation
   const generateTarget = () => {
     if (!gameAreaRef.current) return null;
     
     const areaWidth = gameAreaRef.current.offsetWidth;
     const areaHeight = gameAreaRef.current.offsetHeight;
     
-    const size = Math.floor(Math.random() * 20) + 20; // Taille entre 20 et 40px
+    // Ajuster la taille des cibles en fonction de la difficulté et de l'orientation
+    let minSize, maxSize;
+    
+    switch(difficulty) {
+      case 'easy':
+        minSize = 25;
+        maxSize = 40;
+        break;
+      case 'hard':
+        minSize = 15;
+        maxSize = 25;
+        break;
+      case 'medium':
+      default:
+        minSize = 20;
+        maxSize = 35;
+        break;
+    }
+    
+    // Ajuster pour les petits écrans
+    if (areaWidth < 250 || areaHeight < 200) {
+      minSize = Math.max(15, minSize - 5);
+      maxSize = Math.max(20, maxSize - 10);
+    }
+    
+    const size = Math.floor(Math.random() * (maxSize - minSize)) + minSize;
     const x = Math.floor(Math.random() * (areaWidth - size));
     const y = Math.floor(Math.random() * (areaHeight - size));
     const hue = Math.floor(Math.random() * 60) + 240; // Bleu/violet
@@ -42,7 +82,7 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
     };
   };
   
-  // Ajouter une nouvelle cible périodiquement
+  // Ajouter une nouvelle cible périodiquement, adapté à la difficulté
   useEffect(() => {
     let targetInterval;
     
@@ -50,12 +90,27 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
       // Ajouter une première cible
       setTargets([generateTarget()]);
       
+      // Déterminer la fréquence d'apparition des cibles en fonction de la difficulté
+      let spawnInterval = 800; // par défaut (medium)
+      let maxTargets = 5; // par défaut
+      
+      switch(difficulty) {
+        case 'easy':
+          spawnInterval = 1000;
+          maxTargets = 4;
+          break;
+        case 'hard':
+          spawnInterval = 600;
+          maxTargets = 7;
+          break;
+      }
+      
       // Ajouter de nouvelles cibles à intervalles réguliers
       targetInterval = setInterval(() => {
-        if (targets.length < 5) { // Limiter à 5 cibles simultanées
+        if (targets.length < maxTargets) {
           setTargets(prev => [...prev, generateTarget()]);
         }
-      }, 800);
+      }, spawnInterval);
       
       // Démarrer le timer
       timerRef.current = setInterval(() => {
@@ -75,7 +130,7 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
       clearInterval(targetInterval);
       clearInterval(timerRef.current);
     };
-  }, [gameStarted, gameEnded]);
+  }, [gameStarted, gameEnded, difficulty]);
   
   // Animation d'entrée
   useEffect(() => {
@@ -144,6 +199,23 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
     `).join('\n');
   };
   
+  // Styles adaptatifs en fonction de la taille réelle du conteneur
+  const getAdaptiveStyles = () => {
+    const isSmall = width < 250 || height < 200;
+    const isMedium = (width >= 250 && width < 400) || (height >= 200 && height < 350);
+    
+    return {
+      labelClass: isSmall ? 'text-[8px]' : 'text-xs',
+      titleClass: isSmall ? 'text-sm' : isMedium ? 'text-lg' : 'text-xl',
+      textClass: isSmall ? 'text-[10px]' : 'text-sm',
+      buttonClass: isSmall ? 'text-[10px] px-3 py-1' : 'text-sm px-5 py-2',
+      scoreClass: isSmall ? 'text-[8px]' : 'text-xs',
+      padding: isSmall ? 'p-2' : isMedium ? 'p-3' : 'p-4'
+    };
+  };
+  
+  const styles = getAdaptiveStyles();
+  
   // Ne pas afficher si les publicités sont désactivées
   // ou si l'option spécifique du jeu est désactivée
   if (!isAdTypeEnabled('game')) return null;
@@ -156,7 +228,9 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
         width: `${width}px`, 
         height: `${height}px`,
         boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(106, 90, 205, 0.15) inset',
-        zIndex: 900 // Assurer qu'il est visible mais sous le mode démonstration
+        zIndex: 900, // Assurer qu'il est visible mais sous le mode démonstration
+        maxWidth: '100vw', // Éviter le débordement sur petits écrans
+        maxHeight: '80vh' // Éviter le débordement sur petits écrans
       }}
     >
       {/* Style block for animations */}
@@ -215,15 +289,40 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
         }
       `}</style>
       
-      {/* Écran d'accueil */}
+      {/* Écran d'accueil avec sélection de difficulté */}
       {!gameStarted && !gameEnded && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-20">
-          <h3 className={`text-primary font-valorant text-lg mb-2 drop-shadow-glow ${getTextClass()}`}>{t('gameAd.title')}</h3>
-          <p className={`text-white text-sm text-center mb-4 ${getTextClass()}`}>{t('gameAd.instructions')}</p>
+        <div className={`absolute inset-0 flex flex-col items-center justify-center ${styles.padding} z-20`}>
+          <h3 className={`text-primary font-valorant ${styles.titleClass} mb-2 drop-shadow-glow ${getTextClass()}`}>{t('gameAd.title')}</h3>
+          <p className={`text-white ${styles.textClass} text-center mb-3 ${getTextClass()}`}>{t('gameAd.instructions')}</p>
+          
+          {/* Sélecteur de difficulté */}
+          <div className="w-full max-w-[200px] mb-3">
+            <p className={`text-white/80 ${styles.textClass} text-center mb-1`}>{t('gameAd.selectDifficulty')}:</p>
+            <div className="flex justify-between gap-1">
+              <button 
+                onClick={() => setDifficulty('easy')}
+                className={`flex-1 py-1 rounded text-[10px] font-valorant transition-colors duration-200 ${difficulty === 'easy' ? 'bg-green-500 text-black' : 'bg-black/30 text-green-400 hover:bg-black/50'}`}
+              >
+                {t('gameAd.easy')}
+              </button>
+              <button 
+                onClick={() => setDifficulty('medium')}
+                className={`flex-1 py-1 rounded text-[10px] font-valorant transition-colors duration-200 ${difficulty === 'medium' ? 'bg-primary text-black' : 'bg-black/30 text-primary/80 hover:bg-black/50'}`}
+              >
+                {t('gameAd.medium')}
+              </button>
+              <button 
+                onClick={() => setDifficulty('hard')}
+                className={`flex-1 py-1 rounded text-[10px] font-valorant transition-colors duration-200 ${difficulty === 'hard' ? 'bg-red-500 text-black' : 'bg-black/30 text-red-400 hover:bg-black/50'}`}
+              >
+                {t('gameAd.hard')}
+              </button>
+            </div>
+          </div>
           
           <button 
             onClick={startGame}
-            className={`bg-primary hover:bg-primary/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-glow ${getTextClass()}`}
+            className={`bg-primary hover:bg-primary/80 text-black font-valorant ${styles.buttonClass} rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-glow ${getTextClass()}`}
             style={{
               boxShadow: '0 0 15px rgba(106, 90, 205, 0.4)'
             }}
@@ -231,7 +330,7 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
             {t('gameAd.play')}
           </button>
           
-          <div className={`mt-4 text-white/50 text-xs text-center ${getTextClass()}`}>
+          <div className={`mt-2 text-white/50 text-[10px] text-center ${getTextClass()}`}>
             {t('gameAd.sponsored')}
           </div>
         </div>
@@ -245,21 +344,34 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
           style={{ cursor: 'crosshair' }}
         >
           {/* Affichage du score et du temps */}
-          <div className="absolute top-2 right-2 flex items-center gap-3 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-md z-30">
-            <div className={`text-white text-xs ${getTextClass()}`}>
+          <div className="absolute top-2 right-2 flex items-center gap-2 bg-black/70 backdrop-blur-sm px-2 py-1 rounded z-30">
+            <div className={`text-white ${styles.scoreClass} ${getTextClass()}`}>
               {t('gameAd.score')}: <span id="score-display" className="font-bold">{score}</span>
             </div>
-            <div className={`text-white text-xs ${getTextClass()}`}>
+            <div className={`text-white ${styles.scoreClass} ${getTextClass()}`}>
               {t('gameAd.time')}: <span className={`font-bold ${timeLeft <= 5 ? 'text-red-500' : ''}`}>{timeLeft}s</span>
             </div>
           </div>
           
-          {/* Cibles à cliquer */}
+          {/* Difficulté actuelle */}
+          <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm px-2 py-1 rounded z-30">
+            <div className={`${styles.scoreClass} ${getTextClass()} ${
+              difficulty === 'easy' ? 'text-green-400' : 
+              difficulty === 'hard' ? 'text-red-400' : 
+              'text-primary'
+            }`}>
+              {difficulty === 'easy' ? t('gameAd.easy') : 
+               difficulty === 'hard' ? t('gameAd.hard') : 
+               t('gameAd.medium')}
+            </div>
+          </div>
+          
+          {/* Cibles à cliquer avec adaptation tactile pour les écrans mobiles */}
           {targets.map(target => (
             <div
               key={target.id}
               onClick={() => handleTargetClick(target.id, target.points)}
-              className="absolute rounded-full shadow-lg cursor-pointer flex items-center justify-center transition-transform hover:scale-110"
+              className="absolute rounded-full shadow-lg cursor-pointer flex items-center justify-center transition-transform hover:scale-110 touch-manipulation"
               style={{
                 left: `${target.x}px`,
                 top: `${target.y}px`,
@@ -267,30 +379,44 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
                 height: `${target.size}px`,
                 backgroundColor: target.color,
                 boxShadow: `0 0 10px ${target.color}`,
-                animation: `pulse-${target.id} 0.8s infinite alternate`
+                animation: `pulse-${target.id} 0.8s infinite alternate`,
+                WebkitTapHighlightColor: 'transparent' // Supprime le surlignage au tap sur mobile
               }}
             >
-              <span className="text-white text-[8px] font-bold">+{target.points}</span>
+              <span className={`text-white text-[8px] font-bold ${target.size < 20 ? 'opacity-0' : ''}`}>+{target.points}</span>
             </div>
           ))}
         </div>
       )}
       
-      {/* Écran de fin de jeu */}
+      {/* Écran de fin de jeu avec animations et options */}
       {gameEnded && (
         <div 
           ref={ctaRef}
           className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm p-4 z-30"
         >
-          <h3 className={`text-primary font-valorant text-xl mb-2 ${getTextClass()}`}>{t('gameAd.gameOver')}</h3>
-          <p className={`text-white text-center mb-4 ${getTextClass()}`}>
+          <h3 className={`text-primary font-valorant ${styles.titleClass} mb-2 ${getTextClass()}`}>{t('gameAd.gameOver')}</h3>
+          <p className={`text-white text-center mb-2 ${styles.textClass} ${getTextClass()}`}>
             {t('gameAd.finalScore')}: <span className="text-primary font-bold text-xl">{score}</span>
           </p>
           
-          <div className="flex gap-3 mt-2">
+          {/* Badge de difficulté */}
+          <div className={`mb-3 px-3 py-1 rounded-full ${
+            difficulty === 'easy' ? 'bg-green-500/20 text-green-400' : 
+            difficulty === 'hard' ? 'bg-red-500/20 text-red-400' : 
+            'bg-primary/20 text-primary'
+          }`}>
+            <span className={`${styles.textClass} font-bold`}>
+              {difficulty === 'easy' ? t('gameAd.easyMode') : 
+               difficulty === 'hard' ? t('gameAd.hardMode') : 
+               t('gameAd.mediumMode')}
+            </span>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
             <button 
               onClick={restartGame}
-              className={`bg-primary hover:bg-primary/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
+              className={`bg-primary hover:bg-primary/80 text-black font-valorant ${styles.buttonClass} rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
             >
               {t('gameAd.playAgain')}
             </button>
@@ -299,10 +425,15 @@ const GameAd = ({ width = 300, height = 250, className = "" }) => {
               href="https://mgexpo.ma" 
               target="_blank" 
               rel="noopener noreferrer"
-              className={`bg-white hover:bg-white/80 text-black font-valorant text-sm px-5 py-2 rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
+              className={`bg-white hover:bg-white/80 text-black font-valorant ${styles.buttonClass} rounded-md transition-all duration-300 transform hover:scale-105 ${getTextClass()}`}
             >
               {t('gameAd.visitSite')}
             </a>
+          </div>
+          
+          {/* Recommandation pour partager le score */}
+          <div className="mt-3 text-white/60 text-[10px] text-center">
+            {t('gameAd.shareScore')}
           </div>
         </div>
       )}

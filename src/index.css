@@ -747,3 +747,189 @@ html::before {
     transform: scale(0.75) translateY(-1/2) !important;
   }
 }
+
+/* Styles spécifiques pour les emplacements publicitaires */
+.small-banner-ad {
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+/* Position correcte sous le header pour éviter qu'il soit caché */
+@media screen and (max-width: 768px) {
+  .small-banner-ad {
+    transform: scale(0.9);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .small-banner-ad {
+    transform: scale(0.8);
+  }
+}
+
+/* Assurer que la bannière ne soit pas cachée par le header */
+.fixed.top-\[70px\] {
+  z-index: 50;
+  margin-top: 5px;
+}
+
+/* Styles pour les emplacements publicitaires responsives */
+@media screen and (max-width: 1400px) {
+  .sidebar-ad {
+    transform: scale(0.9);
+  }
+  
+  .fixed.left-2.top-1\/2,
+  .fixed.right-2.top-1\/2 {
+    z-index: 30;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  /* Réduire davantage les sidebars sur tablette large */
+  .sidebar-ad {
+    transform: scale(0.8);
+  }
+  
+  .fixed.left-2.top-1\/2 {
+    left: 0;
+  }
+  
+  .fixed.right-2.top-1\/2 {
+    right: 0;
+  }
+}
+
+/* Améliorations UX pour les composants jeux */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Adaptation pour les bannières publicitaires inline */
+.inline-ad {
+  width: 100%;
+  max-width: 728px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .inline-ad {
+    height: auto !important;
+    min-height: 90px;
+    padding: 0.5rem 0;
+  }
+  
+  .inline-ad .w-16 {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+  
+  .inline-ad .text-sm {
+    font-size: 0.75rem !important;
+  }
+  
+  .inline-ad .text-xs {
+    font-size: 0.65rem !important;
+  }
+}
+
+/* Ajout d'un effet de surbrillance pour les CTA dans les publicités */
+.ad-container a, 
+.ad-container button {
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-container a::after, 
+.ad-container button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: rotate(30deg);
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.ad-container a:hover::after, 
+.ad-container button:hover::after {
+  animation: sheen 1.5s forwards;
+}
+
+@keyframes sheen {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(30deg);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%) rotate(30deg);
+  }
+}
+
+/* Ajout d'un effet de glow pour les conteneurs publicitaires lors du hover */
+.ad-container {
+  transition: all 0.3s ease;
+}
+
+.ad-container:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(106, 90, 205, 0.2);
+  border-color: rgba(106, 90, 205, 0.5);
+}
+
+/* Style spécifique pour les jeux publicitaires */
+.ad-container.GameAd {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ad-container.GameAd:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px rgba(106, 90, 205, 0.3);
+}
+
+/* Espace supplémentaire pour les publicités sous le header */
+body.has-top-ad {
+  padding-top: 70px;
+}
+
+@media screen and (max-width: 768px) {
+  body.has-top-ad {
+    padding-top: 60px;
+  }
+}
+
+/* Animation pour les nouveaux emplacements publicitaires */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ad-fade-in {
+  animation: fadeInDown 0.5s ease forwards;
+}
+
+/* Pour s'assurer que les publicités ne se chevauchent pas sur des écrans très petits */
+@media screen and (max-height: 500px) {
+  .fixed.bottom-0 {
+    position: static;
+    margin-top: 1rem;
+  }
+  
+  .fixed.right-4.top-\[40\%\] {
+    display: none;
+  }
+}
