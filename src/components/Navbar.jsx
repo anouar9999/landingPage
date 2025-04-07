@@ -260,8 +260,12 @@ const NavBar = () => {
     if (link.startsWith('#')) {
       e.preventDefault(); // Prevent default anchor behavior
       scrollToSection(link);
+    } else if (link.includes('user.mgexpo.ma')) {
+      // Redirect to login page in the same tab
+      window.location.href = link;
+      e.preventDefault();
     } else {
-      // For non-anchor links, just close the menus
+      // For other non-anchor links, just close the menus
       setIsMenuOpen(false);
       setIsSubMenuOpen(false);
     }
@@ -398,8 +402,6 @@ const NavBar = () => {
             <a 
               href="https://user.mgexpo.ma/auth/auth1/login"
               onClick={(e) => handleLinkClick(e, "https://user.mgexpo.ma/auth/auth1/login")}
-              target="_blank"
-              rel="noopener noreferrer"
               className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -535,8 +537,6 @@ const NavBar = () => {
               <a 
                 href="https://user.mgexpo.ma/auth/auth1/login"
                 onClick={(e) => handleLinkClick(e, "https://user.mgexpo.ma/auth/auth1/login")}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={`group relative block w-full text-center bg-[#e10000] overflow-hidden py-4 text-white font-bold text-sm uppercase hover:bg-[#c00] transition-all duration-300 rounded-md shadow-lg ${getTextClass()}`}
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>

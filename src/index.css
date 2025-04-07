@@ -1260,3 +1260,120 @@ p {
     align-items: flex-start;
   }
 }
+
+/* Styles pour le titre "Discover the world's largest shared adventure" */
+.about-animated-title {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.about-title-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.about-animated-word {
+  display: inline-block;
+  margin: 0 0.2rem;
+  position: relative;
+  text-align: center;
+  transform: translate3d(0, 2rem, 0) rotateY(15deg) rotateX(8deg);
+  opacity: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  transition: all 0.3s ease;
+}
+
+.about-animated-word b {
+  color: #e10000; /* Rouge accent pour les lettres en gras */
+  font-weight: 900;
+}
+
+/* Responsive adjustments for the about title */
+@media screen and (max-width: 768px) {
+  .about-animated-title {
+    padding: 0 0.5rem;
+  }
+  
+  .about-animated-word {
+    margin: 0 0.15rem;
+    font-size: 0.9em;
+    line-height: 1.3;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-animated-title {
+    padding: 0 0.25rem;
+  }
+  
+  .about-animated-word {
+    margin: 0 0.1rem;
+    font-size: 0.8em;
+    line-height: 1.4;
+  }
+  
+  .about-title-line {
+    margin-bottom: 0.3rem;
+  }
+}
+
+/* Amélioration générale de la réactivité pour les titres */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* Ajustement des tailles de police responsive avec clamp() */
+.font-nightWarrior.text-4xl {
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.font-nightWarrior.text-5xl {
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.1;
+}
+
+.font-nightWarrior.text-6xl {
+  font-size: clamp(2.5rem, 7vw, 3.75rem);
+  line-height: 1.05;
+}
+
+/* Ajustements pour petits écrans */
+@media (max-width: 480px) {
+  #about .relative.text-center {
+    margin-top: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  #about p.font-valorant {
+    font-size: 0.7rem !important;
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+}
+
+/* Ajustements pour tablettes */
+@media (min-width: 481px) and (max-width: 768px) {
+  #about .relative.text-center {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  #about p.font-valorant {
+    font-size: 0.8rem !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+  }
+}

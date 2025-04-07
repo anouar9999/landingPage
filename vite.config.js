@@ -19,6 +19,9 @@ export default defineConfig({
     assetsDir: 'assets',
     assetsInlineLimit: 4096,
     sourcemap: process.env.NODE_ENV !== 'production',
+    rollupOptions: {
+      external: ['@heroicons/react/24/outline', '@heroicons/react/24/solid', '@heroicons/react/20/solid'],
+    },
   },
   server: {
     port: 5173,

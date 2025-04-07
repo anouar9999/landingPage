@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { XMarkIcon, AdjustmentsHorizontalIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, EyeIcon, EyeSlashIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, AdjustmentsHorizontalIcon, ArrowsPointingOutIcon, ArrowsPointingInIcon, EyeIcon, EyeSlashIcon, ExclamationCircleIcon } from '../utils/HeroIconsLocal';
 import adLoader from '../utils/adLoader';
 
 // Composant pour contrôler et suivre les publicités sur le site

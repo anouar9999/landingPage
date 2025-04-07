@@ -208,6 +208,7 @@ const GamingShowcase = () => {
         <AnimatedTitle
           title={t('about.title')}
           containerClass="my-2 sm:my-3 md:my-5 !text-black text-center font-nightWarrior text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+          isAboutTitle={true}
         />
       </div>
 

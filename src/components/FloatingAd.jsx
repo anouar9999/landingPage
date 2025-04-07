@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '../utils/HeroIconsLocal';
 
 // Enregistrer le plugin GSAP
 gsap.registerPlugin(ScrollTrigger);

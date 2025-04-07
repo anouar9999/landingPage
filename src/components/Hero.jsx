@@ -342,7 +342,6 @@ const Hero = () => {
 
           <div className="mx-2 sm:mx-4">
             <a
-              target="_blank"
               href="https://user.mgexpo.ma/auth/auth1/login"
               className="group relative"
               ref={playNowRef}
