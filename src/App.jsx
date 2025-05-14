@@ -16,6 +16,7 @@ import GameAd from "./components/GameAd";
 import AdController from "./components/AdController";
 import Documentation from "./pages/Documentation";
 import Contact from "./pages/Contact";
+import Login from "./pages/Login";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import TifinaghFontLoader from './components/TifinaghFontLoader';
 import './utils/latinToTifinagh'; // S'assurer que les utilitaires Tifinagh sont chargés
@@ -25,7 +26,7 @@ import adLoader from './utils/adLoader';
 import SmallBannerAd from './components/SmallBannerAd';
 import SidebarAd from './components/SidebarAd';
 import InlineAd from './components/InlineAd';
-import FloatingAd from './components/FloatingAd';
+// import FloatingAd from './components/FloatingAd';
 
 // Composant principal de l'application
 function MainPage() {
@@ -429,7 +430,8 @@ function MainPage() {
       
       {/* Floating Ad avec suppression intelligente */}
       {showFloatingAd && !hasSeenFloatingAd && (
-        <FloatingAd onClose={handleCloseFloatingAd} autoHideTime={20000} />
+        // <FloatingAd onClose={handleCloseFloatingAd} autoHideTime={20000} />
+        <div></div>
       )}
       
       {/* Contrôleur de publicités amélioré pour la démonstration */}
@@ -492,6 +494,7 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/downloads" element={<Documentation />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </AppInitializer>
       </LanguageProvider>
