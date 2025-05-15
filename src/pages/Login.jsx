@@ -146,7 +146,7 @@ function Login() {
       case 2:
         return (
           <>
-            <h3 className="text-xl font-semibold text-white mb-4">Create Password</h3>
+            <h3 className=" text-xl font-semibold text-white mb-4">Create Password</h3>
             <p className="text-gray-400 text-sm mb-6">
               Choose a secure password for your account.
             </p>
@@ -286,12 +286,26 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* NavBar removed from here */}
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        {/* <video
+          autoPlay
+          loop
+          muted
+          className="absolute min-w-full min-h-full object-cover"
+        >
+          <source src="/videos/feature-1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video> */}
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black  z-10"></div>
+      </div>
       
-      <div className="  flex-grow flex items-center justify-center bg-gradient-to-b from-black to-gray-900 py-12 px-4">
-        <div className="w-1/2   space-y-8  p-8 rounded-xl  ">
-          <div className="text-center">
+      {/* Content */}
+      <div className="flex-grow flex items-center justify-center py-12 px-4 relative z-20">
+        <div className="w-2/5 space-y-8 p-8 rounded-xl bg-black ">
+          <div className="absolute top-2 text-center">
             <Link to="/">
               <img 
                 src="/img/Logo-MGE-2025-white.svg" 
@@ -299,13 +313,13 @@ function Login() {
                 className="h-24 mx-auto mb-8"
               />
             </Link>
-            <h2 className="text-2xl font-street-fighter text-white tracking-widest mb-1">CREATE YOUR ACCOUNT</h2>
+            <h2 className="text-2xl font-street-fighter text-white tracking-widest mb-4">CREATE YOUR ACCOUNT</h2>
             {/* <p className="text-gray-400 text-sm">
               Join more than 350,000 gamers from all over the world
             </p> */}
           </div>
           
-          {renderStepIndicator()}
+          {/* {renderStepIndicator()} */}
           
           <form className="mt-8 space-y-6" onSubmit={(e) => e.preventDefault()}>
             {error && (
@@ -318,12 +332,12 @@ function Login() {
               {renderStepContent()}
             </div>
 
-            <div className="flex items-center justify-center mt-8  font-free-fire">
+            <div className="absolute bottom-16 translate-x-1/2 left-1/2 flex items-center justify-center mt-8 font-free-fire">
               {currentStep > 1 ? (
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className=" flex items-center mx-8 px-6 py-1 rounded text-gray-400 border border-collapse hover:text-white transition-colors"
+                  className="flex items-center mx-8 px-6 py-1 rounded text-gray-400 border border-collapse hover:text-white transition-colors"
                 >
                   {/* <ArrowLeftIcon className="h-4 w-4 mr-1" /> */}
                   Back
@@ -335,7 +349,7 @@ function Login() {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="group relative font-free-fire flex justify-center px-6 py-2 border border-transparent text-sm  rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+                className={`group relative font-free-fire flex justify-center px-6 py-2 border ${currentStep < 4 ? 'border-primary text-primary hover:bg-primary hover:text-white' : 'border-transparent bg-primary hover:bg-primary-dark text-white'} text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -348,7 +362,7 @@ function Login() {
                   </>
                 ) : (
                   <>
-                    {currentStep < 4 ? 'Continue' : 'Create Account'}
+                    {currentStep < 4 ? 'CONTINUER' : 'CRÉER UN COMPTE'}
                     <ArrowRightIcon className="h-4 w-4 ml-1" />
                   </>
                 )}
@@ -356,7 +370,7 @@ function Login() {
             </div>
           </form>
           
-          <div className="mt-6">
+          {/* <div className="mt-12">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-700"></div>
@@ -407,7 +421,7 @@ function Login() {
                 </svg>
               </button>
             </div>
-          </div>
+          </div> */}
           
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-400">

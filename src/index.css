@@ -1377,3 +1377,16 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto !important;
   }
 }
+.background-animate {
+  background-size: 400% 400%;
+  animation: AnimateBackground 3s ease infinite;
+}
+
+@keyframes AnimateBackground {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
