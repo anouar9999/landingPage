@@ -1,62 +1,112 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useWindowScroll } from "react-use";
-import { Menu, X, Instagram, MessageSquare, Facebook, Youtube, ChevronDown, ChevronUp, Linkedin, Settings, ArrowUpRight, Globe } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Instagram,
+  MessageSquare,
+  Facebook,
+  Youtube,
+  ChevronDown,
+  ChevronUp,
+  Linkedin,
+  Settings,
+  ArrowUpRight,
+  Globe,
+} from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "../hooks/useTranslation";
-// Remplacer l'importation du logo par le chemin public
-// import Logo from '../assets/images/logo.png';
+import globalStorage from "../utils/GlobalStorage";
+import GlobalStorage from "../utils/GlobalStorage";
+import AuthStorage from "../utils/GlobalStorage";
 
 const socialLinks = [
   { Icon: Facebook, link: "https://www.facebook.com/mgex.ma" },
   { Icon: Instagram, link: "https://www.instagram.com/mgex.ma/" },
-  { Icon: Youtube, link: "https://www.youtube.com/channel/UCN-qYwRN2RABWRTenM1WTSg" },
-  { Icon: Linkedin, link: "https://www.linkedin.com/company/102805036/" }
+  {
+    Icon: Youtube,
+    link: "https://www.youtube.com/channel/UCN-qYwRN2RABWRTenM1WTSg",
+  },
+  { Icon: Linkedin, link: "https://www.linkedin.com/company/102805036/" },
 ];
 
-// Composant personnalisé pour l'icône X (anciennement Twitter)
+// Custom X icon component
 const XIcon = (props) => (
-  <svg 
-    viewBox="0 0 24 24" 
-    width={props.size || 24} 
-    height={props.size || 24} 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    fill="none" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    viewBox="0 0 24 24"
+    width={props.size || 24}
+    height={props.size || 24}
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={props.className}
   >
-    <path d="M 2.9921094 3 L 9.7089844 12.861328 L 2.8867188 21 L 5.3886719 21 L 10.773438 14.488281 L 15.212891 21 L 21.214844 21 L 14.078125 10.511719 L 20.53125 3 L 18.03125 3 L 13.017578 9.015625 L 8.9375 3 L 2.9921094 3 z" fill="currentColor"></path>
+    <path
+      d="M 2.9921094 3 L 9.7089844 12.861328 L 2.8867188 21 L 5.3886719 21 L 10.773438 14.488281 L 15.212891 21 L 21.214844 21 L 14.078125 10.511719 L 20.53125 3 L 18.03125 3 L 13.017578 9.015625 L 8.9375 3 L 2.9921094 3 z"
+      fill="currentColor"
+    ></path>
   </svg>
 );
 
-// Ajout de X aux liens sociaux
+// Add X to social links
 socialLinks.push({
   Icon: XIcon,
-  link: "https://twitter.com/mgexma"
+  link: "https://twitter.com/mgexma",
 });
 
 const NavBar = () => {
-  // Utiliser le hook de traduction
-  const { t, isRtl, isTamazight, getTextClass, applyTifinaghToElements } = useTranslation();
-  
-  // Items de navigation principaux avec traductions
+  // Use translation hook
+  const { t, isRtl, isTamazight, getTextClass, applyTifinaghToElements } =
+    useTranslation();
+  const navigate = useNavigate();
+
+  // Add state for login modal and auth
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+
+  // Login form states
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Check if user is already logged in on component mount
+  useEffect(() => {
+    const sessionToken = localStorage.getItem("username");
+    const storedUsername = localStorage.getItem("username");
+    const storedAvatar = localStorage.getItem("avatarUrl");
+
+    if (sessionToken) {
+      setIsLoggedIn(true);
+      setUserName(storedUsername || "");
+      setUserAvatar(storedAvatar || "/img/default-avatar.jpg");
+    }
+  }, []);
+
+  // Main navigation items with translations
   const mainNavItems = [
-    { name: t('nav.passGamers'), link: "#PassGamers" },
-    { name: t('nav.documentation'), link: "/downloads" },
-    { name: t('nav.faq'), link: "#faq" }
+    { name: t("nav.passGamers"), link: "#PassGamers" },
+    { name: t("nav.documentation"), link: "/downloads" },
+    { name: t("nav.faq"), link: "#faq" },
   ];
-  
-  // Items du sous-menu Découvrir
+
+  // Discover submenu items
   const discoverSubItems = [
-    { name: t('nav.discover'), link: "#about" },
-    { name: t('nav.tri9lGlory'), link: "#Tri9lGlory" },
-    { name: t('nav.prizePool'), link: "#PrizePool" },
-    { name: t('nav.proPath'), link: "#pro-path" }
+    { name: t("nav.discover"), link: "#about" },
+    { name: t("nav.tri9lGlory"), link: "#Tri9lGlory" },
+    { name: t("nav.prizePool"), link: "#PrizePool" },
+    { name: t("nav.proPath"), link: "#pro-path" },
   ];
-  
+
   // State management
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -65,12 +115,12 @@ const NavBar = () => {
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [screenSize, setScreenSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
     isMobile: false,
     isTablet: false,
-    isDesktop: false
+    isDesktop: false,
   });
-  
+
   // Refs
   const navContainerRef = useRef(null);
   const menuRef = useRef(null);
@@ -78,13 +128,160 @@ const NavBar = () => {
   const discoverBtnRef = useRef(null);
   const languageSelectorRef = useRef(null);
   const { y: currentScrollY } = useWindowScroll();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Appliquer les traductions en Tifinagh si nécessaire
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+// Cookie utility functions
+const setCookie = (name, value, days = 7, path = '/') => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=${path}; SameSite=Strict`;
+};
+
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+  return null;
+};
+
+const removeCookie = (name, path = '/') => {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
+};
+  // Handle login form submission
+// Check if user is already logged in on component mount
+useEffect(() => {
+  const userData = AuthStorage.getUserData();
+  
+  if (userData && userData.username) {
+    setIsLoggedIn(true);
+    setUserName(userData.username);
+    setUserAvatar(userData.avatarUrl || "/img/default-avatar.jpg");
+  }
+}, []);
+
+// Handle login form submission
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  // Reset errors
+  setEmailError("");
+  setPasswordError("");
+  setServerError("");
+
+  // Validate fields
+  let hasError = false;
+  
+  // (your existing validation code)
+
+  if (hasError) return;
+  setIsLoading(true);
+
+  try {
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    const response = await fetch(`https://api.mgexpo.ma/api/user_login.php`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+
+    const responseText = await response.text();
+    let data;
+    
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      console.error("Failed to parse login response:", e);
+      throw new Error("Invalid server response format");
+    }
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Login failed");
+    }
+
+    // Store user session data using our new utility
+    const userData = {
+      userSessionToken: data.session_token,
+      userId: data.user_id,
+      username: data.username,
+      userType: data.user_type,
+      avatarUrl: data.avatar || "/img/default-avatar.jpg"
+    };
+    
+    // This takes care of all storage methods
+    AuthStorage.setUserData(userData);
+
+    // Update state
+    setIsLoggedIn(true);
+    setUserName(data.username);
+    setUserAvatar(data.avatar || "/img/default-avatar.jpg");
+
+    // Close modal
+    setIsLoginModalOpen(false);
+
+    // Redirect to tournaments page
+    setTimeout(() => {
+      window.location.href = "https://user.mgexpo.ma/tournaments";
+    }, 100);
+  } catch (error) {
+    console.error("Login error:", error);
+    setServerError(
+      error.message || "Une erreur s'est produite. Veuillez réessayer."
+    );
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+  // Handle logout
+  // Handle logout
+  const handleLogout = () => {
+    // One line clears all storage methods
+    AuthStorage.clearUserData();
+  
+    // Reset state
+    setIsLoggedIn(false);
+    setUserName("");
+    setUserAvatar("");
+    setDropdownOpen(false);
+  
+    // Redirect to home
+    navigate("/");
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Apply Tifinagh translations if necessary
   useEffect(() => {
     if (isTamazight) {
-      // Sélectionner tous les éléments de navigation pour appliquer les conversions Tifinagh
       setTimeout(() => {
-        applyTifinaghToElements('nav a, nav button, .discover-trigger, .mobile-menu a, .mobile-menu button');
+        applyTifinaghToElements(
+          "nav a, nav button, .discover-trigger, .mobile-menu a, .mobile-menu button"
+        );
       }, 100);
     }
   }, [isTamazight, applyTifinaghToElements]);
@@ -97,9 +294,9 @@ const NavBar = () => {
         width,
         isMobile: width < 640,
         isTablet: width >= 640 && width < 1024,
-        isDesktop: width >= 1024
+        isDesktop: width >= 1024,
       });
-      
+
       // Close mobile menu when resizing to larger screens
       if (width >= 1024 && isMenuOpen) {
         setIsMenuOpen(false);
@@ -108,10 +305,10 @@ const NavBar = () => {
 
     // Initial check
     updateScreenSize();
-    
+
     // Add event listener
     window.addEventListener("resize", updateScreenSize);
-    
+
     // Cleanup
     return () => window.removeEventListener("resize", updateScreenSize);
   }, [isMenuOpen]);
@@ -127,7 +324,7 @@ const NavBar = () => {
         navContainerRef.current?.classList.remove("bg-black/95");
         navContainerRef.current?.classList.remove("shadow-md");
         navContainerRef.current?.classList.add("bg-black/30");
-      } 
+      }
       // Scrolling down - hide on mobile and tablet, compact on desktop
       else if (currentScrollY > lastScrollY) {
         if (screenSize.isDesktop) {
@@ -140,7 +337,7 @@ const NavBar = () => {
         navContainerRef.current?.classList.add("bg-black/95");
         navContainerRef.current?.classList.add("shadow-md");
         navContainerRef.current?.classList.remove("bg-black/30");
-      } 
+      }
       // Scrolling up - compact or visible with background
       else {
         setIsNavVisible(true);
@@ -157,28 +354,27 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [currentScrollY, lastScrollY, screenSize.isDesktop]);
 
-  // Fonction pour remonter en haut de la page
+  // Function to scroll to top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   // Improved mobile menu animation
   useEffect(() => {
     if (menuRef.current) {
-      // Utiliser GSAP pour une animation plus fluide
       gsap.to(menuRef.current, {
         opacity: isMenuOpen ? 1 : 0,
         x: isMenuOpen ? 0 : -window.innerWidth,
         duration: 0.4,
-        ease: "power3.out"
+        ease: "power3.out",
       });
     }
   }, [isMenuOpen]);
 
-  // Sous-menu animation - Améliorée avec des effets plus fluides
+  // Submenu animation - Enhanced with smoother effects
   useEffect(() => {
     if (subMenuRef.current && screenSize.isDesktop) {
       gsap.to(subMenuRef.current, {
@@ -188,54 +384,56 @@ const NavBar = () => {
         ease: "power2.out",
         transformOrigin: "top center",
         y: isSubMenuOpen ? 0 : -10,
-        scale: isSubMenuOpen ? 1 : 0.98
+        scale: isSubMenuOpen ? 1 : 0.98,
       });
     }
   }, [isSubMenuOpen, screenSize.isDesktop]);
 
-  // Fermer sous-menu quand on clique ailleurs
+  // Close submenu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (subMenuRef.current && !subMenuRef.current.contains(e.target) && 
-          !e.target.classList.contains('discover-trigger')) {
+      if (
+        subMenuRef.current &&
+        !subMenuRef.current.contains(e.target) &&
+        !e.target.classList.contains("discover-trigger")
+      ) {
         setIsSubMenuOpen(false);
       }
     };
-    
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  // Améliorations de l'animation du sélecteur de langue
+  // Language selector animation improvements
   useEffect(() => {
     if (languageSelectorRef.current) {
-      // Ajouter une légère animation au survol
       const element = languageSelectorRef.current;
-      
+
       const handleMouseEnter = () => {
         gsap.to(element, {
           scale: 1.05,
           duration: 0.2,
-          ease: "power1.out"
+          ease: "power1.out",
         });
       };
-      
+
       const handleMouseLeave = () => {
         gsap.to(element, {
           scale: 1,
           duration: 0.2,
-          ease: "power1.in"
+          ease: "power1.in",
         });
       };
-      
-      element.addEventListener('mouseenter', handleMouseEnter);
-      element.addEventListener('mouseleave', handleMouseLeave);
-      
+
+      element.addEventListener("mouseenter", handleMouseEnter);
+      element.addEventListener("mouseleave", handleMouseLeave);
+
       return () => {
-        element.removeEventListener('mouseenter', handleMouseEnter);
-        element.removeEventListener('mouseleave', handleMouseLeave);
+        element.removeEventListener("mouseenter", handleMouseEnter);
+        element.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
   }, []);
@@ -244,9 +442,8 @@ const NavBar = () => {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId.substring(1)); // Remove the #
     if (section) {
-      // Scroll to the section with a smooth animation
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+
       // Close menus after navigating
       setIsMenuOpen(false);
       setIsSubMenuOpen(false);
@@ -257,10 +454,10 @@ const NavBar = () => {
 
   // Close mobile menu on link click
   const handleLinkClick = (e, link) => {
-    if (link.startsWith('#')) {
-      e.preventDefault(); // Prevent default anchor behavior
+    if (link.startsWith("#")) {
+      e.preventDefault();
       scrollToSection(link);
-    } else if (link.includes('user.mgexpo.ma')) {
+    } else if (link.includes("user.mgexpo.ma")) {
       // Redirect to login page in the same tab
       window.location.href = link;
       e.preventDefault();
@@ -271,59 +468,73 @@ const NavBar = () => {
     }
   };
 
-  // Classe commune pour les liens de navigation - Améliorée
-  const navLinkClass = "text-white hover:text-primary transition-all duration-200 text-sm uppercase whitespace-nowrap font-medium tracking-wide hover:scale-105 transform";
+  // Add function to handle login button click
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    setIsLoginModalOpen(true);
+  };
+
+  // Common class for navigation links
+  const navLinkClass =
+    "text-white hover:text-primary transition-all duration-200 text-sm uppercase whitespace-nowrap font-medium tracking-wide hover:scale-105 transform";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
-      {/* Background Overlay - Full Width avec transition améliorée */}
-      <div 
+      {/* Background Overlay - Full Width with improved transition */}
+      <div
         ref={navContainerRef}
-        className={`header-overlay transition-all duration-300 ${isHeaderCompact ? 'header-compact py-1' : 'header-expanded py-2'} ${
-          currentScrollY > 0 ? 'bg-black/95 shadow-lg backdrop-blur-sm' : 'bg-black/30 backdrop-blur-[2px]'
+        className={`header-overlay transition-all duration-300 ${isHeaderCompact ? "header-compact py-1" : "header-expanded py-2"} ${
+          currentScrollY > 0
+            ? "bg-black/95 shadow-lg backdrop-blur-sm"
+            : "bg-black/30 backdrop-blur-[2px]"
         }`}
       ></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className={`flex items-center justify-between ${isHeaderCompact ? 'py-1' : 'py-2'} transition-all duration-300`}>
-          {/* Logo à gauche - Centrer uniquement sur mobile */}
+        <div
+          className={`flex items-center justify-between ${isHeaderCompact ? "py-1" : "py-2"} transition-all duration-300`}
+        >
+          {/* Logo left - Center only on mobile */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/img/Logo-MGE-2025-white.svg" 
-                alt="MGE Logo" 
-                className={`transition-all duration-300 ${isHeaderCompact ? 'h-8 md:h-10' : 'h-10 md:h-14'}`} 
+              <img
+                src="/img/Logo-MGE-2025-white.svg"
+                alt="MGE Logo"
+                className={`transition-all duration-300 ${isHeaderCompact ? "h-8 md:h-10" : "h-10 md:h-14"}`}
               />
             </Link>
           </div>
-          
-          {/* Navigation centrale - Desktop uniquement - AMÉLIORÉE */}
+
+          {/* Central navigation - Desktop only - IMPROVED */}
           <div className="hidden lg:flex items-center space-x-8 justify-center flex-grow">
-            {/* Discover menu with dropdown - AMÉLIORÉ */}
+            {/* Discover menu with dropdown - IMPROVED */}
             <div className="relative">
-              <button 
+              <button
                 ref={discoverBtnRef}
                 className={`${navLinkClass} flex items-center gap-1.5 discover-trigger group p-2 rounded-md hover:bg-white/5 ${getTextClass()}`}
                 onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
                 aria-expanded={isSubMenuOpen}
               >
-                {t('nav.discover')}
+                {t("nav.discover")}
                 <span className="transition-transform duration-200 group-hover:translate-y-0.5">
-                  {isSubMenuOpen ? 
-                    <ChevronUp size={16} className="mt-0.5 text-primary" /> : 
+                  {isSubMenuOpen ? (
+                    <ChevronUp size={16} className="mt-0.5 text-primary" />
+                  ) : (
                     <ChevronDown size={16} className="mt-0.5" />
-                  }
+                  )}
                 </span>
               </button>
-              
-              {/* Dropdown menu - Complètement redesigné */}
-              <div 
+
+              {/* Dropdown menu - Completely redesigned */}
+              <div
                 ref={subMenuRef}
                 className={`absolute left-0 mt-2 w-56 rounded-xl overflow-hidden shadow-xl bg-[#0A0E13]/95 backdrop-blur-md origin-top-left border border-white/10
                   transition-all duration-300 ease-out
-                  ${isSubMenuOpen 
-                    ? 'opacity-100 translate-y-0 pointer-events-auto' 
-                    : 'opacity-0 -translate-y-4 pointer-events-none'}`}
+                  ${
+                    isSubMenuOpen
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : "opacity-0 -translate-y-4 pointer-events-none"
+                  }`}
                 aria-hidden={!isSubMenuOpen}
               >
                 <div className="py-1.5">
@@ -333,7 +544,7 @@ const NavBar = () => {
                       href={item.link}
                       onClick={(e) => handleLinkClick(e, item.link)}
                       className={`group flex items-center px-4 py-2.5 text-white hover:bg-primary/10 transition-colors text-sm uppercase ${getTextClass()}
-                        ${index === 0 ? 'border-t-0' : 'border-t border-white/5'}`}
+                        ${index === 0 ? "border-t-0" : "border-t border-white/5"}`}
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2.5 group-hover:scale-125 transition-transform"></span>
                       {item.name}
@@ -343,9 +554,9 @@ const NavBar = () => {
               </div>
             </div>
 
-            {/* Regular nav links - AMÉLIORÉS */}
-            {mainNavItems.map((item) => (
-              item.link.startsWith('#') ? (
+            {/* Regular nav links - IMPROVED */}
+            {mainNavItems.map((item) =>
+              item.link.startsWith("#") ? (
                 <a
                   key={item.name}
                   href={item.link}
@@ -361,15 +572,18 @@ const NavBar = () => {
                   className={`${navLinkClass} p-2 rounded-md hover:bg-white/5 flex items-center gap-1 ${getTextClass()}`}
                 >
                   {item.name}
-                  <ArrowUpRight size={14} className="opacity-70 group-hover:opacity-100" />
+                  <ArrowUpRight
+                    size={14}
+                    className="opacity-70 group-hover:opacity-100"
+                  />
                 </Link>
               )
-            ))}
+            )}
           </div>
 
           {/* Right side - Auth buttons, Language selector */}
           <div className="flex items-center gap-4">
-            {/* Réseaux sociaux sur desktop - AMÉLIORÉS */}
+            {/* Social networks on desktop - IMPROVED */}
             <div className="hidden lg:flex items-center space-x-3 mr-4">
               {socialLinks.map(({ Icon, link }, index) => (
                 <a
@@ -378,15 +592,15 @@ const NavBar = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/80 hover:text-white transition-all p-1.5 hover:scale-110 hover:bg-white/10 rounded-full"
-                  aria-label={`Visit our ${Icon.name || 'social media'}`}
+                  aria-label={`Visit our ${Icon.name || "social media"}`}
                 >
                   <Icon size={18} />
                 </a>
               ))}
             </div>
 
-            {/* Language selector - Complètement redesigné */}
-            <div 
+            {/* Language selector - Completely redesigned */}
+            <div
               ref={languageSelectorRef}
               className="relative z-20 flex items-center transform-gpu"
             >
@@ -398,23 +612,62 @@ const NavBar = () => {
               </div>
             </div>
 
-            {/* Auth button - Style complètement amélioré */}
-            <Link 
-              to="/login"
-              className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              <div className="relative flex items-center justify-center gap-2">
-                {t('nav.login')}
-                <ArrowUpRight size={16} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            {/* Auth button - Completely improved style */}
+            {isLoggedIn ? (
+              // User is logged in - show avatar and name
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 sm:gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors"
+                >
+                  <img
+                    src={`https://api.mgexpo.ma/${userAvatar}`}
+                    alt={userName}
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-200"
+                  />
+                  <span className="text-sm sm:text-base font-ea-football text-white">
+                    {userName}
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {/* Dropdown menu */}
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-[#16161a] rounded-md shadow-lg py-1 z-50">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+                    >
+                      Se déconnecter
+                    </button>
+                  </div>
+                )}
               </div>
-            </Link>
+            ) : (
+              // User is not logged in - show login button
+              <button
+                onClick={handleLoginClick}
+                className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <div className="relative flex items-center justify-center gap-2">
+                  {t("nav.login")}
+                  <ArrowUpRight
+                    size={16}
+                    className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  />
+                </div>
+              </button>
+            )}
 
             {/* Mobile menu button - visually improved */}
-            <button 
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 ml-1 rounded-md text-white hover:bg-white/10 transition-colors"
-              aria-label={isMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
+              aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? (
@@ -425,142 +678,298 @@ const NavBar = () => {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile menu - Complètement redesigné */}
-        <div 
-          ref={menuRef}
-          className={`lg:hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-lg
-            transition-opacity duration-400 ease-in-out ${isMenuOpen ? 'visible' : 'invisible'}`}
-          aria-hidden={!isMenuOpen}
-        >
-          <div className="container mx-auto px-4 py-4 sm:py-5 pt-20 h-full overflow-y-auto">
+      {/* FACEIT-Style Login Modal */}
+      {isLoginModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95">
+          <div className="bg-[#16161a] rounded-lg w-full max-w-md mx-4 shadow-2xl relative">
             {/* Close button */}
-            <button 
-              onClick={() => setIsMenuOpen(false)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-              aria-label={t('nav.closeMenu')}
+            <button
+              onClick={() => setIsLoginModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
             >
               <X size={24} />
             </button>
-            
-            {/* Navigation links - REFACTOR DESIGN */}
-            <div className="space-y-7">
-              {/* Section Découvrir */}
-              <div className="border-b border-white/10 pb-6">
-                <div className={`text-white/70 text-xs uppercase mb-4 pl-2 flex items-center gap-2 ${getTextClass()}`}>
-                  <Globe size={14} className="text-primary" />
-                  {t('nav.discover')}
+
+            {/* Logo Section */}
+            <div className="pt-8 pb-4 ">
+              <img
+                src="/img/Logo-MGE-2025-white.svg"
+                alt="MGE Logo"
+                className={`transition-all mx-auto duration-300 ${isHeaderCompact ? "h-8 md:h-10" : "h-10 md:h-14"}`}
+              />
+            </div>
+
+            {/* Form Section */}
+            <div className="px-8 pb-8">
+              <h2 className="text-white text-xl text-center mb-6">
+                Se connecter
+              </h2>
+
+              {serverError && (
+                <div className="bg-red-500/20 border border-red-500 text-red-500 p-3 rounded mb-4 text-sm">
+                  {serverError}
                 </div>
-                <div className="space-y-4 ml-2">
+              )}
+
+              <form onSubmit={handleLogin} className="space-y-4">
+                {/* Email Field */}
+                <div>
+                  <label
+                    className={`block ${emailError ? "text-red-500" : "text-gray-400"} text-sm mb-2`}
+                  >
+                    Adresse e-mail
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`w-full bg-[#2c2c31] border ${emailError ? "border-red-500" : "border-gray-700"} text-white px-4 py-3 rounded-sm focus:outline-none focus:border-primary placeholder:text-gray-600`}
+                    placeholder="Adresse e-mail"
+                  />
+                  {emailError && (
+                    <p className="text-red-500 text-xs mt-1">{emailError}</p>
+                  )}
+                </div>
+
+                {/* Password Field */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label
+                      className={`${passwordError ? "text-red-500" : "text-gray-400"} text-sm`}
+                    >
+                      Mot de passe
+                    </label>
+                    <a
+                      href="#"
+                      className="text-[#ff6b00] text-sm hover:underline"
+                    >
+                      Mot de passe oublié ?
+                    </a>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className={`w-full bg-[#2c2c31] border ${passwordError ? "border-red-500" : "border-gray-700"} text-white px-4 py-3 pr-10 rounded-sm focus:outline-none focus:border-primary placeholder:text-gray-600`}
+                      placeholder="Mot de passe"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-3.5 text-gray-400 hover:text-white"
+                    >
+                      {showPassword ? (
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m14.828 14.828L3.59 3.59"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  {passwordError && (
+                    <p className="text-red-500 text-xs mt-1">{passwordError}</p>
+                  )}
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white font-bold py-3 rounded-sm transition-colors uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Connexion..." : "Se connecter"}
+                </button>
+
+                {/* OR Divider */}
+                <div className="text-center text-gray-500 text-sm my-4">OU</div>
+
+                {/* Steam Login Button */}
+                <button
+                  type="button"
+                  className="w-full bg-[#2c2c31] hover:bg-[#3c3c41] text-white py-3 rounded-sm transition-colors border border-gray-700 flex items-center justify-center gap-2"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 256 256"
+                    fill="currentColor"
+                  >
+                    <path d="M127.779 0C60.42 0 5.24 52.173 0 119.014l68.724 28.358A35.641 35.641 0 0 1 89.82 140c.82 0 1.622.04 2.428.106L115.41 98.7l.087.005C115.39 76.965 132.913 58 155.002 58c22.246 0 39.792 18.652 39.792 41.188 0 22.536-17.82 40.911-40.066 40.911l-2.457.009-41.72 29.52a35.862 35.862 0 0 1-20.731 39.325c-8.133 3.447-17.507 3.709-25.983.519L40.83 198.996C56.273 227.49 89.227 256 127.779 256c69.869 0 127.78-57.911 127.78-127.78S197.648 0 127.779 0zM88.374 188.842c-13.803-5.67-20.64-20.62-15.258-33.382l7.938 3.284c9.641 4 14.193 14.766 10.157 24.038-4.037 9.272-15.064 12.944-24.724 8.956l-10.17-4.2c5.416 9.322 17.058 13.204 26.057 8.304zm66.456-90.142c.088-14.033-10.944-25.484-24.687-25.588-13.75-.104-24.92 11.15-24.92 25.2 0 14.042 11.445 25.328 25.478 25.328 14.025 0 24.04-11.016 24.129-25.04z" />
+                  </svg>
+                  LOGIN WITH STEAM
+                </button>
+
+                {/* Don't have account link */}
+                <p className="text-center text-gray-500 text-sm">
+                  Tu n'as pas de compte ?
+                </p>
+
+                {/* Create account link */}
+                <div className="text-center">
+                  <Link
+                    to="/login"
+                    className="text-gray-300 hover:text-white text-sm uppercase"
+                  >
+                    Créer un compte
+                  </Link>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile menu - Add auth options for mobile */}
+      <div
+        ref={menuRef}
+        className="fixed top-0 left-0 w-full h-screen bg-[#16161a] z-40 lg:hidden overflow-y-auto"
+        style={{ opacity: 0, transform: "translateX(-100%)" }}
+      >
+        <div className="p-4">
+          {/* Mobile header */}
+          <div className="flex items-center justify-between mb-6">
+            <img
+              src="/img/Logo-MGE-2025-white.svg"
+              alt="MGE Logo"
+              className="h-8"
+            />
+            <button onClick={() => setIsMenuOpen(false)} className="text-white">
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Mobile navigation items */}
+          <nav className="space-y-4">
+            <div>
+              <button
+                onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
+                className="w-full text-left text-white flex items-center justify-between py-2"
+              >
+                {t("nav.discover")}
+                {isSubMenuOpen ? (
+                  <ChevronUp size={16} />
+                ) : (
+                  <ChevronDown size={16} />
+                )}
+              </button>
+              {isSubMenuOpen && (
+                <div className="ml-4 space-y-2 mt-2">
                   {discoverSubItems.map((item) => (
                     <a
                       key={item.name}
                       href={item.link}
                       onClick={(e) => handleLinkClick(e, item.link)}
-                      className={`block text-white hover:text-primary transition-colors py-1.5 text-sm uppercase ${getTextClass()} flex items-center group`}
+                      className="block text-gray-300 hover:text-white py-1"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2.5 group-hover:scale-125 transition-transform"></span>
                       {item.name}
                     </a>
                   ))}
                 </div>
-              </div>
-              
-              {/* Items principaux */}
-              <div className="border-b border-white/10 pb-6 pt-1">
-                <div className={`text-white/70 text-xs uppercase mb-4 pl-2 ${getTextClass()}`}>{t('nav.mainNav')}</div>
-                <div className="space-y-4 ml-2">
-                  {mainNavItems.map((item) => (
-                    <div key={item.name}>
-                      {item.link.startsWith('#') ? (
-                        <a
-                          href={item.link}
-                          onClick={(e) => handleLinkClick(e, item.link)}
-                          className={`block text-white hover:text-primary transition-colors py-1.5 text-sm uppercase ${getTextClass()} flex items-center group`}
-                        >
-                          {item.name}
-                          <ChevronDown className="ml-1 w-4 h-4 opacity-60 group-hover:opacity-100 -rotate-90" />
-                        </a>
-                      ) : (
-                        <Link
-                          to={item.link}
-                          className={`block text-white hover:text-primary transition-colors py-1.5 text-sm uppercase ${getTextClass()} flex items-center group`}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {item.name}
-                          <ArrowUpRight className="ml-1 w-4 h-4 opacity-60 group-hover:opacity-100" />
-                        </Link>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
-            
-            {/* Language selector in mobile menu */}
-            <div className="pt-7 mt-2 border-b border-white/10 pb-6">
-              <div className={`text-white/70 text-sm uppercase mb-4 pl-2 flex items-center gap-2 ${getTextClass()}`}>
-                <Globe size={14} className="text-primary" />
-                {t('nav.language')}
-              </div>
-              <div className="bg-black/40 backdrop-blur-sm inline-block rounded-md p-1.5 ml-2">
-                <LanguageSelector />
-              </div>
-            </div>
-            
-            {/* Social links - plus spacieux et mieux organisé */}
-            <div className="pt-7 mt-2 border-b border-white/10 pb-6">
-              <div className={`text-white/70 text-sm uppercase mb-4 pl-2 flex items-center gap-2 ${getTextClass()}`}>
-                <MessageSquare size={14} className="text-primary" />
-                {t('nav.followUs')}
-              </div>
-              <div className="flex flex-wrap items-center gap-4 ml-2">
-                {socialLinks.map(({ Icon, link }, index) => (
-                  <a
-                    key={index}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/90 hover:text-white bg-white/5 hover:bg-white/15 transition-all duration-200 p-3 rounded-full relative group"
-                    aria-label={`Visit our ${Icon.name || 'social media'}`}
-                  >
-                    <span className="absolute inset-0 bg-primary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-md"></span>
-                    <Icon size={screenSize.isMobile ? 18 : 20} className="relative" />
-                  </a>
-                ))}
-              </div>
-            </div>
-            
-            {/* CTA button - style amélioré */}
-            <div className="mt-8">
-              <a 
-                href="/login"
-                onClick={(e) => handleLinkClick(e, "/login")}
-                className={`group relative block w-full text-center bg-[#e10000] overflow-hidden py-4 text-white font-bold text-sm uppercase hover:bg-[#c00] transition-all duration-300 rounded-md shadow-lg ${getTextClass()}`}
+
+            {mainNavItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.link}
+                onClick={(e) => handleLinkClick(e, item.link)}
+                className="block text-white py-2"
               >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                <div className="relative flex items-center justify-center gap-2">
-                  {t('nav.login')}
-                  <ArrowUpRight size={16} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </div>
+                {item.name}
               </a>
-              
-              {/* Version indicator with improved styling */}
-              <div className="text-center text-white/40 text-xs mt-6 font-mono">v2.1.0</div>
+            ))}
+
+            {/* Auth buttons for mobile */}
+            <div className="pt-4 mt-4 border-t border-gray-700">
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-md"
+                >
+                  Se déconnecter
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsLoginModalOpen(true);
+                  }}
+                  className="w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white py-3 rounded-md"
+                >
+                  Se connecter
+                </button>
+              )}
             </div>
-          </div>
+
+            {/* Social links for mobile */}
+            <div className="flex justify-center space-x-4 mt-6">
+              {socialLinks.map(({ Icon, link }, index) => (
+                <a
+                  key={index}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Icon size={20} />
+                </a>
+              ))}
+            </div>
+          </nav>
         </div>
       </div>
 
-      {/* Bouton pour remonter - Amélioré avec meilleure animation */}
-      <button 
+      {/* Scroll to top button - Improved with better animation */}
+      <button
         onClick={scrollToTop}
         className={`fixed bottom-6 right-6 bg-primary hover:bg-primary/80 text-white rounded-full p-3 shadow-lg
-          transition-all duration-300 z-50 group ${showScrollUpButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
-        aria-label={t('nav.backToTop')}
+          transition-all duration-300 z-50 group ${showScrollUpButton ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"}`}
+        aria-label={t("nav.backToTop")}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-bounce group-hover:animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 animate-bounce group-hover:animate-pulse"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          />
         </svg>
       </button>
     </header>
