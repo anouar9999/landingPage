@@ -13,6 +13,7 @@ import {
   Settings,
   ArrowUpRight,
   Globe,
+  LogOut,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
@@ -71,8 +72,8 @@ const NavBar = () => {
   const [userAvatar, setUserAvatar] = useState("");
 
   // Login form states
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("user@gmail.com");
+  const [password, setPassword] = useState("User@000");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -81,15 +82,27 @@ const NavBar = () => {
 
   // Check if user is already logged in on component mount
   useEffect(() => {
-    const sessionToken = localStorage.getItem("username");
-    const storedUsername = localStorage.getItem("username");
-    const storedAvatar = localStorage.getItem("avatarUrl");
-
-    if (sessionToken) {
-      setIsLoggedIn(true);
-      setUserName(storedUsername || "");
-      setUserAvatar(storedAvatar || "/img/default-avatar.jpg");
-    }
+    const checkAuth = async () => {
+      // This will check local storage first, then cross-storage if needed
+      const userData = await AuthStorage.getUserData();
+  
+      if (userData && userData.username) {
+        setIsLoggedIn(true);
+        setUserName(userData.username);
+        setUserAvatar(userData.avatarUrl || "/img/default-avatar.jpg");
+      } else {
+        // If not found locally, force sync with cross-storage
+        const syncedData = await AuthStorage.syncWithCrossStorage();
+        
+        if (syncedData && syncedData.username) {
+          setIsLoggedIn(true);
+          setUserName(syncedData.username);
+          setUserAvatar(syncedData.avatarUrl || "/img/default-avatar.jpg");
+        }
+      }
+    };
+  
+    checkAuth();
   }, []);
 
   // Main navigation items with translations
@@ -140,118 +153,106 @@ const NavBar = () => {
   const validatePassword = (password) => {
     return password.length >= 6;
   };
-// Cookie utility functions
-const setCookie = (name, value, days = 7, path = '/') => {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=${path}; SameSite=Strict`;
-};
 
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
-  return null;
-};
 
-const removeCookie = (name, path = '/') => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}`;
-};
+
+  // Check if user is already logged in on component mount
+  useEffect(() => {
+    const userData = AuthStorage.getUserData();
+
+    if (userData && userData.username) {
+      setIsLoggedIn(true);
+      setUserName(userData.username);
+      setUserAvatar(userData.avatarUrl || "/img/default-avatar.jpg");
+    }
+  }, []);
+
   // Handle login form submission
-// Check if user is already logged in on component mount
-useEffect(() => {
-  const userData = AuthStorage.getUserData();
+  const handleLogin = async (e) => {
+    e.preventDefault();
   
-  if (userData && userData.username) {
-    setIsLoggedIn(true);
-    setUserName(userData.username);
-    setUserAvatar(userData.avatarUrl || "/img/default-avatar.jpg");
-  }
-}, []);
-
-// Handle login form submission
-const handleLogin = async (e) => {
-  e.preventDefault();
-
-  // Reset errors
-  setEmailError("");
-  setPasswordError("");
-  setServerError("");
-
-  // Validate fields
-  let hasError = false;
+    // Reset errors
+    setEmailError("");
+    setPasswordError("");
+    setServerError("");
   
-  // (your existing validation code)
-
-  if (hasError) return;
-  setIsLoading(true);
-
-  try {
-    const loginData = {
-      email: email,
-      password: password,
-    };
-
-    const response = await fetch(`https://api.mgexpo.ma/api/user_login.php`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
-
-    const responseText = await response.text();
-    let data;
-    
+    // Validate fields
+    let hasError = false;
+  
+    // Your existing validation code...
+  
+    if (hasError) return;
+    setIsLoading(true);
+  
     try {
-      data = JSON.parse(responseText);
-    } catch (e) {
-      console.error("Failed to parse login response:", e);
-      throw new Error("Invalid server response format");
+      const loginData = {
+        email: email,
+        password: password,
+      };
+  
+      const response = await fetch(`${import.meta.env.VITE_PUBLIC_URL}/api/user_login.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
+  
+      const responseText = await response.text();
+      let data;
+  
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse login response:", e);
+        throw new Error("Invalid server response format");
+      }
+  
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Login failed");
+      }
+  console.log("Login response:", data);
+
+      // Assuming the response contains the session token and user data
+      // Store user session data using our enhanced utility
+      const userData = {
+        userSessionToken: data.session_token,
+        userId: data.user_id        ,
+        username: data.username,
+        userType: data.user_type,
+        avatarUrl: data.avatar || "/img/default-avatar.jpg"
+      };
+  
+      // This now also stores in cross-storage
+      await AuthStorage.setUserData(userData);
+  
+      // Update state
+      setIsLoggedIn(true);
+      setUserName(data.username);
+      setUserAvatar(data.avatar || "/img/default-avatar.jpg");
+  
+      // Close modal
+      setIsLoginModalOpen(false);
+  
+      // Redirect to tournaments page - using the actual Next.js URL
+      setTimeout(() => {
+        window.location.href = "http://localhost:3000/tournaments";
+      }, 100);
+    } catch (error) {
+      console.error("Login error:", error);
+      setServerError(
+        error.message || "Une erreur s'est produite. Veuillez réessayer."
+      );
+    } finally {
+      setIsLoading(false);
     }
-
-    if (!response.ok || !data.success) {
-      throw new Error(data.message || "Login failed");
-    }
-
-    // Store user session data using our new utility
-    const userData = {
-      userSessionToken: data.session_token,
-      userId: data.user_id,
-      username: data.username,
-      userType: data.user_type,
-      avatarUrl: data.avatar || "/img/default-avatar.jpg"
-    };
-    
-    // This takes care of all storage methods
-    AuthStorage.setUserData(userData);
-
-    // Update state
-    setIsLoggedIn(true);
-    setUserName(data.username);
-    setUserAvatar(data.avatar || "/img/default-avatar.jpg");
-
-    // Close modal
-    setIsLoginModalOpen(false);
-
-    // Redirect to tournaments page
-    setTimeout(() => {
-      window.location.href = "https://user.mgexpo.ma/tournaments";
-    }, 100);
-  } catch (error) {
-    console.error("Login error:", error);
-    setServerError(
-      error.message || "Une erreur s'est produite. Veuillez réessayer."
-    );
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   // Handle logout
   // Handle logout
-  const handleLogout = () => {
-    // One line clears all storage methods
-    AuthStorage.clearUserData();
+  const handleLogout = async () => {
+    // This now also clears cross-storage
+    await AuthStorage.clearUserData();
   
     // Reset state
     setIsLoggedIn(false);
@@ -483,11 +484,10 @@ const handleLogin = async (e) => {
       {/* Background Overlay - Full Width with improved transition */}
       <div
         ref={navContainerRef}
-        className={`header-overlay transition-all duration-300 ${isHeaderCompact ? "header-compact py-1" : "header-expanded py-2"} ${
-          currentScrollY > 0
-            ? "bg-black/95 shadow-lg backdrop-blur-sm"
-            : "bg-black/30 backdrop-blur-[2px]"
-        }`}
+        className={`header-overlay transition-all duration-300 ${isHeaderCompact ? "header-compact py-1" : "header-expanded py-2"} ${currentScrollY > 0
+          ? "bg-black/95 shadow-lg backdrop-blur-sm"
+          : "bg-black/30 backdrop-blur-[2px]"
+          }`}
       ></div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -530,10 +530,9 @@ const handleLogin = async (e) => {
                 ref={subMenuRef}
                 className={`absolute left-0 mt-2 w-56 rounded-xl overflow-hidden shadow-xl bg-[#0A0E13]/95 backdrop-blur-md origin-top-left border border-white/10
                   transition-all duration-300 ease-out
-                  ${
-                    isSubMenuOpen
-                      ? "opacity-100 translate-y-0 pointer-events-auto"
-                      : "opacity-0 -translate-y-4 pointer-events-none"
+                  ${isSubMenuOpen
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-4 pointer-events-none"
                   }`}
                 aria-hidden={!isSubMenuOpen}
               >
@@ -636,14 +635,61 @@ const handleLogin = async (e) => {
 
                 {/* Dropdown menu */}
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-[#16161a] rounded-md shadow-lg py-1 z-50">
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
-                    >
-                      Se déconnecter
-                    </button>
-                  </div>
+            //       <div className="absolute right-0 mt-2 w-48 bg-[#16161a] rounded-md shadow-lg py-1 z-50">
+            //          <button
+            //   className="flex w-full items-center justify-between px-2 py-2
+            //            text-sm text-gray-400 hover:text-white
+            //            rounded-md
+            //            transition-colors duration-200"
+        
+            //   role="menuitem"
+            // >
+            //   <span>acces to dashboard</span>
+            //   {/* <LogOut className="h-4 w-4 text-red-400" /> */}
+            // </button>
+            //         <button
+            //           onClick={handleLogout}
+            //           className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+            //         >
+            //           Se déconnecter
+            //         </button>
+            //       </div>
+            <div
+            className="fixed sm:absolute right-0 bottom-0 sm:bottom-auto sm:mt-2 
+                      w-full sm:w-64 shadow-lg bg-gradient-to-t from-black to-transparent backdrop-blur-md
+                    z-50 
+                      sm:rounded-lg rounded-t-lg
+                      transition-all duration-300 ease-out
+                      animate-in slide-in-from-bottom sm:slide-in-from-top"
+          >
+            <div className="p-4 space-y-4" role="menu">
+            <a 
+               
+                href="http://localhost:3000/tournaments"
+             
+                className="flex w-full items-center justify-between px-2 py-2
+                         text-sm text-gray-400 hover:text-white
+                         rounded-md
+                         transition-colors duration-200"
+                // onClick={handleSignOut}
+                role="menuitem"
+              >              <TbDoorEnter   className="h-4 w-4 text-red-400" />
+  
+                <span>acces to dashboard</span>
+              </a>
+              <button
+                className="flex w-full items-center justify-between px-2 py-2
+                         text-sm text-gray-400 hover:text-white
+                         rounded-md
+                         transition-colors duration-200"
+                         onClick={handleLogout}
+                role="menuitem"
+              >
+                <span>Sign out</span>
+                <LogOut className="h-4 w-4 text-red-400" />
+              </button>
+            </div>
+          </div>
                 )}
               </div>
             ) : (
@@ -977,3 +1023,191 @@ const handleLogin = async (e) => {
 };
 
 export default NavBar;
+
+// Add these imports at the top with other imports
+import { Eye, EyeOff, Mail, Lock, AlertCircle } from "lucide-react";
+import { TbDoorEnter } from "react-icons/tb";
+
+// Add this new component for the improved login modal
+const LoginModal = ({ isOpen, onClose, onLogin, isLoading, serverError }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
+
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Reset errors
+    setEmailError("");
+    setPasswordError("");
+
+    // Validate fields
+    let hasError = false;
+
+    if (!email) {
+      setEmailError(t("login.emailRequired"));
+      hasError = true;
+    } else if (!validateEmail(email)) {
+      setEmailError(t("login.invalidEmail"));
+      hasError = true;
+    }
+
+    if (!password) {
+      setPasswordError(t("login.passwordRequired"));
+      hasError = true;
+    } else if (!validatePassword(password)) {
+      setPasswordError(t("login.passwordTooShort"));
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Call the parent's login handler
+    onLogin({ email, password });
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop with blur effect */}
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      ></div>
+
+      {/* Modal content */}
+      <div className="relative bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden transform transition-all">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-purple-500 to-primary"></div>
+        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/20 blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-purple-500/20 blur-3xl"></div>
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          aria-label="Close"
+        >
+          <X size={20} />
+        </button>
+
+        {/* Header */}
+        <div className="px-6 pt-6 pb-4">
+          <h2 className="text-2xl font-bold text-white mb-1">{t("login.welcome")}</h2>
+          <p className="text-gray-400">{t("login.loginToAccount")}</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-4">
+          {/* Server error message */}
+          {serverError && (
+            <div className="bg-red-900/30 border border-red-800 rounded-lg p-3 flex items-start">
+              <AlertCircle size={18} className="text-red-400 mt-0.5 mr-2 flex-shrink-0" />
+              <p className="text-red-200 text-sm">{serverError}</p>
+            </div>
+          )}
+
+          {/* Email field */}
+          <div className="space-y-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+              {t("login.email")}
+            </label>
+            <div className={`relative rounded-lg border ${emailError ? 'border-red-500' : 'border-gray-700'} focus-within:border-primary bg-gray-900/50`}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail size={18} className="text-gray-500" />
+              </div>
+              <input
+                id="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-full pl-10 pr-3 py-2.5 bg-transparent rounded-lg text-white placeholder-gray-500 focus:outline-none"
+                placeholder="your.email@example.com"
+              />
+            </div>
+            {emailError && <p className="text-red-400 text-xs mt-1">{emailError}</p>}
+          </div>
+
+          {/* Password field */}
+          <div className="space-y-1">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+              {t("login.password")}
+            </label>
+            <div className={`relative rounded-lg border ${passwordError ? 'border-red-500' : 'border-gray-700'} focus-within:border-primary bg-gray-900/50`}>
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Lock size={18} className="text-gray-500" />
+              </div>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full pl-10 pr-10 py-2.5 bg-transparent rounded-lg text-white placeholder-gray-500 focus:outline-none"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+            {passwordError && <p className="text-red-400 text-xs mt-1">{passwordError}</p>}
+          </div>
+
+          {/* Forgot password link */}
+          <div className="flex justify-end">
+            <a href="#" className="text-sm text-primary hover:text-primary-light transition-colors">
+              {t("login.forgotPassword")}
+            </a>
+          </div>
+
+          {/* Submit button */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-gray-900 transition-colors disabled:opacity-70"
+          >
+            {isLoading ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                {t("login.loggingIn")}
+              </>
+            ) : (
+              t("login.login")
+            )}
+          </button>
+
+          {/* Register link */}
+          <div className="text-center mt-4">
+            <p className="text-sm text-gray-400">
+              {t("login.noAccount")}{" "}
+              <a href="https://user.mgexpo.ma/register" className="text-primary hover:text-primary-light transition-colors">
+                {t("login.register")}
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
