@@ -19,7 +19,6 @@ import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "../hooks/useTranslation";
 import { TbDoorEnter } from "react-icons/tb";
 
-
 const socialLinks = [
   { Icon: Facebook, link: "https://www.facebook.com/mgex.ma" },
   { Icon: Instagram, link: "https://www.instagram.com/mgex.ma/" },
@@ -46,7 +45,7 @@ const XIcon = (props) => (
     <path
       d="M 2.9921094 3 L 9.7089844 12.861328 L 2.8867188 21 L 5.3886719 21 L 10.773438 14.488281 L 15.212891 21 L 21.214844 21 L 14.078125 10.511719 L 20.53125 3 L 18.03125 3 L 13.017578 9.015625 L 8.9375 3 L 2.9921094 3 z"
       fill="currentColor"
-    ></path>
+    />
   </svg>
 );
 
@@ -58,47 +57,375 @@ socialLinks.push({
 
 const NavBar = () => {
   // Use translation hook
-  const { t, getTextClass,  } =
-    useTranslation();
+  const { t, getTextClass } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const location = useLocation();
 
-  // Add state for login modal and auth
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
-
- 
-
+  // ✅ State management
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
-
- 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const sharedDataRef = useRef(null);
+  const debugLocalStorage = () => {
+    console.log('🔧 ===========================================');
+    console.log('🔧 DEBUGGING LOCALSTORAGE CONTENTS:');
+    console.log('🔧 ===========================================');
+    
+    // Check all possible auth keys
+    const keys = ['authData', 'userData', 'isAuthenticated', 'authToken', 'userId'];
+    keys.forEach(key => {
+      const value = localStorage.getItem(key);
+      console.log(`🔧 localStorage.${key}:`, value);
+      if (value) {
+        try {
+          const parsed = JSON.parse(value);
+          console.log(`🔧 localStorage.${key} (parsed):`, parsed);
+        } catch (e) {
+          console.log(`🔧 localStorage.${key} (not JSON):`, value);
+        }
+      }
+    });
+    
+    console.log('🔧 ===========================================');
+    console.log('🔧 SHAREDDATAMANAGER STATE:');
+    console.log('🔧 ===========================================');
+    console.log('🔧 SharedDataManager exists:', !!sharedDataRef.current);
+    if (sharedDataRef.current) {
+      console.log('🔧 Auth data in SharedDataManager:', sharedDataRef.current.getAuthData());
+      console.log('🔧 All data in SharedDataManager:', sharedDataRef.current.getAll());
+    }
+    
+    console.log('🔧 ===========================================');
+    console.log('🔧 COMPONENT STATE:');
+    console.log('🔧 ===========================================');
+    console.log('🔧 userData:', userData);
+    console.log('🔧 isAuthenticated:', isAuthenticated);
+    console.log('🔧 isLoggedIn:', isLoggedIn);
+    console.log('🔧 ===========================================');
+  };
+  // ✅ Initialize SharedDataManager
+  useEffect(() => {
+    console.log('🔧 NavBar useEffect starting...');
+    
+    class SharedDataManager {
+      constructor() {
+        console.log('🔧 SharedDataManager constructor called');
+        this.channel = new BroadcastChannel('auth-data-sync');
+        this.data = new Map();
+        
+        this.channel.addEventListener('message', (event) => {
+          console.log('🔧 SharedDataManager received message:', event.data);
+          const { type, key, value, requestId } = event.data;
+          
+          switch(type) {
+            case 'set':
+              this.data.set(key, value);
+              this.onDataChange('set', key, value);
+              break;
+            case 'delete':
+              this.data.delete(key);
+              this.onDataChange('delete', key);
+              break;
+            case 'clear':
+              this.data.clear();
+              this.onDataChange('clear');
+              break;
+            case 'request-data':
+              this.sendDataSnapshot(requestId);
+              break;
+            case 'data-snapshot':
+              this.handleDataSnapshot(event.data);
+              break;
+            case 'auth-success':
+              this.handleAuthSuccess(event.data.data);
+              break;
+            case 'logout':
+              this.handleLogout();
+              break;
+          }
+        });
+        
+        this.requestInitialData();
+        console.log('🔧 SharedDataManager constructor finished');
+      }
+      
+      set(key, value) {
+        console.log('🔧 SharedDataManager.set called:', key, value);
+        this.data.set(key, value);
+        this.channel.postMessage({ type: 'set', key, value });
+        this.onDataChange('set', key, value);
+      }
+      
+      delete(key) {
+        console.log('🔧 SharedDataManager.delete called:', key);
+        this.data.delete(key);
+        this.channel.postMessage({ type: 'delete', key });
+        this.onDataChange('delete', key);
+      }
+      
+      get(key) {
+        const value = this.data.get(key);
+        console.log('🔧 SharedDataManager.get called:', key, '→', value);
+        return value;
+      }
+      
+      getAll() {
+        const all = Object.fromEntries(this.data);
+        console.log('🔧 SharedDataManager.getAll called:', all);
+        return all;
+      }
+      
+      setAuthData(userData) {
+        console.log('🔧 SharedDataManager.setAuthData called:', userData);
+        this.set('authData', userData);
+        this.channel.postMessage({ type: 'auth-success', data: userData });
+      }
+      
+      getAuthData() {
+        const authData = this.get('authData');
+        console.log('🔧 SharedDataManager.getAuthData called → result:', authData);
+        return authData;
+      }
+      
+      requestInitialData() {
+        const requestId = Date.now().toString();
+        console.log('🔧 SharedDataManager.requestInitialData called, requestId:', requestId);
+        this.channel.postMessage({ 
+          type: 'request-data', 
+          requestId 
+        });
+      }
+      
+      sendDataSnapshot(requestId) {
+        const snapshot = Object.fromEntries(this.data);
+        console.log('🔧 SharedDataManager.sendDataSnapshot called:', { requestId, snapshot });
+        this.channel.postMessage({
+          type: 'data-snapshot',
+          requestId,
+          snapshot
+        });
+      }
+      
+      handleDataSnapshot({ snapshot }) {
+        console.log('🔧 SharedDataManager.handleDataSnapshot called:', snapshot);
+        console.log('🔧 Current data size:', this.data.size);
+        if (this.data.size === 0) {
+          console.log('🔧 Data size is 0, applying snapshot');
+          Object.entries(snapshot).forEach(([key, value]) => {
+            this.data.set(key, value);
+          });
+          this.onDataChange('sync', null, snapshot);
+        } else {
+          console.log('🔧 Data size is not 0, skipping snapshot');
+        }
+      }
+      
+      handleAuthSuccess(userData) {
+        console.log('🔧 SharedDataManager.handleAuthSuccess called:', userData);
+        this.onAuthSuccess(userData);
+      }
+      
+      handleLogout() {
+        console.log('🔧 SharedDataManager.handleLogout called');
+        this.onLogout();
+      }
+      
+      onDataChange(type, key, value) {}
+      onAuthSuccess(userData) {}
+      onLogout() {}
+      
+      destroy() {
+        console.log('🔧 SharedDataManager.destroy called');
+        this.channel.close();
+      }
+    }
+  
+    console.log('🔧 Creating SharedDataManager instance...');
+    sharedDataRef.current = new SharedDataManager();
+    console.log('🔧 SharedDataManager instance created');
+    
+    // Check localStorage immediately
+    console.log('🔧 Checking localStorage immediately...');
+    const localAuthData = localStorage.getItem('authData');
+    const localUserData = localStorage.getItem('userData');
+    const localIsAuth = localStorage.getItem('isAuthenticated');
+    
+    console.log('🔧 localStorage.authData:', localAuthData);
+    console.log('🔧 localStorage.userData:', localUserData);
+    console.log('🔧 localStorage.isAuthenticated:', localIsAuth);
+    
+    // Set up callbacks with extensive logging
+    sharedDataRef.current.onDataChange = (type, key, value) => {
+      console.log('🔧 NavBar onDataChange triggered:', { type, key, value });
+      
+      if (key === 'authData') {
+        if (type === 'set') {
+          console.log('🔧 NavBar - Setting auth data from onDataChange:', value);
+          setUserData(value);
+          setIsAuthenticated(true);
+          setIsLoggedIn(true);
+          
+          localStorage.setItem('userData', JSON.stringify({ user: value }));
+          localStorage.setItem('isAuthenticated', 'true');
+        } else if (type === 'delete') {
+          console.log('🔧 NavBar - Clearing auth data from onDataChange');
+          setUserData(null);
+          setIsAuthenticated(false);
+          setIsLoggedIn(false);
+          
+          localStorage.removeItem('userData');
+          localStorage.removeItem('isAuthenticated');
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('authData');
+        }
+      }
+    };
+    
+    sharedDataRef.current.onAuthSuccess = (userData) => {
+      console.log('🔧 NavBar onAuthSuccess triggered:', userData);
+      setUserData(userData);
+      setIsAuthenticated(true);
+      setIsLoggedIn(true);
+      
+      localStorage.setItem('userData', JSON.stringify({ user: userData }));
+      localStorage.setItem('isAuthenticated', 'true');
+    };
+    
+    sharedDataRef.current.onLogout = () => {
+      console.log('🔧 NavBar onLogout triggered');
+      setUserData(null);
+      setIsAuthenticated(false);
+      setIsLoggedIn(false);
+      
+      localStorage.removeItem('userData');
+      localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('authData');
+    };
+    
+    // Check for existing data with multiple attempts
+    const checkForAuthData = (attempt = 1) => {
+      console.log(`🔧 Checking for auth data (attempt ${attempt})...`);
+      
+      const existingAuthData = sharedDataRef.current.getAuthData();
+      console.log('🔧 Existing auth data from SharedDataManager:', existingAuthData);
+      
+      if (existingAuthData) {
+        console.log('🔧 Found existing auth data, setting state');
+        setUserData(existingAuthData);
+        setIsAuthenticated(true);
+        setIsLoggedIn(true);
+        return;
+      }
+      
+      // If no data in SharedDataManager, try localStorage
+      console.log('🔧 No data in SharedDataManager, checking localStorage...');
+      
+      let authDataToUse = null;
+      
+      if (localAuthData) {
+        try {
+          const parsed = JSON.parse(localAuthData);
+          console.log('🔧 Parsed authData:', parsed);
+          
+          if (parsed.username) {
+            authDataToUse = parsed;
+          } else if (parsed.user && parsed.user.username) {
+            authDataToUse = parsed.user;
+          }
+        } catch (e) {
+          console.error('🔧 Error parsing authData:', e);
+        }
+      }
+      
+      if (!authDataToUse && localUserData) {
+        try {
+          const parsed = JSON.parse(localUserData);
+          console.log('🔧 Parsed userData:', parsed);
+          
+          if (parsed.user && parsed.user.username) {
+            authDataToUse = parsed.user;
+          } else if (parsed.username) {
+            authDataToUse = parsed;
+          }
+        } catch (e) {
+          console.error('🔧 Error parsing userData:', e);
+        }
+      }
+      
+      if (authDataToUse) {
+        console.log('🔧 Found valid auth data in localStorage:', authDataToUse);
+        console.log('🔧 Setting auth data in SharedDataManager...');
+        sharedDataRef.current.setAuthData(authDataToUse);
+        setUserData(authDataToUse);
+        setIsAuthenticated(true);
+        setIsLoggedIn(true);
+      } else {
+        console.log('🔧 No valid auth data found');
+        if (attempt < 3) {
+          console.log(`🔧 Retrying in 200ms (attempt ${attempt + 1})`);
+          setTimeout(() => checkForAuthData(attempt + 1), 200);
+        } else {
+          console.log('🔧 Max attempts reached, no auth data found');
+        }
+      }
+    };
+    
+    // Start checking after a delay
+    setTimeout(() => {
+      checkForAuthData();
+    }, 100);
+    
+    return () => {
+      console.log('🔧 NavBar useEffect cleanup');
+      if (sharedDataRef.current) {
+        sharedDataRef.current.destroy();
+      }
+    };
+  }, []);
 
   // Get query parameters
   useEffect(() => {
-    // Access query parameters
     const token = searchParams.get('token');
     const userId = searchParams.get('userId');
-    const data = JSON.parse(localStorage.getItem("userData"));
-
-    console.log(data);
     
-    // If token exists in URL, handle authentication
-    if (data === null ) {
-      // You can use these parameters to authenticate the user
-      handleTokenAuth(token, userId);
-    }else{
-      setUserData(data.user);
+    // Check SharedDataManager first, then localStorage
+    const sharedAuthData = sharedDataRef.current?.getAuthData();
+    const localData = JSON.parse(localStorage.getItem("userData") || "null");
+
+    console.log('NavBar - Checking auth data:', { sharedAuthData, localData, token, userId });
+    
+    if (sharedAuthData) {
+      // Use data from SharedDataManager (most up-to-date)
+      setUserData(sharedAuthData);
       setIsAuthenticated(true);
+      setIsLoggedIn(true);
+      console.log('NavBar - Using SharedDataManager auth data');
+    } else if (localData && localData.user) {
+      // Use localStorage data and sync to SharedDataManager
+      setUserData(localData.user);
+      setIsAuthenticated(true);
+      setIsLoggedIn(true);
+      
+      // Sync to SharedDataManager
+      sharedDataRef.current?.setAuthData(localData.user);
+      console.log('NavBar - Using localStorage auth data and syncing to SharedDataManager');
+    } else if (token && userId) {
+      // Handle token authentication
+      handleTokenAuth(token, userId);
+    } else {
+      console.log('NavBar - No auth data found');
     }
   }, [searchParams]);
+
   console.log(userData);
+
   // Function to handle authentication with token
   const handleTokenAuth = async (token, userId) => {
     try {
-      // Option 1: Pass token as query parameter (if your API supports it)
       const response = await fetch(
         `${import.meta.env.VITE_PUBLIC_URL}/api/users.php?user_id=${userId}&token=${encodeURIComponent(token)}`,
         {
@@ -108,64 +435,75 @@ const NavBar = () => {
           },
         }
       );
-  
-     
-    
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         // Set authentication state
         setIsAuthenticated(true);
-
         setIsLoggedIn(true);
-        setUserData(data.data); // Note: changed from data.userData to data.data based on your API response structure
+        setUserData(data.data);
         
-        // Store user data in localStorage
-        localStorage.setItem('userData', JSON.stringify(data.data));
+        // Store in localStorage
+        localStorage.setItem('userData', JSON.stringify({ user: data.data }));
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('authToken', token);
         localStorage.setItem('userId', userId);
         
-        // Remove query parameters from URL to avoid sharing tokens
+        // ✅ Sync to SharedDataManager (this will update other windows)
+        sharedDataRef.current?.setAuthData(data.data);
+        
+        // Remove query parameters from URL
         navigate(location.pathname, { replace: true });
+        
+        console.log('NavBar - Token auth successful, synced to SharedDataManager');
       } else {
         console.error("Authentication failed:", data.message);
-        // Handle authentication failure
-        setIsAuthenticated(false);
-        setUserData(null);
-        
-        // Clear any existing auth data from localStorage
-        localStorage.removeItem('userData');
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userId');
+        handleAuthFailure();
       }
     } catch (error) {
       console.error("Token validation error:", error);
-      // Handle error state
-      setIsAuthenticated(false);
-      setUserData(null);
-      
-      // Clear any existing auth data from localStorage
-      localStorage.removeItem('userData');
-      localStorage.removeItem('isAuthenticated');
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('userId');
+      handleAuthFailure();
     }
   };
 
-  // Add function to handle login button click
-  // Update the handleLogout function:
-  const handleLogout = () => {
+  const handleAuthFailure = () => {
+    setIsAuthenticated(false);
+    setUserData(null);
+    setIsLoggedIn(false);
+    
+    // Clear localStorage
     localStorage.removeItem('userData');
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    
+    // Clear SharedDataManager
+    sharedDataRef.current?.clearAuthData();
+  };
 
+  // ✅ Updated handleLogout function
+  const handleLogout = () => {
+    // Clear local state
+    setIsAuthenticated(false);
+    setUserData(null);
+    setIsLoggedIn(false);
     setDropdownOpen(false);
+    
+    // Clear localStorage
+    localStorage.removeItem('userData');
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    
+    // ✅ Clear SharedDataManager (this will update other windows)
+    sharedDataRef.current?.clearAuthData();
+    
+    console.log('NavBar - User logged out, synced to all windows');
   };
 
   // Main navigation items with translations
@@ -207,17 +545,6 @@ const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-
-
-
-
- 
-
-  
-
-
-
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -229,7 +556,6 @@ const NavBar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
 
   // Screen size detection with detailed breakpoints
   useEffect(() => {
@@ -383,6 +709,13 @@ const NavBar = () => {
     }
   }, []);
 
+  console.log('NavBar - Current state:', { 
+    isAuthenticated, 
+    userData: userData?.username, 
+    isLoggedIn,
+    sharedDataExists: !!sharedDataRef.current 
+  });
+
   // Helper function for smooth scrolling to sections
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId.substring(1)); // Remove the #
@@ -396,7 +729,7 @@ const NavBar = () => {
       console.warn(`Section with ID ${sectionId.substring(1)} not found`);
     }
   };
- 
+
   // Close mobile menu on link click
   const handleLinkClick = (e, link) => {
     if (link.startsWith("#")) {
@@ -413,11 +746,10 @@ const NavBar = () => {
     }
   };
 
-  // Add function to handle login button click
+  // ✅ Fixed handleLoginClick function
   const handleLoginClick = (e) => {
-   
-    // setIsLoginModalOpen(true);
-    route.push("http://localhost:3000/login");
+    // Navigate to login page
+    navigate("http://localhost:3000/login");
   };
 
   // Common class for navigation links
@@ -548,8 +880,6 @@ const NavBar = () => {
               ref={languageSelectorRef}
               className="relative z-20 flex items-center transform-gpu"
             >
-           
-
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-full blur-md group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
                 <div className="bg-black/40 backdrop-blur-md rounded-full p-1 hover:bg-black/50 transition-all duration-200 relative">
@@ -557,83 +887,88 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-
+            <button 
+  onClick={debugLocalStorage}
+  className="fixed bottom-4 left-4 bg-red-500 text-white px-4 py-2 rounded z-50 text-sm"
+>
+  🔧 Debug Auth
+</button>
             {/* Auth button - Completely improved style */}
             {isAuthenticated && userData ? (
-    // User is logged in - show avatar and name
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-2 sm:gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors"
-      >
-        <img
-          src={userData.avatar ? `https://api.mgexpo.ma${userData.avatar}` : "/img/default-avatar.jpg"}
-          alt={userData.username}
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-200"
-        />
-        <span className="text-sm sm:text-base font-ea-football text-white">
-          {userData.username}
-        </span>
-        <ChevronDown
-          size={16}
-          className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
-        />
-      </button>
+              // User is logged in - show avatar and name
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 sm:gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors"
+                >
+                  <img
+                    src={userData.avatar ? `https://api.mgexpo.ma${userData.avatar}` : "/img/default-avatar.jpg"}
+                    alt={userData.username}
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-200"
+                  />
+                  <span className="text-sm sm:text-base font-ea-football text-white">
+                    {userData.username}
+                  </span>
+                  <ChevronDown
+                    size={16}
+                    className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
 
-      {/* Dropdown menu */}
-      {dropdownOpen && (
-        <div
-          className="fixed sm:absolute right-0 bottom-0 sm:bottom-auto sm:mt-2 
-                    w-full sm:w-64 shadow-lg bg-gradient-to-t from-black to-transparent backdrop-blur-md
-                    z-50 
-                    sm:rounded-lg rounded-t-lg
-                    transition-all duration-300 ease-out
-                    animate-in slide-in-from-bottom sm:slide-in-from-top"
-        >
-          <div className="p-4 space-y-4" role="menu">
-            <a 
-              href="http://localhost:3000/tournaments"
-              className="flex w-full items-center justify-between px-2 py-2
-                       text-sm text-gray-400 hover:text-white
-                       rounded-md
-                       transition-colors duration-200"
-              role="menuitem"
-            >
-              <TbDoorEnter className="h-4 w-4 text-red-400" />
-              <span>Access to dashboard</span>
-            </a>
-            <button
-              className="flex w-full items-center justify-between px-2 py-2
-                       text-sm text-gray-400 hover:text-white
-                       rounded-md
-                       transition-colors duration-200"
-              onClick={handleLogout}
-              role="menuitem"
-            >
-              <span>Sign out</span>
-              <LogOut className="h-4 w-4 text-red-400" />
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  ) : (
-    // User is not logged in - show login button
-    <a
-      href="http://localhost:3000/login"
-      onClick={handleLoginClick}
-      className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
-    >
-      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
-      <div className="relative flex items-center justify-center gap-2">
-        {t("nav.login")}
-        <ArrowUpRight
-          size={16}
-          className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-        />
-      </div>
-    </a>
-  )}
+                {/* Dropdown menu */}
+                {dropdownOpen && (
+                  <div
+                    className="fixed sm:absolute right-0 bottom-0 sm:bottom-auto sm:mt-2 
+                              w-full sm:w-64 shadow-lg bg-gradient-to-t from-black to-transparent backdrop-blur-md
+                              z-50 
+                              sm:rounded-lg rounded-t-lg
+                              transition-all duration-300 ease-out
+                              animate-in slide-in-from-bottom sm:slide-in-from-top"
+                  >
+                    <div className="p-4 space-y-4" role="menu">
+                      <a 
+                        href="http://localhost:3000/tournaments"
+                        className="flex w-full items-center justify-between px-2 py-2
+                                 text-sm text-gray-400 hover:text-white
+                                 rounded-md
+                                 transition-colors duration-200"
+                        role="menuitem"
+                      >
+                        <TbDoorEnter className="h-4 w-4 text-red-400" />
+                        <span>Access to dashboard</span>
+                      </a>
+                      <button
+                        className="flex w-full items-center justify-between px-2 py-2
+                                 text-sm text-gray-400 hover:text-white
+                                 rounded-md
+                                 transition-colors duration-200"
+                        onClick={handleLogout}
+                        role="menuitem"
+                      >
+                        <span>Sign out</span>
+                        <LogOut className="h-4 w-4 text-red-400" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              // User is not logged in - show login button
+              <a
+                href="http://localhost:3000/login"
+                onClick={handleLoginClick}
+                className={`relative group overflow-hidden bg-[#e10000] hover:bg-[#c00] text-white text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-md uppercase transition-all duration-300 hover:shadow-lg hover:shadow-[#e10000]/20 hover:-translate-y-0.5 whitespace-nowrap font-bold ${getTextClass()}`}
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500/40 to-red-600/0 animate-pulse-slow opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <div className="relative flex items-center justify-center gap-2">
+                  {t("nav.login")}
+                  <ArrowUpRight
+                    size={16}
+                    className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  />
+                </div>
+              </a>
+            )}
 
             {/* Mobile menu button - visually improved */}
             <button
@@ -652,9 +987,7 @@ const NavBar = () => {
         </div>
       </div>
 
-      
-
-      {/* Mobile menu - Add auth options for mobile */}
+      {/* Mobile menu - ✅ Fixed auth options for mobile */}
       <div
         ref={menuRef}
         className="fixed top-0 left-0 w-full h-screen bg-[#16161a] z-40 lg:hidden overflow-y-auto"
@@ -714,9 +1047,9 @@ const NavBar = () => {
               </a>
             ))}
 
-            {/* Auth buttons for mobile */}
+            {/* ✅ Fixed Auth buttons for mobile */}
             <div className="pt-4 mt-4 border-t border-gray-700">
-              {isLoggedIn ? (
+              {isAuthenticated && userData ? (
                 <button
                   onClick={handleLogout}
                   className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-md"
@@ -724,15 +1057,13 @@ const NavBar = () => {
                   Se déconnecter
                 </button>
               ) : (
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsLoginModalOpen(true);
-                  }}
-                  className="w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white py-3 rounded-md"
+                <a
+                  href="http://localhost:3000/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white py-3 rounded-md text-center"
                 >
                   Se connecter
-                </button>
+                </a>
               )}
             </div>
 
@@ -781,5 +1112,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
