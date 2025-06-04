@@ -19,14 +19,14 @@ const resources = {
       },
       // Hero 
       hero: {
-        title: "Morocco Gaming Expo",
+        title: "GAMIUS",
         subtitle: {
           part1: "Welcome to the ultimate gaming experience",
           part2: "where legends are born",
           part3: "and champions rise",
           part4: "Join us for an unforgettable journey into the world of gaming"
         },
-        bottomTitle: "MGE 2025",
+        bottomTitle: "GAMIUS 2025",
         getStarted: "Get Started",
         playNow: "PLAY NOW"
       },
@@ -58,7 +58,7 @@ const resources = {
         title: "Disc<b>o</b>ver the world's <br /> largest shared <b>a</b>dventure",
         subtitle: "Welcome to the largest esports tournament in Morocco. Show us what you've got in the games you excel at.",
         clickPrompt: "CLICK",
-        description: "Morocco Gaming Expo is the premier gaming event in Morocco, showcasing the latest in video game technology, esports competitions, and gaming culture."
+        description: "GAMIUS is the premier gaming event in Morocco, showcasing the latest in video game technology, esports competitions, and gaming culture."
       },
       // Features
       features: {
@@ -77,7 +77,7 @@ const resources = {
       },
       // Footer
       footer: {
-        description: "Morocco Gaming Expo is the premier gaming event in Morocco, showcasing the latest in video gaming, esports competitions, and creating opportunities for talented gamers.",
+        description: "GAMIUS is the premier gaming event in Morocco, showcasing the latest in video gaming, esports competitions, and creating opportunities for talented gamers.",
         quickLinks: "Quick Links",
         links: {
           home: "Home",
@@ -87,7 +87,7 @@ const resources = {
         },
         followUs: "Follow Us",
         sponsoredBy: "Under the patronage of",
-        copyright: "© {year} Morocco Gaming Expo. All rights reserved.",
+        copyright: "© {year} GAMIUS. All rights reserved.",
         legal: {
           privacy: "Privacy Policy",
           terms: "Terms of Service"
@@ -97,11 +97,11 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "PASS GAMERS",
-        subtitle: "Reserved for players registered on the MGE platform. Activate your pass to unlock exclusive benefits.",
+        subtitle: "Reserved for players registered on the GAMIUS platform. Activate your pass to unlock exclusive benefits.",
         officialInitiative: "Official initiative of the Ministry of Youth, Culture and Communication",
         howItWorks: "How it works?",
         step1: "Sign Up",
-        step1Desc: "Create an account on the MGE platform and complete your profile",
+        step1Desc: "Create an account on the GAMIUS platform and complete your profile",
         step2: "Choose your pass",
         step2Desc: "Select the plan that suits your needs",
         step3: "Access benefits",
@@ -140,7 +140,7 @@ const resources = {
         // FAQ
         faq: {
           title: "FAQ",
-          subtitle: "Find quick answers to your questions about MGE tournaments and participation",
+          subtitle: "Find quick answers to your questions about GAMIUS tournaments and participation",
           searchPlaceholder: "Search a question...",
           noResults: "No results for \"{searchTerm}\"",
           tryAgain: "Try another term or browse all questions below",
@@ -153,8 +153,8 @@ const resources = {
               title: "Tournament Registration",
               questions: {
                 0: {
-                  question: "How do I register for an MGE tournament?",
-                  answer: "To register for an MGE tournament, log in to your account on the platform, select the tournament you're interested in, and follow the registration instructions. Make sure you meet all eligibility criteria and submit your registration before the deadline."
+                  question: "How do I register for an GAMIUS tournament?",
+                  answer: "To register for an GAMIUS tournament, log in to your account on the platform, select the tournament you're interested in, and follow the registration instructions. Make sure you meet all eligibility criteria and submit your registration before the deadline."
                 },
                 1: {
                   question: "What documents are required for registration?",
@@ -162,7 +162,7 @@ const resources = {
                 },
                 2: {
                   question: "Can I register as a team?",
-                  answer: "Yes, for team games like Free Fire or Valorant, you need to register your entire team. A captain creates the team on the platform and invites other members. All members must have an active MGE account and accept the invitation to finalize registration."
+                  answer: "Yes, for team games like Free Fire or Valorant, you need to register your entire team. A captain creates the team on the platform and invites other members. All members must have an active GAMIUS account and accept the invitation to finalize registration."
                 }
               }
             },
@@ -170,8 +170,8 @@ const resources = {
               title: "Tournament Format",
               questions: {
                 0: {
-                  question: "What formats are used in MGE tournaments?",
-                  answer: "MGE tournaments use various formats depending on the game and competition level. Most tournaments follow a group stage followed by single or double elimination brackets. The specific format for each tournament is detailed in the tournament information page."
+                  question: "What formats are used in GAMIUS tournaments?",
+                  answer: "GAMIUS tournaments use various formats depending on the game and competition level. Most tournaments follow a group stage followed by single or double elimination brackets. The specific format for each tournament is detailed in the tournament information page."
                 },
                 1: {
                   question: "How are tournament groups determined?",
@@ -187,7 +187,7 @@ const resources = {
               title: "Prizes and Rewards",
               questions: {
                 0: {
-                  question: "What prizes can I win at MGE tournaments?",
+                  question: "What prizes can I win at GAMIUS tournaments?",
                   answer: "Prizes vary by tournament and include cash prizes, gaming equipment, merchandise, and qualification spots for international tournaments. The total prize pool and distribution are always clearly stated on the tournament information page."
                 },
                 1: {
@@ -196,7 +196,7 @@ const resources = {
                 },
                 2: {
                   question: "Are there participation rewards even if I don't win?",
-                  answer: "Yes, many MGE tournaments offer participation rewards such as digital items, game currency, or exclusive in-game cosmetics. Additionally, all participants receive a certificate of participation which may be valuable for future esports endeavors."
+                  answer: "Yes, many GAMIUS tournaments offer participation rewards such as digital items, game currency, or exclusive in-game cosmetics. Additionally, all participants receive a certificate of participation which may be valuable for future esports endeavors."
                 }
               }
             },
@@ -221,8 +221,8 @@ const resources = {
               title: "Tournament Logistics",
               questions: {
                 0: {
-                  question: "When and where do MGE tournaments take place?",
-                  answer: "MGE tournaments take place throughout the year, with online qualifiers leading to in-person finals at various venues in Morocco. The main MGE event is held annually, typically in Spring. All dates and locations are announced on our website and social media channels."
+                  question: "When and where do GAMIUS tournaments take place?",
+                  answer: "GAMIUS tournaments take place throughout the year, with online qualifiers leading to in-person finals at various venues in Morocco. The main GAMIUS event is held annually, typically in Spring. All dates and locations are announced on our website and social media channels."
                 },
                 1: {
                   question: "Do I need to bring anything to in-person tournaments?",
@@ -240,7 +240,7 @@ const resources = {
       // FAQ
       faq: {
         title: "FAQ",
-        subtitle: "Find quick answers to your questions about MGE tournaments and participation",
+        subtitle: "Find quick answers to your questions about GAMIUS tournaments and participation",
         searchPlaceholder: "Search a question...",
         noResults: "No results for \"{searchTerm}\"",
         tryAgain: "Try another term or browse all questions below",
@@ -253,8 +253,8 @@ const resources = {
             title: "Tournament Registration",
             questions: {
               0: {
-                question: "How do I register for an MGE tournament?",
-                answer: "To register for an MGE tournament, log in to your account on the platform, select the tournament you're interested in, and follow the registration instructions. Make sure you meet all eligibility criteria and submit your registration before the deadline."
+                question: "How do I register for a GAMIUS tournament?",
+                answer: "To register for a GAMIUS tournament, log in to your account on the platform, select the tournament you're interested in, and follow the registration instructions. Make sure you meet all eligibility criteria and submit your registration before the deadline."
               },
               1: {
                 question: "What documents are required for registration?",
@@ -262,7 +262,7 @@ const resources = {
               },
               2: {
                 question: "Can I register as a team?",
-                answer: "Yes, for team games like Free Fire or Valorant, you need to register your entire team. A captain creates the team on the platform and invites other members. All members must have an active MGE account and accept the invitation to finalize registration."
+                answer: "Yes, for team games like Free Fire or Valorant, you need to register your entire team. A captain creates the team on the platform and invites other members. All members must have an active GAMIUS account and accept the invitation to finalize registration."
               }
             }
           },
@@ -270,8 +270,8 @@ const resources = {
             title: "Tournament Format",
             questions: {
               0: {
-                question: "What formats are used in MGE tournaments?",
-                answer: "MGE tournaments use various formats depending on the game and competition level. Most tournaments follow a group stage followed by single or double elimination brackets. The specific format for each tournament is detailed in the tournament information page."
+                question: "What formats are used in GAMIUS tournaments?",
+                answer: "GAMIUS tournaments use various formats depending on the game and competition level. Most tournaments follow a group stage followed by single or double elimination brackets. The specific format for each tournament is detailed in the tournament information page."
               },
               1: {
                 question: "How are tournament groups determined?",
@@ -287,7 +287,7 @@ const resources = {
             title: "Prizes and Rewards",
             questions: {
               0: {
-                question: "What prizes can I win at MGE tournaments?",
+                question: "What prizes can I win at GAMIUS tournaments?",
                 answer: "Prizes vary by tournament and include cash prizes, gaming equipment, merchandise, and qualification spots for international tournaments. The total prize pool and distribution are always clearly stated on the tournament information page."
               },
               1: {
@@ -296,7 +296,7 @@ const resources = {
               },
               2: {
                 question: "Are there participation rewards even if I don't win?",
-                answer: "Yes, many MGE tournaments offer participation rewards such as digital items, game currency, or exclusive in-game cosmetics. Additionally, all participants receive a certificate of participation which may be valuable for future esports endeavors."
+                answer: "Yes, many GAMIUS tournaments offer participation rewards such as digital items, game currency, or exclusive in-game cosmetics. Additionally, all participants receive a certificate of participation which may be valuable for future esports endeavors."
               }
             }
           },
@@ -321,8 +321,8 @@ const resources = {
             title: "Tournament Logistics",
             questions: {
               0: {
-                question: "When and where do MGE tournaments take place?",
-                answer: "MGE tournaments take place throughout the year, with online qualifiers leading to in-person finals at various venues in Morocco. The main MGE event is held annually, typically in Spring. All dates and locations are announced on our website and social media channels."
+                question: "When and where do GAMIUS tournaments take place?",
+                answer: "GAMIUS tournaments take place throughout the year, with online qualifiers leading to in-person finals at various venues in Morocco. The main GAMIUS event is held annually, typically in Spring. All dates and locations are announced on our website and social media channels."
               },
               1: {
                 question: "Do I need to bring anything to in-person tournaments?",
@@ -392,7 +392,7 @@ const resources = {
       },
       // Hero 
       hero: {
-        title: "MGE 2025",
+        title: "GAMIUS 2025",
         bottomTitle: "GAMING",
         playNow: "JOUER MAINTENANT",
         subtitle: {
@@ -430,7 +430,7 @@ const resources = {
         title: "Déc<b>o</b>uvrez la plus grande <br /> aventure parta<b>g</b>ée au Maroc",
         subtitle: "Bienvenue au plus grand tournoi d'e-sport du Maroc. Montrez-nous ce que vous avez dans les jeux où vous excellez.",
         clickPrompt: "CLIQUEZ",
-        description: "Morocco Gaming Expo est le principal événement de jeux vidéo au Maroc, présentant les dernières technologies, des compétitions d'esport et la culture du gaming."
+        description: "GAMIUS GROUP est le principal événement de jeux vidéo au Maroc, présentant les dernières technologies, des compétitions d'esport et la culture du gaming."
       },
       // Features
       features: {
@@ -449,7 +449,7 @@ const resources = {
       },
       // Footer
       footer: {
-        description: "Morocco Gaming Expo est l'événement gaming premier au Maroc, présentant les dernières nouveautés en matière de jeux vidéo, de compétitions esport, et créant des opportunités pour les joueurs talentueux.",
+        description: "GAMIUS GROUP est l'événement gaming premier au Maroc, présentant les dernières nouveautés en matière de jeux vidéo, de compétitions esport, et créant des opportunités pour les joueurs talentueux.",
         quickLinks: "Liens Rapides",
         links: {
           home: "Accueil",
@@ -459,7 +459,7 @@ const resources = {
         },
         followUs: "Suivez-nous",
         sponsoredBy: "Sous le patronage du",
-        copyright: "© {year} Morocco Gaming Expo. Tous droits réservés.",
+        copyright: "© {year} GAMIUS GROUP. Tous droits réservés.",
         legal: {
           privacy: "Politique de Confidentialité",
           terms: "Conditions d'Utilisation"
@@ -469,11 +469,11 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "PASS GAMERS",
-        subtitle: "Réservé aux joueurs inscrits sur la plateforme MGE. Activez votre pass pour débloquer des avantages exclusifs.",
+        subtitle: "Réservé aux joueurs inscrits sur la plateforme GAMIUS. Activez votre pass pour débloquer des avantages exclusifs.",
         officialInitiative: "Initiative officielle du Ministère de la Jeunesse, de la Culture et de la Communication",
         howItWorks: "Comment ça marche ?",
         step1: "Inscrivez-vous",
-        step1Desc: "Créez un compte sur la plateforme MGE et complétez votre profil",
+        step1Desc: "Créez un compte sur la plateforme GAMIUS et complétez votre profil",
         step2: "Choisissez votre pass",
         step2Desc: "Sélectionnez la formule qui correspond à vos besoins",
         step3: "Accédez aux avantages",
@@ -512,7 +512,7 @@ const resources = {
         // FAQ
         faq: {
           title: "FAQ",
-          subtitle: "Trouvez rapidement les réponses à vos questions concernant les tournois et la participation à MGE",
+          subtitle: "Trouvez rapidement les réponses à vos questions concernant les tournois et la participation à GAMIUS",
           searchPlaceholder: "Rechercher une question...",
           noResults: "Aucun résultat pour \"{searchTerm}\"",
           tryAgain: "Essayez un autre terme ou parcourez toutes les questions ci-dessous",
@@ -525,8 +525,8 @@ const resources = {
               title: "Inscription aux Tournois",
               questions: {
                 0: {
-                  question: "Comment s'inscrire à un tournoi MGE ?",
-                  answer: "Pour vous inscrire à un tournoi MGE, connectez-vous à votre compte sur la plateforme, sélectionnez le tournoi qui vous intéresse, et suivez les instructions d'inscription. Assurez-vous de remplir tous les critères d'éligibilité et de soumettre votre inscription avant la date limite."
+                  question: "Comment s'inscrire à un tournoi GAMIUS ?",
+                  answer: "Pour vous inscrire à un tournoi GAMIUS, connectez-vous à votre compte sur la plateforme, sélectionnez le tournoi qui vous intéresse, et suivez les instructions d'inscription. Assurez-vous de remplir tous les critères d'éligibilité et de soumettre votre inscription avant la date limite."
                 },
                 1: {
                   question: "Quels documents sont nécessaires pour l'inscription ?",
@@ -534,7 +534,7 @@ const resources = {
                 },
                 2: {
                   question: "Peut-on s'inscrire en équipe ?",
-                  answer: "Oui, pour les jeux d'équipe comme Free Fire ou Valorant, vous devez inscrire l'ensemble de votre équipe. Un capitaine crée l'équipe sur la plateforme et invite les autres membres. Tous les membres doivent avoir un compte MGE actif et accepter l'invitation pour finaliser l'inscription."
+                  answer: "Oui, pour les jeux d'équipe comme Free Fire ou Valorant, vous devez inscrire l'ensemble de votre équipe. Un capitaine crée l'équipe sur la plateforme et invite les autres membres. Tous les membres doivent avoir un compte GAMIUS actif et accepter l'invitation pour finaliser l'inscription."
                 }
               }
             },
@@ -542,8 +542,8 @@ const resources = {
               title: "Format des Tournois",
               questions: {
                 0: {
-                  question: "Quels formats sont utilisés dans les tournois MGE ?",
-                  answer: "Les tournois MGE utilisent différents formats selon le jeu et le niveau de compétition. La plupart des tournois suivent une phase de groupes suivie de brackets à élimination simple ou double. Le format spécifique de chaque tournoi est détaillé sur la page d'information du tournoi."
+                  question: "Quels formats sont utilisés dans les tournois GAMIUS ?",
+                  answer: "Les tournois GAMIUS utilisent différents formats selon le jeu et le niveau de compétition. La plupart des tournois suivent une phase de groupes suivie de brackets à élimination simple ou double. Le format spécifique de chaque tournoi est détaillé sur la page d'information du tournoi."
                 },
                 1: {
                   question: "Comment sont déterminés les groupes des tournois ?",
@@ -559,7 +559,7 @@ const resources = {
               title: "Prix et Récompenses",
               questions: {
                 0: {
-                  question: "Quels prix puis-je gagner aux tournois MGE ?",
+                  question: "Quels prix puis-je gagner aux tournois GAMIUS ?",
                   answer: "Les prix varient selon le tournoi et comprennent des prix en espèces, du matériel de gaming, des produits dérivés et des places de qualification pour des tournois internationaux. La dotation totale et sa répartition sont toujours clairement indiquées sur la page d'information du tournoi."
                 },
                 1: {
@@ -568,7 +568,7 @@ const resources = {
                 },
                 2: {
                   question: "Y a-t-il des récompenses de participation même si je ne gagne pas ?",
-                  answer: "Oui, de nombreux tournois MGE offrent des récompenses de participation telles que des objets numériques, de la monnaie de jeu ou des cosmétiques exclusifs en jeu. De plus, tous les participants reçoivent un certificat de participation qui peut être valorisant pour de futures carrières esportives."
+                  answer: "Oui, de nombreux tournois GAMIUS offrent des récompenses de participation telles que des objets numériques, de la monnaie de jeu ou des cosmétiques exclusifs en jeu. De plus, tous les participants reçoivent un certificat de participation qui peut être valorisant pour de futures carrières esportives."
                 }
               }
             },
@@ -593,8 +593,8 @@ const resources = {
               title: "Logistique des Tournois",
               questions: {
                 0: {
-                  question: "Quand et où ont lieu les tournois MGE ?",
-                  answer: "Les tournois MGE ont lieu tout au long de l'année, avec des qualifications en ligne menant à des finales en présentiel dans divers lieux au Maroc. L'événement principal MGE se tient annuellement, généralement au printemps. Toutes les dates et lieux sont annoncés sur notre site web et nos réseaux sociaux."
+                  question: "Quand et où ont lieu les tournois GAMIUS ?",
+                  answer: "Les tournois GAMIUS ont lieu tout au long de l'année, avec des qualifications en ligne menant à des finales en présentiel dans divers lieux au Maroc. L'événement principal GAMIUS se tient annuellement, généralement au printemps. Toutes les dates et lieux sont annoncés sur notre site web et nos réseaux sociaux."
                 },
                 1: {
                   question: "Dois-je apporter quelque chose aux tournois en présentiel ?",
@@ -620,8 +620,8 @@ const resources = {
             title: "Général",
             questions: {
               0: {
-                question: "Quand et où ont lieu les tournois MGE ?",
-                answer: "Les tournois MGE ont lieu tout au long de l'année, avec des qualifications en ligne menant à des finales en présentiel dans divers lieux au Maroc. L'événement principal MGE se tient annuellement, généralement au printemps. Toutes les dates et lieux sont annoncés sur notre site web et nos réseaux sociaux."
+                question: "Quand et où ont lieu les tournois GAMIUS ?",
+                answer: "Les tournois GAMIUS ont lieu tout au long de l'année, avec des qualifications en ligne menant à des finales en présentiel dans divers lieux au Maroc. L'événement principal GAMIUS se tient annuellement, généralement au printemps. Toutes les dates et lieux sont annoncés sur notre site web et nos réseaux sociaux."
               },
               1: {
                 question: "Que dois-je apporter aux tournois en présentiel ?",
@@ -629,7 +629,7 @@ const resources = {
               },
               2: {
                 question: "Y a-t-il des hébergements disponibles pour les participants des tournois majeurs ?",
-                answer: "Pour les tournois majeurs comme le MGE, nous proposons généralement des partenariats avec des hôtels locaux offrant des tarifs préférentiels aux participants. Les informations sur les options d'hébergement sont communiquées aux participants qualifiés et sont également disponibles sur notre site web avant l'événement."
+                answer: "Pour les tournois majeurs comme le GAMIUS, nous proposons généralement des partenariats avec des hôtels locaux offrant des tarifs préférentiels aux participants. Les informations sur les options d'hébergement sont communiquées aux participants qualifiés et sont également disponibles sur notre site web avant l'événement."
               }
             }
           },
@@ -672,7 +672,7 @@ const resources = {
       proPath: {
         title: "NOUVELLE VOIE VERS LES PROS",
         tagline: "Programme Officiel du Ministere de la Jeunesse et des Sports",
-        description: "Le Morocco Gaming Expo ouvre une voie structuree vers le professionnalisme pour les talents esport marocains. Progressez des qualifications regionales jusqu'aux finales LAN nationales.",
+        description: "Le GAMIUS GROUP ouvre une voie structuree vers le professionnalisme pour les talents esport marocains. Progressez des qualifications regionales jusqu'aux finales LAN nationales.",
         cta: "Debuter votre parcours pro",
         nextEvent: "Prochaines qualifications: Mars 2025",
         supportedGames: "Jeux supportes:",
@@ -791,11 +791,11 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "باس للاعبين",
-        subtitle: "مخصص للاعبين المسجلين على منصة MGE. فعّل باسك لفتح المزايا الحصرية.",
+        subtitle: "مخصص للاعبين المسجلين على منصة GAMIUS. فعّل باسك لفتح المزايا الحصرية.",
         officialInitiative: "مبادرة رسمية من وزارة الشباب والثقافة والاتصال",
         howItWorks: "كيف يعمل؟",
         step1: "سجّل",
-        step1Desc: "أنشئ حسابًا على منصة MGE وأكمل ملفك الشخصي",
+        step1Desc: "أنشئ حسابًا على منصة GAMIUS وأكمل ملفك الشخصي",
         step2: "اختر باسك",
         step2Desc: "حدد الخطة التي تناسب احتياجاتك",
         step3: "الوصول إلى المزايا",
@@ -834,7 +834,7 @@ const resources = {
         // FAQ
         faq: {
           title: "الأسئلة الشائعة",
-          subtitle: "احصل على إجابات سريعة لأسئلتك حول بطولات MGE والمشاركة",
+          subtitle: "احصل على إجابات سريعة لأسئلتك حول بطولات GAMIUS والمشاركة",
           searchPlaceholder: "ابحث عن سؤال...",
           noResults: "لا توجد نتائج لـ \"{searchTerm}\"",
           tryAgain: "جرب مصطلحًا آخر أو تصفح جميع الأسئلة أدناه",
@@ -847,8 +847,8 @@ const resources = {
               title: "التسجيل في البطولات",
               questions: {
                 0: {
-                  question: "كيف أسجل في بطولة MGE؟",
-                  answer: "للتسجيل في بطولة MGE، قم بتسجيل الدخول إلى حسابك على المنصة، واختر البطولة التي تهتم بها، واتبع تعليمات التسجيل. تأكد من استيفاء جميع معايير الأهلية وتقديم تسجيلك قبل الموعد النهائي."
+                  question: "كيف أسجل في بطولة GAMIUS؟",
+                  answer: "للتسجيل في بطولة GAMIUS، قم بتسجيل الدخول إلى حسابك على المنصة، واختر البطولة التي تهتم بها، واتبع تعليمات التسجيل. تأكد من استيفاء جميع معايير الأهلية وتقديم تسجيلك قبل الموعد النهائي."
                 },
                 1: {
                   question: "ما هي الوثائق المطلوبة للتسجيل؟",
@@ -856,7 +856,7 @@ const resources = {
                 },
                 2: {
                   question: "هل يمكنني التسجيل كفريق؟",
-                  answer: "نعم، بالنسبة لألعاب الفرق مثل Free Fire أو Valorant، تحتاج إلى تسجيل فريقك بالكامل. ينشئ القائد الفريق على المنصة ويدعو الأعضاء الآخرين. يجب أن يكون لدى جميع الأعضاء حساب MGE نشط وقبول الدعوة لإتمام التسجيل."
+                  answer: "نعم، بالنسبة لألعاب الفرق مثل Free Fire أو Valorant، تحتاج إلى تسجيل فريقك بالكامل. ينشئ القائد الفريق على المنصة ويدعو الأعضاء الآخرين. يجب أن يكون لدى جميع الأعضاء حساب GAMIUS نشط وقبول الدعوة لإتمام التسجيل."
                 }
               }
             },
@@ -864,8 +864,8 @@ const resources = {
               title: "تنسيق البطولة",
               questions: {
                 0: {
-                  question: "ما هي التنسيقات المستخدمة في بطولات MGE؟",
-                  answer: "تستخدم بطولات MGE تنسيقات متنوعة اعتمادًا على اللعبة ومستوى المنافسة. تتبع معظم البطولات مرحلة المجموعات متبوعة بأقواس إقصائية فردية أو مزدوجة. يتم تفصيل التنسيق المحدد لكل بطولة في صفحة معلومات البطولة."
+                  question: "ما هي التنسيقات المستخدمة في بطولات GAMIUS؟",
+                  answer: "تستخدم بطولات GAMIUS تنسيقات متنوعة اعتمادًا على اللعبة ومستوى المنافسة. تتبع معظم البطولات مرحلة المجموعات متبوعة بأقواس إقصائية فردية أو مزدوجة. يتم تفصيل التنسيق المحدد لكل بطولة في صفحة معلومات البطولة."
                 },
                 1: {
                   question: "كيف يتم تحديد مجموعات البطولة؟",
@@ -881,7 +881,7 @@ const resources = {
               title: "الجوائز والمكافآت",
               questions: {
                 0: {
-                  question: "ما هي الجوائز التي يمكنني الفوز بها في بطولات MGE؟",
+                  question: "ما هي الجوائز التي يمكنني الفوز بها في بطولات GAMIUS؟",
                   answer: "تختلف الجوائز حسب البطولة وتشمل الجوائز النقدية، ومعدات الألعاب، والبضائع، وأماكن التأهل للبطولات الدولية. يتم دائمًا توضيح إجمالي الجوائز وتوزيعها بوضوح في صفحة معلومات البطولة."
                 },
                 1: {
@@ -890,7 +890,7 @@ const resources = {
                 },
                 2: {
                   question: "هل هناك مكافآت للمشاركة حتى لو لم أفز؟",
-                  answer: "نعم، تقدم العديد من بطولات MGE مكافآت للمشاركة مثل العناصر الرقمية، أو عملة اللعبة، أو مستحضرات التجميل الحصرية داخل اللعبة. بالإضافة إلى ذلك، يحصل جميع المشاركين على شهادة مشاركة قد تكون قيمة لمساعي الرياضات الإلكترونية المستقبلية."
+                  answer: "نعم، تقدم العديد من بطولات GAMIUS مكافآت للمشاركة مثل العناصر الرقمية، أو عملة اللعبة، أو مستحضرات التجميل الحصرية داخل اللعبة. بالإضافة إلى ذلك، يحصل جميع المشاركين على شهادة مشاركة قد تكون قيمة لمساعي الرياضات الإلكترونية المستقبلية."
                 }
               }
             },
@@ -915,8 +915,8 @@ const resources = {
               title: "لوجستيات البطولة",
               questions: {
                 0: {
-                  question: "متى وأين تقام بطولات MGE؟",
-                  answer: "تقام بطولات MGE على مدار العام، مع تصفيات عبر الإنترنت تؤدي إلى نهائيات شخصية في أماكن مختلفة في المغرب. يُقام حدث MGE الرئيسي سنويًا، عادةً في الربيع. يتم الإعلان عن جميع التواريخ والمواقع على موقعنا الإلكتروني وقنوات التواصل الاجتماعي."
+                  question: "متى وأين تقام بطولات GAMIUS؟",
+                  answer: "تقام بطولات GAMIUS على مدار العام، مع تصفيات عبر الإنترنت تؤدي إلى نهائيات شخصية في أماكن مختلفة في المغرب. يُقام حدث GAMIUS الرئيسي سنويًا، عادةً في الربيع. يتم الإعلان عن جميع التواريخ والمواقع على موقعنا الإلكتروني وقنوات التواصل الاجتماعي."
                 },
                 1: {
                   question: "هل أحتاج إلى إحضار أي شيء للبطولات الشخصية؟",
@@ -934,7 +934,7 @@ const resources = {
       // FAQ
       faq: {
         title: "الأسئلة الشائعة",
-        subtitle: "احصل على إجابات سريعة لأسئلتك حول بطولات MGE والمشاركة",
+        subtitle: "احصل على إجابات سريعة لأسئلتك حول بطولات GAMIUS والمشاركة",
         searchPlaceholder: "ابحث عن سؤال...",
         noResults: "لا توجد نتائج لـ \"{searchTerm}\"",
         tryAgain: "جرب مصطلحًا آخر أو تصفح جميع الأسئلة أدناه",
@@ -947,8 +947,8 @@ const resources = {
             title: "التسجيل في البطولات",
             questions: {
               0: {
-                question: "كيف أسجل في بطولة MGE؟",
-                answer: "للتسجيل في بطولة MGE، قم بتسجيل الدخول إلى حسابك على المنصة، واختر البطولة التي تهتم بها، واتبع تعليمات التسجيل. تأكد من استيفاء جميع معايير الأهلية وتقديم تسجيلك قبل الموعد النهائي."
+                question: "كيف أسجل في بطولة GAMIUS؟",
+                answer: "للتسجيل في بطولة GAMIUS، قم بتسجيل الدخول إلى حسابك على المنصة، واختر البطولة التي تهتم بها، واتبع تعليمات التسجيل. تأكد من استيفاء جميع معايير الأهلية وتقديم تسجيلك قبل الموعد النهائي."
               },
               1: {
                 question: "ما هي الوثائق المطلوبة للتسجيل؟",
@@ -956,7 +956,7 @@ const resources = {
               },
               2: {
                 question: "هل يمكنني التسجيل كفريق؟",
-                answer: "نعم، بالنسبة لألعاب الفرق مثل Free Fire أو Valorant، تحتاج إلى تسجيل فريقك بالكامل. ينشئ القائد الفريق على المنصة ويدعو الأعضاء الآخرين. يجب أن يكون لدى جميع الأعضاء حساب MGE نشط وقبول الدعوة لإتمام التسجيل."
+                answer: "نعم، بالنسبة لألعاب الفرق مثل Free Fire أو Valorant، تحتاج إلى تسجيل فريقك بالكامل. ينشئ القائد الفريق على المنصة ويدعو الأعضاء الآخرين. يجب أن يكون لدى جميع الأعضاء حساب GAMIUS نشط وقبول الدعوة لإتمام التسجيل."
               }
             }
           },
@@ -964,8 +964,8 @@ const resources = {
             title: "تنسيق البطولة",
             questions: {
               0: {
-                question: "ما هي التنسيقات المستخدمة في بطولات MGE؟",
-                answer: "تستخدم بطولات MGE تنسيقات متنوعة اعتمادًا على اللعبة ومستوى المنافسة. تتبع معظم البطولات مرحلة المجموعات متبوعة بأقواس إقصائية فردية أو مزدوجة. يتم تفصيل التنسيق المحدد لكل بطولة في صفحة معلومات البطولة."
+                question: "ما هي التنسيقات المستخدمة في بطولات GAMIUS؟",
+                answer: "تستخدم بطولات GAMIUS تنسيقات متنوعة اعتمادًا على اللعبة ومستوى المنافسة. تتبع معظم البطولات مرحلة المجموعات متبوعة بأقواس إقصائية فردية أو مزدوجة. يتم تفصيل التنسيق المحدد لكل بطولة في صفحة معلومات البطولة."
               },
               1: {
                 question: "كيف يتم تحديد مجموعات البطولة؟",
@@ -981,7 +981,7 @@ const resources = {
             title: "الجوائز والمكافآت",
             questions: {
               0: {
-                question: "ما هي الجوائز التي يمكنني الفوز بها في بطولات MGE؟",
+                question: "ما هي الجوائز التي يمكنني الفوز بها في بطولات GAMIUS؟",
                 answer: "تختلف الجوائز حسب البطولة وتشمل الجوائز النقدية، ومعدات الألعاب، والبضائع، وأماكن التأهل للبطولات الدولية. يتم دائمًا توضيح إجمالي الجوائز وتوزيعها بوضوح في صفحة معلومات البطولة."
               },
               1: {
@@ -990,7 +990,7 @@ const resources = {
               },
               2: {
                 question: "هل هناك مكافآت للمشاركة حتى لو لم أفز؟",
-                answer: "نعم، تقدم العديد من بطولات MGE مكافآت للمشاركة مثل العناصر الرقمية، أو عملة اللعبة، أو مستحضرات التجميل الحصرية داخل اللعبة. بالإضافة إلى ذلك، يحصل جميع المشاركين على شهادة مشاركة قد تكون قيمة لمساعي الرياضات الإلكترونية المستقبلية."
+                answer: "نعم، تقدم العديد من بطولات GAMIUS مكافآت للمشاركة مثل العناصر الرقمية، أو عملة اللعبة، أو مستحضرات التجميل الحصرية داخل اللعبة. بالإضافة إلى ذلك، يحصل جميع المشاركين على شهادة مشاركة قد تكون قيمة لمساعي الرياضات الإلكترونية المستقبلية."
               }
             }
           },
@@ -1015,8 +1015,8 @@ const resources = {
             title: "لوجستيات البطولة",
             questions: {
               0: {
-                question: "متى وأين تقام بطولات MGE؟",
-                answer: "تقام بطولات MGE على مدار العام، مع تصفيات عبر الإنترنت تؤدي إلى نهائيات شخصية في أماكن مختلفة في المغرب. يُقام حدث MGE الرئيسي سنويًا، عادةً في الربيع. يتم الإعلان عن جميع التواريخ والمواقع على موقعنا الإلكتروني وقنوات التواصل الاجتماعي."
+                question: "متى وأين تقام بطولات GAMIUS؟",
+                answer: "تقام بطولات GAMIUS على مدار العام، مع تصفيات عبر الإنترنت تؤدي إلى نهائيات شخصية في أماكن مختلفة في المغرب. يُقام حدث GAMIUS الرئيسي سنويًا، عادةً في الربيع. يتم الإعلان عن جميع التواريخ والمواقع على موقعنا الإلكتروني وقنوات التواصل الاجتماعي."
               },
               1: {
                 question: "هل أحتاج إلى إحضار أي شيء للبطولات الشخصية؟",

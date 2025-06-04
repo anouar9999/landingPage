@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Bridge</title>
+</head>
+<body>
+    <script>
+        // This file acts as a bridge for cross-origin authentication
+        console.log('Auth Bridge loaded from:', window.location.origin);
+        
+        // Listen for messages from parent window
+        window.addEventListener('message', function(event) {
+            console.log('Bridge received message:', event.data);
+            
+            // Verify the message is for us
+            if (event.data && event.data.type === 'auth-handshake') {
+                // Send acknowledgment
+                event.source.postMessage({
+                    type: 'bridge-ready',
+                    origin: window.location.origin
+                }, event.origin);
+            }
+            
+            // Handle cross-origin auth messages
+            if (event.data && event.data.type === 'cross-origin-auth') {
+                // Store in localStorage for this origin
+                if (event.data.value) {
+                    localStorage.setItem('cross-origin-auth-data', JSON.stringify({
+                        data: event.data.value,
+                        timestamp: event.data.timestamp,
+                        source: event.origin
+                    }));
+                    
+                    // Also update other keys
+                    localStorage.setItem('authData', JSON.stringify(event.data.value));
+                    localStorage.setItem('userData', JSON.stringify({ user: event.data.value }));
+                    localStorage.setItem('isAuthenticated', 'true');
+                } else if (event.data.type === 'logout') {
+                    // Clear auth data
+                    localStorage.removeItem('cross-origin-auth-data');
+                    localStorage.removeItem('authData');
+                    localStorage.removeItem('userData');
+                    localStorage.removeItem('isAuthenticated');
+                }
+                
+                // Notify other tabs on this origin
+                if (window.BroadcastChannel) {
+                    const channel = new BroadcastChannel('auth-sync-channel');
+                    channel.postMessage(event.data);
+                    channel.close();
+                }
+            }
+        });
+        
+        // Handle auth data requests
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'request-auth-data') {
+                console.log('Bridge received auth data request');
+                
+                // Check all possible auth sources
+                const authSources = [
+                    'cross-origin-auth-data',
+                    'broadcast-auth-data',
+                    'authData',
+                    'userData'
+                ];
+                
+                for (const key of authSources) {
+                    const data = localStorage.getItem(key);
+                    if (data) {
+                        try {
+                            const parsed = JSON.parse(data);
+                            const authData = parsed.user || parsed.data || parsed;
+                            
+                            if (authData && authData.username) {
+                                console.log(`Bridge found auth data in ${key}:`, authData);
+                                
+                                // Send back to requester
+                                event.source.postMessage({
+                                    type: 'auth-data-response',
+                                    authData: authData,
+                                    source: key,
+                                    requestId: event.data.requestId
+                                }, event.origin);
+                                
+                                // Also broadcast as bridge-auth-data
+                                window.parent.postMessage({
+                                    type: 'bridge-auth-data',
+                                    data: authData
+                                }, '*');
+                                
+                                break;
+                            }
+                        } catch (e) {
+                            console.error(`Failed to parse ${key}:`, e);
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Check for existing auth data
+        const checkAuthData = () => {
+            const authData = localStorage.getItem('cross-origin-auth-data');
+            if (authData && window.parent !== window) {
+                try {
+                    const parsed = JSON.parse(authData);
+                    window.parent.postMessage({
+                        type: 'bridge-auth-data',
+                        data: parsed
+                    }, '*');
+                } catch (e) {
+                    console.error('Failed to parse auth data:', e);
+                }
+            }
+        };
+        
+        // Check immediately and periodically
+        checkAuthData();
+        setInterval(checkAuthData, 2000);
+    </script>
+</body>
+</html>

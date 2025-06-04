@@ -51,8 +51,8 @@ const DownloadZone = ({ initialFilter = null }) => {
   const resources = [
     {
       id: 1,
-      title: "Règlement Officiel MGE 2025",
-      description: "Règlement général des compétitions du Morocco Gaming Expo 2025",
+      title: "Règlement Officiel GAMIUS 2025",
+      description: "Règlement général des compétitions du GAMIUS 2025",
       type: "PDF",
       category: "rules",
       size: "2.4 MB",
@@ -95,7 +95,7 @@ const DownloadZone = ({ initialFilter = null }) => {
     },
     {
       id: 5,
-      title: "Pack Logos MGE 2025",
+      title: "Pack Logos GAMIUS 2025",
       description: "Logos officiels en haute résolution pour les créateurs de contenu",
       type: "ZIP",
       category: "media",
@@ -106,7 +106,7 @@ const DownloadZone = ({ initialFilter = null }) => {
     },
     {
       id: 6,
-      title: "Fond d'écran MGE 2025",
+      title: "Fond d'écran GAMIUS 2025",
       description: "Collection de fonds d'écran officiels pour PC et mobile",
       type: "ZIP",
       category: "media",
@@ -202,7 +202,7 @@ const DownloadZone = ({ initialFilter = null }) => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-nightWarrior text-primary mb-3">Zone de Téléchargement</h2>
           <p className="text-white/80 max-w-2xl mx-auto">
-            Téléchargez les règlements, guides et ressources pour préparer votre participation aux tournois MGE
+            Téléchargez les règlements, guides et ressources pour préparer votre participation aux tournois GAMIUS
           </p>
         </div>
         
@@ -326,7 +326,7 @@ const DownloadZone = ({ initialFilter = null }) => {
         {/* Lien externe vers plus de ressources */}
         <div className="mt-12 text-center">
           <a 
-            href="https://docs.moroccogamingexpo.ma" 
+            href="https://docs.gamiusgroup.ma" 
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white/5 hover:bg-primary/80 text-white py-2 px-6 rounded-full transition-all duration-300"

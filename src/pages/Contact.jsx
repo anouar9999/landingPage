@@ -116,7 +116,7 @@ const Contact = () => {
           </h1>
           
           <p className={`text-white/80 max-w-2xl mx-auto ${getTextClass()}`}>
-            {t('contact.description', "Vous avez des questions sur les tournois MGE ou besoin d'assistance ? Notre équipe est là pour vous aider. Remplissez le formulaire ci-dessous ou utilisez nos coordonnées directes.")}
+            {t('contact.description', "Vous avez des questions sur les tournois GAMIUS ou besoin d'assistance ? Notre équipe est là pour vous aider. Remplissez le formulaire ci-dessous ou utilisez nos coordonnées directes.")}
           </p>
         </div>
         
@@ -261,7 +261,7 @@ const Contact = () => {
                     <h3 className={`text-white font-semibold mb-1 ${getTextClass()}`}>
                       {t('contact.email', "Email")}
                     </h3>
-                    <p className="text-white/70">contact@moroccogamingexpo.ma</p>
+                    <p className="text-white/70">contact@gamiusgroup.ma</p>
                   </div>
                 </div>
                 
@@ -273,7 +273,7 @@ const Contact = () => {
                     <h3 className={`text-white font-semibold mb-1 ${getTextClass()}`}>
                       {t('contact.address', "Adresse")}
                     </h3>
-                    <p className="text-white/70">Morocco Gaming Expo, Avenue Hassan II, Casablanca, Maroc</p>
+                    <p className="text-white/70">GAMIUS GROUP, Avenue Hassan II, Casablanca, Maroc</p>
                   </div>
                 </div>
               </div>
@@ -289,7 +289,7 @@ const Contact = () => {
                 allowFullScreen="" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Morocco Gaming Expo Location"
+                title="GAMIUS GROUP Location"
               ></iframe>
             </div>
           </div>
@@ -304,7 +304,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-black/20 p-6 rounded-xl border border-white/5">
               <h3 className={`text-white font-bold mb-2 ${getTextClass()}`}>
-                {t('contact.faq.q1', "Comment puis-je participer aux tournois MGE ?")}
+                {t('contact.faq.q1', "Comment puis-je participer aux tournois GAMIUS ?")}
               </h3>
               <p className={`text-white/70 ${getTextClass()}`}>
                 {t('contact.faq.a1', "Inscrivez-vous sur notre plateforme et suivez les instructions pour rejoindre les qualifications. Consultez notre calendrier des événements pour connaître les dates des prochains tournois.")}
@@ -313,7 +313,7 @@ const Contact = () => {
             
             <div className="bg-black/20 p-6 rounded-xl border border-white/5">
               <h3 className={`text-white font-bold mb-2 ${getTextClass()}`}>
-                {t('contact.faq.q2', "Comment fonctionne le MGE Pass Gamers ?")}
+                {t('contact.faq.q2', "Comment fonctionne le GAMIUS Pass Gamers ?")}
               </h3>
               <p className={`text-white/70 ${getTextClass()}`}>
                 {t('contact.faq.a2', "Le Pass Gamers vous donne accès à des avantages exclusifs comme des places prioritaires aux tournois, des réductions et des contenus premium. Vous pouvez l'acquérir directement sur notre plateforme.")}
@@ -331,10 +331,10 @@ const Contact = () => {
             
             <div className="bg-black/20 p-6 rounded-xl border border-white/5">
               <h3 className={`text-white font-bold mb-2 ${getTextClass()}`}>
-                {t('contact.faq.q4', "Comment devenir partenaire de MGE ?")}
+                {t('contact.faq.q4', "Comment devenir partenaire de GAMIUS ?")}
               </h3>
               <p className={`text-white/70 ${getTextClass()}`}>
-                {t('contact.faq.a4', "Pour les demandes de partenariat, veuillez nous contacter via le formulaire en sélectionnant 'Partenariat' comme sujet ou envoyez-nous un email à partnership@moroccogamingexpo.ma")}
+                {t('contact.faq.a4', "Pour les demandes de partenariat, veuillez nous contacter via le formulaire en sélectionnant 'Partenariat' comme sujet ou envoyez-nous un email à partnership@gamiusgroup.ma")}
               </p>
             </div>
           </div>

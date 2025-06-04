@@ -576,7 +576,7 @@ const ProPath = () => {
               </h3>
               
               <p className={`text-white/80 mb-6 ${getTextClass()}`}>
-                La nouvelle saison de compétitions MGE s'annonce avec des formats innovants, des prix plus importants et un parcours professionnel structuré pour les champions marocains.
+                La nouvelle saison de compétitions GAMIUS s'annonce avec des formats innovants, des prix plus importants et un parcours professionnel structuré pour les champions marocains.
               </p>
               
               <div className="space-y-3 mb-6">
@@ -625,8 +625,8 @@ const ProPath = () => {
             <div className="relative hidden md:block">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img
-                  src="/img/Logo-MGE-2025-white.svg"
-                  alt="MGE 2025"
+                  src="/img/logo-gamius-white.png"
+                  alt="GAMIUS GROUP 2025"
                   className="w-4/5 h-4/5 object-contain opacity-10"
                 />
               </div>
@@ -662,7 +662,7 @@ const ProPath = () => {
               </h3>
               
               <p className={`text-white/80 max-w-xl ${getTextClass()}`}>
-                {t('proPath.docs.description', "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme MGE.")}
+                {t('proPath.docs.description', "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme GAMIUS.")}
               </p>
               
               <div className="mt-6 flex flex-wrap gap-3 z-10 relative">

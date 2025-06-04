@@ -25,7 +25,6 @@ const applyTifinaghToElements = (selector = '[data-tamazight="true"], .needs-tif
       return;
     }
     
-    console.log(`[${timestamp}] applyTifinaghToElements: Application légère de Tifinagh`);
     
     // Utiliser requestAnimationFrame pour éviter de bloquer le thread principal
     requestAnimationFrame(() => {
@@ -131,11 +130,9 @@ export const LanguageProvider = ({ children }) => {
       }
       
       // Déléguer le chargement de la police au TifinaghFontLoader
-      console.log('Délégation du chargement des polices Tifinagh au TifinaghFontLoader');
       
       // Initialiser l'injecteur Tifinagh
       if (typeof window !== 'undefined' && !tifinaghInjectorRef.current) {
-        console.log('Initialisation de l\'injection Tifinagh via le contexte');
         tifinaghInjectorRef.current = initTifinaghInjection(() => {
           return i18n.language === 'tz';
         });

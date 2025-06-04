@@ -158,7 +158,7 @@ const Documentation = () => {
               <div>
                 <h3 className={`text-2xl font-bold text-white mb-3 ${getTextClass()}`}>Documentation interactive</h3>
                 <p className={`text-white/70 max-w-xl mb-4 ${getTextClass()}`}>
-                  Notre plateforme de documentation en ligne contient l'ensemble des informations, tutoriels et ressources pour vous aider à participer aux compétitions MGE.
+                  Notre plateforme de documentation en ligne contient l'ensemble des informations, tutoriels et ressources pour vous aider à participer aux compétitions GAMIUS.
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ const Documentation = () => {
                   </div>
                 </div>
                 <a
-                  href="https://docs.moroccogamingexpo.ma"
+                  href="https://docs.gamiusgroup.ma"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-black py-2.5 px-5 rounded-lg transition-all duration-300"

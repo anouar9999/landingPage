@@ -200,7 +200,7 @@ const PassGamers = () => {
                     
                     <div className="mt-auto">
                       <div className="text-xs text-white/60 mb-1">ID Membre</div>
-                      <div className="text-sm sm:text-lg text-white font-mono tracking-wider mb-2 sm:mb-3">MGE-••••••-2025</div>
+                      <div className="text-sm sm:text-lg text-white font-mono tracking-wider mb-2 sm:mb-3">GAMIUS-••••••-2025</div>
                       
                       <div className="flex justify-between items-center">
                         <div>

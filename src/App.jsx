@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
 import { AdProvider } from "./contexts/AdContext";
-import NavBar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Tri9lGlory from "./components/Tri9lGlory";
@@ -18,14 +17,13 @@ import Documentation from "./pages/Documentation";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
-import TifinaghFontLoader from './components/TifinaghFontLoader';
-import './utils/latinToTifinagh'; // S'assurer que les utilitaires Tifinagh sont chargés
 import adLoader from './utils/adLoader';
 
 // Importation des nouveaux composants publicitaires
 import SmallBannerAd from './components/SmallBannerAd';
 import SidebarAd from './components/SidebarAd';
 import InlineAd from './components/InlineAd';
+import NavBar from "./components/Navbar";
 // import FloatingAd from './components/FloatingAd';
 
 // Composant principal de l'application
@@ -43,8 +41,8 @@ function MainPage() {
   const [showFloatingAd, setShowFloatingAd] = useState(false); // État pour l'annonce flottante - désactivé par défaut
   const [hasSeenFloatingAd, setHasSeenFloatingAd] = useState(false);
   const scrollRef = useRef(null);
-  const [performanceScore, setPerformanceScore] = useState(0);
-  const [adBlocked, setAdBlocked] = useState(false);
+  // const [performanceScore, setPerformanceScore] = useState(0);
+  // const [adBlocked, setAdBlocked] = useState(false);
   const [adControllerExpanded, setAdControllerExpanded] = useState(false); // État pour contrôler l'expansion du panneau de contrôle
   
   // Fonction pour initialiser ou réinitialiser Lenis
@@ -58,7 +56,6 @@ function MainPage() {
       }
     }
     
-    console.log("Initialisation/Réinitialisation de Lenis");
     
     // Débloquer explicitement le défilement avant d'initialiser Lenis
     document.body.style.overflow = '';
@@ -96,7 +93,6 @@ function MainPage() {
     
     // Ajouter un écouteur pour l'événement LenisReset
     const handleLenisReset = () => {
-      console.log("Événement LenisReset reçu, réinitialisation de Lenis");
       initLenis();
     };
     
@@ -118,7 +114,6 @@ function MainPage() {
   useEffect(() => {
     // Vérifier si la langue a changé
     if (language !== lastLanguageRef.current) {
-      console.log(`Langue changée de ${lastLanguageRef.current} à ${language}, réinitialisation de Lenis`);
       
       // Mettre à jour la référence de la dernière langue
       lastLanguageRef.current = language;
@@ -181,14 +176,14 @@ function MainPage() {
   };
   
   // Gestion de la fermeture de l'annonce flottante avec mémoire
-  const handleCloseFloatingAd = () => {
-    setShowFloatingAd(false);
-    setHasSeenFloatingAd(true);
+  // const handleCloseFloatingAd = () => {
+  //   setShowFloatingAd(false);
+  //   setHasSeenFloatingAd(true);
     
-    // Sauvegarder dans localStorage pour 24h
-    const now = new Date();
-    localStorage.setItem('floatingAdClosed', now.toString());
-  };
+  //   // Sauvegarder dans localStorage pour 24h
+  //   const now = new Date();
+  //   localStorage.setItem('floatingAdClosed', now.toString());
+  // };
   
   // Vérifier si l'annonce flottante a déjà été fermée récemment
   useEffect(() => {
@@ -211,14 +206,13 @@ function MainPage() {
     const initializeAds = async () => {
       // Vérifier si l'utilisateur a un bloqueur de publicités
       const isBlocked = await adLoader.detectAdBlocker();
-      setAdBlocked(isBlocked);
+      // setAdBlocked(isBlocked);
       
       // Optimiser la densité des publicités en fonction des performances de l'appareil
       const score = adLoader.optimizeAdLoad();
-      setPerformanceScore(score);
+      // setPerformanceScore(score);
       
       const adDensity = adLoader.getOptimalAdDensity();
-      console.log(`Score de performance: ${score}/10, Densité de publicités: ${adDensity}`);
       
       // Ne pas ajuster automatiquement les publicités au chargement - utilisateur doit les activer manuellement
       // Les commentaires ci-dessous sont conservés pour référence sur le comportement précédent
@@ -236,7 +230,6 @@ function MainPage() {
       
       if (isBlocked) {
         // Message discret pour les utilisateurs avec bloqueur de pub
-        console.log('Pour une expérience optimale de la démo, veuillez désactiver votre bloqueur de publicités');
       }
     };
     
@@ -266,7 +259,7 @@ function MainPage() {
   return (
     <main className="relative min-h-screen w-screen" style={{ overflow: 'visible' }}>
       {/* Notification de changement de domaine */}
-      {showDomainNotice && (
+      {/* {showDomainNotice && (
         <div className="fixed top-0 left-0 w-full bg-primary text-black z-[1001] shadow-md">
           <div className="container mx-auto py-2 px-4 flex items-center justify-between">
             <p className="text-sm md:text-base font-medium">
@@ -285,7 +278,7 @@ function MainPage() {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       
       <NavBar />
       
@@ -461,7 +454,6 @@ const AppInitializer = ({ children }) => {
   // Effect pour mettre à jour la direction du document et les classes
   useEffect(() => {
     if (document) {
-      console.log('AppInitializer - Langue active:', language);
       document.dir = isRtl ? 'rtl' : 'ltr';
       
       // Mise à jour des classes sur l'élément HTML
@@ -478,7 +470,7 @@ const AppInitializer = ({ children }) => {
   
   return (
     <>
-      <TifinaghFontLoader />
+      {/* <TifinaghFontLoader /> */}
       {children}
     </>
   );

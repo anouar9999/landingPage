@@ -31,7 +31,7 @@ const GamingFooter = () => {
     { name: t('nav.passGamers'), path: '#PassGamers' },
     { name: t('nav.documentation'), path: '/downloads' },
     { name: t('nav.faq'), path: '#faq' },
-    { name: t('footer.dashboard'), path: 'https://user.mgexpo.ma' },
+    { name: t('footer.dashboard'), path: 'https://user.gamiusgroup.ma' },
   ];
   
   const legalLinks = [
@@ -41,11 +41,11 @@ const GamingFooter = () => {
   
   // Utilisation des mêmes liens de réseaux sociaux que dans Navbar
   const socialLinks = [
-    { Icon: Facebook, name: 'Facebook', url: 'https://www.facebook.com/mgex.ma' },
-    { Icon: Instagram, name: 'Instagram', url: 'https://www.instagram.com/mgex.ma/' },
+    { Icon: Facebook, name: 'Facebook', url: 'https://www.facebook.com/gamiusgroup' },
+    { Icon: Instagram, name: 'Instagram', url: 'https://www.instagram.com/gamiusgroup/' },
     { Icon: Youtube, name: 'YouTube', url: 'https://www.youtube.com/channel/UCN-qYwRN2RABWRTenM1WTSg' },
     { Icon: Linkedin, name: 'LinkedIn', url: 'https://www.linkedin.com/company/102805036/' },
-    { Icon: XIcon, name: 'X', url: 'https://twitter.com/mgexma' }
+    { Icon: XIcon, name: 'X', url: 'https://twitter.com/gamiusgroup' }
   ];
 
   return (
@@ -55,8 +55,8 @@ const GamingFooter = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-8">
           <div className="max-w-md">
             <img 
-              src="/img/Logo-MGE-2025-white.svg" 
-              alt="Morocco Gaming Expo Logo" 
+              src="/img/logo-gamius-white.png" 
+              alt="GAMIUS GROUP Logo" 
               className="h-14 mb-4"
             />
             <p className="text-gray-400 text-sm">
@@ -122,17 +122,7 @@ const GamingFooter = () => {
           </div>
         </div>
         
-        {/* Logo MJCC */}
-        <div className="flex justify-center my-8">
-          <div className="flex flex-col items-center">
-            <p className="text-gray-400 text-xs mb-2">{t('footer.sponsoredBy') || 'Sous le patronage du'}</p>
-            <img 
-              src="/img/mjcc.svg" 
-              alt="Ministère de la Jeunesse, de la Culture et de la Communication" 
-              className="h-16"
-            />
-          </div>
-        </div>
+        
         
         {/* Séparateur */}
         <div className="h-px bg-gray-800 w-full my-6"></div>
