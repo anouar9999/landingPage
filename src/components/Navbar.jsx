@@ -439,7 +439,7 @@ const NavBar = () => {
                     <img
                       src={
                         user.avatar
-                          ? `${import.meta.env.VITE_PUBLIC_URL || 'http://localhost'}${user.avatar}`
+                          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || 'http://localhost'}${user.avatar}`
                           : "/img/default-avatar.jpg"
                       }
                       alt={user.username || 'User'}
@@ -468,7 +468,7 @@ const NavBar = () => {
                         </div>
                         
                         <a
-                          href="http://localhost:3000/tournaments"
+                          href={`${import.meta.env.VITE_PUBLIC_URL}:3000/tournaments`}
                           className="flex items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
                         >
                           <TbDoorEnter className="h-4 w-4 text-green-400" />
@@ -489,7 +489,7 @@ const NavBar = () => {
               ) : (
                 // User is not logged in
                 <a
-                  href="http://localhost:3000/login"
+                  href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
                   className="bg-[#e10000] hover:bg-[#c00] text-white text-sm px-5 py-2.5 rounded-md uppercase transition-all duration-300 font-bold"
                 >
                   <div className="flex items-center gap-2">
@@ -594,7 +594,7 @@ const NavBar = () => {
                 </div>
               ) : (
                 <a
-                  href="http://localhost:3000/login"
+                  href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white py-3 rounded-md text-center"
                 >

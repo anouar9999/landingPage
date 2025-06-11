@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       setError(null);
 
       // 🔥 REPLACE WITH YOUR ACTUAL BACKEND URL
-      const response = await fetch('http://localhost/api/auth/me.php', {
+      const response = await fetch(`${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/auth/me.php`, {
         method: 'GET',
         credentials: 'include', // IMPORTANT: This sends session cookies
         headers: {
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       
       // 🔥 REPLACE WITH YOUR ACTUAL BACKEND URL
-      const response = await fetch('http://localhost/api/auth/logout.php', {
+      const response = await fetch(`${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/auth/logout.php`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('userData');
         
         // Redirect to login page
-        window.location.href = 'http://localhost:3000/login';
+        window.location.href = `${import.meta.env.VITE_PUBLIC_URL}/login`;
       } else {
         throw new Error('Logout failed');
       }
