@@ -189,42 +189,38 @@ const NavBar = () => {
   }, [isMenuOpen]);
 
   // Enhanced scroll behavior
-  useEffect(() => {
-    const handleScroll = () => {
-      if (currentScrollY === 0) {
-        setIsNavVisible(true);
-        setIsHeaderCompact(false);
-        setShowScrollUpButton(false);
-        navContainerRef.current?.classList.remove("bg-black/95");
-        navContainerRef.current?.classList.remove("shadow-md");
-        navContainerRef.current?.classList.add("bg-black/30");
-      }
-      else if (currentScrollY > lastScrollY) {
-        if (screenSize.isDesktop) {
-          setIsHeaderCompact(true);
-          setIsNavVisible(true);
-        } else {
-          setIsNavVisible(false);
-        }
-        setShowScrollUpButton(currentScrollY > 500);
-        navContainerRef.current?.classList.add("bg-black/95");
-        navContainerRef.current?.classList.add("shadow-md");
-        navContainerRef.current?.classList.remove("bg-black/30");
-      }
-      else {
-        setIsNavVisible(true);
-        setIsHeaderCompact(screenSize.isDesktop && currentScrollY > 200);
-        navContainerRef.current?.classList.add("bg-black/95");
-        navContainerRef.current?.classList.add("shadow-md");
-        navContainerRef.current?.classList.remove("bg-black/30");
-      }
-      setLastScrollY(currentScrollY);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (currentScrollY === 0) {
+  //       setIsNavVisible(true);
+  //       setIsHeaderCompact(false);
+  //       setShowScrollUpButton(false);
+  //       navContainerRef.current?.classList.remove("bg-black/95");
+  //     }
+  //     else if (currentScrollY > lastScrollY) {
+  //       if (screenSize.isDesktop) {
+  //         setIsHeaderCompact(true);
+  //         setIsNavVisible(true);
+  //       } else {
+  //         setIsNavVisible(false);
+  //       }
+  //       setShowScrollUpButton(currentScrollY > 500);
+  //       navContainerRef.current?.classList.add("bg-black/95");
+  //       navContainerRef.current?.classList.remove("bg-black/30");
+  //     }
+  //     else {
+  //       setIsNavVisible(true);
+  //       setIsHeaderCompact(screenSize.isDesktop && currentScrollY > 200);
+  //       navContainerRef.current?.classList.add("bg-black/95");
+  //       navContainerRef.current?.classList.remove("bg-black/30");
+  //     }
+  //     setLastScrollY(currentScrollY);
+  //   };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [currentScrollY, lastScrollY, screenSize.isDesktop]);
+  //   handleScroll();
+  //   window.addEventListener("scroll", handleScroll, { passive: true });
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [currentScrollY, lastScrollY, screenSize.isDesktop]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -269,7 +265,7 @@ const NavBar = () => {
   };
 
   const navLinkClass =
-    "text-white hover:text-primary transition-all duration-200 text-sm uppercase whitespace-nowrap font-medium tracking-wide hover:scale-105 transform";
+    "text-white hover:text-primary transition-all  duration-200 text-sm uppercase  font-medium tracking-wide  transform";
 
   // 🔥 Show loading state
   if (loading) {
@@ -296,7 +292,7 @@ const NavBar = () => {
 
       <div 
         ref={navContainerRef}
-        className={`bg-black/30 backdrop-blur-sm transition-all duration-300 ${
+        className={`bg-gradient-to-b from-black via-black/80 to-transparent  transition-all duration-300 ${
           isNavVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -336,32 +332,74 @@ const NavBar = () => {
                 </button>
 
                 {/* Dropdown menu */}
-                <div
-                  ref={subMenuRef}
-                  className={`absolute left-0 mt-2 w-56 rounded-xl overflow-hidden shadow-xl bg-[#0A0E13]/95 backdrop-blur-md origin-top-left border border-white/10
-                    transition-all duration-300 ease-out
-                    ${
-                      isSubMenuOpen
-                        ? "opacity-100 translate-y-0 pointer-events-auto"
-                        : "opacity-0 -translate-y-4 pointer-events-none"
-                    }`}
-                  aria-hidden={!isSubMenuOpen}
-                >
-                  <div className="py-1.5">
-                    {discoverSubItems.map((item, index) => (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        onClick={(e) => handleLinkClick(e, item.link)}
-                        className={`group flex items-center px-4 py-2.5 text-white hover:bg-primary/10 transition-colors text-sm uppercase ${getTextClass()}
-                          ${index === 0 ? "border-t-0" : "border-t border-white/5"}`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2.5 group-hover:scale-125 transition-transform"></span>
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
+              <div
+  ref={subMenuRef}
+  className={`absolute left-0 mt-0.5 min-w-52 overflow-hidden font-zentry 
+    bg-gradient-to-br from-slate-900/95 via-gray-800/90 to-slate-900/95 
+    backdrop-blur-xl border border-white/10 
+    rounded-2xl shadow-2xl shadow-black/50 origin-top-left
+    transition-all duration-500 ease-out
+    before:absolute before:inset-0 before:bg-gradient-to-br 
+    before:from-white/5 before:to-transparent before:pointer-events-none
+    ${
+      isSubMenuOpen
+        ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+        : "opacity-0 -translate-y-6 scale-95 pointer-events-none"
+    }`}
+  aria-hidden={!isSubMenuOpen}
+>
+ 
+
+  {/* Menu items */}
+  <div className="py-2">
+    {discoverSubItems.map((item, index) => (
+      <a
+        key={item.name}
+        href={item.link}
+        onClick={(e) => handleLinkClick(e, item.link)}
+        className={`group relative flex items-center px-6 py-4 text-white 
+          hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/5
+          transition-all duration-300 text-sm font-medium uppercase tracking-wide
+          overflow-hidden
+          before:absolute before:left-0 before:top-0 before:w-1 before:h-full 
+          before:bg-primary before:transform before:-translate-x-full 
+          before:transition-transform before:duration-300
+          hover:before:translate-x-0
+          ${getTextClass()}`}
+      >
+        {/* Animated background on hover */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent 
+          opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        {/* Icon */}
+        <div className="relative flex items-center justify-center w-8 h-8 mr-4 
+          rounded-lg bg-white/5 group-hover:bg-primary/20 
+          transition-all duration-300 group-hover:scale-110">
+          <span className="w-2.5 h-2.5 rounded-full bg-primary/70 
+            group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/50
+            transition-all duration-300"></span>
+        </div>
+        
+        {/* Text */}
+        <span className="relative z-10 group-hover:translate-x-1 transition-transform duration-300">
+          {item.name}
+        </span>
+        
+        {/* Arrow indicator */}
+        <div className="ml-auto opacity-0 group-hover:opacity-100 
+          transform translate-x-2 group-hover:translate-x-0 
+          transition-all duration-300">
+          <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {/* Footer with subtle gradient */}
+  <div className="h-1 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20"></div>
+</div>
               </div>
 
               {/* Regular nav links */}
@@ -371,7 +409,7 @@ const NavBar = () => {
                     key={item.name}
                     href={item.link}
                     onClick={(e) => handleLinkClick(e, item.link)}
-                    className={`${navLinkClass} p-2 rounded-md hover:bg-white/5 ${getTextClass()}`}
+                    className={`${navLinkClass} p-2 rounded-md  ${getTextClass()}`}
                   >
                     {item.name}
                   </a>
@@ -379,7 +417,7 @@ const NavBar = () => {
                   <Link
                     key={item.name}
                     to={item.link}
-                    className={`${navLinkClass} p-2 rounded-md hover:bg-white/5 flex items-center gap-1 ${getTextClass()}`}
+                    className={`${navLinkClass} p-2 rounded-md  flex items-center gap-1 ${getTextClass()}`}
                   >
                     {item.name}
                     <ArrowUpRight
@@ -416,7 +454,7 @@ const NavBar = () => {
               >
                 <div className="relative group">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-full blur-md group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                  <div className="bg-black/40 backdrop-blur-md rounded-full p-1 hover:bg-black/50 transition-all duration-200 relative">
+                  <div className=" rounded-full p-1 hover:bg-black/50 transition-all duration-200 relative">
                     <LanguageSelector />
                   </div>
                 </div>
@@ -439,7 +477,7 @@ const NavBar = () => {
                     <img
                       src={
                         user.avatar
-                          ? `${import.meta.env.VITE_PUBLIC_URL || 'http://localhost'}${user.avatar}`
+                          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || 'http://localhost'}${user.avatar}`
                           : "/img/default-avatar.jpg"
                       }
                       alt={user.username || 'User'}
@@ -468,7 +506,7 @@ const NavBar = () => {
                         </div>
                         
                         <a
-                          href="http://localhost:3000/tournaments"
+                          href={`${import.meta.env.VITE_PUBLIC_URL}:3000/tournaments`}
                           className="flex items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
                         >
                           <TbDoorEnter className="h-4 w-4 text-green-400" />
@@ -489,10 +527,10 @@ const NavBar = () => {
               ) : (
                 // User is not logged in
                 <a
-                  href="http://localhost:3000/login"
-                  className="bg-[#e10000] hover:bg-[#c00] text-white text-sm px-5 py-2.5 rounded-md uppercase transition-all duration-300 font-bold"
+                  href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
+                  className="bg-[#e10000] hover:bg-[#c00] text-white text-lg px-5 py-2.5 rounded-md uppercase transition-all duration-300 font-bold"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 special-font">
                     {t("nav.login")}
                     <ArrowUpRight size={16} />
                   </div>
@@ -594,7 +632,7 @@ const NavBar = () => {
                 </div>
               ) : (
                 <a
-                  href="http://localhost:3000/login"
+                  href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full bg-[#ff6b00] hover:bg-[#e55a00] text-white py-3 rounded-md text-center"
                 >
