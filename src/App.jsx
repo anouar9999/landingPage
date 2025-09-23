@@ -18,12 +18,14 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import adLoader from './utils/adLoader';
+import Features from "./components/Features";
 
 // Importation des nouveaux composants publicitaires
 import SmallBannerAd from './components/SmallBannerAd';
 import SidebarAd from './components/SidebarAd';
 import InlineAd from './components/InlineAd';
 import NavBar from "./components/Navbar";
+import OrganizerBanner from "./components/OrganizerBanner";
 // import FloatingAd from './components/FloatingAd';
 
 // Composant principal de l'application
@@ -257,7 +259,7 @@ function MainPage() {
   };
 
   return (
-    <main className="relative min-h-screen w-screen" style={{ overflow: 'visible' }}>
+    <main className="relative min-h-screen w-screen bg-black" style={{ overflow: 'visible' }}>
       {/* Notification de changement de domaine */}
       {/* {showDomainNotice && (
         <div className="fixed top-0 left-0 w-full bg-primary text-black z-[1001] shadow-md">
@@ -310,38 +312,39 @@ function MainPage() {
       <About />
       
       {/* Publicité en ligne entre les sections */}
-      <div className="container mx-auto px-4">
+      {/* <div className="container mx-auto px-4">
         <InlineAd />
       </div>
-      
+       */}
       {/* Section Road to Glory */}
       <Tri9lGlory />
       
       {/* Section Prize Pool */}
-      <PrizePool />
+      {/* <PrizePool /> */}
       
       {/* Section ProPath */}
       <div id="pro-path">
         <ProPath />
       </div>
-      
+            <Features />
+
       {/* Publicité en ligne entre les sections */}
-      <div className="container mx-auto px-4">
+      {/* <div className="container mx-auto px-4">
         <InlineAd />
-      </div>
-      
+      </div> */}
+
       {/* Section Pass Gamers */}
       <div id="PassGamers">
         <PassGamers />
       </div>
-      
+      <OrganizerBanner/>
       {/* Section FAQ */}
       <div id="faq">
         <FAQ />
       </div>
       
       {/* Bannière de footer */}
-      <FooterAd />
+      {/* <FooterAd /> */}
       
       {/* Footer */}
       <Footer />
@@ -428,7 +431,7 @@ function MainPage() {
       )}
       
       {/* Contrôleur de publicités amélioré pour la démonstration */}
-      <AdController 
+      {/* <AdController 
         onToggleSmallBanner={() => setShowSmallBanner(!showSmallBanner)}
         onToggleLeftSidebar={() => setShowLeftSidebar(!showLeftSidebar)}
         onToggleRightSidebar={() => setShowRightSidebar(!showRightSidebar)}
@@ -442,7 +445,7 @@ function MainPage() {
         showAllAds={showAds}
         setAdControllerExpanded={setAdControllerExpanded}
         adControllerExpanded={adControllerExpanded}
-      />
+      /> */}
     </main>
   );
 }

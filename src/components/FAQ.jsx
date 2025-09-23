@@ -19,7 +19,6 @@ const FAQ = () => {
   
   // Fonction pour obtenir le texte de version
   const getVersionText = () => {
-    if (language === 'tz') return 'ⵜⴰⵍⵇⵇⵎⵜ ⵜⵓⵏⵙⵉⴱⵜ 2025';
     if (language === 'ar') return 'الإصدار الرسمي 2025';
     return 'Version officielle 2025';
   };

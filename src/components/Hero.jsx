@@ -10,7 +10,8 @@ import FrenchTitle from "./FrenchTitle";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } = useTranslation();
+  const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
+    useTranslation();
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const audioElementRef = useRef(null);
@@ -29,13 +30,13 @@ const Hero = () => {
   const totalVideos = 4;
   const nextVdRef = useRef(null);
   const heroSectionRef = useRef(null);
-  
+
   // S'assurer que la section est visible et que la police est correctement appliquée
   useEffect(() => {
     if (heroSectionRef.current) {
-      heroSectionRef.current.style.visibility = 'visible';
-      heroSectionRef.current.style.opacity = '1';
-      
+      heroSectionRef.current.style.visibility = "visible";
+      heroSectionRef.current.style.opacity = "1";
+
       // Forcer l'application de la police Tifinagh sur les éléments clés
       if (isTamazight) {
         forceTifinaghFont(heroSectionRef);
@@ -44,24 +45,29 @@ const Hero = () => {
         forceTifinaghFont(heroContentRef);
         forceTifinaghFont(playNowRef);
         forceTifinaghFont(bottomTitleRef);
-        
+
         // Appliquer manuellement la classe aux éléments qui pourraient être générés dynamiquement
         setTimeout(() => {
-          const textElements = heroSectionRef.current.querySelectorAll('p, span, div > span, a, button, h1:not(.font-nightWarrior), h2:not(.font-nightWarrior), h3:not(.font-nightWarrior)');
-          textElements.forEach(el => {
-            if (!el.classList.contains('font-nightWarrior') && 
-                !el.classList.contains('nightWarrior')) {
-              el.classList.add('tamazight-text');
-              el.style.fontFamily = 'Tifinagh, "Noto Sans Tifinagh", sans-serif';
-              el.style.fontWeight = '600';
+          const textElements = heroSectionRef.current.querySelectorAll(
+            "p, span, div > span, a, button, h1:not(.font-nightWarrior), h2:not(.font-nightWarrior), h3:not(.font-nightWarrior)"
+          );
+          textElements.forEach((el) => {
+            if (
+              !el.classList.contains("font-nightWarrior") &&
+              !el.classList.contains("nightWarrior")
+            ) {
+              el.classList.add("tamazight-text");
+              el.style.fontFamily =
+                'Tifinagh, "Noto Sans Tifinagh", sans-serif';
+              el.style.fontWeight = "600";
             }
           });
         }, 100);
       }
-      
+
       // Debug message en développement
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Hero section visible, langue:', language);
+      if (process.env.NODE_ENV === "development") {
+        console.log("Hero section visible, langue:", language);
       }
     }
   }, [language, forceTifinaghFont, isTamazight]);
@@ -129,7 +135,7 @@ const Hero = () => {
     if (hasClicked) {
       const nextVideo = document.querySelector("#next-video");
       const currentVideo = document.querySelector("#current-video");
-      
+
       if (nextVideo) {
         gsap.set("#next-video", { visibility: "visible" });
         gsap.to("#next-video", {
@@ -142,7 +148,7 @@ const Hero = () => {
           onStart: () => nextVdRef.current && nextVdRef.current.play(),
         });
       }
-      
+
       if (currentVideo) {
         gsap.from("#current-video", {
           transformOrigin: "center center",
@@ -177,13 +183,13 @@ const Hero = () => {
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
-  const worldToMorocco = t('hero.worldToMorocco', "au Maroc");
+  const worldToMorocco = t("hero.worldToMorocco", "au Maroc");
 
   return (
-    <div 
-      id="hero" 
-      className="relative h-screen w-full overflow-hidden pt-32" 
-      dir={isRtl ? 'rtl' : 'ltr'}
+    <div
+      id="hero"
+      className="relative h-screen w-full overflow-hidden pt-32"
+      dir={isRtl ? "rtl" : "ltr"}
       ref={heroSectionRef}
     >
       {/* Suppression de l'indicateur de débogage */}
@@ -206,7 +212,7 @@ const Hero = () => {
         <div className="relative h-full">
           {/* Fallback background in case video doesn't load */}
           <div className="absolute inset-0 bg-[#0a0a14] z-0"></div>
-          
+
           {/* Video Preview Container */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
             <div className="aspect-video cursor-pointer overflow-hidden rounded-lg">
@@ -248,7 +254,9 @@ const Hero = () => {
             }}
           />
           <video
-            src={getVideoSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
+            src={getVideoSrc(
+              currentIndex === totalVideos - 1 ? 1 : currentIndex
+            )}
             autoPlay
             loop
             muted
@@ -284,42 +292,52 @@ const Hero = () => {
         </button>
 
         {/* HeroAdOverlay - Composant pour afficher les emplacements publicitaires */}
-        <HeroAdOverlay />
+        {/* <HeroAdOverlay /> */}
 
         {/* Content */}
-        <div 
+        <div
           className="absolute left-0 top-0 z-40 h-full w-full"
           ref={heroContentRef}
         >
           <div className="flex h-full flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12">
             <div ref={subTitleRef} className="relative text-white">
-              {language === 'fr' ? (
-                <FrenchTitle 
-                  className="font-nightWarrior text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl"
+              {language === "fr" ? (
+                
+                <FrenchTitle
+                  className=" !special-font text-primary hero-heading text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl"
                   textKey="hero.title"
+                  descKey={t("hero.bottomTitle")}
                 />
               ) : (
-                <h1 
-                  ref={mainTitleRef} 
-                  className={`font-nightWarrior text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl ${isTamazight ? 'tamazight-text' : ''}`}
+                <h1
+                  ref={mainTitleRef}
+                  className={` special-font hero-heading text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl `}
                 >
-                  {t('hero.title')}
+                 
+                 <b className="text-primary ">{t("hero.title")}</b>  <br />
+                <b>{t("hero.bottomTitle")}</b> 
+
                 </h1>
               )}
               <div className="absolute -bottom-2 left-0 h-0.5 w-16 bg-gradient-to-r from-purple-500 to-transparent sm:h-1 sm:w-20 md:w-24 lg:-bottom-3 lg:w-32"></div>
             </div>
 
-            <div className="mt-6 text-center font-general sm:mt-8 md:mt-10">
-              <p className={`mx-auto max-w-lg text-sm leading-relaxed text-blue-100 sm:max-w-xl sm:text-base md:max-w-2xl md:text-lg lg:max-w-3xl ${getTextClass()}`}>
+            <div className="mt-6 text-center font-circular-web sm:mt-8 md:mt-10">
+              <p
+                className={`mx-auto max-w-lg text-sm leading-relaxed text-blue-100 sm:max-w-xl sm:text-base md:max-w-2xl md:text-lg lg:max-w-3xl ${getTextClass()}`}
+              >
                 <span className={`text-brand-valorant ${getTextClass()}`}>
-                  {t('hero.subtitle.part1')}
+                  {t("hero.subtitle.part1")}
                 </span>{" "}
                 <span className={`text-white/90 ${getTextClass()}`}>
-                  {t('hero.subtitle.part2')}
+                  {t("hero.subtitle.part2")}
                 </span>{" "}
-                <span className={`text-primary ${getTextClass()}`}>{t('hero.subtitle.part3')}</span>.{" "}
+                <span className={`text-primary ${getTextClass()}`}>
+                  {t("hero.subtitle.part3")}
+                </span>
+                .{" "}
                 <span className={`text-white/80 ${getTextClass()}`}>
-                  {t('hero.subtitle.part4')}
+                  {t("hero.subtitle.part4")}
                 </span>
               </p>
             </div>
@@ -328,17 +346,17 @@ const Hero = () => {
       </div>
 
       {/* Bottom Title */}
-      <h1 
+      <h1
         ref={bottomTitleRef}
-        className={`absolute bottom-4 right-4 text-4xl text-black opacity-20 transition-opacity duration-300 hover:opacity-40 sm:bottom-5 sm:right-5 sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-nightWarrior ${isTamazight ? 'tamazight-text' : ''}`}
+        className={`absolute bottom-4 right-4 text-4xl text-black opacity-20 special-font transition-opacity duration-300 hover:opacity-40 sm:bottom-5 sm:right-5 sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-nightWarrior ${isTamazight ? "tamazight-text" : ""}`}
       >
-        {t('hero.bottomTitle')}
+        {t("hero.bottomTitle")}
       </h1>
 
       {/* Bottom Bar */}
       <div className="absolute bottom-0 inset-x-0 z-10 mb-4 sm:mb-6 md:mb-8">
         <div className="flex items-center justify-center w-full px-4 md:px-16">
-          <div className="h-px flex-1 bg-gradient-to-r from-[#FF4757]/30 to-[#AE2085]/30"></div>
+          <div className="h-px flex-1 bg-gradient-to-r from-white to-white/30"></div>
 
           <div className="mx-2 sm:mx-4">
             <a
@@ -349,14 +367,16 @@ const Hero = () => {
               <div className="absolute inset-0 -skew-x-12 bg-white"></div>
               <span className="relative flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8">
                 <div className="absolute inset-0 -skew-x-12 border border-white"></div>
-                <span className={`relative z-10 text-xs sm:text-sm md:text-base text-black font-valorant uppercase ${getTextClass()}`}>
-                  {t('hero.playNow')}
+                <span
+                  className={`relative special-font z-10 text-sm sm:text-md md:text-xl text-black   uppercase`}
+                >
+                  {t("hero.playNow")}
                 </span>
               </span>
             </a>
           </div>
 
-          <div className="h-px flex-1 bg-gradient-to-r from-[#AE2085]/30 to-[#FF4757]/30"></div>
+          <div className="h-px flex-1 bg-gradient-to-r from-primary/30 to-primary"></div>
         </div>
       </div>
     </div>

@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('userData');
         
         // Redirect to login page
-        window.location.href = `${import.meta.env.VITE_PUBLIC_URL}/login`;
+        window.location.href = `${import.meta.env.VITE_PUBLIC_URL}:/login`;
       } else {
         throw new Error('Logout failed');
       }

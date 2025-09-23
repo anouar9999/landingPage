@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from '../hooks/useTranslation';
 import { Link } from 'react-router-dom';
+import AnimatedTitle from './AnimatedTitle';
 
 // Référencer les images depuis le dossier public
 const IMAGES = {
@@ -51,11 +52,7 @@ const ProPath = () => {
     easing: "cubic-bezier(.03,.98,.52,.99)",
   };
   
-  // Fonction pour garantir l'application de tamazight-text sur les éléments importants
-  const getTamazightClass = () => {
-    if (language === 'tz') return 'tamazight-text font-tifinagh';
-    return '';
-  };
+ 
   
   // Données des étapes du programme - Version actualisée pour le Ministère
   const steps = [
@@ -369,63 +366,40 @@ const ProPath = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <div className="inline-block bg-primary/10 backdrop-blur-sm px-4 py-1 rounded-full mb-4">
-            <span className={`text-primary font-valorant text-sm uppercase tracking-wider ${getTamazightClass()}`}>
+        <div className="relative z-10 h-full flex flex-col items-center justify-center ">
+          <p className="font-general  text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
               {t('proPath.tagline', "Programme Officiel du Ministère de la Jeunesse et des Sports")}
-            </span>
-          </div>
-          
-          <h2 className={`pro-path-title text-4xl md:text-5xl font-nightWarrior text-primary mb-4 ${language === 'tz' ? 'tamazight-text' : ''}`}>
+        </p>
+          <AnimatedTitle
+          title={t('proPath.title', "Nouvelle Voie vers les Pros")}
+          containerClass=" !text-black text-center text-primary"
+        />
+
+          {/* <h2 className={`pro-path-title text-4xl md:text-5xl font-nightWarrior text-primary mb-4 ${language === 'tz' ? 'tamazight-text' : ''}`}>
             {t('proPath.title', "Nouvelle Voie vers les Pros")}
-          </h2>
+          </h2> */}
           
-          <p className={`pro-path-description text-white/80 text-lg max-w-3xl mx-auto ${getTextClass()}`}>
+          <p className={`pro-path-description text-white/80 font-general text-center text-md max-w-2xl py-4 mx-auto ${getTextClass()}`}>
             {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurée vers le professionnalisme pour les talents esport marocains. Progressez des qualifications régionales jusqu'aux finales LAN nationales.")}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <a 
               href="#inscription"
-              className="inline-flex items-center bg-primary hover:bg-primary/90 text-black font-bold py-3 px-6 rounded-lg transition-all duration-300"
+              className="inline-flex items-center bg-[#e10000] hover:bg-[#c00] font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 "
             >
               <span className={getTextClass()}>{t('proPath.cta', "Débuter votre parcours pro")}</span>
               <ArrowUpRight className="ml-2" size={18} />
             </a>
             
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white py-3 px-6 rounded-lg">
+            <div className="inline-flex items-center gap-2 bg-white/10   font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 ">
               <Calendar size={18} />
               <span className={getTextClass()}>{t('proPath.nextEvent', "Prochaines qualifications: Mars 2025")}</span>
             </div>
           </div>
 
           {/* Jeux officiels avec style amélioré */}
-          <div className="mt-8">
-            <span className={`text-white/70 text-sm mb-3 block ${getTextClass()}`}>
-              {t('proPath.supportedGames', "Jeux officiels du programme:")}
-            </span>
-            <div className="flex flex-wrap gap-4 justify-center items-center mt-2">
-              {officialGames.map(game => (
-                <div key={game.id} className="group">
-                  <div className="relative overflow-hidden bg-white/5 hover:bg-white/10 transition-all duration-300 p-2 rounded-lg border border-primary/20 hover:border-primary/40 cursor-pointer flex items-center gap-2">
-                    <img 
-                      src={game.icon} 
-                      alt={game.name}
-                      className="w-6 h-6 object-contain"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23111'/%3E%3Ctext x='50%25' y='50%25' font-size='10' text-anchor='middle' fill='%23fff' dominant-baseline='middle'%3E${game.name.charAt(0)}%3C/text%3E%3C/svg%3E`;
-                      }}
-                    />
-                    <span className={`text-white/90 text-sm ${getTextClass()}`}>{game.name}</span>
-                    
-                    {/* Animation de l'indicateur au survol */}
-                    <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 group-hover:w-full"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+       
         </div>
         
         {/* Timeline avec les étapes - Version améliorée */}
@@ -456,9 +430,9 @@ const ProPath = () => {
                 
                 {/* Image */}
                 <div className="w-full md:w-5/12 step-image">
-                  <div className="relative rounded-lg overflow-hidden aspect-video border border-primary/30 group shadow-xl shadow-primary/10 transform transition-transform duration-500 hover:scale-[1.02]">
+                  <div className="relative rounded-lg overflow-hidden aspect-video  group shadow-xl shadow-primary/10 transform transition-transform duration-500 hover:scale-[1.02]">
                     <img 
-                      src={step.image} 
+                      src={"https://www.gamingonavax.com/_astro/footer-bg.NGAfjhUO_ZmubwI.webp"} 
                       alt={t(`proPath.steps.${step.id}.title`, step.title)}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
@@ -469,9 +443,9 @@ const ProPath = () => {
                     />
                     
                     {/* Étiquette de l'étape */}
-                    <div className="absolute top-0 left-0 bg-primary/90 text-black py-1 px-3 flex items-center gap-1.5 rounded-br-lg">
+                    <div className="absolute top-0 left-0 bg-primary/90  text-black py-1 px-3 flex items-center gap-1.5 rounded-br-lg">
                       <div className="step-icon">{step.icon}</div>
-                      <span className={`font-bold uppercase text-sm tracking-wider ${getTextClass()}`}>
+                      <span className={` uppercase font-zentry text-sm tracking-wider ${getTextClass()}`}>
                         {t(`proPath.steps.${step.id}.label`, step.id)}
                       </span>
                     </div>
@@ -486,11 +460,11 @@ const ProPath = () => {
                 
                 {/* Contenu de l'étape */}
                 <div className="w-full md:w-7/12 bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-primary/20 shadow-lg">
-                  <h3 className={`step-title text-2xl font-nightWarrior text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
+                  <h3 className={`step-title text-2xl font-zentry text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
                     {t(`proPath.steps.${step.id}.title`, step.title)}
                   </h3>
                   
-                  <p className={`step-description text-white/80 mb-5 ${getTextClass()}`}>
+                  <p className={`step-description font-general tracking-tighter text-white/80 mb-5`}>
                     {t(`proPath.steps.${step.id}.description`, step.description)}
                   </p>
                   
@@ -501,7 +475,7 @@ const ProPath = () => {
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                       {step.features.map((feature, idx) => (
-                        <div key={idx} className="feature-item flex items-center gap-2">
+                        <div key={idx} className="feature-item flex items-center gap-2 ">
                           <Star size={15} className="text-primary flex-shrink-0" />
                           <span className={`text-white/90 text-sm ${getTextClass()}`}>
                             {t(`proPath.steps.${step.id}.features.${idx}`, feature)}
@@ -530,40 +504,40 @@ const ProPath = () => {
         </div>
         
         {/* Section statistiques */}
-        <div className="mt-24 bg-primary/5 backdrop-blur-sm rounded-2xl border border-primary/20 p-8">
-          <h3 className={`text-center text-2xl font-nightWarrior text-primary mb-8 ${language === 'tz' ? 'tamazight-text' : ''}`}>
+        <div className="mt-24 bg-primary/5 backdrop-blur-sm rounded-2xl   p-8">
+          <h3 className={`text-center text-2xl tracking-wider break-all special-font text-primary mb-8 ${language === 'tz' ? 'tamazight-text' : ''}`}>
             {t('proPath.statsTitle', "L'engagement du Ministère pour l'Esport Marocain")}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div className="p-4">
-              <div className={`text-4xl font-bold text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>12</div>
-              <div className={`text-primary font-medium mb-1 ${getTextClass()}`}>{t('proPath.stats.regions', "Régions couvertes")}</div>
+              <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>12</div>
+              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.regions', "Régions couvertes")}</div>
               <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.regionsDesc', "Tournois qualificatifs dans tout le Royaume")}</p>
             </div>
             
             <div className="p-4">
-              <div className={`text-4xl font-bold text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>4</div>
-              <div className={`text-primary font-medium mb-1 ${getTextClass()}`}>{t('proPath.stats.games', "Jeux officiels")}</div>
+              <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>4</div>
+              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.games', "Jeux officiels")}</div>
               <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.gamesDesc', "Diversité des disciplines esportives")}</p>
             </div>
             
             <div className="p-4">
-              <div className={`text-4xl font-bold text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>400+</div>
-              <div className={`text-primary font-medium mb-1 ${getTextClass()}`}>{t('proPath.stats.players', "Joueurs participants")}</div>
+              <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>400+</div>
+              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.players', "Joueurs participants")}</div>
               <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.playersDesc', "À la première saison nationale")}</p>
             </div>
             
             <div className="p-4">
-              <div className={`text-4xl font-bold text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>1</div>
-              <div className={`text-primary font-medium mb-1 ${getTextClass()}`}>{t('proPath.stats.finale', "Grande finale LAN")}</div>
+              <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>1</div>
+              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.finale', "Grande finale LAN")}</div>
               <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.finaleDesc', "Événement national annuel")}</p>
             </div>
           </div>
         </div>
         
         {/* Section Nouvelle Saison Mars 2025 - Redesign complet */}
-        <div className="mt-16 relative overflow-hidden">
+        {/* <div className="mt-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
             <div className="bg-black/40 backdrop-blur-md p-8 rounded-xl border border-primary/30 shadow-xl">
@@ -644,103 +618,10 @@ const ProPath = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         
         {/* Nouvelle section Documentation */}
-        <div 
-          className="mt-20 p-8 rounded-xl bg-gradient-to-r from-[#111122] to-[#0a0a14] border border-primary/20 shadow-lg relative z-20 hover:shadow-xl hover:border-primary/30 transition-all duration-300 documentation-section"
-          style={{ position: 'relative', isolation: 'isolate' }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Couche d'isolation pour garantir l'interactivité */}
-          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: -1 }}></div>
-          
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <h3 className={`text-2xl font-nightWarrior text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
-                {t('proPath.docs.title', "Documentation complète")}
-              </h3>
-              
-              <p className={`text-white/80 max-w-xl ${getTextClass()}`}>
-                {t('proPath.docs.description', "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme GAMIUS.")}
-              </p>
-              
-              <div className="mt-6 flex flex-wrap gap-3 z-10 relative">
-                <Link
-                  to="/downloads"
-                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-black font-bold py-2.5 px-5 rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer active:scale-95 group relative overflow-hidden"
-                  style={{ zIndex: 30 }}
-                  onClick={(e) => {
-                    // Garantit que le clic fonctionne même en cas d'overlay
-                    e.stopPropagation();
-                    window.location.href = "/downloads";
-                  }}
-                >
-                  <div className="absolute inset-0 bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <span className={`${getTextClass()} relative z-10`}>Accéder à la documentation</span>
-                  <FileText size={16} className="relative z-10" />
-                </Link>
-                
-                <a
-                  href="https://docs.moroccogamingexpo.ma"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-transparent hover:bg-white/5 text-primary py-2.5 px-5 rounded-lg transition-all duration-300 border border-primary/30 hover:scale-105 cursor-pointer active:scale-95 group relative overflow-hidden"
-                  style={{ zIndex: 30 }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <span className={`${getTextClass()} relative z-10`}>Documentation en ligne</span>
-                  <ExternalLink size={16} className="relative z-10" />
-                </a>
-              </div>
-            </div>
-            
-            <div className="w-full md:w-auto z-10 relative">
-              <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto">
-                <Link
-                  to="/downloads?filter=rules"
-                  className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center hover:bg-white/10 transition-all duration-300 hover:border-primary/30 hover:scale-105 cursor-pointer active:scale-95 relative overflow-hidden group"
-                  style={{ zIndex: 30 }}
-                >
-                  <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <FileText size={24} className="text-primary mb-2 relative z-10" />
-                  <span className={`text-white text-sm ${getTextClass()} relative z-10`}>Règlements</span>
-                </Link>
-                
-                <Link
-                  to="/downloads?filter=guides"
-                  className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center hover:bg-white/10 transition-all duration-300 hover:border-primary/30 hover:scale-105 cursor-pointer active:scale-95 relative overflow-hidden group"
-                  style={{ zIndex: 30 }}
-                >
-                  <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <Gamepad size={24} className="text-primary mb-2 relative z-10" />
-                  <span className={`text-white text-sm ${getTextClass()} relative z-10`}>Guides</span>
-                </Link>
-                
-                <Link
-                  to="/downloads?filter=calendar"
-                  className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center hover:bg-white/10 transition-all duration-300 hover:border-primary/30 hover:scale-105 cursor-pointer active:scale-95 relative overflow-hidden group"
-                  style={{ zIndex: 30 }}
-                >
-                  <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <Calendar size={24} className="text-primary mb-2 relative z-10" />
-                  <span className={`text-white text-sm ${getTextClass()} relative z-10`}>Calendrier</span>
-                </Link>
-                
-                <Link
-                  to="/downloads?filter=media"
-                  className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center hover:bg-white/10 transition-all duration-300 hover:border-primary/30 hover:scale-105 cursor-pointer active:scale-95 relative overflow-hidden group"
-                  style={{ zIndex: 30 }}
-                >
-                  <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-lg"></div>
-                  <Image size={24} className="text-primary mb-2 relative z-10" />
-                  <span className={`text-white text-sm ${getTextClass()} relative z-10`}>Médias</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
