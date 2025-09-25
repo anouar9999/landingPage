@@ -309,7 +309,7 @@ function MainPage() {
       <Hero />
       
       {/* Section À propos */}
-      <About />
+      {/* <About /> */}
       
       {/* Publicité en ligne entre les sections */}
       {/* <div className="container mx-auto px-4">
@@ -337,7 +337,7 @@ function MainPage() {
       <div id="PassGamers">
         <PassGamers />
       </div>
-      <OrganizerBanner/>
+      {/* <OrganizerBanner/> */}
       {/* Section FAQ */}
       <div id="faq">
         <FAQ />

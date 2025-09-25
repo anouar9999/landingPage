@@ -1,8 +1,7 @@
-import { t } from "i18next";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
-import LanguageContext from "../contexts/LanguageContext";
-import FrenchTitle from "./FrenchTitle";
 import useTranslation from "../hooks/useTranslation";
+import FrenchTitle from "./FrenchTitle";
+import AnimatedTitle from "./AnimatedTitle";
 
 const BentoTilt = forwardRef(({ children, className = "" }, ref) => {
   const [transformStyle, setTransformStyle] = useState("");
@@ -61,18 +60,8 @@ const ProvidenceGameShowcase = () => {
   const cursorRef = useRef(null);
 const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
     useTranslation();
-  // Mock translation function
-  // const t = (key) => {
-  //   const translations = {
-  //     'tri9lGlory.steps.step2': 'Participate in online qualifiers and show your skills against other players.',
-  //     'tri9lGlory.steps.step3': 'The best players will advance to the finals and have a chance to become champions.'
-  //   };
-  //   return translations[key] || key;
-  // };
-
-  // Initialize particles effect from GamingBanner
+  // Initialize particles effect
   useEffect(() => {
-    // Generate particles
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -83,7 +72,6 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
     }));
     setParticles(newParticles);
 
-    // Animate particles
     const interval = setInterval(() => {
       setParticles((prev) =>
         prev.map((particle) => ({
@@ -112,7 +100,6 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
       setCursorVisible(false);
     };
 
-    // Add listeners for interactive elements
     const interactiveElements = document.querySelectorAll('.interactive-element');
     interactiveElements.forEach(element => {
       element.addEventListener('mouseenter', handleMouseEnter);
@@ -139,7 +126,6 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
     }
   }, [mousePosition]);
 
-  // Handle mouse move for mouse position tracking (for potential glow effect)
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePosition({
@@ -148,12 +134,37 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
     });
   };
 
+  // Game step images - Replace these URLs with your actual images
+  const stepImages = {
+    step1: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/669ab245885641d086a7e3c7_hunt-1%20v2-p-800.png", // Gaming characters
+    step2: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/669ab25004a941d461ff9089_hunt-2%20v2-p-800.png", // Gaming action/battle
+    step3: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/64a7c90179edf8c8c14d7750_IMG%20(5)-p-800.webp", // Rewards/treasure
+  };
+
+  const StepImage = ({ src, alt, className }) => (
+    <div className={`relative overflow-hidden rounded-xl ${className}`}>
+      <img 
+        src={src} 
+        alt={alt}
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+      {/* Floating gaming elements overlay */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-4 right-4 w-3 h-3 bg-yellow-400 rounded-full opacity-80 animate-pulse"></div>
+        <div className="absolute bottom-4 left-4 w-2 h-2 bg-red-500 rounded-full opacity-60 animate-bounce"></div>
+        <div className="absolute top-1/2 left-1/2 w-1 h-8 bg-gradient-to-b from-transparent via-white to-transparent opacity-30 transform -translate-x-1/2 -translate-y-1/2"></div>
+      </div>
+    </div>
+  );
+
   return (
     <div 
       className="relative w-full min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 overflow-hidden cursor-crosshair"
       onMouseMove={handleMouseMove}
     >
-      {/* Animated particles background from GamingBanner */}
+      {/* Animated particles background */}
       <div className="absolute inset-0">
         {particles.map((particle) => (
           <div
@@ -198,74 +209,115 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col lg:flex-row min-h-screen">
-        {/* Left Side - Game Information */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header Section */}
         <div className="flex-1 flex flex-col justify-center px-8 lg:px-16 py-12">
           {/* Small Title */}
-          <div className="mb-8">
-            {/* <p className="text-gray-400 text-sm tracking-widest uppercase mb-2">
-              FEATURED GAMES
-            </p> */}
-            <div className="w-12 h-px bg-red-500"></div>
+          <div className="mb-8 text-center">
+            <div className="w-12 h-px bg-red-500 mx-auto"></div>
           </div>
+ {language === 'fr' ? (
+              <FrenchTitle
+                className=" !special-font hero-heading text-primary  text-center text-5xl sm:text-6xl md:text-[7rem] lg:text-[9rem] xl:text-7xl"
+                textKey="tri9lGlory.title"
 
+                as="div"
+               
+              />
+            ) : (
+               <AnimatedTitle
+          title={t('tri9lGlory.title', "Nouvelle Voie vers les Pros")}
+          containerClass=" text-center !text-primary"
+        />
+            
+            )}
           {/* Main Title */}
-          <h1 className="special-font  upp text-6xl lg:text-8xl font-black text-white mb-6 tracking-tight">
-            {
-              language === 'fr' ? (
-                <FrenchTitle textKey="tri9lGlory.title" className="text-6xl lg:text-8xl font-black text-white mb-6 tracking-tight" as="div" />
-              ):(
-                t('tri9lGlory.title')
-              )
-            }
+          <h1 className="text-6xl lg:text-8xl font-black text-white  tracking-tight text-center">
+          
           </h1>
 
           {/* Description */}
-          <p className="text-gray-200  text-sm text-start  font-circular-web lg:text-lg xl:text-xl max-w-xl mb-1 lg:mb-2 leading-relaxed line-clamp-2">
-            {t('tri9lGlory.description')}
-            </p>
+          <p className="text-gray-200 font-circular-web text-lg xl:text-xl max-w-3xl mx-auto mb-16 leading-relaxed text-center">
+            {t("tri9lGlory.description")}
+          </p>
+        </div>
 
-          {/* Game Details - BentoTilt Cards */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-8 my-12">
-            <BentoTilt className="w-full md:w-1/3 transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg  hover:border-red-500 transition-colors duration-300">
-                <span className="mb-3 md:mb-4 block font-zentry text-4xl md:text-5xl font-black text-red-500">
-                  01
-                </span>
-                <h3 className="text-white text-xl font-bold mb-2">{t('tri9lGlory.steps.step1Title')}</h3>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-  {t('tri9lGlory.steps.step1')}                </p>
+        {/* Visual Steps Section */}
+        <div className="px-8 lg:px-16 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {/* Step 1 */}
+            <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
+              <div className="group relative backdrop-blur-lg   rounded-2xl overflow-hidden hover:border-red-500 transition-all duration-300">
+                <div className="relative h-64 mb-6">
+                  <StepImage 
+                    src={stepImages.step1} 
+                    alt="Gaming characters choosing stakes"
+                    className="w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-white text-3xl font-zentry mb-4 flex items-center justify-evenly"><div className=" z-10">
+                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">01</span>
+                </div> {t("tri9lGlory.steps.step1Title")}</h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
+                  {t("tri9lGlory.steps.step1")}
+                  </p>
+                </div>
+                
               </div>
             </BentoTilt>
 
-            <BentoTilt className="w-full md:w-1/3 transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg  hover:border-red-500 transition-colors duration-300">
-                <span className="mb-3 md:mb-4 block font-zentry text-4xl md:text-5xl font-black text-red-500">
-                  02
-                </span>
-                <h3 className="text-white text-xl font-bold mb-2">{t('tri9lGlory.steps.step2Title')}</h3>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                  {t('tri9lGlory.steps.step2')}
-                </p>
+            {/* Step 2 */}
+            <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
+              <div className="group relative backdrop-blur-lg rounded-2xl overflow-hidden hover:border-red-500  transition-all duration-300">
+                <div className="relative h-64 mb-6">
+                  <StepImage 
+                    src={stepImages.step2} 
+                    alt="Gaming battle and skill demonstration"
+                    className="w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className=" z-10">
+                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">02</span>
+                </div>{t("tri9lGlory.steps.step2Title")}</h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
+                  {t("tri9lGlory.steps.step2")}
+                    </p>
+                </div>
+                
               </div>
             </BentoTilt>
 
-            <BentoTilt className="w-full md:w-1/3 transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg hover:border-red-500 transition-colors duration-300">
-                <span className="mb-3 md:mb-4 font-zentry block text-4xl md:text-5xl font-black text-red-500">
-                  03
-                </span>
-                <h3 className="text-white text-xl font-bold mb-2">{t('tri9lGlory.steps.step3Title')}</h3>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                  {t('tri9lGlory.steps.step3')}
-                </p>
+            {/* Step 3 */}
+            <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
+              <div className="group relative backdrop-blur-lgrounded-2xl overflow-hidden hover:border-red-500  transition-all duration-300">
+                <div className="relative h-64 mb-6">
+                  <StepImage 
+                    src={stepImages.step3} 
+                    alt="Gaming rewards and treasure"
+                    className="w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                </div>
+                <div className="p-6 text-center ">
+                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className="z-10">
+                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">03</span>
+                </div>{t("tri9lGlory.steps.step3Title")}</h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
+                  {t("tri9lGlory.steps.step3")}
+                  </p>
+                </div>
+                
               </div>
             </BentoTilt>
           </div>
         </div>
       </div>
 
-      {/* Background decorative elements from GamingBanner */}
+      {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-10">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 border border-yellow-400 rounded-full" />
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 border border-orange-500 rounded-full" />

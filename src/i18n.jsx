@@ -26,7 +26,10 @@ const resources = {
           part3: "Dive into the action, join a community of champions",
           part4: "and forge your own story. The game starts now!",
         },
-        bottomTitle: "Where legends are born.",
+        bottomTitle: {
+          part1: "Where legends",
+          part2: "are born.",
+        },
         getStarted: "Get Started",
         playNow: "PLAY NOW",
       },
@@ -40,9 +43,9 @@ const resources = {
           step2Title: "CHALLENGER",
           step3Title: "CHAMPION",
           step1:
-            " SIGN UP: Create your player profile in seconds. Joining the arena is fast, easy, and free!",
+            "SIGN UP: Create your player profile in seconds. Joining the arena is fast, easy, and free!",
           step2:
-            " COMPETE: Jump into online qualifiers. Prove your skills and dominate the leaderboard against the community.",
+            "COMPETE: Jump into online qualifiers. Prove your skills and dominate the leaderboard against the community.",
           step3:
             "RISE: Crush the qualifiers to reach the grand finals. Seize your chance to become a legend.",
         },
@@ -215,22 +218,46 @@ const resources = {
           title: "REGIONAL QUALIFIERS",
           description:
             "Represent your city, dominate your region! The competition starts right at your doorstep. Battle the best local players and secure your spot on the national stage.",
+          competitionFormat: {
+            title: "Competition Format",
+            format: "Double elimination system",
+            groups: "Groups of 8 to 16 participants",
+            type: "In-person and online qualifiers",
+          },
         },
         nationalChampionships: {
           title: "NATIONAL CHAMPIONSHIPS",
           description:
             "You've conquered your region. Now, the nation is watching. Wear your colors with pride and battle the national elite for the ultimate champion title.",
+          competitionFormat: {
+            title: "Competition Format",
+            format: "Championship system competition",
+            points: "Seasonal points system",
+            coverage: "National media coverage",
+          },
         },
         eliteLeague: {
           title: "MOROCCAN ELITE LEAGUE",
           description:
             "Welcome to the summit. This is where champions become legends. Face the absolute elite of Morocco and prepare to shine on the international stage.",
           link: "Discover the league ↗",
+          competitionFormat: {
+            title: "Competition Format",
+            training: "Professional technical coaching",
+            coverage: "Complete media support",
+            format: "League system with elimination phases",
+          },
         },
         grandFinal: {
           title: "GRAND NATIONAL LAN FINAL",
           description:
             "This is where history is made! After dominating the qualifiers, face the best on stage, in front of an electrified crowd and under the media spotlight. Become the champion you're destined to be.",
+          competitionFormat: {
+            title: "Competition Format",
+            format: "Live finals on stage",
+            prizes: "Official prizes and recognition",
+            broadcast: "Television broadcast and streaming platforms",
+          },
         },
         newSeason: {
           title: "MARCH 2026: LAUNCH OF THE NEW GAMIUS SEASON",
@@ -269,13 +296,119 @@ const resources = {
           },
         },
       },
+      // Complete Documentation section
+      completeDocumentation: {
+        title: "COMPLETE DOCUMENTATION",
+        description:
+          "Everything you need to master the competition is right here. Download the regulations, guides, and all official GAMIUS resources to prepare for your victory.",
+        buttons: {
+          download: "Download Resources 📄",
+          viewOnline: "View Online ↗",
+        },
+      },
+      faq: {
+        title: "Frequently Asked Questions",
+        subtitle:
+          "Get quick answers to your questions about GAMIUS tournaments and participation",
+        searchPlaceholder: "Search for a question...",
+        noResults: 'No results found for "{searchTerm}"',
+        tryAgain: "Try another term or browse all questions below",
+        resultsCount:
+          '{count} {count, plural, one {result} other {results}} for "{searchTerm}"',
+        category: "Category",
+        noAnswerFound: "Didn't find the answer to your question?",
+        contactUs: "Contact us directly",
+        categories: {
+          registration: {
+            title: "Registration & Account",
+            questions: {
+              0: {
+                question: "How can I register for Gamius tournaments?",
+                answer:
+                  'Registration is simple! Create an account on our platform, complete your player profile, and then you can sign up for your region\'s qualifiers directly from the "Tournaments" page.',
+              },
+              1: {
+                question: "Is registration free?",
+                answer:
+                  "Yes, creating your account and participating in standard qualifiers is 100% free. Our goal is to make competition accessible to all Moroccan talents.",
+              },
+              2: {
+                question: "What is the Gamius Pass and how do I get it?",
+                answer:
+                  "The Gamius Pass is your free VIP access to exclusive benefits like early access to tournaments and offers from our partners. You can activate it instantly from your dashboard once your profile is complete.",
+              },
+            },
+          },
+          format: {
+            title: "Competition Format",
+            questions: {
+              0: {
+                question: "How does the competitive circuit work?",
+                answer:
+                  "The circuit is a progressive journey: you start with the qualifiers in your region. If you stand out, you advance to the national championships, then to the Elite League, with the ultimate goal being the Grand National LAN Final.",
+              },
+              1: {
+                question: "What types of game formats are used?",
+                answer:
+                  "We use standard competitive formats to ensure fairness. This includes group stages and double-elimination brackets for qualifiers, and a seasonal league system for the national championships.",
+              },
+              2: {
+                question: "How do I qualify for the next stage?",
+                answer:
+                  "Qualification is based on your performance. In the early stages, you must finish at the top of your tournament's bracket. For the championships, a seasonal points system determines who moves forward.",
+              },
+            },
+          },
+          rules: {
+            title: "Rules & Conduct",
+            questions: {
+              0: {
+                question: "Where can I find the full tournament rulebook?",
+                answer:
+                  'All detailed regulations, per game and competition stage, are available in our "Download Zone." We strongly advise you to read them carefully.',
+              },
+              1: {
+                question: "What is your policy on cheating?",
+                answer:
+                  "We have a zero-tolerance policy towards cheating in any form (software, bug exploits, etc.). Any violation will result in immediate disqualification and potentially a permanent ban from our competitions.",
+              },
+              2: {
+                question: "Are there any age restrictions to participate?",
+                answer:
+                  "Yes, the minimum age to participate is generally 16, but this may vary depending on the game and its PEGI rating. Specific requirements are always listed in each tournament's rulebook.",
+              },
+            },
+          },
+          logistics: {
+            title: "Logistics & Events",
+            questions: {
+              0: {
+                question: "Are tournaments online or in-person?",
+                answer:
+                  "It's a mix of both! The initial qualifier stages are mostly online to be accessible to everyone. The regional finals and national stages are physical (LAN) events for an unforgettable experience.",
+              },
+              1: {
+                question:
+                  "Do I need to bring my own equipment (PC, controller, etc.)?",
+                answer:
+                  "For online events, you use your own setup. For LAN events, we provide the PCs and monitors. However, you are encouraged to bring your own peripherals (keyboard, mouse, controller, headset) to be as comfortable as possible.",
+              },
+              2: {
+                question: "How are prizes distributed?",
+                answer:
+                  "Cash prizes are typically distributed via bank transfer within 30 to 60 days after the competition ends. Physical prizes are awarded in person at the event's closing ceremony.",
+              },
+            },
+          },
+        },
+      },
     },
   },
   fr: {
     translation: {
       // Navigation
       nav: {
-        discover: "Découvrir",
+        discover: "Decouvrir",
         passGamers: "Pass Gamers",
         documentation: "Documentation",
         faq: "FAQ",
@@ -294,77 +427,80 @@ const resources = {
       // Hero
       hero: {
         title: "GAMIUS",
-        bottomTitle: "Là où les légendes naissent.",
-        playNow: "JOUER MAINTENANT",
         subtitle: {
-          part1: "Plonge dans l'action, ",
-          part2: "rejoins une communauté de champions ",
-          part3: "et forge ta propre histoire. ",
-          part4: "Le jeu commence maintenant !",
+          part1: "La ou les legendes naissent. ",
+          part2: "Ton arene t'attend!",
+          part3: "Plonge dans l'action, rejoins une communaute de champions ",
+          part4: "et forge ta propre histoire. Le jeu commence maintenant !",
         },
+        bottomTitle: {
+          part1: "La ou les legendes",
+          part2: "naissent.",
+        },
+        playNow: "JOUER MAINTENANT",
       },
       // tri9lGlory section
       tri9lGlory: {
         title: "LA VOIE DE LA GLOIRE",
         description:
-          "D'amateur à pro, chaque victoire te rapproche de la légende. Ton ascension commence ici.",
+          "D'amateur a pro, chaque victoire te rapproche de la legende. Ton ascension commence ici.",
         steps: {
-          step1Title: "DÉBUTANT",
+          step1Title: "DeBUTANT",
           step2Title: "CHALLENGER",
           step3Title: "CHAMPION",
           step1:
-            "INSCRIS-TOI : Crée ton profil en quelques clics. Rejoindre l'arène est simple, rapide et gratuit !",
+            "INSCRIS-TOI : Cree ton profil en quelques clics. Rejoindre l'arene est simple, rapide et gratuit !",
           step2:
-            "AFFRONTE : Plonge dans les qualifications en ligne. Montre ton skill et impose ton style face à la communauté.",
+            "AFFRONTE : Plonge dans les qualifications en ligne. Montre ton skill et impose ton style face a la communaute.",
           step3:
-            "TRIOMPHE : Qualifie-toi pour la grande finale et grave ton nom parmi les légendes. La gloire est à ta portée.",
+            "TRIOMPHE : Qualifie-toi pour la grande finale et grave ton nom parmi les legendes. La gloire est a ta portee.",
         },
       },
       // PrizePool section
       prizePool: {
         title: "PRIZE POOL",
         description:
-          "Ton talent mérite une récompense. Battez-vous pour la gloire et le butin !",
+          "Ton talent merite une recompense. Battez-vous pour la gloire et le butin !",
         totalPrizePool: "Cagnotte Totale",
-        seasonRewards: "Récompenses Officielles Saison 2025",
+        seasonRewards: "Recompenses Officielles Saison 2025",
         additionalInfo:
-          "Des prix supplémentaires peuvent être attribués tout au long de la compétition, notamment du matériel gaming, des produits dérivés et des opportunités exclusives.",
+          "Des prix supplementaires peuvent être attribues tout au long de la competition, notamment du materiel gaming, des produits derives et des opportunites exclusives.",
         places: {
-          first: "1ère Place",
-          second: "2ème Place",
-          third: "3ème Place",
+          first: "1ere Place",
+          second: "2eme Place",
+          third: "3eme Place",
         },
       },
       // About
       about: {
-        title: "Rejoins la légende !",
+        title: "Rejoins la legende !",
         subtitle:
-          "Les plus grands tournois e-sport du Maroc t'attendent. Montre ton talent, domine la compétition et vis l'aventure partagée la plus intense. Prêt à faire trembler l'arène ?",
+          "Les plus grands tournois e-sport du Maroc t'attendent. Montre ton talent, domine la competition et vis l'aventure partagee la plus intense. Prêt a faire trembler l'arene ?",
         clickPrompt: "CLIQUEZ",
         description:
-          "GAMIUS GROUP est le principal événement de jeux vidéo au Maroc, présentant les dernières technologies, des compétitions d'esport et la culture du gaming.",
+          "GAMIUS GROUP est le principal evenement de jeux video au Maroc, presentant les dernieres technologies, des competitions d'esport et la culture du gaming.",
       },
       // Features
       features: {
         title: "Ce Que Nous Offrons",
         tournaments: "Tournois",
         tournamentsDesc:
-          "Participez à des tournois à forts enjeux avec des prix incroyables",
-        community: "Communauté",
+          "Participez a des tournois a forts enjeux avec des prix incroyables",
+        community: "Communaute",
         communityDesc:
-          "Rejoignez une communauté dynamique de joueurs passionnés",
-        experience: "Expérience",
-        experienceDesc: "Découvrez les derniers jeux et technologies de pointe",
+          "Rejoignez une communaute dynamique de joueurs passionnes",
+        experience: "Experience",
+        experienceDesc: "Decouvrez les derniers jeux et technologies de pointe",
       },
       // Events
       events: {
-        title: "Événements à Venir",
-        viewAll: "Voir Tous les Événements",
+        title: "evenements a Venir",
+        viewAll: "Voir Tous les evenements",
       },
       // Footer
       footer: {
         description:
-          "GAMIUS GROUP est l'événement gaming premier au Maroc, présentant les dernières nouveautés en matière de jeux vidéo, de compétitions esport, et créant des opportunités pour les joueurs talentueux.",
+          "GAMIUS GROUP est l'evenement gaming premier au Maroc, presentant les dernieres nouveautes en matiere de jeux video, de competitions esport, et creant des opportunites pour les joueurs talentueux.",
         quickLinks: "Liens Rapides",
         links: {
           home: "Accueil",
@@ -374,9 +510,9 @@ const resources = {
         },
         followUs: "Suivez-nous",
         sponsoredBy: "Sous le patronage du",
-        copyright: "© {year} GAMIUS GROUP. Tous droits réservés.",
+        copyright: "© {year} GAMIUS GROUP. Tous droits reserves.",
         legal: {
-          privacy: "Politique de Confidentialité",
+          privacy: "Politique de Confidentialite",
           terms: "Conditions d'Utilisation",
         },
         dashboard: "Espace Utilisateur",
@@ -385,82 +521,82 @@ const resources = {
       passGamers: {
         title: "PASS GAMIUS",
         subtitle:
-          "Ton accès VIP à l'univers GAMIUS. Rejoins le club des joueurs privilégiés et débloque : Accès anticipé aux tournois, Récompenses uniques, Offres de nos marques partenaires 🚀",
+          "Ton acces VIP a l'univers GAMIUS. Rejoins le club des joueurs privilegies et debloque : Acces anticipe aux tournois, Recompenses uniques, Offres de nos marques partenaires 🚀",
         officialInitiative: "100% GRATUIT & EXCLUSIF",
         howItWorks: "Comment obtenir ton Pass Gamius",
         step1: "S'inscrire",
-        step1Desc: "Crée ton compte GAMIUS et finalise ton profil de joueur.",
+        step1Desc: "Cree ton compte GAMIUS et finalise ton profil de joueur.",
         step2: "Activer",
         step2Desc:
-          "Active ton Pass gratuitement depuis ton tableau de bord. C'est instantané !",
+          "Active ton Pass gratuitement depuis ton tableau de bord. C'est instantane !",
         step3: "Profiter",
         step3Desc:
-          "Explore tes avantages et prépare-toi pour la prochaine compétition.",
-        selectPlan: "Sélectionnez votre formule",
+          "Explore tes avantages et prepare-toi pour la prochaine competition.",
+        selectPlan: "Selectionnez votre formule",
         monthlyPlan: "Mensuel",
         quarterlyPlan: "Trimestriel",
         annualPlan: "Annuel",
         advantages: "Avantages du Pass",
-        recommended: "RECOMMANDÉ",
+        recommended: "RECOMMANDe",
         choose: "Choisir",
-        selected: "Sélectionné:",
+        selected: "Selectionne:",
         noCommitment: "Sans engagement",
         quarterlyCommitment: "Engagement 3 mois",
         annualCommitment: "Engagement annuel",
         passActive:
-          "Votre pass devient actif immédiatement après l'inscription",
+          "Votre pass devient actif immediatement apres l'inscription",
         securePayment:
-          "Paiement sécurisé et conditions d'utilisation conformes aux directives ministérielles",
+          "Paiement securise et conditions d'utilisation conformes aux directives ministerielles",
         // Benefits
         benefits: {
           tickets: {
-            title: "Accès Anticipé",
+            title: "Acces Anticipe",
             description:
               "Inscris-toi aux tournois avant tout le monde et garantis ta place.",
           },
           offers: {
-            title: "Récompenses Uniques",
+            title: "Recompenses Uniques",
             description:
-              "Reçois du loot exclusif, des cadeaux et des tickets VIP pour les plus grands événements.",
+              "Reçois du loot exclusif, des cadeaux et des tickets VIP pour les plus grands evenements.",
           },
           status: {
             title: "Offres Partenaires",
             description:
-              "Profite de réductions exclusives de nos marques partenaires, juste pour toi.",
+              "Profite de reductions exclusives de nos marques partenaires, juste pour toi.",
           },
           community: {
             title: "Statut Premium",
             description:
-              "Affiche un badge unique sur ton profil et sois reconnu par toute la communauté.",
+              "Affiche un badge unique sur ton profil et sois reconnu par toute la communaute.",
           },
         },
       },
       // Documentation Center
       documentationCenter: {
-        title: "LES RÈGLES DU JEU",
+        title: "LES ReGLES DU JEU",
         description:
-          "Tout ce qu'il te faut pour maîtriser la compétition est ici. Prépare ta stratégie et assure ta victoire.",
+          "Tout ce qu'il te faut pour maîtriser la competition est ici. Prepare ta strategie et assure ta victoire.",
         cards: {
-          regulations: "Règlements",
-          strategyGuides: "Guides Stratégiques",
-          mediaKit: "Kit Média",
+          regulations: "Reglements",
+          strategyGuides: "Guides Strategiques",
+          mediaKit: "Kit Media",
         },
         strategyHub: {
-          title: "LE HUB STRATÉGIQUE",
+          title: "LE HUB STRATeGIQUE",
           description:
-            "Toutes les connaissances dont tu as besoin, accessibles instantanément. Explore, apprends et prépare ta prochaine victoire.",
+            "Toutes les connaissances dont tu as besoin, accessibles instantanement. Explore, apprends et prepare ta prochaine victoire.",
           subtitle:
-            "Ton guide de jeu interactif - Navigue facilement dans nos tutos, trouve les réponses à tes questions et ne manque aucune mise à jour importante du circuit GAMIUS.",
+            "Ton guide de jeu interactif - Navigue facilement dans nos tutos, trouve les reponses a tes questions et ne manque aucune mise a jour importante du circuit GAMIUS.",
           features: {
             tutorials: "Tutoriels pour maîtriser chaque aspect du jeu",
-            faq: "FAQ pour des réponses immédiates",
-            updates: "Mises à jour en temps réel",
+            faq: "FAQ pour des reponses immediates",
+            updates: "Mises a jour en temps reel",
           },
         },
         downloadZone: {
-          title: "ZONE DE TÉLÉCHARGEMENT",
+          title: "ZONE DE TeLeCHARGEMENT",
           description:
-            "Prêt à te préparer ? Télécharge ici tous les règlements, guides stratégiques et ressources officielles des tournois GAMIUS.",
+            "Prêt a te preparer ? Telecharge ici tous les reglements, guides strategiques et ressources officielles des tournois GAMIUS.",
         },
       },
       // ProPath
@@ -468,48 +604,72 @@ const resources = {
         title: "TA VOIE VERS LE PRO-GAMING",
         tagline: "LE CIRCUIT NATIONAL OFFICIEL",
         description:
-          "Le GAMIUS GROUP t'ouvre la voie vers le professionnalisme. Domine les qualifications dans ta région pour atteindre la grande finale nationale et prouver que tu es le meilleur.",
-        cta: "Débuter ton parcours pro",
+          "Le GAMIUS GROUP t'ouvre la voie vers le professionnalisme. Domine les qualifications dans ta region pour atteindre la grande finale nationale et prouver que tu es le meilleur.",
+        cta: "Debuter ton parcours pro",
         nextEvent: "Prochaines qualifications: Mars 2025",
-        supportedGames: "Jeux supportés:",
-        formatFeatures: "Format de compétition",
+        supportedGames: "Jeux supportes:",
+        formatFeatures: "Format de competition",
         learnMore: "En savoir plus",
         statsTitle: "LE CIRCUIT GAMIUS EN CHIFFRES",
         stats: {
-          regions: "12 Régions en compétition",
-          regionsDesc: "Ta chance de briller, où que tu sois.",
-          games: "4 Jeux à l'honneur",
-          gamesDesc: "Prouve ton talent sur tes jeux préférés.",
-          players: "400+ Communauté de champions",
+          regions: "12 Regions en competition",
+          regionsDesc: "Ta chance de briller, ou que tu sois.",
+          games: "4 Jeux a l'honneur",
+          gamesDesc: "Prouve ton talent sur tes jeux preferes.",
+          players: "400+ Communaute de champions",
           playersDesc: "Et l'aventure ne fait que commencer !",
           finale: "1 Destination finale",
-          finaleDesc: "Un seul événement pour sacrer le meilleur du Maroc.",
+          finaleDesc: "Un seul evenement pour sacrer le meilleur du Maroc.",
         },
         regionalQualifiers: {
-          title: "QUALIFICATIONS RÉGIONALES",
+          title: "QUALIFICATIONS ReGIONALES",
           description:
-            "Représente ta ville, domine ta région ! La compétition commence près de chez toi. Affronte les meilleurs joueurs locaux et impose-toi pour atteindre l'étape nationale.",
+            "Represente ta ville, domine ta region ! La competition commence pres de chez toi. Affronte les meilleurs joueurs locaux et impose-toi pour atteindre l'etape nationale.",
+          competitionFormat: {
+            title: "Format de Competition",
+            format: "Systeme d'elimination double",
+            groups: "Groupes de 8 a 16 participants",
+            type: "Qualifications presentielles et en ligne",
+          },
         },
         nationalChampionships: {
           title: "CHAMPIONNATS NATIONAUX",
           description:
-            "Tu as conquis ta région. Maintenant, le Maroc t'attend. Porte fièrement tes couleurs et affronte l'élite nationale pour le titre de champion suprême.",
+            "Tu as conquis ta region. Maintenant, le Maroc t'attend. Porte fierement tes couleurs et affronte l'elite nationale pour le titre de champion suprême.",
+          competitionFormat: {
+            title: "Format de Competition",
+            format: "Competition en systeme de championnat",
+            points: "Systeme de points saisonnier",
+            coverage: "Couverture mediatique nationale",
+          },
         },
         eliteLeague: {
-          title: "LIGUE ÉLITE MAROCAINE",
+          title: "LIGUE eLITE MAROCAINE",
           description:
-            "Bienvenue au sommet. Ici, les champions deviennent des légendes. Affronte l'élite absolue du Maroc et prépare-toi à briller sur la scène internationale.",
-          link: "Découvrir la ligue ↗",
+            "Bienvenue au sommet. Ici, les champions deviennent des legendes. Affronte l'elite absolue du Maroc et prepare-toi a briller sur la scene internationale.",
+          link: "Decouvrir la ligue ↗",
+          competitionFormat: {
+            title: "Format de Competition",
+            training: "Encadrement technique professionnel",
+            coverage: "Accompagnement mediatique complet",
+            format: "Systeme de ligue avec phases eliminatoires",
+          },
         },
         grandFinal: {
           title: "GRANDE FINALE LAN NATIONALE",
           description:
-            "C'est ici que l'histoire s'écrit ! Après avoir dominé les qualifications, affronte les meilleurs sur scène, devant un public enflammé et sous les projecteurs des médias. Deviens le champion que tu es destiné à être.",
+            "C'est ici que l'histoire s'ecrit ! Apres avoir domine les qualifications, affronte les meilleurs sur scene, devant un public enflamme et sous les projecteurs des medias. Deviens le champion que tu es destine a être.",
+          competitionFormat: {
+            title: "Format de Competition",
+            format: "Finales presentielles sur scene",
+            prizes: "Prix et reconnaissance officielle",
+            broadcast: "Diffusion televisee et plateformes de streaming",
+          },
         },
         newSeason: {
           title: "MARS 2026 : LANCEMENT DE LA NOUVELLE SAISON GAMIUS",
           description:
-            "La compétition GAMIUS passe au niveau supérieur ! Attends-toi à des formats inédits, des prix encore plus importants et un parcours professionnel structuré pour t'aider à devenir une légende marocaine de l'e-sport.",
+            "La competition GAMIUS passe au niveau superieur ! Attends-toi a des formats inedits, des prix encore plus importants et un parcours professionnel structure pour t'aider a devenir une legende marocaine de l'e-sport.",
         },
       },
       // Join The Adventure section
@@ -518,9 +678,9 @@ const resources = {
         steps: {
           step1: {
             number: "01",
-            title: "DÉBUTANT",
+            title: "DeBUTANT",
             action: "INSCRIVEZ-VOUS",
-            description: "Créez votre compte sur notre plateforme officielle.",
+            description: "Creez votre compte sur notre plateforme officielle.",
             detail: "C'est rapide, facile et gratuit !",
           },
           step2: {
@@ -528,14 +688,122 @@ const resources = {
             title: "CHALLENGER",
             action: "PARTICIPEZ",
             description: "Participez aux tournois et qualifications.",
-            detail: "Montrez vos compétences !",
+            detail: "Montrez vos competences !",
           },
           step3: {
             number: "03",
             title: "CHAMPION",
-            action: "ÉVOLUEZ",
-            description: "Accédez aux finales et devenez champion.",
+            action: "eVOLUEZ",
+            description: "Accedez aux finales et devenez champion.",
             detail: "La gloire vous attend !",
+          },
+        },
+      },
+      // Complete Documentation section
+      completeDocumentation: {
+        title: "DOCUMENTATION COMPLeTE",
+        description:
+          "Toutes les infos pour maîtriser la competition sont ici. Telecharge les reglements, les guides et toutes les ressources GAMIUS pour preparer ta victoire.",
+        buttons: {
+          download: "Telecharger les ressources 📄",
+          viewOnline: "Consulter en ligne ↗",
+        },
+      },
+      faq: {
+        title: "Foire Aux Questions",
+        subtitle:
+          "Obtenez des reponses rapides a vos questions sur les tournois GAMIUS et la participation",
+        searchPlaceholder: "Rechercher une question...",
+        noResults: 'Aucun resultat trouve pour "{searchTerm}"',
+        tryAgain:
+          "Essayez un autre terme ou parcourez toutes les questions ci-dessous",
+        resultsCount:
+          '{count} {count, plural, one {resultat} other {resultats}} pour "{searchTerm}"',
+        category: "Categorie",
+        noAnswerFound: "Vous n'avez pas trouve la reponse a votre question ?",
+        contactUs: "Contactez-nous directement",
+        categories: {
+          registration: {
+            title: "Inscription & Compte",
+            questions: {
+              0: {
+                question: "Comment puis-je m'inscrire aux tournois Gamius ?",
+                answer:
+                  "L'inscription est simple ! Cree un compte sur notre plateforme, complete ton profil de joueur, et tu pourras ensuite t'inscrire aux qualifications de ta region directement depuis la page \"Tournois\".",
+              },
+              1: {
+                question: "L'inscription est-elle gratuite ?",
+                answer:
+                  "Oui, la creation de ton compte et la participation aux qualifications standards sont 100% gratuites. Notre objectif est de rendre la competition accessible a tous les talents marocains.",
+              },
+              2: {
+                question: "Qu'est-ce que le Pass Gamius et comment l'obtenir ?",
+                answer:
+                  "Le Pass Gamius est ton acces VIP gratuit a des avantages exclusifs comme l'acces anticipe aux tournois et des offres de nos partenaires. Tu peux l'activer instantanement depuis ton tableau de bord une fois ton profil complete.",
+              },
+            },
+          },
+          format: {
+            title: "Format de la Competition",
+            questions: {
+              0: {
+                question: "Comment fonctionne le circuit competitif ?",
+                answer:
+                  "Le circuit est un parcours progressif : tu commences par les qualifications dans ta region. Si tu te distingues, tu accedes aux championnats nationaux, puis a la Ligue elite, avec pour objectif final la Grande Finale LAN Nationale.",
+              },
+              1: {
+                question: "Quels types de formats de jeu sont utilises ?",
+                answer:
+                  "Nous utilisons des formats competitifs standards pour garantir l'equite. Cela inclut des phases de groupes et des brackets a double elimination pour les qualifications, et un systeme de ligue saisonnier pour les championnats nationaux.",
+              },
+              2: {
+                question: "Comment se qualifier pour l'etape suivante ?",
+                answer:
+                  "La qualification depend de tes performances. Dans les premieres etapes, tu dois finir en haut du classement de ton tournoi. Pour les championnats, un systeme de points saisonnier determine qui avance.",
+              },
+            },
+          },
+          rules: {
+            title: "Regles et Conduite",
+            questions: {
+              0: {
+                question:
+                  "Ou puis-je trouver le reglement complet des tournois ?",
+                answer:
+                  'Tous les reglements detailles, par jeu et par etape de la competition, sont disponibles dans notre "Zone de Telechargement". Nous te conseillons de les lire attentivement.',
+              },
+              1: {
+                question: "Quelle est votre politique sur la triche ?",
+                answer:
+                  "Nous avons une politique de tolerance zero envers la triche sous toutes ses formes (logiciels, exploitation de bugs, etc.). Toute infraction entraînera une disqualification immediate et potentiellement un bannissement permanent de nos competitions.",
+              },
+              2: {
+                question: "Y a-t-il des restrictions d'âge pour participer ?",
+                answer:
+                  "Oui, l'âge minimum pour participer est generalement de 16 ans, mais cela peut varier selon le jeu et ses restrictions PEGI. Les conditions specifiques sont toujours indiquees dans le reglement de chaque tournoi.",
+              },
+            },
+          },
+          logistics: {
+            title: "Logistique et evenements",
+            questions: {
+              0: {
+                question: "Les tournois sont-ils en ligne ou en personne ?",
+                answer:
+                  "C'est un melange des deux ! Les premieres phases de qualification se deroulent principalement en ligne pour être accessibles a tous. Les finales regionales et les etapes nationales sont des evenements physiques (LAN) pour une experience inoubliable.",
+              },
+              1: {
+                question:
+                  "Dois-je apporter mon propre equipement (PC, manette, etc.) ?",
+                answer:
+                  "Pour les evenements en ligne, tu utilises ton propre materiel. Pour les evenements LAN, nous fournissons les PC et les ecrans. Cependant, tu es encourage a apporter tes propres peripheriques (clavier, souris, manette, casque) pour être le plus a l'aise possible.",
+              },
+              2: {
+                question: "Comment les prix sont-ils distribues ?",
+                answer:
+                  "Les prix en argent (cashprizes) sont generalement distribues par virement bancaire dans les 30 a 60 jours suivant la fin de la competition. Les prix materiels sont remis en main propre lors de la ceremonie de clôture de l'evenement.",
+              },
+            },
           },
         },
       },
@@ -570,7 +838,10 @@ const resources = {
           part3: "انغمس في الإثارة، انضم إلى مجتمع الأبطال ",
           part4: "واصنع قصتك الخاصة. اللعبة تبدأ الآن!",
         },
-        bottomTitle: "حيث تولد الأساطير. حلبتك تنتظرك!",
+        bottomTitle: {
+          part1: "حيث تولد الأساطير.",
+          part2: "حلبتك تنتظرك!",
+        },
         getStarted: "ابدأ الآن",
         playNow: "العب الآن",
       },
@@ -584,11 +855,11 @@ const resources = {
           step2Title: "متحدٍ",
           step3Title: "بطل",
           step1:
-            "  - سجّل: أنشئ ملفك كلاعب في ثوانٍ. الانضمام إلى الحلبة سريع وسهل ومجاني!",
+            "سجِّل: أنشئ ملفك كلاعب في ثوانٍ. الانضمام إلى الحلبة سريع وسهل ومجاني!",
           step2:
-            " - نافس: اقتحم التصفيات عبر الإنترنت. أثبت مهاراتك وهيمن على المنافسة أمام الجميع.",
+            "نافس: اقتحم التصفيات عبر الإنترنت. أثبت مهاراتك وهيمن على المنافسة أمام الجميع.",
           step3:
-            "  - ارتقِ: اسحق التصفيات للوصل إلى النهائيات الكبرى. اغتنم فرصتك لتصبح أسطورة.",
+            "ارتقِ: اسحق التصفيات للوصول إلى النهائيات الكبرى. اغتنم فرصتك لتصبح أسطورة.",
         },
       },
       // PrizePool section
@@ -656,7 +927,7 @@ const resources = {
         step1: "التسجيل",
         step1Desc: "أنشئ حسابك على GAMIUS وأكمل ملفك الشخصي كلاعب.",
         step2: "التفعيل",
-        step2Desc: "فعّل بطاقتك مجاناً من لوحة التحكم الخاصة بك. الأمر فوري!",
+        step2Desc: "فعِّل بطاقتك مجاناً من لوحة التحكم الخاصة بك. الأمر فوري!",
         step3: "الاستمتاع",
         step3Desc: "اكتشف مزاياك واستعد للمنافسة القادمة.",
         selectPlan: "اختر خطتك",
@@ -675,7 +946,7 @@ const resources = {
         benefits: {
           tickets: {
             title: "وصول مبكر",
-            description: "سجّل في البطولات قبل الجميع واضمن مكانك.",
+            description: "سجِّل في البطولات قبل الجميع واضمن مكانك.",
           },
           offers: {
             title: "مكافآت حصرية",
@@ -697,7 +968,7 @@ const resources = {
       documentationCenter: {
         title: "قوانين اللعبة",
         description:
-          "كل ما تحتاجه لإتقان المنافسة موجود هنا. حضّر استراتيجيتك واضمن انتصارك.",
+          "كل ما تحتاجه لإتقان المنافسة موجود هنا. حضِّر استراتيجيتك واضمن انتصارك.",
         cards: {
           regulations: "القوانين",
           strategyGuides: "أدلة الاستراتيجيات",
@@ -711,14 +982,14 @@ const resources = {
             "دليلك التفاعلي للعبة - تصفح بسهولة دروسنا، اعثر على إجابات لأسئلتك ولا تفوت أي تحديث مهم في بطولة GAMIUS.",
           features: {
             tutorials: "دروس لإتقان كل جانب من اللعبة",
-            faq: "أسئلة مجاوبة للحصول على إجابات فورية",
+            faq: "أسئلة مجابة للحصول على إجابات فورية",
             updates: "تحديثات في الوقت الفعلي",
           },
         },
         downloadZone: {
           title: "منطقة التحميل",
           description:
-            "مستعد للتجهيز؟ حمّل من هنا كل القوانين، الأدلة الاستراتيجية والموارد الرسمية لبطولات GAMIUS.",
+            "مستعد للتجهيز؟ حمِّل من هنا كل القوانين، الأدلة الاستراتيجية والموارد الرسمية لبطولات GAMIUS.",
         },
       },
       // ProPath
@@ -726,7 +997,7 @@ const resources = {
         title: "طريقك نحو الاحتراف",
         tagline: "البطولة الوطنية الرسمية",
         description:
-          "مجموعة GAMIUS GROUP تفتح لك الطريق نحو الاحتراف. سيطر على التصفيات في منطقتك للوصل إلى النهائي الوطني الكبير وأثبت أنك الأفضل.",
+          "مجموعة GAMIUS GROUP تفتح لك الطريق نحو الاحتراف. سيطر على التصفيات في منطقتك للوصول إلى النهائي الوطني الكبير وأثبت أنك الأفضل.",
         cta: "ابدأ رحلتك المهنية",
         nextEvent: "التصفيات القادمة: مارس 2025",
         supportedGames: "الألعاب المدعومة:",
@@ -747,22 +1018,46 @@ const resources = {
           title: "التصفيات الجهوية",
           description:
             "مثّل مدينتك، سيطر على منطقتك! المنافسة تبدأ بالقرب منك. واجه أفضل اللاعبين المحليين واحجز مكانك في المرحلة الوطنية.",
+          competitionFormat: {
+            title: "نظام المنافسة",
+            format: "نظام الإقصاء المزدوج",
+            groups: "مجموعات من 8 إلى 16 مشاركاً",
+            type: "تصفيات حضورية وعبر الإنترنت",
+          },
         },
         nationalChampionships: {
           title: "البطولات الوطنية",
           description:
             "لقد سيطرت على منطقتك. الآن، المغرب كله يترقبك. ارفع ألوانك بفخر وواجه نخبة اللاعبين على لقب البطل الأوحد.",
+          competitionFormat: {
+            title: "نظام المنافسة",
+            format: "منافسة بنظام البطولة",
+            points: "نظام نقاط موسمي",
+            coverage: "تغطية إعلامية وطنية",
+          },
         },
         eliteLeague: {
           title: "الدوري المغربي للنخبة",
           description:
             "مرحباً بك في القمة. هنا، يصبح الأبطال أساطير. واجه نخبة النخبة في المغرب واستعد للتألق على الساحة الدولية.",
           link: "اكتشف الدوري ↗",
+          competitionFormat: {
+            title: "نظام المنافسة",
+            training: "تأطير تقني محترف",
+            coverage: "مواكبة إعلامية كاملة",
+            format: "نظام دوري مع مراحل إقصائية",
+          },
         },
         grandFinal: {
           title: "النهائي الوطني الكبير (LAN)",
           description:
             "هنا تُصنع الأساطير! بعد سيطرتك على التصفيات، واجه الأفضل على المسرح، أمام جمهور متحمس وتحت أضواء الإعلام. كن البطل المقدّر له أن تكون.",
+          competitionFormat: {
+            title: "نظام المنافسة",
+            format: "نهائيات حضورية على المسرح",
+            prizes: "جوائز وتقدير رسمي",
+            broadcast: "بث تلفزيوني ومنصات البث المباشر",
+          },
         },
         newSeason: {
           title: "مارس 2026: إطلاق موسم GAMIUS الجديد",
@@ -777,7 +1072,7 @@ const resources = {
           step1: {
             number: "01",
             title: "مبتدئ",
-            action: "سجّل",
+            action: "سجِّل",
             description: "أنشئ حسابك على منصتنا الرسمية.",
             detail: "إنه سريع وسهل ومجاني!",
           },
@@ -811,15 +1106,97 @@ const resources = {
         contactUs: "اتصل بنا مباشرة",
         categories: {
           registration: {
-            title: "التسجيل في البطولات",
+            title: "التسجيل والحساب",
             questions: {
               0: {
-                question: "كيف أسجل في بطولة GAMIUS؟",
+                question: "كيف يمكنني التسجيل في بطولات Gamius؟",
                 answer:
-                  "للتسجيل في بطولة GAMIUS، قم بتسجيل الدخول إلى حسابك على المنصة، واختر البطولة التي تهتم بها، واتبع تعليمات التسجيل. تأكد من استيفاء جميع معايير الأهلية وتقديم تسجيلك قبل الموعد النهائي.",
+                  'التسجيل بسيط! أنشئ حساباً على منصتنا، أكمل ملفك الشخصي كلاعب، وبعدها يمكنك التسجيل في تصفيات منطقتك مباشرة من صفحة "البطولات".',
+              },
+              1: {
+                question: "هل التسجيل مجاني؟",
+                answer:
+                  "نعم، إنشاء حسابك والمشاركة في التصفيات العادية مجاني 100%. هدفنا هو جعل المنافسة متاحة لجميع المواهب المغربية.",
+              },
+              2: {
+                question: "ما هو Gamius Pass وكيف أحصل عليه؟",
+                answer:
+                  "Gamius Pass هو بوابتك المجانية للحصول على مزايا حصرية مثل الوصول المبكر للبطولات وعروض من شركائنا. يمكنك تفعيله فوراً من لوحة التحكم الخاصة بك بمجرد إكمال ملفك الشخصي.",
               },
             },
           },
+          format: {
+            title: "نظام المنافسة",
+            questions: {
+              0: {
+                question: "كيف تعمل الدورة التنافسية؟",
+                answer:
+                  "الدورة هي مسار تدريجي: تبدأ بالتصفيات في منطقتك. إذا تميزت، تنتقل إلى البطولات الوطنية، ثم إلى دوري النخبة، والهدف النهائي هو النهائي الوطني الكبير (LAN).",
+              },
+              1: {
+                question: "ما هي أنظمة اللعب المستخدمة؟",
+                answer:
+                  "نستخدم أنظمة تنافسية معيارية لضمان العدالة. يشمل ذلك مراحل المجموعات ونظام الإقصاء المزدوج للتصفيات، ونظام دوري موسمي للبطولات الوطنية.",
+              },
+              2: {
+                question: "كيف أتأهل للمرحلة التالية؟",
+                answer:
+                  "التأهل يعتمد على أدائك. في المراحل الأولى، يجب أن تنهي في صدارة ترتيب بطولتك. بالنسبة للبطولات، نظام نقاط موسمي يحدد من يتقدم.",
+              },
+            },
+          },
+          rules: {
+            title: "القوانين والسلوك",
+            questions: {
+              0: {
+                question:
+                  "أين يمكنني العثور على كتاب القوانين الكامل للبطولات؟",
+                answer:
+                  'جميع القوانين المفصلة، لكل لعبة ومرحلة من المنافسة، متاحة في "منطقة التحميل" الخاصة بنا. ننصحك بشدة بقراءتها بعناية.',
+              },
+              1: {
+                question: "ما هي سياستكم بشأن الغش؟",
+                answer:
+                  "لدينا سياسة عدم التسامح مطلقاً مع الغش بأي شكل من الأشكال (برامج، استغلال أخطاء اللعبة، إلخ). أي انتهاك سيؤدي إلى استبعاد فوري وقد يؤدي إلى حظر دائم من منافساتنا.",
+              },
+              2: {
+                question: "هل هناك قيود على العمر للمشاركة؟",
+                answer:
+                  "نعم، الحد الأدنى للعمر للمشاركة هو 16 عاماً عام بشكل عام، لكن هذا قد يختلف حسب اللعبة وتصنيفها (PEGI). المتطلبات المحددة مذكورة دائماً في كتاب قوانين كل بطولة.",
+              },
+            },
+          },
+          logistics: {
+            title: "الخدمات اللوجستية والفعاليات",
+            questions: {
+              0: {
+                question: "هل البطولات عبر الإنترنت أم حضورية؟",
+                answer:
+                  "هي مزيج من الاثنين! مراحل التصفيات الأولى تكون في الغالب عبر الإنترنت لتكون متاحة للجميع. النهائيات الإقليمية والمراحل الوطنية هي فعاليات حضورية (LAN) لتجربة لا تُنسى.",
+              },
+              1: {
+                question:
+                  "هل يجب أن أحضر معداتي الخاصة (كمبيوتر، وحدة تحكم، إلخ)؟",
+                answer:
+                  "للفعاليات عبر الإنترنت، تستخدم أجهزتك الخاصة. للفعاليات الحضورية (LAN)، نحن نوفر أجهزة الكمبيوتر والشاشات. ومع ذلك، نشجعك على إحضار ملحقاتك الطرفية (لوحة مفاتيح، فأرة، وحدة تحكم، سماعة رأس) لتكون مرتاحاً قدر الإمكان.",
+              },
+              2: {
+                question: "كيف يتم توزيع الجوائز؟",
+                answer:
+                  "الجوائز النقدية توزع عادة عبر التحويل البنكي في غضون 30 إلى 60 يوماً بعد انتهاء المنافسة. الجوائز المادية تُمنح شخصياً في حفل ختام الفعالية.",
+              },
+            },
+          },
+        },
+      },
+      // Complete Documentation section
+      completeDocumentation: {
+        title: "الوثائق الكاملة",
+        description:
+          "كل ما تحتاجه لإتقان المنافسة موجود هنا. حمِّل القوانين، الأدلة وجميع موارد GAMIUS الرسمية لتحضير انتصارك.",
+        buttons: {
+          download: "تحميل الموارد 📄",
+          viewOnline: "تصفح أونلاين ↗",
         },
       },
     },
@@ -829,13 +1206,13 @@ const resources = {
 // Configuration i18n
 i18n.use(initReactI18next).init({
   resources,
-  lng: localStorage.getItem("language") || "fr", // Langue par défaut
+  lng: localStorage.getItem("language") || "fr", // Langue par defaut
   fallbackLng: "fr",
   interpolation: {
-    escapeValue: false, // Pas besoin d'échapper les valeurs avec React
+    escapeValue: false, // Pas besoin d'echapper les valeurs avec React
   },
   react: {
-    useSuspense: false, // Désactiver Suspense pour éviter les erreurs
+    useSuspense: false, // Desactiver Suspense pour eviter les erreurs
   },
 });
 

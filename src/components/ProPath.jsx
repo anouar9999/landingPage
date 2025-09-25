@@ -58,50 +58,50 @@ const ProPath = () => {
   const steps = [
     {
       id: 'qualifications',
-      icon: <Target size={24} className="text-primary" />,
-      title: "Qualifications Régionales",
-      description: "Débutez votre parcours par les tournois de qualification régionaux organisés dans 12 régions du Royaume. Affrontez les meilleurs talents locaux dans un format de brackets à double élimination.",
-      image: "/img/qualifications.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
+      icon: <Target size={24} className="text-black" />,
+      title: t("proPath.regionalQualifiers.title"),
+      description: t("proPath.regionalQualifiers.description"),
+      image: "img/WhatsApp Image 2025-09-25 à 14.03.34_d922dd2a.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
       features: [
-        "Brackets à double élimination",
-        "Groupes de 8 à 16 participants",
-        "Qualifications en présentiel et en ligne"
+        t("proPath.regionalQualifiers.competitionFormat.format"),
+        t("proPath.regionalQualifiers.competitionFormat.groups"),
+        t("proPath.regionalQualifiers.competitionFormat.type"),
       ]
     },
     {
       id: 'national',
-      icon: <TrendingUp size={24} className="text-primary" />,
-      title: "Championnats Nationaux",
-      description: "Les meilleurs joueurs régionaux avancent vers les tournois nationaux où ils représentent leur région et affrontent l'élite marocaine dans un format de championnat régulier avec montées et descentes.",
-      image: "/img/national-championship.jpg",
+      icon: <TrendingUp size={24} className="text-black" />,
+      title: t("proPath.nationalChampionships.title"),
+      description: t("proPath.nationalChampionships.description"),
+      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2a03a0d6.jpg",
       features: [
-        "Compétition en format championnat",
-        "Système de points saisonnier",
-        "Couverture médiatique nationale"
+        t("proPath.nationalChampionships.competitionFormat.format"),
+        t("proPath.nationalChampionships.competitionFormat.points"),
+        t("proPath.nationalChampionships.competitionFormat.coverage"),
       ]
     },
     {
       id: 'elite',
-      icon: <Trophy size={24} className="text-primary" />,
-      title: "Ligue Élite Marocaine",
-      description: "Les champions nationaux rejoignent la Ligue Élite, où les meilleurs talents du pays s'affrontent régulièrement sous l'égide du Ministère, avec un encadrement professionnel et une visibilité internationale.",
-      image: "/img/elite-league.jpg",
+      icon: <Trophy size={24} className="text-black" />,
+      title: t("proPath.eliteLeague.title"),
+      description: t("proPath.eliteLeague.description"),
+      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_63e1c92b.jpg",
       features: [
-        "Encadrement technique professionnel",
-        "Format de ligue avec phases éliminatoires",
-        "Accompagnement médiatique complet"
+        t("proPath.eliteLeague.competitionFormat.training"),
+        t("proPath.eliteLeague.competitionFormat.coverage"),
+        t("proPath.eliteLeague.competitionFormat.format"),
       ]
     },
     {
       id: 'lan-finale',
-      icon: <Medal size={24} className="text-primary" />,
-      title: "Grande Finale LAN Nationale",
-      description: "L'apogée de la saison compétitive avec un événement LAN prestigieux où les meilleurs joueurs du pays s'affrontent sur scène devant un public, avec des commentateurs professionnels et une production TV.",
-      image: "/img/lan-finals.jpg",
+      icon: <Medal size={24} className="text-black" />,
+      title: t("proPath.grandFinal.title"),
+      description: t("proPath.grandFinal.description"),
+      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2032df42.jpg",
       features: [
-        "Finales en présentiel sur scène",
-        "Diffusion TV et plateformes streaming",
-        "Prix et reconnaissance officiels"
+      t("proPath.grandFinal.competitionFormat.format"),
+        t("proPath.grandFinal.competitionFormat.prizes"),
+        t("proPath.grandFinal.competitionFormat.broadcast"),
       ]
     }
   ];
@@ -372,14 +372,14 @@ const ProPath = () => {
         </p>
           <AnimatedTitle
           title={t('proPath.title', "Nouvelle Voie vers les Pros")}
-          containerClass=" !text-black text-center text-primary"
+          containerClass="  text-center "
         />
 
           {/* <h2 className={`pro-path-title text-4xl md:text-5xl font-nightWarrior text-primary mb-4 ${language === 'tz' ? 'tamazight-text' : ''}`}>
             {t('proPath.title', "Nouvelle Voie vers les Pros")}
           </h2> */}
           
-          <p className={`pro-path-description text-white/80 font-general text-center text-md max-w-2xl py-4 mx-auto ${getTextClass()}`}>
+          <p className={`pro-path-description text-gray-200 font-circular-web text-lg xl:text-xl max-w-3xl mx-auto mb-16 leading-relaxed text-center ${getTextClass()}  `}>
             {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurée vers le professionnalisme pour les talents esport marocains. Progressez des qualifications régionales jusqu'aux finales LAN nationales.")}
           </p>
 
@@ -432,7 +432,7 @@ const ProPath = () => {
                 <div className="w-full md:w-5/12 step-image">
                   <div className="relative rounded-lg overflow-hidden aspect-video  group shadow-xl shadow-primary/10 transform transition-transform duration-500 hover:scale-[1.02]">
                     <img 
-                      src={"https://www.gamingonavax.com/_astro/footer-bg.NGAfjhUO_ZmubwI.webp"} 
+                      src={step.image } 
                       alt={t(`proPath.steps.${step.id}.title`, step.title)}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
@@ -464,7 +464,7 @@ const ProPath = () => {
                     {t(`proPath.steps.${step.id}.title`, step.title)}
                   </h3>
                   
-                  <p className={`step-description font-general tracking-tighter text-white/80 mb-5`}>
+                  <p className={`step-description font-circular-web tracking-tighter text-white/80 mb-5`}>
                     {t(`proPath.steps.${step.id}.description`, step.description)}
                   </p>
                   
