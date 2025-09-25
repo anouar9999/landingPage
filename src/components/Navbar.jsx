@@ -550,7 +550,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                     <ArrowUpRight size={16} />
                   </div>
                 </a>
-              )} */}
+              ) */}
 
               {/* Auth section */}
               {loading ? (
@@ -644,7 +644,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
               {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className=" rounded-md text-white  transition-colors"
+              className="rounded-md text-white transition-colors lg:hidden" // Only show on mobile/tablet
               aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={isMenuOpen}
             >
