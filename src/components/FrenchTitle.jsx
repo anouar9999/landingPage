@@ -5,7 +5,8 @@ import { color } from 'framer-motion';
 const FrenchTitle = ({ 
   children, 
   textKey, 
-  descKey,
+  bottomTitleKey2,
+  bottomTitleKey1,
   className = '', 
   as: Component = 'h1',
   ...rest 
@@ -14,7 +15,7 @@ const FrenchTitle = ({
   const titleRef = useRef(null);
   
   // Définir les classes CSS spécifiques au style de titre
-  const titleClass = `${className} ${language === 'fr' ? 'french-title flex' : ''}`.trim();
+  const titleClass = `${className} ${language === 'fr' ? 'french-title flex ' : ''}`.trim();
   
   // Contenu à afficher (soit la traduction, soit les enfants directs)
   const content = textKey ? t(textKey) : children;
@@ -25,7 +26,7 @@ const FrenchTitle = ({
     whiteSpace: 'normal',
     writingMode: 'horizontal-tb',
     textOrientation: 'mixed',
-    FontFace: 'Zentry, sans-serif',
+
   };
   
   return (
@@ -41,8 +42,9 @@ const FrenchTitle = ({
      <b className='font-zentry '> {content} </b>
       <br />
 
-                    {descKey && <span className='font-zentry text-white'>{t(descKey)}</span>}
-
+                    {bottomTitleKey1 && <span className='font-zentry text-white'>{t(bottomTitleKey1)}</span>}
+<br />
+                    {bottomTitleKey2 && <span className='font-zentry text-white'>{t(bottomTitleKey2)}</span>}
     </Component>
     </>
    

@@ -146,24 +146,24 @@ const FAQ = () => {
         }
       ]
     },
-    {
-      category: t('faq.categories.prizes.title'),
-      icon: <Trophy size={20} />,
-      questions: [
-        {
-          question: t('faq.categories.prizes.questions.0.question'),
-          answer: t('faq.categories.prizes.questions.0.answer')
-        },
-        {
-          question: t('faq.categories.prizes.questions.1.question'),
-          answer: t('faq.categories.prizes.questions.1.answer')
-        },
-        {
-          question: t('faq.categories.prizes.questions.2.question'),
-          answer: t('faq.categories.prizes.questions.2.answer')
-        }
-      ]
-    },
+    // {
+    //   category: t('faq.categories.prizes.title'),
+    //   icon: <Trophy size={20} />,
+    //   questions: [
+    //     {
+    //       question: t('faq.categories.prizes.questions.0.question'),
+    //       answer: t('faq.categories.prizes.questions.0.answer')
+    //     },
+    //     {
+    //       question: t('faq.categories.prizes.questions.1.question'),
+    //       answer: t('faq.categories.prizes.questions.1.answer')
+    //     },
+    //     {
+    //       question: t('faq.categories.prizes.questions.2.question'),
+    //       answer: t('faq.categories.prizes.questions.2.answer')
+    //     }
+    //   ]
+    // },
     {
       category: t('faq.categories.rules.title'),
       icon: <Info size={20} />,
