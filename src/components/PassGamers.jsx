@@ -167,7 +167,7 @@ const PassGamers = () => {
             </p>
 
             {/* Enhanced 3D Card */}
-            {/* <div className="max-w-sm mx-auto lg:mx-0 mt-8">
+            <div className="max-w-sm mx-auto lg:mx-0 mt-8">
               <div 
                 ref={cardRef} 
                 className="group relative w-full h-64 perspective-1000 cursor-pointer"
@@ -182,9 +182,9 @@ const PassGamers = () => {
               
                     <div className="flex justify-between items-start">
                       <div>
-                        <div className="text-xs text-yellow-400 uppercase tracking-widest font-bold mb-1">
+                        {/* <div className="text-xs text-yellow-400 uppercase tracking-widest font-bold mb-1">
                           Ministère Jeunesse
-                        </div>
+                        </div> */}
                         <div className="text-xl font-black text-white drop-shadow-lg">
                           Pass Gamer Officiel
                         </div>
@@ -233,12 +233,12 @@ const PassGamers = () => {
                     </div>
                   </div>
 
-              }
+              
                   <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-yellow-400/20 animate-ping"></div>
                   <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-cyan-400/20 animate-pulse"></div>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             {/* Enhanced CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mt-8">

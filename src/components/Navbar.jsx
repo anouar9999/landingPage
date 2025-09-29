@@ -61,8 +61,9 @@ socialLinks.push({
 });
 
 const NavBar = () => {
-const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
-    useTranslation();  const navigate = useNavigate();
+  const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
+    useTranslation();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const location = useLocation();
 
@@ -134,10 +135,26 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
   ];
 
   const discoverSubItems = [
-    { name: t("nav.discover"), link: "#about" },
-    { name: t("nav.tri9lGlory"), link: "#Tri9lGlory" },
-    { name: t("nav.prizePool"), link: "#PrizePool" },
-    { name: t("nav.proPath"), link: "#pro-path" },
+    {
+      name: t("nav.discover"),
+      link: "#about",
+      bgImage: "/img/discover-bg.jpg", // Add your image path
+    },
+    {
+      name: t("nav.tri9lGlory"),
+      link: "#Tri9lGlory",
+      bgImage: "/img/tri9l-glory-bg.jpg", // Add your image path
+    },
+    {
+      name: t("nav.prizePool"),
+      link: "#PrizePool",
+      bgImage: "/img/prize-pool-bg.jpg", // Add your image path
+    },
+    {
+      name: t("nav.proPath"),
+      link: "#pro-path",
+      bgImage: "/img/pro-path-bg.jpg", // Add your image path
+    },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -308,18 +325,32 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
           <div
             className={`flex items-center justify-between ${isHeaderCompact ? "py-1" : "py-2"} transition-all duration-300`}
           >
-           
-            {/* Logo left */}
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center">
-                <img
-                  src="img/logo-gamius-white.png"
-                  alt="GAMIUS Logo"
-                  className={`transition-all duration-300 ${isHeaderCompact ? "h-10 md:h-12" : "h-10 md:h-14"}`}
-                />
-              </Link>
+            {/* Mobile menu button and Logo */}
+            <div className="flex items-center gap-3">
+              {/* Mobile menu button - Left side */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="rounded-md text-white transition-colors lg:hidden" // Only show on mobile/tablet
+                aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
+                aria-expanded={isMenuOpen}
+              >
+                {isMenuOpen ? (
+                  <X size={screenSize.isMobile ? 20 : 24} />
+                ) : (
+                  <Menu size={screenSize.isMobile ? 20 : 24} />
+                )}
+              </button>
+              {/* Logo left */}
+              <div className="flex items-center">
+                <Link to="/" className="flex items-center">
+                  <img
+                    src="img/logo-gamius-white.png"
+                    alt="GAMIUS Logo"
+                    className={`transition-all duration-300 ${isHeaderCompact ? "h-10 md:h-12" : "h-10 md:h-14"}`}
+                  />
+                </Link>
+              </div>
             </div>
-
             {/* Central navigation - Desktop only */}
             <div className="hidden lg:flex items-center space-x-8 justify-center flex-grow">
               {/* Discover menu with dropdown */}
@@ -343,13 +374,11 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                 {/* Dropdown menu */}
                 <div
                   ref={subMenuRef}
-                  className={`absolute left-0 mt-0.5 min-w-52 overflow-hidden font-zentry 
+                  className={`absolute left-0 mt-0.5 min-w-96 overflow-hidden font-zentry 
                     bg-gradient-to-br from-slate-900/95 via-gray-800/90 to-slate-900/95 
                     backdrop-blur-xl border border-white/10 
                     rounded-2xl shadow-2xl shadow-black/50 origin-top-left
                     transition-all duration-500 ease-out
-                    before:absolute before:inset-0 before:bg-gradient-to-br 
-                    before:from-white/5 before:to-transparent before:pointer-events-none
                     ${
                       isSubMenuOpen
                         ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
@@ -365,18 +394,25 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                         href={item.link}
                         onClick={(e) => handleLinkClick(e, item.link)}
                         className={`group relative flex items-center px-6 py-4 text-white 
-                          hover:bg-gradient-to-r hover:from-primary/20 hover:to-primary/5
                           transition-all duration-300 text-sm font-medium uppercase tracking-wide
                           overflow-hidden
-                          before:absolute before:left-0 before:top-0 before:w-1 before:h-full 
-                          before:bg-primary before:transform before:-translate-x-full 
-                          before:transition-transform before:duration-300
-                          hover:before:translate-x-0
                           ${getTextClass()}`}
                       >
+                        {/* Individual item background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg m-1"></div>
+
+                        {/* Left-to-right overlay on hover */}
                         <div
-                          className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent 
-                          opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          className="absolute inset-0 bg-gradient-to-r from-primary/30 via-primary/20 to-transparent 
+                          transform -translate-x-full group-hover:translate-x-0 
+                          transition-transform duration-500 ease-out"
+                        ></div>
+
+                        {/* Left accent bar */}
+                        <div
+                          className="absolute left-0 top-0 w-1 h-full bg-primary 
+                          transform scale-y-0 group-hover:scale-y-100 
+                          transition-transform duration-300 origin-top"
                         ></div>
 
                         <div
@@ -398,7 +434,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                         <div
                           className="ml-auto opacity-0 group-hover:opacity-100 
                           transform translate-x-2 group-hover:translate-x-0 
-                          transition-all duration-300"
+                          transition-all duration-300 relative z-10"
                         >
                           <svg
                             className="w-4 h-4 text-primary"
@@ -452,7 +488,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
             {/* Right side - Auth buttons, Language selector */}
             <div className="flex items-center gap-4">
               {/* Social networks on desktop */}
- 
+
               <div className="hidden lg:flex items-center space-x-3 mr-4">
                 {socialLinks.map(({ Icon, link }, index) => (
                   <a
@@ -572,7 +608,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                           : "/img/default-avatar.jpg"
                       }
                       alt={user.username || "User"}
-                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-green-400"
+                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover "
                       onError={(e) => {
                         e.target.src = "/img/default-avatar.jpg";
                       }}
@@ -580,6 +616,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                     <span className="text-sm sm:text-base text-white font-medium">
                       {user.username || "User"}
                     </span>
+
                     <ChevronDown
                       size={16}
                       className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
@@ -587,7 +624,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-64 shadow-lg bg-black/90 backdrop-blur-md z-50 rounded-lg border border-white/10">
+                    <div className="absolute right-0 mt-2 w-96 shadow-lg bg-black/90 backdrop-blur-md z-50 rounded-lg border border-white/10">
                       <div className="p-4 space-y-4">
                         <div className="text-center border-b border-white/10 pb-3">
                           <p className="text-white font-medium">
@@ -642,7 +679,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                 </>
               )}
               {/* Mobile menu button */}
-            <button
+              {/* <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="rounded-md text-white transition-colors lg:hidden" // Only show on mobile/tablet
               aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
@@ -653,7 +690,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
               ) : (
                 <Menu size={screenSize.isMobile ? 20 : 24} />
               )}
-            </button>
+            </button> */}
             </div>
           </div>
         </div>
@@ -693,19 +730,17 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                   onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
                   className="w-full flex  justify-center items-center special-font py-4 text-white hover:bg-white/5 rounded-xl transition-all duration-200 group"
                 >
-                 {
-                  language === "fr" ? (
+                  {language === "fr" ? (
                     <FrenchTitle
                       textKey="nav.discover"
                       className="text-2xl font-medium !flex !items-center mr-4"
                       as="span"
                     />
                   ) : (
-                     <span className="text-2xl font-medium mr-4">
-                    {t("nav.discover")}
-                  </span>
-                  )
-                 }
+                    <span className="text-2xl font-medium mr-4">
+                      {t("nav.discover")}
+                    </span>
+                  )}
                   <div
                     className={`transition-transform duration-300 ${isSubMenuOpen ? "rotate-180" : ""}`}
                   >
@@ -735,7 +770,10 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
               {/* Main navigation items */}
               {mainNavItems.map((item, index) => (
-                <div key={item.name} className="w-full flex flex-col items-center">
+                <div
+                  key={item.name}
+                  className="w-full flex flex-col items-center"
+                >
                   {item.link.startsWith("#") ? (
                     <a
                       href={item.link}
@@ -768,7 +806,6 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
             </nav>
 
             {/* Auth section for mobile */}
-           
           </div>
         </div>
       </div>
