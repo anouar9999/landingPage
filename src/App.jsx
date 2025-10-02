@@ -25,6 +25,8 @@ import SmallBannerAd from './components/SmallBannerAd';
 import SidebarAd from './components/SidebarAd';
 import InlineAd from './components/InlineAd';
 import NavBar from "./components/Navbar";
+import OrganizerPage from "./components/Organizer";
+
 import OrganizerBanner from "./components/OrganizerBanner";
 // import FloatingAd from './components/FloatingAd';
 
@@ -490,6 +492,8 @@ function App() {
             <Route path="/downloads" element={<Documentation />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
+                        <Route path="/organizer" element={<OrganizerPage />} />
+
           </Routes>
         </AppInitializer>
       </LanguageProvider>
