@@ -58,6 +58,7 @@ const ProPath = () => {
   const steps = [
     {
       id: 'Players',
+      link : 'https://user.gnews.ma/login',
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
@@ -70,6 +71,7 @@ const ProPath = () => {
     },
     {
       id: 'Organisers',
+         link : '/organiser',
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
@@ -82,6 +84,7 @@ const ProPath = () => {
     },
     {
       id: 'ecosysteme',
+        link : '/login',
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
@@ -488,7 +491,7 @@ const ProPath = () => {
                   {/* Bouton d'en savoir plus */}
                   <div className="mt-6">
                     <a 
-                      href={`#${step.id}-details`}
+                      href={`${step.link}`}
                       className="inline-flex items-center gap-1.5 text-primary hover:text-primary/80 text-sm font-semibold transition-colors"
                     >
                       <span className={getTextClass()}>

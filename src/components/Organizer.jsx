@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, ChevronDown, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import NavBar from './Navbar';
+import AnimatedTitle from './AnimatedTitle';
 
 // export default function OrganizerPage() {
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -567,13 +568,13 @@ export default function OrganizerPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">Community</h3>
+                    <h3 className="text-2xl font-zentry mb-2">Community</h3>
                     <p className="text-sm text-gray-400">Perfect for small local tournaments and getting started</p>
                   </div>
                   
                   <div className="mb-8 pb-8 border-b border-gray-800">
                     <div className="flex items-baseline">
-                      <span className="text-5xl font-bold">Free</span>
+                      <span className="text-5xl font-zentry">Free</span>
                     </div>
                     <p className="text-sm text-gray-500 mt-1">No credit card required</p>
                   </div>
@@ -600,9 +601,9 @@ export default function OrganizerPage() {
                       <span className="text-sm text-gray-300">Community support</span>
                     </div>
                   </div>
-                   <button className="w-full mt-8 bg-white/5 hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
+                   <a href='/login' className="w-full mt-8 bg-white/5 text-center hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
                     Get Started
-                  </button>
+                  </a>
                 </div>
               </div>
 
@@ -616,18 +617,18 @@ export default function OrganizerPage() {
                 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center mb-4">
                       <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">White-label</h3>
+                    <h3 className="text-2xl font-zentry mb-2">White-label</h3>
                     <p className="text-sm text-gray-400">Custom solutions for large-scale operations</p>
                   </div>
                   
                   <div className="mb-8 pb-8 border-b border-gray-800">
                     <div className="flex items-baseline">
-                      <span className="text-5xl font-bold">Custom</span>
+                      <span className="text-5xl font-zentry">Custom</span>
                     </div>
                     <p className="text-sm text-gray-500 mt-1">Tailored to your needs</p>
                   </div>
@@ -662,24 +663,14 @@ export default function OrganizerPage() {
                       <span className="text-sm text-gray-300">24/7 premium support</span>
                     </div>
                   </div>
-                  <button className="w-full mt-8 bg-white/5 hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
+                  <a href='/contact'  className="w-full mt-8 bg-white/5 text-center hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
                     Contact Sales
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>          
 
-            {/* Trusted By */}
-            <div className="flex flex-col items-center">
-              <p className="text-xs text-gray-600 uppercase tracking-wider mb-6">Trusted by leading esports organizations</p>
-              <div className="flex flex-wrap justify-center items-center gap-8 opacity-50">
-                <div className="text-xl font-bold">Slack</div>
-                <div className="text-xl font-bold">Stripe</div>
-                <div className="text-xl font-bold">Spotify</div>
-                <div className="text-xl font-bold">Booking.com</div>
-                <div className="text-xl font-bold">Gusto</div>
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -687,8 +678,14 @@ export default function OrganizerPage() {
         <section id="plans" className="py-20 px-6 lg:px-8 bg-[#0A0A0A]">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Compare Plans</h2>
-              <p className="text-gray-400">Choose the perfect plan for your esports ambitions</p>
+              <AnimatedTitle 
+              title={'Compare Plans'}
+              description={'Choose the perfect plan for your esports ambitions'}
+              className="!mb-8"
+
+              />
+              {/* <h2 className="text-4xl md:text-5xl font-bold mb-4">Compare Plans</h2> */}
+              <p className="text-gray-400 font-circular-web">Choose the perfect plan for your esports ambitions</p>
             </div>
 
             {/* Comparison Table */}
@@ -742,19 +739,7 @@ export default function OrganizerPage() {
                 </table>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="grid grid-cols-2 border-t border-gray-800">
-                <div className="p-6 text-center border-r border-gray-800">
-                  <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-8 py-2 rounded-lg transition font-medium">
-                    Get Started
-                  </button>
-                </div>
-                <div className="p-6 text-center">
-                  <button className="text-sm text-gray-400 hover:text-white transition">
-                    Contact Sales
-                  </button>
-                </div>
-              </div>
+              
             </div>
           </div>
         </section>
@@ -871,63 +856,22 @@ export default function OrganizerPage() {
         {/* Newsletter Section */}
         <section className="py-20 px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Launch Your Next Big Event?</h2>
-              <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
+            <div className="bg-gradient-to-r from-primary/85 to-primary rounded-3xl p-12 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black special-font">Ready to Launch Your Next Big Event?</h2>
+              <p className="text-indigo-100 mb-8 max-w-2xl mx-auto font-circular-web">
                 Join hundreds of organizers who trust us. Create your first tournament in minutes.
               </p>
-              <button className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+              <a href='/login' className="bg-black text-white px-8 py-3  font-semibold hover:bg-gray-100 transition">
                 Start for Free →
-              </button>
+              </a>
             </div>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-gray-800 py-12 px-6 lg:px-8">
+        <footer className=" py-12 px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Product</h4>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#features" className="hover:text-white transition">Features</a></li>
-                  <li><a href="#plans" className="hover:text-white transition">Pricing</a></li>
-                  <li><a href="#" className="hover:text-white transition">Security</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Company</h4>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#" className="hover:text-white transition">About</a></li>
-                  <li><a href="#" className="hover:text-white transition">Blog</a></li>
-                  <li><a href="#" className="hover:text-white transition">Careers</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Resources</h4>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="/downloads" className="hover:text-white transition">Documentation</a></li>
-                  <li><a href="#" className="hover:text-white transition">API</a></li>
-                  <li><a href="#" className="hover:text-white transition">Support</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Legal</h4>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-                  <li><a href="#" className="hover:text-white transition">Terms</a></li>
-                  <li><a href="#" className="hover:text-white transition">Cookie Policy</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4 text-sm">Social</h4>
-                <ul className="space-y-2 text-sm text-gray-400">
-                  <li><a href="#" className="hover:text-white transition">Twitter</a></li>
-                  <li><a href="#" className="hover:text-white transition">Discord</a></li>
-                  <li><a href="#" className="hover:text-white transition">GitHub</a></li>
-                </ul>
-              </div>
-            </div>
+          
             
             <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800">
             <div className="flex items-center mb-4 md:mb-0">
