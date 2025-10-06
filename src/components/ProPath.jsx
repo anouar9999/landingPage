@@ -57,53 +57,53 @@ const ProPath = () => {
   // Données des étapes du programme - Version actualisée pour le Ministère
   const steps = [
     {
-      id: 'qualifications',
+      id: 'Players',
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
       image: "img/WhatsApp Image 2025-09-25 à 14.03.34_d922dd2a.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
       features: [
-        t("proPath.regionalQualifiers.competitionFormat.format"),
-        t("proPath.regionalQualifiers.competitionFormat.groups"),
-        t("proPath.regionalQualifiers.competitionFormat.type"),
+        t("proPath.regionalQualifiers.keyFeatures.format"),
+        t("proPath.regionalQualifiers.keyFeatures.groups"),
+        t("proPath.regionalQualifiers.keyFeatures.type"),
       ]
     },
     {
-      id: 'national',
+      id: 'Organisers',
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
       image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2a03a0d6.jpg",
       features: [
-        t("proPath.nationalChampionships.competitionFormat.format"),
-        t("proPath.nationalChampionships.competitionFormat.points"),
-        t("proPath.nationalChampionships.competitionFormat.coverage"),
+        t("proPath.nationalChampionships.keyFeatures.format"),
+        t("proPath.nationalChampionships.keyFeatures.points"),
+        t("proPath.nationalChampionships.keyFeatures.coverage"),
       ]
     },
     {
-      id: 'elite',
+      id: 'ecosysteme',
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
       image: "img/WhatsApp Image 2025-09-25 à 14.03.33_63e1c92b.jpg",
       features: [
-        t("proPath.eliteLeague.competitionFormat.training"),
-        t("proPath.eliteLeague.competitionFormat.coverage"),
-        t("proPath.eliteLeague.competitionFormat.format"),
+        t("proPath.eliteLeague.keyFeatures.training"),
+        t("proPath.eliteLeague.keyFeatures.coverage"),
+        t("proPath.eliteLeague.keyFeatures.format"),
       ]
     },
-    {
-      id: 'lan-finale',
-      icon: <Medal size={24} className="text-black" />,
-      title: t("proPath.grandFinal.title"),
-      description: t("proPath.grandFinal.description"),
-      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2032df42.jpg",
-      features: [
-      t("proPath.grandFinal.competitionFormat.format"),
-        t("proPath.grandFinal.competitionFormat.prizes"),
-        t("proPath.grandFinal.competitionFormat.broadcast"),
-      ]
-    }
+    // {
+    //   id: 'lan-finale',
+    //   icon: <Medal size={24} className="text-black" />,
+    //   title: t("proPath.grandFinal.title"),
+    //   description: t("proPath.grandFinal.description"),
+    //   image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2032df42.jpg",
+    //   features: [
+    //   t("proPath.grandFinal.keyFeatures.format"),
+    //     t("proPath.grandFinal.keyFeatures.prizes"),
+    //     t("proPath.grandFinal.keyFeatures.broadcast"),
+    //   ]
+    // }
   ];
   
   // Jeux officiels du programme

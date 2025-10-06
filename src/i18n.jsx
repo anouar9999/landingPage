@@ -56,7 +56,7 @@ const resources = {
         description:
           "More than glory awaits. Compete for epic prizes and prove you're the best!",
         totalPrizePool: "Total Prize Pool",
-        seasonRewards: "Official 2025 Season Rewards",
+        seasonRewards: "Official 2026 Season Rewards",
         additionalInfo:
           "Additional prizes may be awarded throughout the competition including gaming gear, merchandise, and exclusive opportunities.",
         places: {
@@ -195,13 +195,13 @@ const resources = {
       // ProPath
       proPath: {
         title: "YOUR PATH TO PRO GAMING",
-        tagline: "THE OFFICIAL NATIONAL CIRCUIT",
+        tagline: "ESPORTS START HERE",
         description:
-          "The GAMIUS GROUP opens your path to becoming a pro. Dominate the qualifiers in your region to reach the grand national final and prove you're the best.",
-        cta: "Start your pro journey",
-        nextEvent: "Next qualifications: March 2025",
+          "Whether you're a player or an organizer, our platform is the meeting point for the gaming community. Find, create, and compete in events made for you.",
+        cta: "Find your competition",
+        nextEvent: "Next qualifications: March 2026",
         supportedGames: "Supported games:",
-        formatFeatures: "Competition format",
+        formatFeatures: "KEY FEATURES",
         learnMore: "Learn more",
         statsTitle: "THE GAMIUS CIRCUIT IN NUMBERS",
         stats: {
@@ -215,50 +215,50 @@ const resources = {
           finaleDesc: "One single event to crown the best in Morocco.",
         },
         regionalQualifiers: {
-          title: "REGIONAL QUALIFIERS",
+          title: "JOIN THE COMPETITION",
           description:
-            "Represent your city, dominate your region! The competition starts right at your doorstep. Battle the best local players and secure your spot on the national stage.",
-          competitionFormat: {
-            title: "Competition Format",
-            format: "Double elimination system",
-            groups: "Groups of 8 to 16 participants",
-            type: "In-person and online qualifiers",
+            " Your next adventure awaits. Browse hundreds of community-run tournaments, find teammates, and make a name for yourself. Whatever your skill level, there's a place for you here.",
+          keyFeatures: {
+            title: "KEY FEATURES:",
+            format: "All games, all platforms",
+            groups: "Filter by skill level, format, and prize pool",
+            type: "Player profiles and stat tracking",
           },
         },
         nationalChampionships: {
-          title: "NATIONAL CHAMPIONSHIPS",
+          title: "CREATE MEMORABLE EVENTS",
           description:
-            "You've conquered your region. Now, the nation is watching. Wear your colors with pride and battle the national elite for the ultimate champion title.",
-          competitionFormat: {
-            title: "Competition Format",
-            format: "Championship system competition",
-            points: "Seasonal points system",
-            coverage: "National media coverage",
+            " Bring your ideas to life. Our toolset allows you to create, manage, and promote tournaments from start to finish. From a friendly competition to a professional league, we have the solution.",
+          keyFeatures: {
+            title: "KEY FEATURES:",
+            format: "Automated bracket and score management",
+            points: "Easy sponsor integration",
+            coverage: "Built-in communication tools for your participants",
           },
         },
         eliteLeague: {
-          title: "MOROCCAN ELITE LEAGUE",
+          title: "A CENTRAL HUB FOR ESPORTS",
           description:
-            "Welcome to the summit. This is where champions become legends. Face the absolute elite of Morocco and prepare to shine on the international stage.",
+            "More than just a tournament website, we are a complete ecosystem where the passion for gaming comes alive. This is where legends are born, communities grow stronger, and esports thrive.",
           link: "Discover the league ↗",
-          competitionFormat: {
-            title: "Competition Format",
-            training: "Professional technical coaching",
-            coverage: "Complete media support",
-            format: "League system with elimination phases",
+          keyFeatures: {
+            title: "KEY FEATURES:",
+            training: "News and rankings from the local scene",
+            coverage: "Resources for content creators",
+            format: "A network of trusted partners",
           },
         },
-        grandFinal: {
-          title: "GRAND NATIONAL LAN FINAL",
-          description:
-            "This is where history is made! After dominating the qualifiers, face the best on stage, in front of an electrified crowd and under the media spotlight. Become the champion you're destined to be.",
-          competitionFormat: {
-            title: "Competition Format",
-            format: "Live finals on stage",
-            prizes: "Official prizes and recognition",
-            broadcast: "Television broadcast and streaming platforms",
-          },
-        },
+        // grandFinal: {
+        //   title: "GRAND NATIONAL LAN FINAL",
+        //   description:
+        //     "This is where history is made! After dominating the qualifiers, face the best on stage, in front of an electrified crowd and under the media spotlight. Become the champion you're destined to be.",
+        //   keyFeatures: {
+        //     title: "Competition Format",
+        //     format: "Live finals on stage",
+        //     prizes: "Official prizes and recognition",
+        //     broadcast: "Television broadcast and streaming platforms",
+        //   },
+        // },
         newSeason: {
           title: "MARCH 2026: LAUNCH OF THE NEW GAMIUS SEASON",
           description:
@@ -462,7 +462,7 @@ const resources = {
         description:
           "Ton talent merite une recompense. Battez-vous pour la gloire et le butin !",
         totalPrizePool: "Cagnotte Totale",
-        seasonRewards: "Recompenses Officielles Saison 2025",
+        seasonRewards: "Recompenses Officielles Saison 2026",
         additionalInfo:
           "Des prix supplementaires peuvent être attribues tout au long de la competition, notamment du materiel gaming, des produits derives et des opportunites exclusives.",
         places: {
@@ -602,13 +602,14 @@ const resources = {
       // ProPath
       proPath: {
         title: "TA VOIE VERS LE PRO-GAMING",
-        tagline: "LE CIRCUIT NATIONAL OFFICIEL",
+        tagline: "L'ESPORT COMMENCE ICI",
         description:
-          "Le GAMIUS GROUP t'ouvre la voie vers le professionnalisme. Domine les qualifications dans ta region pour atteindre la grande finale nationale et prouver que tu es le meilleur.",
-        cta: "Debuter ton parcours pro",
-        nextEvent: "Prochaines qualifications: Mars 2025",
+          "Que vous soyez joueur ou organisateur, notre plateforme est le point de rencontre de la communauté gaming. Trouvez, créez et participez à des compétitions à votre mesure.",
+        cta: "Trouver une compétition",
+        // cta: "Organiser un tournoi",
+        nextEvent: "Prochaines qualifications : Mars 2026",
         supportedGames: "Jeux supportes:",
-        formatFeatures: "Format de competition",
+        formatFeatures: "POINTS CLÉS :",
         learnMore: "En savoir plus",
         statsTitle: "LE CIRCUIT GAMIUS EN CHIFFRES",
         stats: {
@@ -622,50 +623,49 @@ const resources = {
           finaleDesc: "Un seul evenement pour sacrer le meilleur du Maroc.",
         },
         regionalQualifiers: {
-          title: "QUALIFICATIONS ReGIONALES",
+          title: "REJOIGNEZ LA COMPETITION",
           description:
-            "Represente ta ville, domine ta region ! La competition commence pres de chez toi. Affronte les meilleurs joueurs locaux et impose-toi pour atteindre l'etape nationale.",
-          competitionFormat: {
-            title: "Format de Competition",
-            format: "Systeme d'elimination double",
-            groups: "Groupes de 8 a 16 participants",
-            type: "Qualifications presentielles et en ligne",
+            "Votre prochaine aventure vous attend. Parcourez des centaines de tournois organisés par la communauté, trouvez des coéquipiers et faites-vous un nom. Quel que soit votre niveau, il y a une place pour vous.",
+          keyFeatures: {
+            title: "POINTS CLÉS",
+            format: "Tous les jeux, toutes les plateformes",
+            groups: "Filtrez par niveau, format et jeu",
+            type: "Profils de joueurs et suivi des statistiques",
           },
         },
         nationalChampionships: {
-          title: "CHAMPIONNATS NATIONAUX",
+          title: "CREEZ DES EVENEMENTS MEMORABLES",
           description:
-            "Tu as conquis ta region. Maintenant, le Maroc t'attend. Porte fierement tes couleurs et affronte l'elite nationale pour le titre de champion suprême.",
-          competitionFormat: {
-            title: "Format de Competition",
-            format: "Competition en systeme de championnat",
-            points: "Systeme de points saisonnier",
-            coverage: "Couverture mediatique nationale",
+            " Donnez vie à vos idées. Notre suite d'outils vous permet de créer, gérer et promouvoir des tournois de A à Z. De la simple compétition entre amis à la ligue professionnelle, nous avons la solution.",
+          keyFeatures: {
+            title: "POINTS CLÉS",
+            format: "Gestion automatisée des brackets et des scores",
+            points: "Intégration facile de vos sponsors",
+            coverage: "Outils de communication intégrés pour vos participants",
           },
         },
         eliteLeague: {
-          title: "LIGUE eLITE MAROCAINE",
+          title: "UN HUB CENTRAL POUR L'ESPORT",
           description:
-            "Bienvenue au sommet. Ici, les champions deviennent des legendes. Affronte l'elite absolue du Maroc et prepare-toi a briller sur la scene internationale.",
-          link: "Decouvrir la ligue ↗",
-          competitionFormat: {
-            title: "Format de Competition",
-            training: "Encadrement technique professionnel",
-            coverage: "Accompagnement mediatique complet",
-            format: "Systeme de ligue avec phases eliminatoires",
+            " Plus qu'un simple site de tournois, nous sommes un écosystème complet où la passion du jeu prend vie. C'est ici que les légendes naissent, que les communautés se renforcent et que l'esport grandit.",
+          keyFeatures: {
+            title: "POINTS CLÉS",
+            training: "Actualités et classements de la scène locale",
+            coverage: "Ressources pour les créateurs de contenu",
+            format: "Un réseau de partenaires de confiance",
           },
         },
-        grandFinal: {
-          title: "GRANDE FINALE LAN NATIONALE",
-          description:
-            "C'est ici que l'histoire s'ecrit ! Apres avoir domine les qualifications, affronte les meilleurs sur scene, devant un public enflamme et sous les projecteurs des medias. Deviens le champion que tu es destine a être.",
-          competitionFormat: {
-            title: "Format de Competition",
-            format: "Finales presentielles sur scene",
-            prizes: "Prix et reconnaissance officielle",
-            broadcast: "Diffusion televisee et plateformes de streaming",
-          },
-        },
+        // grandFinal: {
+        //   title: "GRANDE FINALE LAN NATIONALE",
+        //   description:
+        //     "C'est ici que l'histoire s'ecrit ! Apres avoir domine les qualifications, affronte les meilleurs sur scene, devant un public enflamme et sous les projecteurs des medias. Deviens le champion que tu es destine a être.",
+        //   keyFeatures: {
+        //     title: "POINTS CLÉS",
+        //     format: "Finales presentielles sur scene",
+        //     prizes: "Prix et reconnaissance officielle",
+        //     broadcast: "Diffusion televisee et plateformes de streaming",
+        //   },
+        // },
         newSeason: {
           title: "MARS 2026 : LANCEMENT DE LA NOUVELLE SAISON GAMIUS",
           description:
@@ -999,7 +999,7 @@ const resources = {
         description:
           "مجموعة GAMIUS GROUP تفتح لك الطريق نحو الاحتراف. سيطر على التصفيات في منطقتك للوصول إلى النهائي الوطني الكبير وأثبت أنك الأفضل.",
         cta: "ابدأ رحلتك المهنية",
-        nextEvent: "التصفيات القادمة: مارس 2025",
+        nextEvent: "التصفيات القادمة: مارس 2026",
         supportedGames: "الألعاب المدعومة:",
         formatFeatures: "تنسيق المنافسة",
         learnMore: "اعرف المزيد",
@@ -1018,7 +1018,7 @@ const resources = {
           title: "التصفيات الجهوية",
           description:
             "مثّل مدينتك، سيطر على منطقتك! المنافسة تبدأ بالقرب منك. واجه أفضل اللاعبين المحليين واحجز مكانك في المرحلة الوطنية.",
-          competitionFormat: {
+          keyFeatures: {
             title: "نظام المنافسة",
             format: "نظام الإقصاء المزدوج",
             groups: "مجموعات من 8 إلى 16 مشاركاً",
@@ -1029,7 +1029,7 @@ const resources = {
           title: "البطولات الوطنية",
           description:
             "لقد سيطرت على منطقتك. الآن، المغرب كله يترقبك. ارفع ألوانك بفخر وواجه نخبة اللاعبين على لقب البطل الأوحد.",
-          competitionFormat: {
+          keyFeatures: {
             title: "نظام المنافسة",
             format: "منافسة بنظام البطولة",
             points: "نظام نقاط موسمي",
@@ -1041,7 +1041,7 @@ const resources = {
           description:
             "مرحباً بك في القمة. هنا، يصبح الأبطال أساطير. واجه نخبة النخبة في المغرب واستعد للتألق على الساحة الدولية.",
           link: "اكتشف الدوري ↗",
-          competitionFormat: {
+          keyFeatures: {
             title: "نظام المنافسة",
             training: "تأطير تقني محترف",
             coverage: "مواكبة إعلامية كاملة",
@@ -1052,7 +1052,7 @@ const resources = {
           title: "النهائي الوطني الكبير (LAN)",
           description:
             "هنا تُصنع الأساطير! بعد سيطرتك على التصفيات، واجه الأفضل على المسرح، أمام جمهور متحمس وتحت أضواء الإعلام. كن البطل المقدّر له أن تكون.",
-          competitionFormat: {
+          keyFeatures: {
             title: "نظام المنافسة",
             format: "نهائيات حضورية على المسرح",
             prizes: "جوائز وتقدير رسمي",
