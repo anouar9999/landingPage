@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Download, FileText, Image, Gamepad, Filter, Search, ExternalLink, MessageSquare } from 'lucide-react';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../hooks/useTranslation';
 
 const DownloadZone = ({ initialFilter = null }) => {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const sectionRef = useRef(null);
@@ -16,7 +18,6 @@ const DownloadZone = ({ initialFilter = null }) => {
       const filterMap = {
         'rules': 'rules',
         'guides': 'guides',
-        'media': 'media',
         'calendar': 'guides' // Rediriger calendar vers guides pour l'instant
       };
       
@@ -41,10 +42,9 @@ const DownloadZone = ({ initialFilter = null }) => {
   
   // Catégories de ressources
   const categories = [
-    { id: 'all', name: 'Tous', icon: <Filter size={16} /> },
-    { id: 'rules', name: 'Règlements', icon: <FileText size={16} /> },
-    { id: 'guides', name: 'Guides', icon: <Gamepad size={16} /> },
-    { id: 'media', name: 'Médias', icon: <Image size={16} /> }
+    { id: 'all', name: t('downloadZone.tabs.all'), icon: <Filter size={16} /> },
+    { id: 'rules', name: t('downloadZone.tabs.rules'), icon: <FileText size={16} /> },
+    { id: 'guides', name: t('downloadZone.tabs.guides'), icon: <Gamepad size={16} /> }
   ];
   
   // Données des ressources téléchargeables
@@ -92,28 +92,6 @@ const DownloadZone = ({ initialFilter = null }) => {
       date: "10/03/2025",
       downloadUrl: "#",
       thumbnailUrl: "/img/checklist-thumbnail.jpg"
-    },
-    {
-      id: 5,
-      title: "Pack Logos GAMIUS 2025",
-      description: "Logos officiels en haute résolution pour les créateurs de contenu",
-      type: "ZIP",
-      category: "media",
-      size: "15.6 MB",
-      date: "01/01/2025",
-      downloadUrl: "#",
-      thumbnailUrl: "/img/logos-thumbnail.jpg"
-    },
-    {
-      id: 6,
-      title: "Fond d'écran GAMIUS 2025",
-      description: "Collection de fonds d'écran officiels pour PC et mobile",
-      type: "ZIP",
-      category: "media",
-      size: "28.2 MB",
-      date: "20/02/2025",
-      downloadUrl: "#",
-      thumbnailUrl: "/img/wallpaper-thumbnail.jpg"
     },
     {
       id: 7,
@@ -200,9 +178,9 @@ const DownloadZone = ({ initialFilter = null }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header de section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-nightWarrior text-primary mb-3">Zone de Téléchargement</h2>
+          <h2 className="text-4xl font-nightWarrior text-primary mb-3">{t('downloadZone.title')}</h2>
           <p className="text-white/80 max-w-2xl mx-auto">
-            Téléchargez les règlements, guides et ressources pour préparer votre participation aux tournois GAMIUS
+            {t('downloadZone.subtitle')}
           </p>
         </div>
         
@@ -231,7 +209,7 @@ const DownloadZone = ({ initialFilter = null }) => {
             </div>
             <input
               type="text"
-              placeholder="Rechercher..."
+              placeholder={t('downloadZone.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="block w-full pl-10 pr-3 py-2 bg-black/20 border border-primary/20 rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary/50 focus:outline-none text-white placeholder-white/50"
@@ -243,8 +221,8 @@ const DownloadZone = ({ initialFilter = null }) => {
         {filteredResources.length === 0 ? (
           <div className="text-center py-10">
             <Download size={48} className="mx-auto text-white/30 mb-4" />
-            <p className="text-white/70 text-lg">Aucune ressource ne correspond à votre recherche</p>
-            <p className="text-white/50 mt-2">Essayez un autre terme ou catégorie</p>
+            <p className="text-white/70 text-lg">{t('downloadZone.noResults')}</p>
+            <p className="text-white/50 mt-2">{t('downloadZone.tryAnother')}</p>
           </div>
         ) : (
           <div 
@@ -285,8 +263,8 @@ const DownloadZone = ({ initialFilter = null }) => {
                   <p className="text-white/70 text-sm mb-3 line-clamp-2">{resource.description}</p>
                   
                   <div className="flex items-center justify-between text-xs text-white/50 mb-3">
-                    <span>Taille: {resource.size}</span>
-                    <span>Mis à jour: {resource.date}</span>
+                    <span>{t('downloadZone.size')} {resource.size}</span>
+                    <span>{t('downloadZone.updated')} {resource.date}</span>
                   </div>
                   
                   <button
@@ -294,7 +272,7 @@ const DownloadZone = ({ initialFilter = null }) => {
                     className="flex items-center justify-center gap-2 w-full bg-white/5 hover:bg-primary/80 text-white py-2 px-4 rounded transition-all duration-300 group-hover:bg-primary/70"
                   >
                     <Download size={16} />
-                    <span>Télécharger</span>
+                    <span>{t('downloadZone.downloadButton')}</span>
                   </button>
                 </div>
               </div>
@@ -306,9 +284,9 @@ const DownloadZone = ({ initialFilter = null }) => {
         <div className="mt-12 mb-12 bg-gradient-to-r from-primary/10 to-transparent p-6 rounded-xl border border-primary/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-white text-xl font-bold mb-2">Besoin d'aide avec les documents ?</h3>
+              <h3 className="text-white text-xl font-bold mb-2">{t('downloadZone.helpBanner.title')}</h3>
               <p className="text-white/70">
-                Si vous avez des questions concernant les documents ou besoin d'assistance, notre équipe est là pour vous aider.
+                {t('downloadZone.helpBanner.description')}
               </p>
             </div>
             <div>
@@ -316,7 +294,7 @@ const DownloadZone = ({ initialFilter = null }) => {
                 to="/contact"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-black font-bold py-2.5 px-5 rounded-lg transition-all duration-300"
               >
-                <span>Contactez-nous</span>
+                <span>{t('downloadZone.helpBanner.contactButton')}</span>
                 <MessageSquare size={16} />
               </Link>
             </div>

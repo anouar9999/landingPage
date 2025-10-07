@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const DownloadPage = () => {
   // Utiliser le hook de traduction
-  const { t, isRtl } = useTranslation();
+  const { t, isRtl, i18n } = useTranslation();
 
   const [activeTab, setActiveTab] = useState('all');
   const heroRef = useRef(null);
@@ -17,36 +17,26 @@ const DownloadPage = () => {
   
   // Catégories principales avec traductions
   const tabs = [
-    { id: 'all', name: t('downloads.tabs.all'), icon: <FileArchive size={18} /> },
-    { id: 'rules', name: t('downloads.tabs.rules'), icon: <FileText size={18} /> },
-    { id: 'tickets', name: t('downloads.tabs.tickets'), icon: <Award size={18} /> },
-    { id: 'guides', name: t('downloads.tabs.guides'), icon: <Gamepad size={18} /> },
+    { id: 'all', name: t('downloadZone.tabs.all'), icon: <FileArchive size={18} /> },
+    { id: 'rules', name: t('downloadZone.tabs.rules'), icon: <FileText size={18} /> },
+    { id: 'guides', name: t('downloadZone.tabs.guides'), icon: <Gamepad size={18} /> },
   ];
   
   // Documents mis en avant avec traductions
   const featuredDocuments = [
     {
       id: 'rulebook',
-      title: t('downloads.documents.rulebook.title'),
-      description: t('downloads.documents.rulebook.description'),
+      title: t('downloadZone.documents.rulebook.title'),
+      description: t('downloadZone.documents.rulebook.description'),
       category: 'rules',
       icon: <FileText size={40} className="text-yellow-500" />,
       downloadUrl: '#',
       isNew: true
     },
     {
-      id: 'golden-ticket',
-      title: t('downloads.documents.goldenTicket.title'),
-      description: t('downloads.documents.goldenTicket.description'),
-      category: 'tickets',
-      icon: <Trophy size={40} className="text-yellow-500" />,
-      downloadUrl: '#',
-      isNew: true
-    },
-    {
       id: 'participation-guide',
-      title: t('downloads.documents.participationGuide.title'),
-      description: t('downloads.documents.participationGuide.description'),
+      title: t('downloadZone.documents.participationGuide.title'),
+      description: t('downloadZone.documents.participationGuide.description'),
       category: 'guides',
       icon: <Gamepad size={40} className="text-yellow-500" />,
       downloadUrl: '#'
@@ -118,10 +108,10 @@ const DownloadPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div ref={titleRef} className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-nightWarrior text-yellow-500 mb-4">
-              {t('downloads.title')}
+              {t('downloadZone.title')}
             </h1>
             <p className="text-white/80 text-xl">
-              {t('downloads.subtitle')}
+              {t('downloadZone.subtitle')}
             </p>
           </div>
           
@@ -154,7 +144,7 @@ const DownloadPage = () => {
                   <div className="flex justify-between items-start mb-4">
                     <div className="p-3 bg-black/30 rounded-lg">{doc.icon}</div>
                     {doc.isNew && (
-                      <span className="bg-yellow-500 text-black text-xs font-bold py-1 px-2 rounded">{t('downloads.new')}</span>
+                      <span className="bg-yellow-500 text-black text-xs font-bold py-1 px-2 rounded">{t('downloadZone.new')}</span>
                     )}
                   </div>
                   
@@ -166,7 +156,7 @@ const DownloadPage = () => {
                     className="flex items-center justify-center gap-2 w-full bg-yellow-500/90 hover:bg-yellow-500 text-black font-bold py-3 px-4 rounded transition-all duration-300"
                   >
                     <Download size={18} />
-                    <span>{t('downloads.downloadButton')}</span>
+                    <span>{t('downloadZone.downloadButton')}</span>
                   </button>
                 </div>
               </div>
@@ -176,22 +166,22 @@ const DownloadPage = () => {
       </div>
       
       {/* Inclusion du composant DownloadZone existant */}
-      <div className="bg-[#080810]">
+      {/* <div className="bg-[#080810]">
         <DownloadZone />
-      </div>
+      </div> */}
       
       {/* Bannière "Besoin d'aide" */}
       <div className="bg-gradient-to-r from-yellow-500/20 to-yellow-500/5 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">{t('downloads.helpBanner.title')}</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('downloadZone.helpBanner.title')}</h2>
           <p className="text-white/70 max-w-2xl mx-auto mb-6">
-            {t('downloads.helpBanner.description')}
+            {t('downloadZone.helpBanner.description')}
           </p>
           <Link 
             to="/contact" 
             className="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-all duration-300"
           >
-            <span>{t('downloads.helpBanner.contactButton')}</span>
+            <span>{t('downloadZone.helpBanner.contactButton')}</span>
             <ExternalLink size={18} />
           </Link>
         </div>

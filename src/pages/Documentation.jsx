@@ -202,9 +202,9 @@ const Documentation = () => {
       </div>
       
       {/* Intégration du composant DownloadZone */}
-      <div id="downloads-section">
+      {/* <div id="downloads-section">
         <DownloadZone initialFilter={initialFilter} />
-      </div>
+      </div> */}
       
       <Footer />
     </>

@@ -1,670 +1,261 @@
-import React, { useState } from 'react';
-import { Menu, X, ChevronDown, Check } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Menu, X, ChevronDown, Check, Sparkles, Trophy, Target, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import NavBar from './Navbar';
 import AnimatedTitle from './AnimatedTitle';
+import { useTranslation } from '../hooks/useTranslation';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
-// export default function OrganizerPage() {
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-//   const [openFaq, setOpenFaq] = useState(null);
-
-//   const toggleFaq = (index) => {
-//     setOpenFaq(openFaq === index ? null : index);
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-[#0D0D0D] text-white relative">
-//       {/* Background Image with Overlay */}
-//       <div className="fixed inset-0 z-0">
-//         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070')] bg-cover bg-center bg-no-repeat"></div>
-//         {/* Gradient overlay from transparent top to dark bottom */}
-// <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0D0D0D]/70 to-[#0D0D0D]"></div>      </div>
-
-//       {/* Content */}
-//       <div className="relative z-10">
-//         <NavBar />
-
-//         {/* Hero Section */}
-//         <section className="pt-32 pb-20 px-6 lg:px-8 font-circular-web">
-//           <div className="max-w-5xl mx-auto text-center ">
-//             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 !font-zentry special-font">
-//               Create and Manage<br />
-//            <span className='text-primary'>Unforgettable</span>    <br />
-//               Competitions
-//             </h1>
-//             <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-//               From local events to global circuits, our platform gives you the keys to success. 
-//               You focus on the show, we'll handle the technology.
-//             </p>
-            
-           
-
-//        {/* Pricing Cards Preview */}
-//             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-//               {/* Community Plan */}
-//               <div className="relative rounded-2xl p-8 text-left overflow-hidden h-full flex flex-col group hover:scale-[1.02] transition-transform">
-//                 {/* Background Image with Overlay */}
-//                 <div className="absolute inset-0 z-0">
-//                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-//                   <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/90 via-[#1A1A1A]/95 to-[#0D0D0D]/90"></div>
-//                 </div>
-                
-//                 <div className="relative z-10">
-//                   <div className="mb-6">
-//                     <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center mb-4">
-//                       <svg className="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-//                       </svg>
-//                     </div>
-//                     <h3 className="text-2xl font-bold mb-2">Community</h3>
-//                     <p className="text-sm text-gray-400">Perfect for small local tournaments and getting started</p>
-//                   </div>
-                  
-//                   <div className="mb-8 pb-8 border-b border-gray-800">
-//                     <div className="flex items-baseline">
-//                       <span className="text-5xl font-bold">Free</span>
-//                     </div>
-//                     <p className="text-sm text-gray-500 mt-1">No credit card required</p>
-//                   </div>
-
-//                   <button className="w-full bg-white/5 hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition mb-8">
-//                     Get Started
-//                   </button>
-
-//                   <div className="space-y-4 flex-grow">
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Up to 64 participants</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Standard tournament formats</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Automated bracket generation</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Basic participant profiles</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Community support</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Professional Plan - Highlighted */}
-//               <div className="relative rounded-2xl p-8 text-left overflow-hidden transform md:scale-105 shadow-2xl shadow-indigo-500/20 h-full flex flex-col group hover:scale-110 transition-transform">
-//                 {/* Background Image with Overlay */}
-//                 <div className="absolute inset-0 z-0">
-//                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-//                   <div className="absolute inset-0 bg-gradient-to-b from-indigo-600/95 via-indigo-700/90 to-indigo-800/95"></div>
-//                 </div>
-                
-//                 <div className="absolute top-4 right-4 bg-white text-indigo-600 text-xs font-bold px-3 py-1 rounded-full z-10">
-//                   RECOMMENDED
-//                 </div>
-//                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-                
-//                 <div className="relative z-10 mb-6">
-//                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
-//                     <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-//                     </svg>
-//                   </div>
-//                   <h3 className="text-2xl font-bold mb-2 text-white">Professional</h3>
-//                   <p className="text-sm text-indigo-100">For serious organizers running regular events</p>
-//                 </div>
-                
-//                 <div className="relative z-10 mb-8 pb-8 border-b border-white/20">
-//                   <div className="flex items-baseline">
-//                     <span className="text-5xl font-bold text-white">$2.99</span>
-//                     <span className="text-white/70 ml-2">/month</span>
-//                   </div>
-//                   <p className="text-sm text-indigo-100 mt-1">Billed monthly or annually</p>
-//                 </div>
-
-//                 <button className="relative z-10 w-full bg-white text-indigo-600 hover:bg-gray-100 rounded-xl py-3 text-sm font-semibold transition mb-8 shadow-lg">
-//                   Start Free Trial
-//                 </button>
-
-//                 <div className="relative z-10 space-y-4 flex-grow">
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white font-medium">Everything in Community, plus:</span>
-//                   </div>
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white">Up to 256 participants</span>
-//                   </div>
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white">Real-time statistics & analytics</span>
-//                   </div>
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white">Sponsor integration tools</span>
-//                   </div>
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white">Advanced format options</span>
-//                   </div>
-//                   <div className="flex items-start space-x-3">
-//                     <Check className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />
-//                     <span className="text-sm text-white">Priority email support</span>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Enterprise Plan */}
-//               <div className="relative rounded-2xl p-8 text-left overflow-hidden h-full flex flex-col group hover:scale-[1.02] transition-transform">
-//                 {/* Background Image with Overlay */}
-//                 <div className="absolute inset-0 z-0">
-//                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-//                   <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/90 via-[#1A1A1A]/95 to-[#0D0D0D]/90"></div>
-//                 </div>
-                
-//                 <div className="relative z-10">
-//                   <div className="mb-6">
-//                     <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-4">
-//                       <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-//                       </svg>
-//                     </div>
-//                     <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
-//                     <p className="text-sm text-gray-400">Custom solutions for large-scale operations</p>
-//                   </div>
-                  
-//                   <div className="mb-8 pb-8 border-b border-gray-800">
-//                     <div className="flex items-baseline">
-//                       <span className="text-5xl font-bold">Custom</span>
-//                     </div>
-//                     <p className="text-sm text-gray-500 mt-1">Tailored to your needs</p>
-//                   </div>
-
-//                   <button className="w-full bg-white/5 hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition mb-8">
-//                     Contact Sales
-//                   </button>
-
-//                   <div className="space-y-4 flex-grow">
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300 font-medium">Everything in Professional, plus:</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Unlimited participants</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">White-label solution</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Custom branding & domain</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">Dedicated account manager</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">API access & integrations</span>
-//                     </div>
-//                     <div className="flex items-start space-x-3">
-//                       <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-//                       <span className="text-sm text-gray-300">24/7 premium support</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>          
-
-//             {/* Trusted By */}
-//             <div className="flex flex-col items-center">
-//               <p className="text-xs text-gray-600 uppercase tracking-wider mb-6">Trusted by leading esports organizations</p>
-//               <div className="flex flex-wrap justify-center items-center gap-8 opacity-50">
-//                 <div className="text-xl font-bold">Slack</div>
-//                 <div className="text-xl font-bold">Stripe</div>
-//                 <div className="text-xl font-bold">Spotify</div>
-//                 <div className="text-xl font-bold">Booking.com</div>
-//                 <div className="text-xl font-bold">Gusto</div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* Comparison Table Section */}
-//         <section id="plans" className="py-20 px-6 lg:px-8 bg-[#0A0A0A]">
-//           <div className="max-w-6xl mx-auto">
-//             <div className="text-center mb-16">
-//               <h2 className="text-4xl md:text-5xl font-bold mb-4">Compare Plans</h2>
-//               <p className="text-gray-400">Choose the perfect plan for your esports ambitions</p>
-//             </div>
-
-//             {/* Comparison Table */}
-//             <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden">
-//               <div className="overflow-x-auto">
-//                 <table className="w-full">
-//                   <thead>
-//                     <tr className="border-b border-gray-800">
-//                       <th className="text-left p-6 font-normal text-gray-400 text-sm">Features</th>
-//                       <th className="p-6 text-center">
-//                         <div className="text-sm text-gray-400 mb-2">Community</div>
-//                         <div className="text-2xl font-bold">Free</div>
-//                       </th>
-//                       <th className="p-6 text-center bg-indigo-600/5">
-//                         <div className="text-sm text-indigo-400 mb-2">Professional</div>
-//                         <div className="text-2xl font-bold">$2.99</div>
-//                         <div className="text-xs text-gray-500">per month</div>
-//                       </th>
-//                       <th className="p-6 text-center">
-//                         <div className="text-sm text-gray-400 mb-2">Enterprise</div>
-//                         <div className="text-2xl font-bold">$6.99</div>
-//                         <div className="text-xs text-gray-500">per month</div>
-//                       </th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {[
-//                       { feature: 'Max participants', free: '64', pro: '256', ent: 'Unlimited' },
-//                       { feature: 'Tournament formats', free: 'Standard', pro: 'Standard', ent: 'All + Custom' },
-//                       { feature: 'Automated brackets', free: true, pro: true, ent: true },
-//                       { feature: 'Real-time stats', free: false, pro: true, ent: true },
-//                       { feature: 'Custom branding', free: false, pro: false, ent: true },
-//                       { feature: 'Sponsor integration', free: false, pro: true, ent: true },
-//                       { feature: 'White-label solution', free: false, pro: false, ent: true },
-//                       { feature: 'Dedicated support', free: false, pro: false, ent: true }
-//                     ].map((row, idx) => (
-//                       <tr key={idx} className="border-b border-gray-800 last:border-0">
-//                         <td className="p-6 text-sm text-gray-300">{row.feature}</td>
-//                         <td className="p-6 text-center">
-//                           {typeof row.free === 'boolean' ? (
-//                             row.free ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-700">—</span>
-//                           ) : (
-//                             <span className="text-sm text-gray-400">{row.free}</span>
-//                           )}
-//                         </td>
-//                         <td className="p-6 text-center bg-indigo-600/5">
-//                           {typeof row.pro === 'boolean' ? (
-//                             row.pro ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-700">—</span>
-//                           ) : (
-//                             <span className="text-sm text-gray-400">{row.pro}</span>
-//                           )}
-//                         </td>
-//                         <td className="p-6 text-center">
-//                           {typeof row.ent === 'boolean' ? (
-//                             row.ent ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-700">—</span>
-//                           ) : (
-//                             <span className="text-sm text-gray-400">{row.ent}</span>
-//                           )}
-//                         </td>
-//                       </tr>
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               </div>
-
-//               {/* CTA Buttons */}
-//               <div className="grid grid-cols-3 border-t border-gray-800">
-//                 <div className="p-6 text-center border-r border-gray-800">
-//                   <button className="text-sm text-gray-400 hover:text-white transition">
-//                     Select
-//                   </button>
-//                 </div>
-//                 <div className="p-6 text-center bg-indigo-600/5 border-r border-gray-800">
-//                   <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-8 py-2 rounded-lg transition font-medium">
-//                     Get Professional
-//                   </button>
-//                 </div>
-//                 <div className="p-6 text-center">
-//                   <button className="text-sm text-gray-400 hover:text-white transition">
-//                     Contact Sales
-//                   </button>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* Features Section */}
-//         <section id="features" className="py-20 px-6 lg:px-8">
-//           <div className="max-w-6xl mx-auto">
-//             <div className="grid md:grid-cols-2 gap-8 items-center mb-20">
-//               <div>
-//                 <div className="inline-block bg-indigo-600/10 text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-//                   ORGANIZERS
-//                 </div>
-//                 <h2 className="text-4xl md:text-5xl font-bold mb-6">
-//                   The Power of a Pro Tool, Made Simple
-//                 </h2>
-//                 <p className="text-gray-400 text-lg mb-8">
-//                   Managing an esports event shouldn't be complicated. We've designed an intuitive 
-//                   interface that automates complex tasks.
-//                 </p>
-                
-//                 <div className="space-y-6">
-//                   <div className="flex items-start space-x-4">
-//                     <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-//                       <Check className="w-5 h-5 text-indigo-400" />
-//                     </div>
-//                     <div>
-//                       <h3 className="font-semibold mb-1">Total Flexibility</h3>
-//                       <p className="text-sm text-gray-400">No matter the game or format, our platform adapts to your vision.</p>
-//                     </div>
-//                   </div>
-//                   <div className="flex items-start space-x-4">
-//                     <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-//                       <Check className="w-5 h-5 text-indigo-400" />
-//                     </div>
-//                     <div>
-//                       <h3 className="font-semibold mb-1">Player Engagement</h3>
-//                       <p className="text-sm text-gray-400">Professional experience with profiles, stats, and real-time leaderboards.</p>
-//                     </div>
-//                   </div>
-//                   <div className="flex items-start space-x-4">
-//                     <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-//                       <Check className="w-5 h-5 text-indigo-400" />
-//                     </div>
-//                     <div>
-//                       <h3 className="font-semibold mb-1">Simplified Monetization</h3>
-//                       <p className="text-sm text-gray-400">Easily integrate your sponsors and manage ticketing.</p>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 h-96 flex items-center justify-center">
-//                 <div className="text-center">
-//                   <div className="text-6xl font-bold mb-2">01:20:15</div>
-//                   <div className="text-indigo-200 text-sm">Average Setup Time</div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* FAQ Section */}
-//         <section id="faq" className="py-20 px-6 lg:px-8 bg-[#0A0A0A]">
-//           <div className="max-w-3xl mx-auto">
-//             <div className="text-center mb-12">
-//               <h2 className="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
-//               <p className="text-gray-400">Everything you need to know about our platform</p>
-//             </div>
-
-//             <div className="space-y-3">
-//               {[
-//                 {
-//                   q: "Which games are supported?",
-//                   a: "Absolutely all of them! You define the rules."
-//                 },
-//                 {
-//                   q: "Do I need technical skills?",
-//                   a: "Not at all. Our interface is designed to be simple and intuitive."
-//                 },
-//                 {
-//                   q: "Can I organize paid tournaments?",
-//                   a: "Yes, with our Enterprise plan, you can link your own ticketing system."
-//                 },
-//                 {
-//                   q: "What payment methods do you accept?",
-//                   a: "We accept all major credit cards, PayPal, and cryptocurrency payments."
-//                 }
-//               ].map((faq, index) => (
-//                 <div 
-//                   key={index}
-//                   className="bg-[#1A1A1A] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition"
-//                 >
-//                   <button
-//                     onClick={() => toggleFaq(index)}
-//                     className="w-full p-6 text-left flex justify-between items-center"
-//                   >
-//                     <span className="font-medium">{faq.q}</span>
-//                     <ChevronDown 
-//                       className={`text-gray-400 transition-transform flex-shrink-0 ml-4 ${openFaq === index ? 'rotate-180' : ''}`}
-//                       size={20}
-//                     />
-//                   </button>
-//                   {openFaq === index && (
-//                     <div className="px-6 pb-6 text-gray-400 text-sm border-t border-gray-800 pt-4">
-//                       {faq.a}
-//                     </div>
-//                   )}
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* Newsletter Section */}
-//         <section className="py-20 px-6 lg:px-8">
-//           <div className="max-w-4xl mx-auto">
-//             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-12 text-center">
-//               <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Launch Your Next Big Event?</h2>
-//               <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
-//                 Join hundreds of organizers who trust us. Create your first tournament in minutes.
-//               </p>
-//               <button className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-//                 Start for Free →
-//               </button>
-//             </div>
-//           </div>
-//         </section>
-
-//         {/* Footer */}
-//         <footer className="border-t border-gray-800 py-12 px-6 lg:px-8">
-//           <div className="max-w-7xl mx-auto">
-//             <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-//               <div>
-//                 <h4 className="font-semibold mb-4 text-sm">Product</h4>
-//                 <ul className="space-y-2 text-sm text-gray-400">
-//                   <li><a href="#" className="hover:text-white transition">Features</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Pricing</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Security</a></li>
-//                 </ul>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold mb-4 text-sm">Company</h4>
-//                 <ul className="space-y-2 text-sm text-gray-400">
-//                   <li><a href="#" className="hover:text-white transition">About</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Blog</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Careers</a></li>
-//                 </ul>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold mb-4 text-sm">Resources</h4>
-//                 <ul className="space-y-2 text-sm text-gray-400">
-//                   <li><a href="#" className="hover:text-white transition">Documentation</a></li>
-//                   <li><a href="#" className="hover:text-white transition">API</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Support</a></li>
-//                 </ul>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold mb-4 text-sm">Legal</h4>
-//                 <ul className="space-y-2 text-sm text-gray-400">
-//                   <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Terms</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Cookie Policy</a></li>
-//                 </ul>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold mb-4 text-sm">Social</h4>
-//                 <ul className="space-y-2 text-sm text-gray-400">
-//                   <li><a href="#" className="hover:text-white transition">Twitter</a></li>
-//                   <li><a href="#" className="hover:text-white transition">Discord</a></li>
-//                   <li><a href="#" className="hover:text-white transition">GitHub</a></li>
-//                 </ul>
-//               </div>
-//             </div>
-            
-//             <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800">
-//               <div className="flex items-center space-x-2 mb-4 md:mb-0">
-//                 <div className="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg"></div>
-//                 <span className="font-semibold">Esports Hub</span>
-//               </div>
-//               <p className="text-sm text-gray-500">© 2024 Esports Hub. All rights reserved.</p>
-//             </div>
-//           </div>
-//         </footer>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
+gsap.registerPlugin(ScrollTrigger);
 
 
 export default function OrganizerPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+  const { t } = useTranslation();
+  
+  const heroRef = useRef(null);
+  const cardsRef = useRef(null);
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
+  useEffect(() => {
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      // Animate hero section on load
+      if (heroRef.current && heroRef.current.children.length > 0) {
+        gsap.fromTo(heroRef.current.children,
+          {
+            y: 50,
+            opacity: 0
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power2.out',
+            delay: 0.2
+          }
+        );
+      }
+
+      // Animate cards on scroll
+      if (cardsRef.current && cardsRef.current.children.length > 0) {
+        gsap.fromTo(cardsRef.current.children,
+          {
+            y: 30,
+            opacity: 0
+          },
+          {
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: 'top 80%',
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'power2.out'
+          }
+        );
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0D0D0D] text-white relative">
-      {/* Background Image with Overlay */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070')] bg-cover bg-center bg-no-repeat"></div>
-        {/* Gradient overlay from transparent top to dark bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0D0D0D]/70 to-[#0D0D0D]"></div>      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0D0D0D] to-black text-white relative overflow-hidden">
+      {/* Enhanced Background Effects */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Animated gradient orbs - Primary color themed */}
+        <div className="absolute top-20 left-10 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-primary/15 via-gray-700/10 to-transparent blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-20 right-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gradient-to-r from-gray-800/20 via-primary/10 to-transparent blur-3xl animate-bounce-slow"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 sm:w-60 h-48 sm:h-60 rounded-full bg-gradient-to-r from-primary/15 to-gray-900/10 blur-3xl animate-spin-slow"></div>
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5 bg-grid-pattern"></div>
+        
+        {/* Floating particles - Primary themed */}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary/30 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${15 + Math.random() * 10}s`,
+            }}
+          />
+        ))}
+      </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 min-h-screen">
         <NavBar />
 
         {/* Hero Section */}
-         <section className="pt-32 pb-20 px-6 lg:px-8 font-circular-web">
-           <div className="max-w-5xl mx-auto text-center ">
-             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 !font-zentry special-font">
-               Create and Manage<br />
-            <span className='text-primary'>Unforgettable</span>    <br />
-               Competitions
+         <section className="pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 font-circular-web relative z-10">
+           <div className="max-w-5xl mx-auto text-center" ref={heroRef}>
+             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+               <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+               <span>{t('organizer.hero.badge')}</span>
+             </div>
+             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 !font-zentry special-font bg-gradient-to-r from-white via-gray-200 to-primary bg-clip-text text-transparent drop-shadow-2xl px-2">
+               {t('organizer.hero.title1')}<br />
+            <span className='bg-gradient-to-r from-primary via-primary/90 to-primary/80 bg-clip-text text-transparent'>{t('organizer.hero.title2')}</span>    <br />
+               {t('organizer.hero.title3')}
              </h1>
-             <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-               From local events to global circuits, our platform gives you the keys to success. 
-               You focus on the show, we'll handle the technology.
+             <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+               {t('organizer.hero.subtitle')}
              </p>
             
            {/* Pricing Cards Preview */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12" ref={cardsRef}>
               {/* Community Plan */}
-              <div className="relative rounded-2xl p-8 text-left overflow-hidden h-full flex flex-col group hover:scale-[1.02] transition-transform">
+              <div className="relative angular-cut p-6 sm:p-8 text-left overflow-hidden h-full flex flex-col group hover:-translate-y-2 transition-all duration-500 cursor-pointer">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/90 via-[#1A1A1A]/95 to-[#0D0D0D]/90"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-black/95 group-hover:from-gray-900/90 group-hover:via-gray-800/85 transition-all duration-500"></div>
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/5 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
                 </div>
                 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center mb-4">
-                      <svg className="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-gray-700/30 group-hover:shadow-gray-600/50 transition-all">
+                      <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <svg className="w-7 h-7 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
+                      {/* Pulse ring */}
+                      <div className="absolute inset-0 rounded-2xl bg-gray-500/30 animate-ping"></div>
                     </div>
-                    <h3 className="text-2xl font-zentry mb-2">Community</h3>
-                    <p className="text-sm text-gray-400">Perfect for small local tournaments and getting started</p>
+                    <h3 className="text-xl sm:text-2xl font-zentry mb-2 text-white">{t('organizer.plans.community.name')}</h3>
+                    <p className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.description')}</p>
                   </div>
                   
-                  <div className="mb-8 pb-8 border-b border-gray-800">
-                    <div className="flex items-baseline">
-                      <span className="text-5xl font-zentry">Free</span>
+                  <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-700/50">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl sm:text-5xl md:text-6xl font-zentry bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">{t('organizer.plans.community.price')}</span>
+                      <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 animate-pulse" />
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">No credit card required</p>
+                    <p className="text-xs sm:text-sm text-gray-400 mt-2">{t('organizer.plans.community.priceDetail')}</p>
                   </div>
 
-                  <div className="flex-grow space-y-4">
+                  <div className="flex-grow space-y-3 sm:space-y-4">
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Up to 64 participants</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.participants')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Standard tournament formats</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.formats')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Automated bracket generation</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.brackets')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Basic participant profiles</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.profiles')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Community support</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.support')}</span>
                     </div>
                   </div>
-                   <a href='/login' className="w-full mt-8 bg-white/5 text-center hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
-                    Get Started
+                   <a href='https://user.gnews.ma/login' className="group relative w-full mt-6 sm:mt-8 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gray-700/20 rounded-xl group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300"></div>
+                    <div className="relative flex items-center justify-center gap-2 border border-gray-600/50 text-white rounded-xl py-3 sm:py-3.5 text-xs sm:text-sm font-semibold hover:border-primary transition-all backdrop-blur-sm">
+                      <span>{t('organizer.plans.community.cta')}</span>
+                      <Zap className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </a>
                 </div>
               </div>
 
               {/* White-label Plan */}
-              <div className="relative rounded-2xl p-8 text-left overflow-hidden h-full flex flex-col group hover:scale-[1.02] transition-transform">
+              <div className="relative angular-cut p-6 sm:p-8 text-left overflow-hidden h-full flex flex-col group hover:-translate-y-2 transition-all duration-500 cursor-pointer border-2 border-primary/40">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/90 via-[#1A1A1A]/95 to-[#0D0D0D]/90"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-primary/10 to-black/95 group-hover:from-gray-900/90 group-hover:via-primary/15 transition-all duration-500"></div>
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
+                  {/* Corner glow */}
+                  <div className="absolute top-0 right-0 w-16 sm:w-24 h-16 sm:h-24 bg-primary/20 rounded-full blur-3xl"></div>
                 </div>
                 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center mb-4">
-                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary to-primary/90 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-primary/40 group-hover:shadow-primary/60 transition-all">
+                      <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
+                      {/* Pulse ring */}
+                      <div className="absolute inset-0 rounded-2xl bg-primary/30 animate-ping"></div>
+                      {/* Crown badge for premium */}
+                      <div className="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                        <Trophy className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-zentry mb-2">White-label</h3>
-                    <p className="text-sm text-gray-400">Custom solutions for large-scale operations</p>
+                    <h3 className="text-xl sm:text-2xl font-zentry mb-2 text-white">{t('organizer.plans.whiteLabel.name')}</h3>
+                    <p className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.description')}</p>
                   </div>
                   
-                  <div className="mb-8 pb-8 border-b border-gray-800">
-                    <div className="flex items-baseline">
-                      <span className="text-5xl font-zentry">Custom</span>
+                  <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-primary/30">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl sm:text-5xl md:text-6xl font-zentry bg-gradient-to-r from-primary via-primary/90 to-white bg-clip-text text-transparent">{t('organizer.plans.whiteLabel.price')}</span>
+                      <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-primary animate-pulse" />
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">Tailored to your needs</p>
+                    <p className="text-xs sm:text-sm text-gray-400 mt-2">{t('organizer.plans.whiteLabel.priceDetail')}</p>
                   </div>
 
-                  <div className="space-y-4 flex-grow">
+                  <div className="space-y-3 sm:space-y-4 flex-grow">
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300 font-medium">Everything in Community, plus:</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300 font-medium">{t('organizer.plans.whiteLabel.everythingPlus')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Unlimited participants</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.participants')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">White-label solution</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.solution')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Custom branding & domain</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.types')}</span>
                     </div>
                      <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Real-time statistics & analytics</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.stats')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">Dedicated account manager</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.manager')}</span>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-gray-300">24/7 premium support</span>
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.whiteLabel.features.support')}</span>
                     </div>
                   </div>
-                  <a href='/contact'  className="w-full mt-8 bg-white/5 text-center hover:bg-white/10 border border-gray-700 text-white rounded-xl py-3 text-sm font-semibold transition">
-                    Contact Sales
+                  <a href='/contact' className="group relative w-full mt-6 sm:mt-8 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary to-primary rounded-xl animate-gradient-x"></div>
+                    <div className="relative flex items-center justify-center gap-2 text-white rounded-xl py-3 sm:py-3.5 text-xs sm:text-sm font-semibold shadow-lg shadow-primary/30 group-hover:shadow-primary/50 transition-all">
+                      <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-180 transition-transform duration-500" />
+                      <span>{t('organizer.plans.whiteLabel.cta')}</span>
+                      <Trophy className="w-3 h-3 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" />
+                    </div>
                   </a>
                 </div>
               </div>
@@ -675,62 +266,87 @@ export default function OrganizerPage() {
         </section>
 
         {/* Comparison Table Section */}
-        <section id="plans" className="py-20 px-6 lg:px-8 bg-[#0A0A0A]">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
+        <section id="plans" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] via-gray-900/50 to-[#0A0A0A] relative">
+          {/* Background effects */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-48 sm:w-72 h-48 sm:h-72 bg-primary/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-1/4 w-48 sm:w-72 h-48 sm:h-72 bg-gray-700/10 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-5xl mx-auto relative z-10">
+            <div className="text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+                <Trophy className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>{t('organizer.comparison.choosePlan')}</span>
+              </div>
               <AnimatedTitle 
-              title={'Compare Plans'}
-              description={'Choose the perfect plan for your esports ambitions'}
+              title={t('organizer.comparison.title')}
+              description={t('organizer.comparison.subtitle')}
               className="!mb-8"
 
               />
-              {/* <h2 className="text-4xl md:text-5xl font-bold mb-4">Compare Plans</h2> */}
-              <p className="text-gray-400 font-circular-web">Choose the perfect plan for your esports ambitions</p>
+              <p className="text-gray-300 font-circular-web text-lg">{t('organizer.comparison.subtitle')}</p>
             </div>
 
             {/* Comparison Table */}
-            <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden">
+            <div className="bg-[#1A1A1A]/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl overflow-hidden shadow-2xl shadow-primary/5">
               <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-800">
-                      <th className="text-left p-6 font-normal text-gray-400 text-sm w-1/3">Features</th>
-                      <th className="p-6 text-center w-1/3">
-                        <div className="text-sm text-gray-400 mb-2">Community</div>
-                        <div className="text-2xl font-bold">Free</div>
+                <table className="w-full min-w-[600px]">
+                  <thead className="bg-gradient-to-r from-slate-800/50 to-gray-900/50">
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left p-4 sm:p-6 font-semibold text-gray-300 text-xs sm:text-sm w-1/3 uppercase tracking-wider">{t('organizer.comparison.features')}</th>
+                      <th className="p-4 sm:p-6 text-center w-1/3">
+                        <div className="text-[10px] sm:text-xs text-gray-400 mb-1 sm:mb-2 uppercase tracking-wider">{t('organizer.comparison.community')}</div>
+                        <div className="text-lg sm:text-2xl font-bold text-white font-zentry">{t('organizer.comparison.free')}</div>
                       </th>
-                      <th className="p-6 text-center w-1/3">
-                        <div className="text-sm text-gray-400 mb-2">White-label</div>
-                        <div className="text-2xl font-bold">Custom</div>
-                        <div className="text-xs text-gray-500">Contact Us</div>
+                      <th className="p-4 sm:p-6 text-center w-1/3 relative">
+                        {/* Premium badge */}
+                        <div className="absolute top-2 right-2 bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded-full border border-primary/30">
+                          {t('organizer.comparison.premium')}
+                        </div>
+                        <div className="text-xs text-gray-400 mb-2 uppercase tracking-wider">{t('organizer.comparison.whiteLabel')}</div>
+                        <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent font-zentry">{t('organizer.comparison.custom')}</div>
+                        <div className="text-xs text-gray-500 mt-1">{t('organizer.comparison.contactUs')}</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      { feature: 'Max participants', free: '64', ent: 'Unlimited' },
-                      { feature: 'Tournament formats', free: 'Standard', ent: 'All + Custom' },
-                      { feature: 'Automated brackets', free: true, ent: true },
-                      { feature: 'Real-time stats', free: false, ent: true },
-                      { feature: 'Sponsor integration', free: false, ent: true },
-                      { feature: 'Custom branding', free: false, ent: true },
-                      { feature: 'White-label solution', free: false, ent: true },
-                      { feature: 'Dedicated support', free: false, ent: true }
+                      { feature: t('organizer.comparison.rows.maxParticipants'), free: '64', ent: t('organizer.comparison.rows.unlimited') },
+                      { feature: t('organizer.comparison.rows.formats'), free: t('organizer.comparison.rows.standard'), ent: t('organizer.comparison.rows.allCustom') },
+                      { feature: t('organizer.comparison.rows.brackets'), free: true, ent: true },
+                      { feature: t('organizer.comparison.rows.stats'), free: false, ent: true },
+                      { feature: t('organizer.comparison.rows.sponsorIntegration'), free: false, ent: true },
+                      { feature: t('organizer.comparison.rows.customBranding'), free: false, ent: true },
+                      { feature: t('organizer.comparison.rows.whiteLabelSolution'), free: false, ent: true },
+                      { feature: t('organizer.comparison.rows.dedicatedSupport'), free: false, ent: true }
                     ].map((row, idx) => (
-                      <tr key={idx} className="border-b border-gray-800 last:border-0">
-                        <td className="p-6 text-sm text-gray-300">{row.feature}</td>
-                        <td className="p-6 text-center">
+                      <tr key={idx} className="border-b border-gray-800 last:border-0 hover:bg-white/5 transition-colors duration-200 group">
+                        <td className="p-4 sm:p-6 text-xs sm:text-sm text-gray-300 group-hover:text-white transition-colors font-medium">{row.feature}</td>
+                        <td className="p-4 sm:p-6 text-center">
                           {typeof row.free === 'boolean' ? (
-                            row.free ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-700">—</span>
+                            row.free ? (
+                              <div className="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-green-500/20">
+                                <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                              </div>
+                            ) : (
+                              <span className="text-gray-700">—</span>
+                            )
                           ) : (
-                            <span className="text-sm text-gray-400">{row.free}</span>
+                            <span className="text-xs sm:text-sm text-gray-300 font-semibold">{row.free}</span>
                           )}
                         </td>
-                        <td className="p-6 text-center">
+                        <td className="p-4 sm:p-6 text-center">
                           {typeof row.ent === 'boolean' ? (
-                            row.ent ? <Check className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-700">—</span>
+                            row.ent ? (
+                              <div className="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-primary/20">
+                                <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                              </div>
+                            ) : (
+                              <span className="text-gray-700">—</span>
+                            )
                           ) : (
-                            <span className="text-sm text-gray-400">{row.ent}</span>
+                            <span className="text-xs sm:text-sm text-primary font-semibold">{row.ent}</span>
                           )}
                         </td>
                       </tr>
@@ -745,56 +361,72 @@ export default function OrganizerPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-20 px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20">
+        <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative">
+          {/* Background accent */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none"></div>
+          
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
               <div>
-                <div className="inline-block bg-indigo-600/10 text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                  ORGANIZERS
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+                  <Trophy className="w-3 h-3 sm:w-4 sm:h-4" />
+                  {t('organizer.features.badge')}
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                  The Power of a Pro Tool, Made Simple
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-zentry bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                  {t('organizer.features.title')}
                 </h2>
-                <p className="text-gray-400 text-lg mb-8">
-                  Managing an esports event shouldn't be complicated. We've designed an intuitive 
-                  interface that automates complex tasks.
+                <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                  {t('organizer.features.subtitle')}
                 </p>
                 
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Check className="w-5 h-5 text-indigo-400" />
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Total Flexibility</h3>
-                      <p className="text-sm text-gray-400">No matter the game or format, our platform adapts to your vision.</p>
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base">{t('organizer.features.flexibility.title')}</h3>
+                      <p className="text-xs sm:text-sm text-gray-400">{t('organizer.features.flexibility.description')}</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Check className="w-5 h-5 text-indigo-400" />
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Player Engagement</h3>
-                      <p className="text-sm text-gray-400">Professional experience with profiles, stats, and real-time leaderboards.</p>
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base">{t('organizer.features.engagement.title')}</h3>
+                      <p className="text-xs sm:text-sm text-gray-400">{t('organizer.features.engagement.description')}</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-indigo-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Check className="w-5 h-5 text-indigo-400" />
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Simplified Monetization</h3>
-                      <p className="text-sm text-gray-400">Easily integrate your sponsors and manage ticketing.</p>
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base">{t('organizer.features.monetization.title')}</h3>
+                      <p className="text-xs sm:text-sm text-gray-400">{t('organizer.features.monetization.description')}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl font-bold mb-2">01:20:15</div>
-                  <div className="text-indigo-200 text-sm">Average Setup Time</div>
+              <div className="relative angular-cut bg-gradient-to-br from-primary via-primary/95 to-primary/90 p-6 sm:p-8 h-72 sm:h-96 flex items-center justify-center overflow-hidden group">
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+                <div className="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 bg-white/10 rounded-full blur-3xl animate-pulse-slow"></div>
+                <div className="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-gray-900/20 rounded-full blur-2xl animate-bounce-slow"></div>
+                
+                {/* Content */}
+                <div className="text-center relative z-10">
+                  <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-2xl mb-3 sm:mb-4 backdrop-blur-sm border border-white/20">
+                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                  </div>
+                  <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-2 sm:mb-3 font-zentry bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent drop-shadow-lg">01:20:15</div>
+                  <div className="text-white text-base sm:text-lg font-semibold">{t('organizer.features.setupTime')}</div>
+                  <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-white/80 text-xs sm:text-sm">
+                    <Target className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span>{t('organizer.features.setupTimeLabel')}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -802,48 +434,63 @@ export default function OrganizerPage() {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="py-20 px-6 lg:px-8 bg-[#0A0A0A]">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
-              <p className="text-gray-400">Everything you need to know about our platform</p>
+        <section id="faq" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0A0A0A] to-gray-900/30 relative">
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/3 right-0 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-primary/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/3 left-0 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-gray-700/5 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-3xl mx-auto relative z-10">
+            <div className="text-center mb-10 sm:mb-12">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+                <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>{t('organizer.faq.gotQuestions')}</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 font-zentry bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">{t('organizer.faq.title')}</h2>
+              <p className="text-gray-300 text-lg">{t('organizer.faq.subtitle')}</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {[
                 {
-                  q: "Which games are supported?",
-                  a: "Absolutely all of them! You define the rules."
+                  q: t('organizer.faq.questions.games.q'),
+                  a: t('organizer.faq.questions.games.a')
                 },
                 {
-                  q: "Do I need technical skills?",
-                  a: "Not at all. Our interface is designed to be simple and intuitive."
+                  q: t('organizer.faq.questions.technical.q'),
+                  a: t('organizer.faq.questions.technical.a')
                 },
                 {
-                  q: "Can I organize paid tournaments?",
-                  a: "Yes, with our White-label plan, you can link your own ticketing system and payment gateways."
+                  q: t('organizer.faq.questions.paid.q'),
+                  a: t('organizer.faq.questions.paid.a')
                 },
                 {
-                  q: "What payment methods do you accept for the plan?",
-                  a: "We accept all major credit cards, PayPal, and cryptocurrency payments for custom plans."
+                  q: t('organizer.faq.questions.payment.q'),
+                  a: t('organizer.faq.questions.payment.a')
                 }
               ].map((faq, index) => (
                 <div 
                   key={index}
-                  className="bg-[#1A1A1A] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition"
+                  className="relative bg-[#1A1A1A]/80 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-primary/40 transition-all duration-300 group hover:shadow-lg hover:shadow-primary/10"
                 >
+                  {/* Subtle gradient on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full p-6 text-left flex justify-between items-center"
+                    className="relative w-full p-4 sm:p-6 text-left flex justify-between items-center z-10"
                   >
-                    <span className="font-medium">{faq.q}</span>
-                    <ChevronDown 
-                      className={`text-gray-400 transition-transform flex-shrink-0 ml-4 ${openFaq === index ? 'rotate-180' : ''}`}
-                      size={20}
-                    />
+                    <span className="font-semibold text-sm sm:text-base text-gray-200 group-hover:text-white transition-colors pr-2">{faq.q}</span>
+                    <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${openFaq === index ? 'rotate-180' : ''}`}>
+                      <ChevronDown 
+                        className={`text-primary transition-transform`}
+                        size={18}
+                      />
+                    </div>
                   </button>
                   {openFaq === index && (
-                    <div className="px-6 pb-6 text-gray-400 text-sm border-t border-gray-800 pt-4">
+                    <div className="relative px-4 sm:px-6 pb-4 sm:pb-6 text-gray-300 text-xs sm:text-sm border-t border-gray-800 pt-3 sm:pt-4 animate-fadeIn z-10">
                       {faq.a}
                     </div>
                   )}
@@ -854,40 +501,176 @@ export default function OrganizerPage() {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-20 px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-primary/85 to-primary rounded-3xl p-12 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black special-font">Ready to Launch Your Next Big Event?</h2>
-              <p className="text-indigo-100 mb-8 max-w-2xl mx-auto font-circular-web">
-                Join hundreds of organizers who trust us. Create your first tournament in minutes.
-              </p>
-              <a href='/login' className="bg-black text-white px-8 py-3  font-semibold hover:bg-gray-100 transition">
-                Start for Free →
-              </a>
+        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative">
+          {/* Background accent */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 md:w-[600px] h-72 sm:h-96 md:h-[600px] bg-gradient-to-r from-primary/20 to-gray-700/20 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-4xl mx-auto relative z-10">
+            <div className="relative angular-cut bg-gradient-to-r from-primary/90 via-primary/95 to-primary/90 p-8 sm:p-12 text-center overflow-hidden group">
+              {/* Animated background elements */}
+              <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+              <div className="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 bg-white/10 rounded-full blur-3xl animate-pulse-slow"></div>
+              <div className="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-gray-900/20 rounded-full blur-2xl"></div>
+              
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1500 ease-in-out"></div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                  <span className="text-white font-semibold text-xs sm:text-sm">{t('organizer.cta.startJourney')}</span>
+                </div>
+                
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-white special-font drop-shadow-lg px-2">{t('organizer.cta.title')}</h2>
+                <p className="text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto font-circular-web text-base sm:text-lg leading-relaxed px-2">
+                  {t('organizer.cta.subtitle')}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                  <a href='https://user.gnews.ma/login' className="group relative inline-block">
+                    <div className="absolute inset-0 -skew-x-12 bg-black group-hover:bg-primary transition-colors duration-300"></div>
+                    <span className="relative flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-sm sm:text-base">
+                      <div className="absolute inset-0 -skew-x-12 border-2 border-white/20 group-hover:border-primary/50 transition-colors duration-300"></div>
+                      <span className="relative z-10">{t('organizer.cta.button')}</span>
+                      <Sparkles className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-180 transition-transform duration-500" />
+                    </span>
+                  </a>
+                  
+                  <div className="flex items-center gap-2 text-white/90">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                    <span className="text-xs sm:text-sm font-medium">{t('organizer.cta.freeToStart')}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className=" py-12 px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
+        <footer className="relative py-10 sm:py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800/50 bg-gradient-to-b from-transparent to-black/50">
+          {/* Footer glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none"></div>
           
-            
-            <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800">
-            <div className="flex items-center mb-4 md:mb-0">
-                <Link to="/" className="flex items-center">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-center pt-6 sm:pt-8 gap-4">
+              <div className="flex items-center mb-2 md:mb-0">
+                <Link to="/" className="flex items-center group">
                   <img
                     src="img/logo-gamius-white.png"
                     alt="GAMIUS Logo"
-                    className="h-10"
+                    className="h-8 sm:h-10 transition-transform group-hover:scale-110 duration-300"
                   />
                 </Link>
               </div>
-              <p className="text-sm text-gray-500">© 2025 Gamius. All rights reserved.</p>
+              <p className="text-xs sm:text-sm text-gray-400 text-center">© 2025 Gamius. <span className="text-primary">All rights reserved.</span></p>
             </div>
           </div>
         </footer>
       </div>
+
+      {/* Enhanced Styles */}
+      <style jsx>{`
+        .angular-cut {
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+          background: rgba(26, 26, 26, 0.6);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bg-grid-pattern {
+          background-image: 
+            linear-gradient(rgba(255, 61, 8, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 61, 8, 0.08) 1px, transparent 1px);
+          background-size: 50px 50px;
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.7;
+          }
+          50% {
+            transform: translateY(-20px) rotate(180deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.9);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0px) scale(0.9);
+          }
+          50% {
+            transform: translateY(-10px) scale(1);
+          }
+        }
+
+        @keyframes spin-slow {
+          0% {
+            transform: rotate(0deg) scale(0.8);
+          }
+          100% {
+            transform: rotate(360deg) scale(1.2);
+          }
+        }
+
+        .animate-float {
+          animation: float 20s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .animate-bounce-slow {
+          animation: bounce-slow 6s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes gradient-x {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 3s ease infinite;
+        }
+      `}</style>
     </div>
   );
 }
+

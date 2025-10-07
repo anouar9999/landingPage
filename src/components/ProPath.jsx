@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+﻿import React, { useRef, useEffect } from 'react';
 import { ArrowUpRight, Target, TrendingUp, Award, Users, Trophy, Medal, Calendar, Star, Download, ExternalLink, FileText, Gamepad, Image } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,7 +6,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import { Link } from 'react-router-dom';
 import AnimatedTitle from './AnimatedTitle';
 
-// Référencer les images depuis le dossier public
+// RÃ©fÃ©rencer les images depuis le dossier public
 const IMAGES = {
   mobile: "/img/mobile-mge.webp",
   booster: "/img/booster.webp",
@@ -18,13 +18,13 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Fonction pour générer une image SVG de remplacement pour les étapes
+// Fonction pour gÃ©nÃ©rer une image SVG de remplacement pour les Ã©tapes
 const generatePlaceholderSVG = (id, title, color = '#d7c6af', bgColor = '#111122') => {
   const safeTitle = title.replace(/[<>&"']/g, '');
   return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='${bgColor}'/%3E%3Ctext x='50%25' y='50%25' font-size='38' text-anchor='middle' fill='${color}' dominant-baseline='middle'%3E${id.toUpperCase()}%3C/text%3E%3C/svg%3E`;
 };
 
-// Fonction pour générer une image de secours pour les images manquantes
+// Fonction pour gÃ©nÃ©rer une image de secours pour les images manquantes
 const generateFallbackImage = (imageName, text = "Image non disponible") => {
   return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23181830'/%3E%3Ctext x='50%25' y='50%25' font-size='24' text-anchor='middle' fill='%23d7c6af' dominant-baseline='middle'%3E${text}%3C/text%3E%3Ctext x='50%25' y='60%25' font-size='18' text-anchor='middle' fill='%23d7c6af' dominant-baseline='middle'%3E${imageName}%3C/text%3E%3C/svg%3E`;
 };
@@ -54,7 +54,7 @@ const ProPath = () => {
   
  
   
-  // Données des étapes du programme - Version actualisée pour le Ministère
+  // DonnÃ©es des Ã©tapes du programme - Version actualisÃ©e pour le MinistÃ¨re
   const steps = [
     {
       id: 'Players',
@@ -62,7 +62,7 @@ const ProPath = () => {
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
-      image: "img/WhatsApp Image 2025-09-25 à 14.03.34_d922dd2a.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
+      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.34_d922dd2a.jpg", // Cette image sera gÃ©nÃ©rÃ©e dynamiquement si elle n'existe pas
       features: [
         t("proPath.regionalQualifiers.keyFeatures.format"),
         t("proPath.regionalQualifiers.keyFeatures.groups"),
@@ -75,7 +75,7 @@ const ProPath = () => {
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
-      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2a03a0d6.jpg",
+      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.33_2a03a0d6.jpg",
       features: [
         t("proPath.nationalChampionships.keyFeatures.format"),
         t("proPath.nationalChampionships.keyFeatures.points"),
@@ -88,7 +88,7 @@ const ProPath = () => {
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
-      image: "img/WhatsApp Image 2025-09-25 à 14.03.33_63e1c92b.jpg",
+      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.33_63e1c92b.jpg",
       features: [
         t("proPath.eliteLeague.keyFeatures.training"),
         t("proPath.eliteLeague.keyFeatures.coverage"),
@@ -100,7 +100,7 @@ const ProPath = () => {
     //   icon: <Medal size={24} className="text-black" />,
     //   title: t("proPath.grandFinal.title"),
     //   description: t("proPath.grandFinal.description"),
-    //   image: "img/WhatsApp Image 2025-09-25 à 14.03.33_2032df42.jpg",
+    //   image: "img/WhatsApp Image 2025-09-25 Ã  14.03.33_2032df42.jpg",
     //   features: [
     //   t("proPath.grandFinal.keyFeatures.format"),
     //     t("proPath.grandFinal.keyFeatures.prizes"),
@@ -123,14 +123,14 @@ const ProPath = () => {
       sectionRef.current.style.visibility = 'visible';
       sectionRef.current.style.opacity = '1';
       
-      // Debug message en développement
+      // Debug message en dÃ©veloppement
       if (process.env.NODE_ENV === 'development') {
         console.log('ProPath section visible, langue:', language);
       }
     }
   }, [language]);
   
-  // Animations lors du défilement
+  // Animations lors du dÃ©filement
   useEffect(() => {
     if (sectionRef.current && typeof window !== 'undefined') {
       // Animation du titre de section
@@ -171,7 +171,7 @@ const ProPath = () => {
         );
       }
       
-      // Animation des étapes
+      // Animation des Ã©tapes
       stepsRef.current.forEach((step, index) => {
         if (step) {
           const tl = gsap.timeline({
@@ -187,7 +187,7 @@ const ProPath = () => {
             { opacity: 1, x: 0, duration: 0.7, ease: "power2.out" }
           );
           
-          // Animation de l'image dans l'étape
+          // Animation de l'image dans l'Ã©tape
           const stepImage = step.querySelector('.step-image');
           if (stepImage) {
             tl.fromTo(
@@ -198,7 +198,7 @@ const ProPath = () => {
             );
           }
           
-          // Animation de l'icône et du titre
+          // Animation de l'icÃ´ne et du titre
           const iconElement = step.querySelector('.step-icon');
           const titleElement = step.querySelector('.step-title');
           if (iconElement && titleElement) {
@@ -221,7 +221,7 @@ const ProPath = () => {
             );
           }
           
-          // Animation des caractéristiques
+          // Animation des caractÃ©ristiques
           const featureItems = step.querySelectorAll('.feature-item');
           if (featureItems && featureItems.length > 0) {
             tl.fromTo(
@@ -234,7 +234,7 @@ const ProPath = () => {
         }
       });
       
-      // Amélioration de l'animation de la timeline
+      // AmÃ©lioration de l'animation de la timeline
       if (timelineRef.current) {
         gsap.fromTo(
           timelineRef.current,
@@ -267,7 +267,7 @@ const ProPath = () => {
               end: "bottom 10%",
               scrub: 0.3,
               onUpdate: (self) => {
-                // Cela garantit que la barre s'anime proportionnellement au défilement
+                // Cela garantit que la barre s'anime proportionnellement au dÃ©filement
                 progressBarRef.current.style.transform = `scaleY(${self.progress})`;
               }
             }
@@ -279,12 +279,12 @@ const ProPath = () => {
 
   useEffect(() => {
     if (proPathRef.current && isTamazight) {
-      // Force la police sur tout le composant et ses éléments clés
+      // Force la police sur tout le composant et ses Ã©lÃ©ments clÃ©s
       forceTifinaghFont(proPathRef);
       forceTifinaghFont(pathHeadingRef);
       forceTifinaghFont(pathListRef);
       
-      // Appliquer à tous les textes, même dynamiquement générés
+      // Appliquer Ã  tous les textes, mÃªme dynamiquement gÃ©nÃ©rÃ©s
       setTimeout(() => {
         try {
           const textElements = proPathRef.current.querySelectorAll(
@@ -302,11 +302,11 @@ const ProPath = () => {
           });
         } catch (error) {
           console.warn('Erreur non critique lors de l\'application de la police dans ProPath:', error);
-          // Continuer l'exécution malgré l'erreur
+          // Continuer l'exÃ©cution malgrÃ© l'erreur
         }
       }, 200);
       
-      // Log en mode développement
+      // Log en mode dÃ©veloppement
       if (process.env.NODE_ENV === 'development') {
         console.log('ProPath: Tifinagh font applied', language);
       }
@@ -314,7 +314,7 @@ const ProPath = () => {
   }, [language, forceTifinaghFont, isTamazight]);
 
   useEffect(() => {
-    // S'assurer que les références existent avant d'appliquer les animations
+    // S'assurer que les rÃ©fÃ©rences existent avant d'appliquer les animations
     if (pathHeadingRef?.current && containerRef?.current) {
       // Heading animation
       gsap.from(pathHeadingRef.current, {
@@ -328,7 +328,7 @@ const ProPath = () => {
       });
     }
 
-    // Path list animation - vérifier que la ref et ses enfants existent
+    // Path list animation - vÃ©rifier que la ref et ses enfants existent
     if (pathListRef?.current?.children && pathListRef.current.children.length > 0 && containerRef?.current) {
       gsap.from(pathListRef.current.children, {
         opacity: 0,
@@ -371,7 +371,7 @@ const ProPath = () => {
         {/* Section header */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center ">
           <p className="font-general  text-primary text-xs sm:text-xs md:text-sm lg:text-sm uppercase px-2 md:px-4 max-w-2xl mx-auto">
-              {t('proPath.tagline', "Programme Officiel du Ministère de la Jeunesse et des Sports")}
+              {t('proPath.tagline', "Programme Officiel du MinistÃ¨re de la Jeunesse et des Sports")}
         </p>
           <AnimatedTitle
           title={t('proPath.title', "Nouvelle Voie vers les Pros")}
@@ -383,7 +383,7 @@ const ProPath = () => {
           </h2> */}
           
           <p className={`pro-path-description text-gray-200 font-circular-web text-lg xl:text-xl max-w-3xl mx-auto mb-16 leading-relaxed text-center ${getTextClass()}  `}>
-            {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurée vers le professionnalisme pour les talents esport marocains. Progressez des qualifications régionales jusqu'aux finales LAN nationales.")}
+            {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurÃ©e vers le professionnalisme pour les talents esport marocains. Progressez des qualifications rÃ©gionales jusqu'aux finales LAN nationales.")}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
@@ -391,7 +391,7 @@ const ProPath = () => {
               href="#inscription"
               className="inline-flex items-center bg-[#e10000] hover:bg-[#c00] font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 "
             >
-              <span className={getTextClass()}>{t('proPath.cta', "Débuter votre parcours pro")}</span>
+              <span className={getTextClass()}>{t('proPath.cta', "DÃ©buter votre parcours pro")}</span>
               <ArrowUpRight className="ml-2" size={18} />
             </a>
             
@@ -401,13 +401,13 @@ const ProPath = () => {
             </div>
           </div>
 
-          {/* Jeux officiels avec style amélioré */}
+          {/* Jeux officiels avec style amÃ©liorÃ© */}
        
         </div>
         
-        {/* Timeline avec les étapes - Version améliorée */}
+        {/* Timeline avec les Ã©tapes - Version amÃ©liorÃ©e */}
         <div className="relative mt-16" ref={timelineRef}>
-          {/* Barre de progression verticale avec style amélioré */}
+          {/* Barre de progression verticale avec style amÃ©liorÃ© */}
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary/5 via-primary/10 to-primary/5 hidden md:block rounded-full overflow-hidden">
             <div 
               ref={progressBarRef}
@@ -416,7 +416,7 @@ const ProPath = () => {
             ></div>
           </div>
           
-          {/* Étapes alternées avec amélioration visuelle */}
+          {/* Ã‰tapes alternÃ©es avec amÃ©lioration visuelle */}
           <div className="space-y-20 md:space-y-32 relative">
             {steps.map((step, index) => (
               <div 
@@ -440,12 +440,12 @@ const ProPath = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
                         e.target.onerror = null;
-                        // Utiliser l'image de remplacement générée dynamiquement
+                        // Utiliser l'image de remplacement gÃ©nÃ©rÃ©e dynamiquement
                         e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
                       }}
                     />
                     
-                    {/* Étiquette de l'étape */}
+                    {/* Ã‰tiquette de l'Ã©tape */}
                     <div className="absolute top-0 left-0 bg-primary/90  text-black py-1 px-3 flex items-center gap-1.5 rounded-br-lg">
                       <div className="step-icon">{step.icon}</div>
                       <span className={` uppercase font-zentry text-sm tracking-wider ${getTextClass()}`}>
@@ -456,12 +456,12 @@ const ProPath = () => {
                     {/* Overlay avec effet de gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                     
-                    {/* Numéro de l'étape visible sur mobile */}
+                    {/* NumÃ©ro de l'Ã©tape visible sur mobile */}
                     <div className="absolute top-3 right-3 md:hidden w-8 h-8 rounded-full bg-primary flex items-center justify-center text-black font-bold text-sm">{index + 1}</div>
                   </div>
                 </div>
                 
-                {/* Contenu de l'étape */}
+                {/* Contenu de l'Ã©tape */}
                 <div className="w-full md:w-7/12 bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-primary/20 shadow-lg">
                   <h3 className={`step-title text-2xl font-zentry text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
                     {t(`proPath.steps.${step.id}.title`, step.title)}
@@ -471,10 +471,10 @@ const ProPath = () => {
                     {t(`proPath.steps.${step.id}.description`, step.description)}
                   </p>
                   
-                  {/* Caractéristiques du format de compétition */}
+                  {/* CaractÃ©ristiques du format de compÃ©tition */}
                   <div className="mt-4 space-y-2.5">
                     <h4 className={`text-white text-sm uppercase tracking-wider font-bold ${getTextClass()}`}>
-                      {t('proPath.formatFeatures', "Format de compétition")}
+                      {t('proPath.formatFeatures', "Format de compÃ©tition")}
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                       {step.features.map((feature, idx) => (
@@ -506,40 +506,38 @@ const ProPath = () => {
           </div>
         </div>
         
-        {/* Section statistiques */}
-        <div className="mt-24 bg-primary/5 backdrop-blur-sm rounded-2xl   p-8">
+        {/* Section statistiques - COMMENTED OUT */}
+        {/* <div className="mt-24 bg-primary/5 backdrop-blur-sm rounded-2xl   p-8">
           <h3 className={`text-center text-2xl tracking-wider break-all special-font text-primary mb-8 ${language === 'tz' ? 'tamazight-text' : ''}`}>
-            {t('proPath.statsTitle', "L'engagement du Ministère pour l'Esport Marocain")}
+            {t('proPath.statsTitle', "L'engagement du MinistÃ¨re pour l'Esport Marocain")}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div className="p-4">
               <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>12</div>
-              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.regions', "Régions couvertes")}</div>
+              <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.regions', "RÃ©gions couvertes")}</div>
               <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.regionsDesc', "Tournois qualificatifs dans tout le Royaume")}</p>
             </div>
             
             <div className="p-4">
               <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>4</div>
               <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.games', "Jeux officiels")}</div>
-              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.gamesDesc', "Diversité des disciplines esportives")}</p>
+              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.gamesDesc', "DiversitÃ© des disciplines esportives")}</p>
             </div>
             
             <div className="p-4">
               <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>400+</div>
               <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.players', "Joueurs participants")}</div>
-              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.playersDesc', "À la première saison nationale")}</p>
+              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.playersDesc', "Ã€ la premiÃ¨re saison nationale")}</p>
             </div>
             
             <div className="p-4">
               <div className={`text-4xl font-zentry text-white mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>1</div>
               <div className={`text-primary font-ea-football mb-1 ${getTextClass()}`}>{t('proPath.stats.finale', "Grande finale LAN")}</div>
-              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.finaleDesc', "Événement national annuel")}</p>
+              <p className={`text-white/60 text-sm ${getTextClass()}`}>{t('proPath.stats.finaleDesc', "Ã‰vÃ©nement national annuel")}</p>
             </div>
           </div>
-        </div>
-        
-        {/* Section Nouvelle Saison Mars 2025 - Redesign complet */}
+        </div> */}        {/* Section Nouvelle Saison Mars 2025 - Redesign complet */}
         {/* <div className="mt-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
@@ -553,7 +551,7 @@ const ProPath = () => {
               </h3>
               
               <p className={`text-white/80 mb-6 ${getTextClass()}`}>
-                La nouvelle saison de compétitions GAMIUS s'annonce avec des formats innovants, des prix plus importants et un parcours professionnel structuré pour les champions marocains.
+                La nouvelle saison de compÃ©titions GAMIUS s'annonce avec des formats innovants, des prix plus importants et un parcours professionnel structurÃ© pour les champions marocains.
               </p>
               
               <div className="space-y-3 mb-6">
@@ -562,8 +560,8 @@ const ProPath = () => {
                     <Trophy size={14} className="text-primary" />
                   </div>
                   <div>
-                    <h4 className={`text-white font-semibold mb-1 ${getTextClass()}`}>Prix total augmenté</h4>
-                    <p className={`text-white/70 text-sm ${getTextClass()}`}>Récompenses et prize pools revus à la hausse</p>
+                    <h4 className={`text-white font-semibold mb-1 ${getTextClass()}`}>Prix total augmentÃ©</h4>
+                    <p className={`text-white/70 text-sm ${getTextClass()}`}>RÃ©compenses et prize pools revus Ã  la hausse</p>
                   </div>
                 </div>
                 
@@ -582,8 +580,8 @@ const ProPath = () => {
                     <Calendar size={14} className="text-primary" />
                   </div>
                   <div>
-                    <h4 className={`text-white font-semibold mb-1 ${getTextClass()}`}>Calendrier étendu</h4>
-                    <p className={`text-white/70 text-sm ${getTextClass()}`}>Saison complète avec phases régulières et playoffs</p>
+                    <h4 className={`text-white font-semibold mb-1 ${getTextClass()}`}>Calendrier Ã©tendu</h4>
+                    <p className={`text-white/70 text-sm ${getTextClass()}`}>Saison complÃ¨te avec phases rÃ©guliÃ¨res et playoffs</p>
                   </div>
                 </div>
               </div>

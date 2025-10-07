@@ -8,7 +8,7 @@ const resources = {
       // Navigation
       nav: {
         discover: "Discover",
-        passGamers: "Pass Gamers",
+        passGamers: "Pass Gamius",
         documentation: "Documentation",
         faq: "FAQ",
         tri9lGlory: "Road to Glory",
@@ -16,6 +16,7 @@ const resources = {
         playFree: "Play Free",
         login: "Log In",
         proPath: "Pro Path",
+        organizer: "Organizer",
       },
       // Hero
       hero: {
@@ -90,6 +91,122 @@ const resources = {
       events: {
         title: "Upcoming Events",
         viewAll: "View All Events",
+      },
+      // Organizer Page
+      organizer: {
+        hero: {
+          badge: "Professional Tournament Management",
+          title1: "Create and Manage",
+          title2: "Unforgettable",
+          title3: "Competitions",
+          subtitle: "From local events to global circuits, our platform gives you the keys to success. You focus on the show, we'll handle the technology."
+        },
+        plans: {
+          community: {
+            name: "Community",
+            description: "Perfect for small local tournaments and getting started",
+            price: "Free",
+            priceDetail: "No credit card required",
+            cta: "Get Started",
+            features: {
+              participants: "Up to 64 participants",
+              formats: "Standard tournament formats",
+              brackets: "Automated bracket generation",
+              profiles: "Basic participant profiles",
+              support: "Community support"
+            }
+          },
+          whiteLabel: {
+            name: "White-label",
+            description: "Custom solutions for large-scale operations",
+            price: "Custom",
+            priceDetail: "Tailored to your needs",
+            cta: "Contact Sales",
+            everythingPlus: "Everything in Community, plus:",
+            features: {
+              participants: "Unlimited participants",
+              solution: "White-label solution",
+              types: "Custom tournament types",
+              stats: "Real-time statistics & analytics",
+              manager: "Dedicated account manager",
+              support: "24/7 premium support"
+            }
+          }
+        },
+        comparison: {
+          title: "Compare Plans",
+          subtitle: "Choose the perfect plan for your esports ambitions",
+          choosePlan: "Choose Your Plan",
+          features: "Features",
+          community: "Community",
+          whiteLabel: "White-label",
+          free: "Free",
+          custom: "Custom",
+          contactUs: "Contact Us",
+          premium: "PREMIUM",
+          rows: {
+            maxParticipants: "Max participants",
+            formats: "Tournament formats",
+            brackets: "Automated brackets",
+            stats: "Real-time stats",
+            sponsorIntegration: "Sponsor integration",
+            customBranding: "Custom branding",
+            whiteLabelSolution: "White-label solution",
+            dedicatedSupport: "Dedicated support",
+            standard: "Standard",
+            allCustom: "All + Custom",
+            unlimited: "Unlimited"
+          }
+        },
+        features: {
+          badge: "ORGANIZERS",
+          title: "The Power of a Pro Tool, Made Simple",
+          subtitle: "Managing an esports event shouldn't be complicated. We've designed an intuitive interface that automates complex tasks.",
+          flexibility: {
+            title: "Total Flexibility",
+            description: "No matter the game or format, our platform adapts to your vision."
+          },
+          engagement: {
+            title: "Player Engagement",
+            description: "Professional experience with profiles, stats, and real-time leaderboards."
+          },
+          monetization: {
+            title: "Simplified Monetization",
+            description: "Easily integrate your sponsors and manage ticketing."
+          },
+          setupTime: "Average Setup Time",
+          setupTimeLabel: "Average Setup Time"
+        },
+        faq: {
+          title: "Frequently Asked Questions",
+          subtitle: "Everything you need to know about our platform",
+          gotQuestions: "Got Questions?",
+          questions: {
+            games: {
+              q: "Which games are supported?",
+              a: "Absolutely all of them! You define the rules."
+            },
+            technical: {
+              q: "Do I need technical skills?",
+              a: "Not at all. Our interface is designed to be simple and intuitive."
+            },
+            paid: {
+              q: "Can I organize paid tournaments?",
+              a: "Yes, with our White-label plan, you can link your own ticketing system and payment gateways."
+            },
+            payment: {
+              q: "What payment methods do you accept for the plan?",
+              a: "We accept all major credit cards, PayPal, and cryptocurrency payments for custom plans."
+            }
+          }
+        },
+        cta: {
+          title: "Ready to Launch Your Next Big Event?",
+          subtitle: "Join hundreds of organizers who trust us. Create your first tournament in minutes.",
+          button: "Start for Free →",
+          startJourney: "Start Your Journey",
+          freeToStart: "Free to get started"
+        }
       },
       // Footer
       footer: {
@@ -188,8 +305,36 @@ const resources = {
         },
         downloadZone: {
           title: "DOWNLOAD ZONE",
+          subtitle: "Download the regulations, guides and resources to prepare your participation in GAMIUS tournaments",
           description:
             "Ready to get prepared? Download all the official regulations, strategy guides, and resources for the GAMIUS tournaments right here.",
+          new: "NEW",
+          downloadButton: "Download",
+          searchPlaceholder: "Search...",
+          noResults: "No resources match your search",
+          tryAnother: "Try another term or category",
+          size: "Size:",
+          updated: "Updated:",
+          tabs: {
+            all: "All",
+            rules: "Regulations",
+            guides: "Guides"
+          },
+          documents: {
+            rulebook: {
+              title: "Official GAMIUS 2025 Rulebook",
+              description: "General regulations for GAMIUS 2025 competitions"
+            },
+            participationGuide: {
+              title: "Tournament Registration Guide",
+              description: "Step-by-step tutorial to register for tournaments and validate your team"
+            }
+          },
+          helpBanner: {
+            title: "Need help with documents?",
+            description: "If you have questions about documents or need assistance, our team is here to help.",
+            contactButton: "Contact Us"
+          }
         },
       },
       // ProPath
@@ -409,7 +554,7 @@ const resources = {
       // Navigation
       nav: {
         discover: "Decouvrir",
-        passGamers: "Pass Gamers",
+        passGamers: "Pass Gamius",
         documentation: "Documentation",
         faq: "FAQ",
         tri9lGlory: "Voie de la Gloire",
@@ -417,6 +562,7 @@ const resources = {
         playFree: "Jouer Gratuitement",
         login: "Connexion",
         proPath: "Parcours Pro",
+        organizer: "Organisateur",
         language: "Langue",
         followUs: "Suivez-nous",
         mainNav: "Navigation principale",
@@ -496,6 +642,122 @@ const resources = {
       events: {
         title: "evenements a Venir",
         viewAll: "Voir Tous les evenements",
+      },
+      // Organizer Page
+      organizer: {
+        hero: {
+          badge: "Gestion Professionnelle de Tournois",
+          title1: "Creez et Gerez des",
+          title2: "Competitions",
+          title3: "Inoubliables",
+          subtitle: "Des événements locaux aux circuits mondiaux, notre plateforme vous donne les clés du succès. Concentrez-vous sur le spectacle, nous gérons la technologie."
+        },
+        plans: {
+          community: {
+            name: "Communaute",
+            description: "Parfait pour les petits tournois locaux et pour débuter",
+            price: "Gratuit",
+            priceDetail: "Aucune carte bancaire requise",
+            cta: "Commencer",
+            features: {
+              participants: "Jusqu'à 64 participants",
+              formats: "Formats de tournoi standards",
+              brackets: "Génération automatique des brackets",
+              profiles: "Profils de participants basiques",
+              support: "Support communautaire"
+            }
+          },
+          whiteLabel: {
+            name: "Marque blanche",
+            description: "Solutions personnalisées pour les opérations à grande échelle",
+            price: "Sur mesure",
+            priceDetail: "Adapté à vos besoins",
+            cta: "Contacter les ventes",
+            everythingPlus: "Tout ce qui est dans Communauté, plus:",
+            features: {
+              participants: "Participants illimités",
+              solution: "Solution marque blanche",
+              types: "Types de tournoi personnalisés",
+              stats: "Statistiques et analyses en temps réel",
+              manager: "Gestionnaire de compte dédié",
+              support: "Support premium 24/7"
+            }
+          }
+        },
+        comparison: {
+          title: "Comparer les Plans",
+          subtitle: "Choisissez le plan parfait pour vos ambitions esport",
+          choosePlan: "Choisissez Votre Plan",
+          features: "Fonctionnalités",
+          community: "Communauté",
+          whiteLabel: "Marque blanche",
+          free: "Gratuit",
+          custom: "Sur mesure",
+          contactUs: "Nous contacter",
+          premium: "PREMIUM",
+          rows: {
+            maxParticipants: "Participants maximum",
+            formats: "Formats de tournoi",
+            brackets: "Brackets automatisés",
+            stats: "Statistiques en temps réel",
+            sponsorIntegration: "Intégration des sponsors",
+            customBranding: "Image de marque personnalisée",
+            whiteLabelSolution: "Solution marque blanche",
+            dedicatedSupport: "Support dédié",
+            standard: "Standard",
+            allCustom: "Tout + Personnalisé",
+            unlimited: "Illimité"
+          }
+        },
+        features: {
+          badge: "ORGANISATEURS",
+          title: "La Puissance d'un Outil Pro, en Toute Simplicite",
+          subtitle: "Gérer un événement esport ne devrait pas être compliqué. Nous avons conçu une interface intuitive qui automatise les tâches complexes.",
+          flexibility: {
+            title: "Flexibilité Totale",
+            description: "Peu importe le jeu ou le format, notre plateforme s'adapte à votre vision."
+          },
+          engagement: {
+            title: "Engagement des Joueurs",
+            description: "Expérience professionnelle avec profils, statistiques et classements en temps réel."
+          },
+          monetization: {
+            title: "Monétisation Simplifiée",
+            description: "Intégrez facilement vos sponsors et gérez la billetterie."
+          },
+          setupTime: "Temps de Configuration Moyen",
+          setupTimeLabel: "Temps de Configuration Moyen"
+        },
+        faq: {
+          title: "Questions Frequemment Posees",
+          subtitle: "Tout ce que vous devez savoir sur notre plateforme",
+          gotQuestions: "Des Questions?",
+          questions: {
+            games: {
+              q: "Quels jeux sont pris en charge?",
+              a: "Absolument tous! Vous définissez les règles."
+            },
+            technical: {
+              q: "Ai-je besoin de compétences techniques?",
+              a: "Pas du tout. Notre interface est conçue pour être simple et intuitive."
+            },
+            paid: {
+              q: "Puis-je organiser des tournois payants?",
+              a: "Oui, avec notre plan Marque blanche, vous pouvez lier votre propre système de billetterie et passerelles de paiement."
+            },
+            payment: {
+              q: "Quels moyens de paiement acceptez-vous pour le plan?",
+              a: "Nous acceptons toutes les principales cartes bancaires, PayPal et les paiements en cryptomonnaie pour les plans personnalisés."
+            }
+          }
+        },
+        cta: {
+          title: "Pret a Lancer Votre Prochain Grand evenement?",
+          subtitle: "Rejoignez des centaines d'organisateurs qui nous font confiance. Créez votre premier tournoi en quelques minutes.",
+          button: "Commencer Gratuitement →",
+          startJourney: "Commencez Votre Aventure",
+          freeToStart: "Gratuit pour commencer"
+        }
       },
       // Footer
       footer: {
@@ -594,9 +856,37 @@ const resources = {
           },
         },
         downloadZone: {
-          title: "ZONE DE TeLeCHARGEMENT",
+          title: "ZONE DE TELECHARGEMENT",
+          subtitle: "Téléchargez les règlements, guides et ressources pour préparer votre participation aux tournois GAMIUS",
           description:
             "Prêt a te preparer ? Telecharge ici tous les reglements, guides strategiques et ressources officielles des tournois GAMIUS.",
+          new: "NOUVEAU",
+          downloadButton: "Télécharger",
+          searchPlaceholder: "Rechercher...",
+          noResults: "Aucune ressource ne correspond à votre recherche",
+          tryAnother: "Essayez un autre terme ou catégorie",
+          size: "Taille:",
+          updated: "Mis à jour:",
+          tabs: {
+            all: "Tous",
+            rules: "Règlements",
+            guides: "Guides"
+          },
+          documents: {
+            rulebook: {
+              title: "Règlement Officiel GAMIUS 2025",
+              description: "Règlement général des compétitions du GAMIUS 2025"
+            },
+            participationGuide: {
+              title: "Guide d'Inscription aux Tournois",
+              description: "Tutoriel pas-à-pas pour s'inscrire aux tournois et valider son équipe"
+            }
+          },
+          helpBanner: {
+            title: "Besoin d'aide avec les documents ?",
+            description: "Si vous avez des questions concernant les documents ou besoin d'assistance, notre équipe est là pour vous aider.",
+            contactButton: "Contactez-nous"
+          }
         },
       },
       // ProPath
@@ -814,7 +1104,7 @@ const resources = {
       // Navigation
       nav: {
         discover: "اكتشف",
-        passGamers: "باس جيمرز",
+        passGamers: "باس غاميوس",
         documentation: "التوثيق",
         faq: "الأسئلة الشائعة",
         tri9lGlory: "الطريق إلى المجد",
@@ -822,6 +1112,7 @@ const resources = {
         playFree: "العب مجانا",
         login: "تسجيل الدخول",
         proPath: "طريق المحترفين",
+        organizer: "المنظم",
         language: "اللغة",
         followUs: "تابعنا",
         mainNav: "التنقل الرئيسي",
@@ -896,6 +1187,122 @@ const resources = {
       events: {
         title: "الأحداث القادمة",
         viewAll: "عرض جميع الأحداث",
+      },
+      // Organizer Page
+      organizer: {
+        hero: {
+          badge: "إدارة احترافية للبطولات",
+          title1: "أنشئ وأدر",
+          title2: "لا تُنسى",
+          title3: "منافسات",
+          subtitle: "من الأحداث المحلية إلى الدوائر العالمية، منصتنا تمنحك مفاتيح النجاح. ركز على العرض، ونحن نتولى التكنولوجيا."
+        },
+        plans: {
+          community: {
+            name: "المجتمع",
+            description: "مثالي للبطولات المحلية الصغيرة وللبدء",
+            price: "مجاني",
+            priceDetail: "لا حاجة لبطاقة ائتمان",
+            cta: "ابدأ الآن",
+            features: {
+              participants: "حتى 64 مشاركاً",
+              formats: "تنسيقات بطولات قياسية",
+              brackets: "إنشاء جداول تلقائي",
+              profiles: "ملفات تعريف أساسية للمشاركين",
+              support: "دعم المجتمع"
+            }
+          },
+          whiteLabel: {
+            name: "العلامة البيضاء",
+            description: "حلول مخصصة للعمليات واسعة النطاق",
+            price: "مخصص",
+            priceDetail: "مصمم حسب احتياجاتك",
+            cta: "اتصل بالمبيعات",
+            everythingPlus: "كل ما في المجتمع، بالإضافة إلى:",
+            features: {
+              participants: "مشاركون غير محدودين",
+              solution: "حل العلامة البيضاء",
+              types: "أنواع بطولات مخصصة",
+              stats: "إحصائيات وتحليلات في الوقت الفعلي",
+              manager: "مدير حساب مخصص",
+              support: "دعم متميز 24/7"
+            }
+          }
+        },
+        comparison: {
+          title: "قارن الخطط",
+          subtitle: "اختر الخطة المثالية لطموحاتك في الرياضات الإلكترونية",
+          choosePlan: "اختر خطتك",
+          features: "الميزات",
+          community: "المجتمع",
+          whiteLabel: "العلامة البيضاء",
+          free: "مجاني",
+          custom: "مخصص",
+          contactUs: "اتصل بنا",
+          premium: "مميز",
+          rows: {
+            maxParticipants: "الحد الأقصى للمشاركين",
+            formats: "تنسيقات البطولات",
+            brackets: "جداول تلقائية",
+            stats: "إحصائيات في الوقت الفعلي",
+            sponsorIntegration: "تكامل الرعاة",
+            customBranding: "علامة تجارية مخصصة",
+            whiteLabelSolution: "حل العلامة البيضاء",
+            dedicatedSupport: "دعم مخصص",
+            standard: "قياسي",
+            allCustom: "الكل + مخصص",
+            unlimited: "غير محدود"
+          }
+        },
+        features: {
+          badge: "المنظمين",
+          title: "قوة أداة احترافية، بكل بساطة",
+          subtitle: "إدارة حدث رياضي إلكتروني لا ينبغي أن تكون معقدة. لقد صممنا واجهة بديهية تقوم بأتمتة المهام المعقدة.",
+          flexibility: {
+            title: "مرونة كاملة",
+            description: "بغض النظر عن اللعبة أو التنسيق، منصتنا تتكيف مع رؤيتك."
+          },
+          engagement: {
+            title: "مشاركة اللاعبين",
+            description: "تجربة احترافية مع ملفات التعريف والإحصائيات ولوحات الصدارة في الوقت الفعلي."
+          },
+          monetization: {
+            title: "تحقيق الدخل المبسط",
+            description: "دمج الرعاة بسهولة وإدارة بيع التذاكر."
+          },
+          setupTime: "متوسط وقت الإعداد",
+          setupTimeLabel: "متوسط وقت الإعداد"
+        },
+        faq: {
+          title: "الأسئلة الشائعة",
+          subtitle: "كل ما تحتاج معرفته عن منصتنا",
+          gotQuestions: "لديك أسئلة؟",
+          questions: {
+            games: {
+              q: "ما الألعاب المدعومة؟",
+              a: "جميعها تماماً! أنت تحدد القواعد."
+            },
+            technical: {
+              q: "هل أحتاج إلى مهارات تقنية؟",
+              a: "ليس على الإطلاق. واجهتنا مصممة لتكون بسيطة وبديهية."
+            },
+            paid: {
+              q: "هل يمكنني تنظيم بطولات مدفوعة؟",
+              a: "نعم، مع خطة العلامة البيضاء، يمكنك ربط نظام التذاكر وبوابات الدفع الخاصة بك."
+            },
+            payment: {
+              q: "ما طرق الدفع التي تقبلونها للخطة؟",
+              a: "نقبل جميع بطاقات الائتمان الرئيسية وPayPal ومدفوعات العملات المشفرة للخطط المخصصة."
+            }
+          }
+        },
+        cta: {
+          title: "هل أنت مستعد لإطلاق حدثك الكبير القادم؟",
+          subtitle: "انضم إلى مئات المنظمين الذين يثقون بنا. أنشئ بطولتك الأولى في دقائق.",
+          button: "ابدأ مجاناً ←",
+          startJourney: "ابدأ رحلتك",
+          freeToStart: "مجاني للبدء"
+        }
       },
       // Footer
       footer: {
@@ -988,8 +1395,36 @@ const resources = {
         },
         downloadZone: {
           title: "منطقة التحميل",
+          subtitle: "قم بتنزيل اللوائح والأدلة والموارد للتحضير لمشاركتك في بطولات GAMIUS",
           description:
             "مستعد للتجهيز؟ حمِّل من هنا كل القوانين، الأدلة الاستراتيجية والموارد الرسمية لبطولات GAMIUS.",
+          new: "جديد",
+          downloadButton: "تحميل",
+          searchPlaceholder: "بحث...",
+          noResults: "لا توجد موارد تطابق بحثك",
+          tryAnother: "جرب مصطلح أو فئة أخرى",
+          size: "الحجم:",
+          updated: "تم التحديث:",
+          tabs: {
+            all: "الكل",
+            rules: "اللوائح",
+            guides: "الأدلة"
+          },
+          documents: {
+            rulebook: {
+              title: "اللائحة الرسمية GAMIUS 2025",
+              description: "اللوائح العامة لمسابقات GAMIUS 2025"
+            },
+            participationGuide: {
+              title: "دليل التسجيل في البطولات",
+              description: "دليل خطوة بخطوة للتسجيل في البطولات والتحقق من فريقك"
+            }
+          },
+          helpBanner: {
+            title: "هل تحتاج مساعدة بشأن المستندات؟",
+            description: "إذا كان لديك أسئلة حول المستندات أو تحتاج إلى مساعدة، فريقنا هنا لمساعدتك.",
+            contactButton: "اتصل بنا"
+          }
         },
       },
       // ProPath

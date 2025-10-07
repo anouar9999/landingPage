@@ -7,7 +7,6 @@ import {
   Facebook,
   Youtube,
   ChevronDown,
-  ChevronUp,
   Linkedin,
   ArrowUpRight,
   LogOut,
@@ -129,37 +128,16 @@ const NavBar = () => {
   };
 
   const mainNavItems = [
-    { name: t("nav.passGamers"), link: "#PassGamers" },
+    { name: t("nav.passGamers"), link: "/#PassGamers" },
     { name: t("nav.documentation"), link: "/downloads" },
-      { name: "Organier", link: "/organizer" },
-    { name: t("nav.faq"), link: "#faq" },
+    { name: t("nav.organizer"), link: "/organizer" },
+    { name: t("nav.faq"), link: "/#faq" },
   ];
 
-  const discoverSubItems = [
-    {
-      name: t("nav.discover"),
-      link: "#about",
-      bgImage: "/img/discover-bg.jpg", // Add your image path
-    },
-    {
-      name: t("nav.tri9lGlory"),
-      link: "#Tri9lGlory",
-      bgImage: "/img/tri9l-glory-bg.jpg", // Add your image path
-    },
-    {
-      name: t("nav.prizePool"),
-      link: "#PrizePool",
-      bgImage: "/img/prize-pool-bg.jpg", // Add your image path
-    },
-    {
-      name: t("nav.proPath"),
-      link: "#pro-path",
-      bgImage: "/img/pro-path-bg.jpg", // Add your image path
-    },
-  ];
+  // Discover is now a simple nav item, not a dropdown
+  const discoverNavItem = { name: t("nav.discover"), link: "/#hero" };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
@@ -173,8 +151,6 @@ const NavBar = () => {
 
   const navContainerRef = useRef(null);
   const menuRef = useRef(null);
-  const subMenuRef = useRef(null);
-  const discoverBtnRef = useRef(null);
   const languageSelectorRef = useRef(null);
   const { y: currentScrollY } = useWindowScroll();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -290,7 +266,6 @@ const NavBar = () => {
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsMenuOpen(false);
-      setIsSubMenuOpen(false);
     }
   };
 
@@ -298,12 +273,33 @@ const NavBar = () => {
     if (link.startsWith("#")) {
       e.preventDefault();
       scrollToSection(link);
+    } else if (link.startsWith("/") && link.includes("#")) {
+      // Handle links like "/#hero" - navigate to home page then scroll
+      e.preventDefault();
+      const hash = link.split("#")[1];
+      if (location.pathname !== "/") {
+        // Navigate to home page first
+        navigate("/");
+        // Wait for navigation then scroll
+        setTimeout(() => {
+          const section = document.getElementById(hash);
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
+      } else {
+        // Already on home page, just scroll
+        const section = document.getElementById(hash);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+      setIsMenuOpen(false);
     } else if (link.includes("user.mgexpo.ma")) {
       window.location.href = link;
       e.preventDefault();
     } else {
       setIsMenuOpen(false);
-      setIsSubMenuOpen(false);
     }
   };
 
@@ -354,114 +350,18 @@ const NavBar = () => {
             </div>
             {/* Central navigation - Desktop only */}
             <div className="hidden lg:flex items-center space-x-8 justify-center flex-grow">
-              {/* Discover menu with dropdown */}
-              <div className="relative">
-                <button
-                  ref={discoverBtnRef}
-                  className={`${navLinkClass} flex items-center gap-1.5 discover-trigger group p-2 rounded-md hover:bg-white/5 ${getTextClass()}`}
-                  onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
-                  aria-expanded={isSubMenuOpen}
-                >
-                  {t("nav.discover")}
-                  <span className="transition-transform duration-200 group-hover:translate-y-0.5">
-                    {isSubMenuOpen ? (
-                      <ChevronUp size={16} className="mt-0.5 text-primary" />
-                    ) : (
-                      <ChevronDown size={16} className="mt-0.5" />
-                    )}
-                  </span>
-                </button>
-
-                {/* Dropdown menu */}
-                <div
-                  ref={subMenuRef}
-                  className={`absolute left-0 mt-0.5 min-w-96 overflow-hidden font-zentry 
-                    bg-gradient-to-br from-slate-900/95 via-gray-800/90 to-slate-900/95 
-                    backdrop-blur-xl border border-white/10 
-                    rounded-2xl shadow-2xl shadow-black/50 origin-top-left
-                    transition-all duration-500 ease-out
-                    ${
-                      isSubMenuOpen
-                        ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-                        : "opacity-0 -translate-y-6 scale-95 pointer-events-none"
-                    }`}
-                  aria-hidden={!isSubMenuOpen}
-                >
-                  {/* Menu items */}
-                  <div className="py-2">
-                    {discoverSubItems.map((item, index) => (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        onClick={(e) => handleLinkClick(e, item.link)}
-                        className={`group relative flex items-center px-6 py-4 text-white 
-                          transition-all duration-300 text-sm font-medium uppercase tracking-wide
-                          overflow-hidden
-                          ${getTextClass()}`}
-                      >
-                        {/* Individual item background */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg m-1"></div>
-
-                        {/* Left-to-right overlay on hover */}
-                        <div
-                          className="absolute inset-0 bg-gradient-to-r from-primary/30 via-primary/20 to-transparent 
-                          transform -translate-x-full group-hover:translate-x-0 
-                          transition-transform duration-500 ease-out"
-                        ></div>
-
-                        {/* Left accent bar */}
-                        <div
-                          className="absolute left-0 top-0 w-1 h-full bg-primary 
-                          transform scale-y-0 group-hover:scale-y-100 
-                          transition-transform duration-300 origin-top"
-                        ></div>
-
-                        <div
-                          className="relative flex items-center justify-center w-8 h-8 mr-4 
-                          rounded-lg bg-white/5 group-hover:bg-primary/20 
-                          transition-all duration-300 group-hover:scale-110"
-                        >
-                          <span
-                            className="w-2.5 h-2.5 rounded-full bg-primary/70 
-                            group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/50
-                            transition-all duration-300"
-                          ></span>
-                        </div>
-
-                        <span className="relative z-10 group-hover:translate-x-1 transition-transform duration-300">
-                          {item.name}
-                        </span>
-
-                        <div
-                          className="ml-auto opacity-0 group-hover:opacity-100 
-                          transform translate-x-2 group-hover:translate-x-0 
-                          transition-all duration-300 relative z-10"
-                        >
-                          <svg
-                            className="w-4 h-4 text-primary"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-
-                  <div className="h-1 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20"></div>
-                </div>
-              </div>
+              {/* Discover button - simple link to hero */}
+              <a
+                href={discoverNavItem.link}
+                onClick={(e) => handleLinkClick(e, discoverNavItem.link)}
+                className={`${navLinkClass} p-2 rounded-md ${getTextClass()}`}
+              >
+                {discoverNavItem.name}
+              </a>
 
               {/* Regular nav links */}
               {mainNavItems.map((item) =>
-                item.link.startsWith("#") ? (
+                item.link.startsWith("#") || (item.link.startsWith("/") && item.link.includes("#")) ? (
                   <a
                     key={item.name}
                     href={item.link}
@@ -725,48 +625,25 @@ const NavBar = () => {
           {/* Mobile navigation content */}
           <div className="flex-1 overflow-y-auto">
             <nav className="p-6 space-y-2 flex flex-col items-center">
-              {/* Discover section */}
+              {/* Discover button - simple link to hero */}
               <div className="mobile-nav-item w-full flex flex-col items-center">
-                <button
-                  onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
-                  className="w-full flex  justify-center items-center special-font py-4 text-white hover:bg-white/5 rounded-xl transition-all duration-200 group"
+                <a
+                  href={discoverNavItem.link}
+                  onClick={(e) => handleLinkClick(e, discoverNavItem.link)}
+                  className="w-full flex justify-center items-center special-font py-4 text-white hover:bg-white/5 rounded-xl transition-all duration-200"
                 >
                   {language === "fr" ? (
                     <FrenchTitle
                       textKey="nav.discover"
-                      className="text-2xl font-medium !flex !items-center mr-4"
+                      className="text-2xl font-medium !flex !items-center"
                       as="span"
                     />
                   ) : (
-                    <span className="text-2xl font-medium mr-4">
+                    <span className="text-2xl font-medium">
                       {t("nav.discover")}
                     </span>
                   )}
-                  <div
-                    className={`transition-transform duration-300 ${isSubMenuOpen ? "rotate-180" : ""}`}
-                  >
-                    <ChevronDown size={20} className="text-primary" />
-                  </div>
-                </button>
-                {/* Submenu */}
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    isSubMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="ml-6 mt-2 space-y-1">
-                    {discoverSubItems.map((item, index) => (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        onClick={(e) => handleLinkClick(e, item.link)}
-                        className="block py-3 px-4 text-gray-300 hover:text-white font-robert-medium rounded-lg transition-all duration-200 text-base"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
+                </a>
               </div>
 
               {/* Main navigation items */}
@@ -775,7 +652,7 @@ const NavBar = () => {
                   key={item.name}
                   className="w-full flex flex-col items-center"
                 >
-                  {item.link.startsWith("#") ? (
+                  {item.link.startsWith("#") || (item.link.startsWith("/") && item.link.includes("#")) ? (
                     <a
                       href={item.link}
                       onClick={(e) => handleLinkClick(e, item.link)}
