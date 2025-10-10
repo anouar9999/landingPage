@@ -22,7 +22,7 @@ const XIcon = (props) => (
 
 const GamingFooter = () => {
   const { t, isRtl } = useTranslation();
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
   
   // Liens et ressources mis à jour pour correspondre à la structure de la page
   const resources = [
@@ -33,7 +33,6 @@ const GamingFooter = () => {
     { name: t('nav.faq'), path: '#faq' },
     { name: t('footer.dashboard'), path: 'https://user.gamiusgroup.ma' },
   ];
-  
   const legalLinks = [
     { name: t('footer.legal.privacy'), path: '/privacy-policy' },
     { name: t('footer.legal.terms'), path: '/terms-of-use' }
@@ -41,17 +40,16 @@ const GamingFooter = () => {
   
   // Utilisation des mêmes liens de réseaux sociaux que dans Navbar
   const socialLinks = [
-    { Icon: Facebook, name: 'Facebook', url: 'https://www.facebook.com/gamiusgroup' },
-    { Icon: Instagram, name: 'Instagram', url: 'https://www.instagram.com/gamiusgroup/' },
-    { Icon: Youtube, name: 'YouTube', url: 'https://www.youtube.com/channel/UCN-qYwRN2RABWRTenM1WTSg' },
-    { Icon: Linkedin, name: 'LinkedIn', url: 'https://www.linkedin.com/company/102805036/' },
-    { Icon: XIcon, name: 'X', url: 'https://twitter.com/gamiusgroup' }
+    { Icon: Facebook, name: 'Facebook', url: '/#hero' },
+    { Icon: Instagram, name: 'Instagram', url: '/#hero' },
+    { Icon: Youtube, name: 'YouTube', url: '/#hero' },
+    { Icon: Linkedin, name: 'LinkedIn', url: '/#hero' },
+    { Icon: XIcon, name: 'X', url: '/#hero' }
   ];
 
   return (
     <footer className="bg-black text-white pt-12 pb-8" dir={isRtl ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Logo et description */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-8">
           <div className="max-w-md">
             <img 
@@ -59,7 +57,7 @@ const GamingFooter = () => {
               alt="GAMIUS GROUP Logo" 
               className="h-14 mb-4"
             />
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm font-circular-web leading-relaxed">
               {t('footer.description')}
             </p>
           </div>
@@ -68,14 +66,14 @@ const GamingFooter = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
             {/* Liens rapides */}
             <div>
-              <h3 className="text-primary font-valorant uppercase mb-4 text-sm">{t('footer.quickLinks')}</h3>
-              <ul className="space-y-2">
+              <h3 className="text-primary font-zentry uppercase mb-4 text-sm tracking-wider">{t('footer.quickLinks')}</h3>
+              <ul className="space-y-2.5">
                 {resources.map((link, index) => (
                   <li key={index}>
                     {link.path.startsWith('#') ? (
                       <a 
                         href={link.path} 
-                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                        className="text-gray-400 hover:text-primary transition-colors text-sm font-circular-web"
                       >
                         {link.name}
                       </a>
@@ -84,14 +82,14 @@ const GamingFooter = () => {
                         href={link.path} 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                        className="text-gray-400 hover:text-primary transition-colors text-sm font-circular-web"
                       >
                         {link.name}
                       </a>
                     ) : (
                       <Link 
                         to={link.path} 
-                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                        className="text-gray-400 hover:text-primary transition-colors text-sm font-circular-web"
                       >
                         {link.name}
                       </Link>
@@ -103,15 +101,13 @@ const GamingFooter = () => {
             
             {/* Suivez-nous */}
             <div>
-              <h3 className="text-primary font-valorant uppercase mb-4 text-sm">{t('footer.followUs')}</h3>
+              <h3 className="text-primary font-zentry uppercase mb-4 text-sm tracking-wider">{t('footer.followUs')}</h3>
               <div className="flex gap-3 flex-wrap">
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
                     href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700"
+                    className="text-gray-400 hover:text-primary transition-all duration-300 w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 hover:scale-110"
                     aria-label={social.name}
                   >
                     <social.Icon size={16} />
@@ -129,7 +125,7 @@ const GamingFooter = () => {
         
         {/* Copyright et liens légaux */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-xs text-center md:text-left">
+          <p className="text-gray-500 text-xs text-center md:text-left font-circular-web">
             {t('footer.copyright', { year: currentYear })}
           </p>
           
@@ -138,7 +134,7 @@ const GamingFooter = () => {
               <Link
                 key={index}
                 to={link.path}
-                className="text-gray-500 hover:text-white transition-colors text-xs"
+                className="text-gray-500 hover:text-primary transition-colors text-xs font-circular-web"
               >
                 {link.name}
               </Link>

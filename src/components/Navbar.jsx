@@ -25,13 +25,13 @@ import { useAuth } from "../utils/useAuth.jsx";
 import FrenchTitle from "./FrenchTitle.jsx";
 
 const socialLinks = [
-  { Icon: Facebook, link: "https://www.facebook.com/mgex.ma" },
-  { Icon: Instagram, link: "https://www.instagram.com/mgex.ma/" },
+  { Icon: Facebook, link: "/#hero" },
+  { Icon: Instagram, link: "/#hero" },
   {
     Icon: Youtube,
-    link: "https://www.youtube.com/channel/UCN-qYwRN2RABWRTenM1WTSg",
+    link: "/#hero",
   },
-  { Icon: Linkedin, link: "https://www.linkedin.com/company/102805036/" },
+  { Icon: Linkedin, link: "/#hero" },
 ];
 
 // Custom X icon component
@@ -56,7 +56,7 @@ const XIcon = (props) => (
 
 socialLinks.push({
   Icon: XIcon,
-  link: "https://twitter.com/mgexma",
+  link: "/#hero",
 });
 
 const NavBar = () => {
@@ -395,8 +395,6 @@ const NavBar = () => {
                   <a
                     key={index}
                     href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="text-white/80 hover:text-white transition-all p-1.5 hover:scale-110 hover:bg-white/10 rounded-full"
                     aria-label={`Visit our ${Icon.name || "social media"}`}
                   >

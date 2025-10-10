@@ -1,4 +1,4 @@
-﻿import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowUpRight, Target, TrendingUp, Award, Users, Trophy, Medal, Calendar, Star, Download, ExternalLink, FileText, Gamepad, Image } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -62,7 +62,7 @@ const ProPath = () => {
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
-      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.34_d922dd2a.jpg", // Cette image sera gÃ©nÃ©rÃ©e dynamiquement si elle n'existe pas
+      image: "/img/WhatsApp Image 2025-09-25 à 14.03.34_d922dd2a.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
       features: [
         t("proPath.regionalQualifiers.keyFeatures.format"),
         t("proPath.regionalQualifiers.keyFeatures.groups"),
@@ -71,11 +71,11 @@ const ProPath = () => {
     },
     {
       id: 'Organisers',
-         link : '/organiser',
+         link : '/organizer',
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
-      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.33_2a03a0d6.jpg",
+      image: "/img/WhatsApp Image 2025-09-25 à 14.03.33_2a03a0d6.jpg",
       features: [
         t("proPath.nationalChampionships.keyFeatures.format"),
         t("proPath.nationalChampionships.keyFeatures.points"),
@@ -84,11 +84,11 @@ const ProPath = () => {
     },
     {
       id: 'ecosysteme',
-        link : '/login',
+        link : 'https://user.gnews.ma/login ',
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
-      image: "img/WhatsApp Image 2025-09-25 Ã  14.03.33_63e1c92b.jpg",
+      image: "/img/WhatsApp Image 2025-09-25 à 14.03.33_63e1c92b.jpg",
       features: [
         t("proPath.eliteLeague.keyFeatures.training"),
         t("proPath.eliteLeague.keyFeatures.coverage"),
@@ -388,7 +388,7 @@ const ProPath = () => {
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <a 
-              href="#inscription"
+              href="https://user.gnews.ma/login "
               className="inline-flex items-center bg-[#e10000] hover:bg-[#c00] font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 "
             >
               <span className={getTextClass()}>{t('proPath.cta', "DÃ©buter votre parcours pro")}</span>

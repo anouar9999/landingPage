@@ -121,7 +121,7 @@ const resources = {
             description: "Custom solutions for large-scale operations",
             price: "Custom",
             priceDetail: "Tailored to your needs",
-            cta: "Contact Sales",
+            cta: "Contact us",
             everythingPlus: "Everything in Community, plus:",
             features: {
               participants: "Unlimited participants",
@@ -672,7 +672,7 @@ const resources = {
             description: "Solutions personnalisées pour les opérations à grande échelle",
             price: "Sur mesure",
             priceDetail: "Adapté à vos besoins",
-            cta: "Contacter les ventes",
+            cta: "Contacter nous",
             everythingPlus: "Tout ce qui est dans Communauté, plus:",
             features: {
               participants: "Participants illimités",
@@ -1217,7 +1217,7 @@ const resources = {
             description: "حلول مخصصة للعمليات واسعة النطاق",
             price: "مخصص",
             priceDetail: "مصمم حسب احتياجاتك",
-            cta: "اتصل بالمبيعات",
+            cta: "اتصل بنا",
             everythingPlus: "كل ما في المجتمع، بالإضافة إلى:",
             features: {
               participants: "مشاركون غير محدودين",

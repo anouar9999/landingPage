@@ -336,7 +336,7 @@ const Hero = () => {
 
           <div className="mx-2 sm:mx-4">
             <a
-              href="https://user.mgexpo.ma/login"
+              href="https://user.gnews.ma/login "
               className="group relative"
               ref={playNowRef}
             >

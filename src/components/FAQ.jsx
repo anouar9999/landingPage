@@ -266,28 +266,10 @@ const FAQ = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
   
-  // Animation de l'accordéon
+  // Animation de l'accordéon - simplified since we use conditional rendering
   useEffect(() => {
-    accordionRefs.current.forEach((ref, index) => {
-      if (ref) {
-        if (index === activeIndex) {
-          gsap.to(ref, {
-            height: "auto",
-            opacity: 1,
-            duration: 0.4,
-            ease: "power2.out"
-          });
-        } else {
-          gsap.to(ref, {
-            height: 0,
-            opacity: 0,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
-      }
-    });
-  }, [activeIndex, filteredQuestions]);
+    // Animations handled via CSS transitions
+  }, [activeIndex]);
   
   return (
     <div id="faq" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0a0a14] to-[#090914]" 
@@ -306,140 +288,76 @@ const FAQ = () => {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className={`text-4xl font-nightWarrior text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl special-font font-black text-white mb-4 tracking-tight uppercase ${language === 'tz' ? 'tamazight-text' : ''}`}>
             {t('faq.title')}
           </h2>
-          <p className={`text-white/80 max-w-2xl mx-auto ${getTextClass()}`}>
+          <p className={`text-white/70 text-lg max-w-2xl mx-auto leading-relaxed ${getTextClass()}`}>
             {t('faq.subtitle')}
           </p>
-          
-          {/* Barre de recherche */}
-          <div className="mt-8 max-w-md mx-auto">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search size={18} className="text-white/50" />
-              </div>
-              <input
-                type="text"
-                placeholder={t('faq.searchPlaceholder')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`block w-full pl-10 pr-3 py-3 bg-black/20 border border-primary/20 rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary/50 focus:outline-none text-white placeholder-white/50 ${getTextClass()}`}
-              />
-              {searchTerm && (
-                <button
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-white/50 hover:text-white"
-                  onClick={() => setSearchTerm('')}
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          </div>
         </div>
         
-        {searchTerm && filteredQuestions.length === 0 ? (
-          <div className="text-center py-10">
-            <HelpCircle size={48} className="mx-auto text-white/30 mb-4" />
-            <p className={`text-white/70 text-lg ${getTextClass()}`}>
-              {t('faq.noResults') + ` "${searchTerm}"`}
-            </p>
-            <p className={`text-white/50 mt-2 ${getTextClass()}`}>
-              {t('faq.tryAgain')}
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Résultats de recherche OU questions par catégorie */}
-            {searchTerm ? (
-              <div className="space-y-6 mb-6">
-                <h3 className={`text-white/70 text-lg font-valorant ${getTextClass()}`}>
-                  {`${filteredQuestions.length} ${filteredQuestions.length > 1 ? t('faq.resultsPlural') : t('faq.resultsSingular')} pour "${searchTerm}"`}
-                </h3>
-                
-                {/* Affichage des résultats de recherche */}
-                <div className="space-y-4">
-                  {filteredQuestions.map((item, index) => (
-                    <div 
-                      key={index}
-                      className="bg-[#0c0c18] border border-primary/10 rounded-lg overflow-hidden"
-                    >
-                      <button
-                        className="w-full px-5 py-4 flex justify-between items-center text-left text-white hover:bg-black/30 transition-colors"
-                        onClick={() => toggleAccordion(index)}
-                      >
-                        <span className={`font-semibold pr-8 ${getTextClass()}`}>{item.question}</span>
-                        <ChevronDown
-                          size={20}
-                          className={`text-primary transition-transform duration-200 ${
-                            activeIndex === index ? "transform rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-                      <div
-                        ref={(el) => (accordionRefs.current[index] = el)}
-                        className="overflow-hidden"
-                        style={{ height: 0, opacity: 0 }}
-                      >
-                        <div className="px-5 py-4 text-white/80">
-                          <p className={getTextClass()}>{item.answer}</p>
-                          <div className={`mt-3 text-xs text-primary/70 italic ${getTextClass()}`}>
-                            {t('faq.category')}: {item.category}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+        <div className="space-y-10 px-2">
+          {/* Affichage par catégories */}
+          {faqData.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="space-y-4">
+              {/* Category Header */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                  <span className="text-primary">{category.icon}</span>
                 </div>
+                <h3 className={`text-white font-semibold text-xl uppercase tracking-wide ${getTextClass()}`}>{category.category}</h3>
               </div>
-            ) : (
-              <div className="space-y-10">
-                {/* Affichage par catégories */}
-                {faqData.map((category, categoryIndex) => (
-                  <div key={categoryIndex} className="space-y-4">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-primary">{category.icon}</span>
-                      <h3 className={`text-white font-valorant text-xl ${getTextClass()}`}>{category.category}</h3>
-                    </div>
+              
+              {category.questions.map((item, questionIndex) => {
+                const globalIndex = categoryIndex * 10 + questionIndex;
+                const isActive = activeIndex === globalIndex;
+                return (
+                  <div 
+                    key={questionIndex}
+                    className="relative group"
+                  >
+                    {/* Skewed background */}
+                    <div className={`absolute inset-0 -skew-x-6 bg-[#0A0A0A] border-2 transition-all duration-300 ${
+                      isActive ? 'border-primary/60' : 'border-gray-800 group-hover:border-primary/40'
+                    }`}></div>
                     
-                    {category.questions.map((item, questionIndex) => {
-                      const globalIndex = categoryIndex * 10 + questionIndex;
-                      return (
-                        <div 
-                          key={questionIndex}
-                          className="bg-[#0c0c18] border border-primary/10 rounded-lg overflow-hidden"
-                        >
-                          <button
-                            className="w-full px-5 py-4 flex justify-between items-center text-left text-white hover:bg-black/30 transition-colors"
-                            onClick={() => toggleAccordion(globalIndex)}
-                          >
-                            <span className={`font-semibold pr-8 ${getTextClass()}`}>{item.question}</span>
-                            <ChevronDown
-                              size={20}
-                              className={`text-primary transition-transform duration-200 ${
-                                activeIndex === globalIndex ? "transform rotate-180" : ""
-                              }`}
-                            />
-                          </button>
-                          <div
-                            ref={(el) => (accordionRefs.current[globalIndex] = el)}
-                            className="overflow-hidden"
-                            style={{ height: 0, opacity: 0 }}
-                          >
-                            <div className="px-5 py-4 text-white/80">
-                              <p className={getTextClass()}>{item.answer}</p>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {/* Subtle gradient on hover/active */}
+                    <div className={`absolute inset-0 -skew-x-6 bg-gradient-to-r from-primary/5 to-transparent transition-opacity duration-300 ${
+                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}></div>
+                    
+                    <button
+                      className="relative w-full p-5 sm:p-6 text-left flex justify-between items-center z-10"
+                      onClick={() => toggleAccordion(globalIndex)}
+                    >
+                      <span className={`font-semibold text-sm sm:text-base text-white pr-8 ${getTextClass()}`}>
+                        {item.question}
+                      </span>
+                      <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${
+                        isActive ? 'rotate-180 bg-primary/20' : ''
+                      }`}>
+                        <ChevronDown 
+                          className="text-primary transition-transform"
+                          size={18}
+                        />
+                      </div>
+                    </button>
+                    
+                    {isActive && (
+                      <div
+                        ref={(el) => (accordionRefs.current[globalIndex] = el)}
+                        className="relative z-10 px-5 sm:px-6 pb-5 sm:pb-6 text-white/80 border-t border-gray-700 pt-4 animate-fadeIn"
+                      >
+                        <p className={`leading-relaxed ${getTextClass()}`}>{item.answer}</p>
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+                );
+              })}
+            </div>
+          ))}
+        </div>
         
         {/* Appel à l'action */}
         <div className="mt-12 text-center">

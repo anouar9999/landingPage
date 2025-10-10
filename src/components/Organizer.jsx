@@ -122,20 +122,19 @@ export default function OrganizerPage() {
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-black/95 group-hover:from-gray-900/90 group-hover:via-gray-800/85 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/85 to-black/90"></div>
                   {/* Shine effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/5 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
                 </div>
                 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="mb-6">
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-gray-700/30 group-hover:shadow-gray-600/50 transition-all">
-                      <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-black rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-primary/50 border border-gray-600">
                       <svg className="w-7 h-7 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                       {/* Pulse ring */}
-                      <div className="absolute inset-0 rounded-2xl bg-gray-500/30 animate-ping"></div>
+                      <div className="absolute inset-0 rounded-2xl bg-primary/30 animate-ping"></div>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-zentry mb-2 text-white">{t('organizer.plans.community.name')}</h3>
                     <p className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.description')}</p>
@@ -186,7 +185,7 @@ export default function OrganizerPage() {
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-primary/10 to-black/95 group-hover:from-gray-900/90 group-hover:via-primary/15 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/85 to-black/90"></div>
                   {/* Shine effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
                   {/* Corner glow */}
@@ -195,8 +194,7 @@ export default function OrganizerPage() {
                 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="mb-6">
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary to-primary/90 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-primary/40 group-hover:shadow-primary/60 transition-all">
-                      <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-black rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-primary/50 border border-gray-600">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
@@ -410,24 +408,23 @@ export default function OrganizerPage() {
                 </div>
               </div>
 
-              <div className="relative angular-cut bg-gradient-to-br from-primary via-primary/95 to-primary/90 p-6 sm:p-8 h-72 sm:h-96 flex items-center justify-center overflow-hidden group">
-                {/* Animated background */}
-                <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-                <div className="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 bg-white/10 rounded-full blur-3xl animate-pulse-slow"></div>
-                <div className="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-gray-900/20 rounded-full blur-2xl animate-bounce-slow"></div>
+              <div className="relative angular-cut bg-gradient-to-br from-slate-900 via-slate-800 to-black p-6 sm:p-8 h-72 sm:h-96 flex items-center justify-center overflow-hidden group">
+                {/* Animated background video/image */}
+                <video
+                  src="videos/feature-1.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                />
                 
-                {/* Content */}
-                <div className="text-center relative z-10">
-                  <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-2xl mb-3 sm:mb-4 backdrop-blur-sm border border-white/20">
-                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-                  </div>
-                  <div className="text-5xl sm:text-6xl md:text-7xl font-bold mb-2 sm:mb-3 font-zentry bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent drop-shadow-lg">01:20:15</div>
-                  <div className="text-white text-base sm:text-lg font-semibold">{t('organizer.features.setupTime')}</div>
-                  <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-white/80 text-xs sm:text-sm">
-                    <Target className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span>{t('organizer.features.setupTimeLabel')}</span>
-                  </div>
-                </div>
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-black/40"></div>
+                
+                {/* Animated decorative elements */}
+                <div className="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 bg-primary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+                <div className="absolute bottom-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-white/10 rounded-full blur-2xl animate-bounce-slow"></div>
               </div>
             </div>
           </div>
@@ -451,7 +448,7 @@ export default function OrganizerPage() {
               <p className="text-gray-300 text-lg">{t('organizer.faq.subtitle')}</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 px-2">
               {[
                 {
                   q: t('organizer.faq.questions.games.q'),
@@ -472,17 +469,20 @@ export default function OrganizerPage() {
               ].map((faq, index) => (
                 <div 
                   key={index}
-                  className="relative bg-[#1A1A1A]/80 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden hover:border-primary/40 transition-all duration-300 group hover:shadow-lg hover:shadow-primary/10"
+                  className="relative group"
                 >
+                  {/* Skewed background */}
+                  <div className="absolute inset-0 -skew-x-6 bg-[#0A0A0A] border-2 border-gray-800 group-hover:border-primary/40 transition-all duration-300"></div>
+                  
                   {/* Subtle gradient on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 -skew-x-6 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
                   <button
                     onClick={() => toggleFaq(index)}
                     className="relative w-full p-4 sm:p-6 text-left flex justify-between items-center z-10"
                   >
                     <span className="font-semibold text-sm sm:text-base text-gray-200 group-hover:text-white transition-colors pr-2">{faq.q}</span>
-                    <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${openFaq === index ? 'rotate-180' : ''}`}>
+                    <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${openFaq === index ? 'rotate-180' : ''}`}>
                       <ChevronDown 
                         className={`text-primary transition-transform`}
                         size={18}
@@ -490,7 +490,7 @@ export default function OrganizerPage() {
                     </div>
                   </button>
                   {openFaq === index && (
-                    <div className="relative px-4 sm:px-6 pb-4 sm:pb-6 text-gray-300 text-xs sm:text-sm border-t border-gray-800 pt-3 sm:pt-4 animate-fadeIn z-10">
+                    <div className="relative px-4 sm:px-6 pb-4 sm:pb-6 text-gray-300 text-xs sm:text-sm border-t border-gray-700 pt-3 sm:pt-4 animate-fadeIn z-10">
                       {faq.a}
                     </div>
                   )}
@@ -530,19 +530,14 @@ export default function OrganizerPage() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                  <a href='https://user.gnews.ma/login' className="group relative inline-block">
-                    <div className="absolute inset-0 -skew-x-12 bg-black group-hover:bg-primary transition-colors duration-300"></div>
+                  <a href='https://user.gnews.ma/login' className="relative inline-block">
+                    <div className="absolute inset-0 -skew-x-12 bg-primary"></div>
                     <span className="relative flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-sm sm:text-base">
-                      <div className="absolute inset-0 -skew-x-12 border-2 border-white/20 group-hover:border-primary/50 transition-colors duration-300"></div>
+                      <div className="absolute inset-0 -skew-x-12 border-2 border-primary/50"></div>
                       <span className="relative z-10">{t('organizer.cta.button')}</span>
-                      <Sparkles className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-180 transition-transform duration-500" />
+                      <Sparkles className="relative z-10 w-4 h-4 sm:w-5 sm:h-5" />
                     </span>
                   </a>
-                  
-                  <div className="flex items-center gap-2 text-white/90">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                    <span className="text-xs sm:text-sm font-medium">{t('organizer.cta.freeToStart')}</span>
-                  </div>
                 </div>
               </div>
             </div>
