@@ -496,63 +496,146 @@ const NavBar = () => {
               ) : isAuthenticated && user ? (
                 // keep your dropdown avatar for desktop
                 <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center gap-2 sm:gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors"
-                  >
-                    <img
-                      src={
-                        user.avatar
-                          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
-                          : "/img/default-avatar.jpg"
-                      }
-                      alt={user.username || "User"}
-                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover "
-                      onError={(e) => {
-                        e.target.src = "/img/default-avatar.jpg";
-                      }}
-                    />
-                    <span className="text-sm sm:text-base text-white font-medium">
-                      {user.username || "User"}
-                    </span>
+                 <button
+  className="group relative flex items-center transition-all duration-300"
+  onClick={() => setDropdownOpen(!dropdownOpen)}
+  aria-expanded={dropdownOpen}
+  aria-haspopup="true"
+>
+  {/* Mobile: Just rounded avatar */}
+  <div className="md:hidden w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden flex-shrink-0 shadow-lg hover:border-primary hover:scale-105 transition-all duration-300">
+    <img
+      src={
+        user.avatar
+          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
+          : "/img/default-avatar.jpg"
+      }
+      alt={user.username || "User"}
+      className="w-full h-full object-cover"
+      onError={(e) => {
+        e.target.src = "/img/default-avatar.jpg";
+      }}
+    />
+  </div>
 
-                    <ChevronDown
-                      size={16}
-                      className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
+  {/* Desktop: Full profile button */}
+  <div className="hidden md:flex items-center space-x-3 py-2.5 px-4 min-w-[200px] lg:min-w-[220px]">
+    {/* Background with angular styling */}
+    <div className="absolute inset-0 group-hover:border-primary/30 transition-all duration-300 overflow-hidden">
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,61,8,0.02)_2px,rgba(255,61,8,0.02)_4px)] opacity-50" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+
+    {/* Content */}
+    <div className="relative z-10 flex items-center space-x-3 w-full">
+      {/* Avatar with skewed container */}
+      <div className="relative w-9 h-9 flex-shrink-0 transform -skew-x-6 b overflow-hidden bg-black/40">
+        <div className="transform skew-x-6 w-full h-full">
+          <img
+            src={
+              user.avatar
+                ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
+                : "https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+            }
+            alt={user.username || "User"}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.src = "/img/default-avatar.jpg";
+            }}
+          />
+        </div>
+      </div>
+
+      {/* User info */}
+      <div className="flex-1 min-w-0 text-left">
+        <p className="text-sm font-bold text-white truncate uppercase tracking-wide">
+          {user.username || "User"}
+        </p>
+        {user.user_type && (
+          <p className="text-xs font-semibold text-primary truncate text-center capitalize">
+            {user.user_type}
+          </p>
+        )}
+      </div>
+
+      {/* Chevron */}
+      <div className="flex-shrink-0 w-5 h-5 bg-primary/20 border border-primary/40 flex items-center justify-center transform -skew-x-6 group-hover:bg-primary/30 transition-all duration-300">
+        <ChevronDown
+          className={`w-3 h-3 text-primary transition-transform duration-300 transform skew-x-6 ${
+            dropdownOpen ? 'rotate-180' : ''
+          }`}
+        />
+      </div>
+    </div>
+  </div>
+</button>
 
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-96 shadow-lg bg-black/90 backdrop-blur-md z-50 rounded-lg border border-white/10">
-                      <div className="p-4 space-y-4">
-                        <div className="text-center border-b border-white/10 pb-3">
-                          <p className="text-white font-medium">
-                            {user.username}
-                          </p>
-                          <p className="text-gray-400 text-sm">{user.email}</p>
-                          <p className="text-gray-400 text-xs">
-                            Points: {user.points || 0}
-                          </p>
-                        </div>
+  <div className="absolute right-0 mt-2 w-96 z-50">
+    {/* Corner accents */}
+    <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary z-10" />
+    <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary z-10" />
+    
+    <div className="relative bg-black/90 backdrop-blur-md border border-white/10 overflow-hidden">
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,61,8,0.02)_2px,rgba(255,61,8,0.02)_4px)] opacity-50 pointer-events-none" />
+      
+      <div className="relative z-10 p-4 space-y-4" role="menu">
+        {/* User Info Section */}
+        <div className="text-center border-b border-white/10 pb-4">
+          <p className="text-white font-bold uppercase tracking-wider mb-1">
+            {user.username}
+          </p>
+          <p className="text-gray-400 text-xs mb-2">{user.email}</p>
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 px-3 py-1">
+            <span className="text-primary text-xs font-bold uppercase tracking-wider">
+              {user.points || 0} Points
+            </span>
+          </div>
+        </div>
 
-                        <a
-                          href={`${import.meta.env.VITE_PUBLIC_URL}:3000/tournaments`}
-                          className="flex items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
-                        >
-                          <TbDoorEnter className="h-4 w-4 text-green-400" />
-                          <span>Access Dashboard</span>
-                        </a>
+        {/* Access Dashboard Link */}
+        <a
+          href={`${import.meta.env.VITE_PUBLIC_URL}/tournaments`}
+          className="group/item relative flex items-center justify-between px-3 py-2 text-sm transition-all duration-300 overflow-hidden"
+          role="menuitem"
+        >
+          <div className="absolute inset-0 bg-white/0 group-hover/item:bg-white/5 border-l-2 border-transparent group-hover/item:border-green-500/50 transition-all duration-300" />
+          
+          <div className="relative z-10 flex items-center gap-2">
+            <div className="w-6 h-6 bg-green-500/20 border border-green-500/40 flex items-center justify-center transform -skew-x-6 group-hover/item:bg-green-500/30 transition-all duration-300">
+              <TbDoorEnter className="h-3 w-3 text-green-400 transform skew-x-6" />
+            </div>
+            <span className="text-gray-300 group-hover/item:text-white font-bold uppercase text-xs tracking-wider">
+              Access Dashboard
+            </span>
+          </div>
+        </a>
+        
+        {/* Sign Out Button */}
+        <button
+          className="group/item relative flex w-full items-center justify-between px-3 py-2 text-sm transition-all duration-300 overflow-hidden"
+          onClick={handleLogout}
+          role="menuitem"
+        >
+          <div className="absolute inset-0 bg-white/0 group-hover/item:bg-red-500/10 border-l-2 border-transparent group-hover/item:border-red-500/50 transition-all duration-300" />
+          
+          <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-red-500/20 border border-red-500/40 flex items-center justify-center transform -skew-x-6 group-hover/item:bg-red-500/30 transition-all duration-300">
+                <LogOut className="h-3 w-3 text-red-400 transform skew-x-6" />
+              </div>
+              <span className="text-gray-300 group-hover/item:text-white font-bold uppercase text-xs tracking-wider">
+                Sign Out
+              </span>
+            </div>
+          </div>
+        </button>
+      </div>
 
-                        <button
-                          onClick={handleLogout}
-                          className="flex w-full items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
-                        >
-                          <span>Sign Out</span>
-                          <LogOut className="h-4 w-4 text-red-400" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
+      <div className="h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+    </div>
+  </div>
+)}
                 </div>
               ) : (
                 <>
