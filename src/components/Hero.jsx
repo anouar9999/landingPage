@@ -2,36 +2,21 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { useEffect, useRef, useState } from "react";
-import VideoPreview from "./VideoPreview";
-import HeroAdOverlay from "./HeroAdOverlay";
 import clsx from "clsx";
 import { useTranslation } from "../hooks/useTranslation";
 import FrenchTitle from "./FrenchTitle";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
+  const { t, isRtl, language, getTextClass } =
     useTranslation();
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const audioElementRef = useRef(null);
   const mainTitleRef = useRef(null);
   const subTitleRef = useRef(null);
-  const logoWrapperRef = useRef(null);
-  const heroContentRef = useRef(null);
-  const playNowRef = useRef(null);
-  const bottomTitleRef = useRef(null);
-  const leftBarRef = useRef(null);
-  const rightBarRef = useRef(null);
-
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [hasClicked, setHasClicked] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [loadedVideos, setLoadedVideos] = useState(0);
-
-  const totalVideos = 4;
-  const nextVdRef = useRef(null);
   const heroSectionRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   // S'assurer que la section est visible et que la police est correctement appliquée
   useEffect(() => {
@@ -44,10 +29,10 @@ const Hero = () => {
         console.log("Hero section visible, langue:", language);
       }
     }
-  }, [language, forceTifinaghFont, isTamazight]);
+  }, [language]);
 
   const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -57,17 +42,6 @@ const Hero = () => {
       audioElementRef.current.pause();
     }
   }, [isAudioPlaying]);
-
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
-
-  const handleMiniVdClick = () => {
-    setHasClicked(true);
-    setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
-  };
 
   const toggleAudioIndicator = () => {
     setIsAudioPlaying((prev) => !prev);
@@ -95,57 +69,7 @@ const Hero = () => {
         delay: 0.8,
       });
     }
-
-    if (logoWrapperRef.current) {
-      gsap.from(logoWrapperRef.current, {
-        x: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        delay: 1,
-      });
-    }
-
-    // Animate vertical bars
-    if (leftBarRef.current && rightBarRef.current) {
-      gsap.from([leftBarRef.current, rightBarRef.current], {
-        scaleY: 0,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power3.out",
-        delay: 1.2,
-        transformOrigin: "center center",
-        stagger: 0.2,
-      });
-    }
-
-    if (hasClicked) {
-      const nextVideo = document.querySelector("#next-video");
-      const currentVideo = document.querySelector("#current-video");
-
-      if (nextVideo) {
-        gsap.set("#next-video", { visibility: "visible" });
-        gsap.to("#next-video", {
-          transformOrigin: "center center",
-          scale: 1,
-          width: "100%",
-          height: "100%",
-          duration: 1,
-          ease: "power1.inOut",
-          onStart: () => nextVdRef.current && nextVdRef.current.play(),
-        });
-      }
-
-      if (currentVideo) {
-        gsap.from("#current-video", {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
-        });
-      }
-    }
-  }, [hasClicked]);
+  });
 
   useGSAP(() => {
     const videoFrame = document.querySelector("#video-frame");
@@ -168,7 +92,6 @@ const Hero = () => {
     }
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
   return (
     <div
@@ -200,54 +123,14 @@ const Hero = () => {
           {/* Fallback background in case video doesn't load */}
           <div className="absolute inset-0 bg-[#0a0a14] z-0"></div>
 
-          {/* Video Preview Container */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-            <div className="aspect-video cursor-pointer overflow-hidden rounded-lg">
-              <VideoPreview>
-                <div
-                  onClick={handleMiniVdClick}
-                  className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-                >
-                  <video
-                    ref={nextVdRef}
-                    src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                    loop
-                    muted
-                    id="current-video"
-                    className="h-full w-full object-cover"
-                    onLoadedData={handleVideoLoad}
-                    onError={(e) => {
-                      console.error("Video failed to load:", e);
-                      setLoading(false);
-                    }}
-                  />
-                </div>
-              </VideoPreview>
-            </div>
-          </div>
-
-          {/* Main Video */}
+          {/* Single Background Video */}
           <video
-            ref={nextVdRef}
-            src={getVideoSrc(currentIndex)}
-            loop
-            muted
-            id="next-video"
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 invisible z-20 h-full w-full object-cover"
-            onLoadedData={handleVideoLoad}
-            onError={(e) => {
-              console.error("Video failed to load:", e);
-              setLoading(false);
-            }}
-          />
-          <video
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
-            )}
+            src="videos/hero-1.mp4"
             autoPlay
             loop
             muted
-            className="absolute left-0 top-0 h-full w-full object-cover"
+            playsInline
+            className="absolute left-0 top-0 h-full w-full object-cover z-10"
             onLoadedData={handleVideoLoad}
             onError={(e) => {
               console.error("Video failed to load:", e);
@@ -281,7 +164,6 @@ const Hero = () => {
         {/* Content */}
         <div
           className="absolute left-0 top-0 z-40 h-full w-full"
-          ref={heroContentRef}
         >
           <div className="flex h-full flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12">
             <div ref={subTitleRef} className="relative text-white">
@@ -338,7 +220,6 @@ const Hero = () => {
             <a
               href="https://user.gnews.ma/login "
               className="group relative"
-              ref={playNowRef}
             >
               <div className="absolute inset-0 -skew-x-12 bg-white"></div>
               <span className="relative flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8">
