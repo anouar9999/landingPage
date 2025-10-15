@@ -96,7 +96,8 @@ const Hero = () => {
   return (
     <div
       id="hero"
-      className="relative h-screen w-full overflow-hidden pt-32"
+      className="relative w-full overflow-hidden bg-black"
+      style={{ height: "calc(100vh - 4rem)", marginTop: "4rem" }}
       dir={isRtl ? "rtl" : "ltr"}
       ref={heroSectionRef}
     >
@@ -105,7 +106,7 @@ const Hero = () => {
      
 
       {loading && (
-        <div className="absolute z-50 flex h-screen w-full items-center justify-center bg-violet-50">
+        <div className="absolute z-50 flex h-full w-full items-center justify-center bg-black">
           <div className="three-body">
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
@@ -116,8 +117,7 @@ const Hero = () => {
 
       <div
         id="video-frame"
-        className="relative z-10 h-screen w-full overflow-hidden rounded-lg bg-blue-75"
-        style={{ marginTop: "-8rem" }}
+        className="relative z-10 h-full w-full overflow-hidden rounded-lg bg-blue-75"
       >
         <div className="relative h-full">
           {/* Fallback background in case video doesn't load */}
@@ -137,6 +137,8 @@ const Hero = () => {
               setLoading(false);
             }}
           />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/50 z-20"></div>
         </div>
 
         {/* Audio Controls */}
@@ -165,11 +167,11 @@ const Hero = () => {
         <div
           className="absolute left-0 top-0 z-40 h-full w-full"
         >
-          <div className="flex h-full flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="flex h-full flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pb-16 sm:pb-20 md:pb-24 lg:pb-28">
             <div ref={subTitleRef} className="relative text-white">
               {language === "fr" ? (
                 <FrenchTitle
-                  className=" !special-font text-primary hero-heading text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl"
+                  className="!special-font text-primary hero-heading text-center text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl"
                   textKey="hero.title"
                   bottomTitleKey1={t("hero.bottomTitle.part1") }
                   bottomTitleKey2={t("hero.bottomTitle.part2")}
@@ -177,20 +179,20 @@ const Hero = () => {
               ) : (
                 <h1
                   ref={mainTitleRef}
-                  className={` special-font hero-heading text-center text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] xl:text-9xl `}
+                  className={`special-font hero-heading text-center text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl leading-tight`}
                 >
-                  <b className="text-primary ">{t("hero.title")}</b> <br />
+                  <b className="text-primary">{t("hero.title")}</b> <br />
                   <b>{t("hero.bottomTitle.part1")}</b>
                   <br />
-                         <b>{t("hero.bottomTitle.part2")} </b>
+                  <b>{t("hero.bottomTitle.part2")} </b>
                 </h1>
               )}
-              <div className="absolute -bottom-2 left-0 h-0.5 w-16 bg-gradient-to-r from-purple-500 to-transparent sm:h-1 sm:w-20 md:w-24 lg:-bottom-3 lg:w-32"></div>
+              <div className="absolute -bottom-1 left-0 h-0.5 w-10 bg-gradient-to-r from-purple-500 to-transparent sm:w-14 md:h-1 md:w-16 lg:w-20 xl:w-24"></div>
             </div>
 
-            <div className="mt-6 text-center font-circular-web sm:mt-8 md:mt-10">
+            <div className="mt-2 text-center font-circular-web sm:mt-3 md:mt-3 lg:mt-4 xl:mt-5">
               <p
-                className={`mx-auto max-w-lg text-sm leading-relaxed text-blue-100 sm:max-w-xl sm:text-base md:max-w-2xl md:text-lg lg:max-w-3xl ${getTextClass()}`}
+                className={`mx-auto max-w-xs text-xs leading-relaxed text-white/90 xs:max-w-sm xs:text-sm sm:max-w-lg sm:text-sm md:max-w-xl md:text-base lg:max-w-2xl lg:text-lg xl:max-w-3xl xl:text-xl 2xl:max-w-4xl drop-shadow-lg ${getTextClass()}`}
               >
                 <span className={`text-brand-valorant ${getTextClass()}`}>
                   {t("hero.subtitle.part1")}
@@ -211,21 +213,21 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="absolute bottom-0 inset-x-0 z-10 mb-4 sm:mb-6 md:mb-8">
-        <div className="flex items-center justify-center w-full px-4 md:px-16">
-          <div className="h-px flex-1 bg-gradient-to-r from-white to-white/30"></div>
+      {/* Bottom Bar - Compact Responsive Button */}
+      <div className="absolute bottom-0 inset-x-0 z-30 mb-4 sm:mb-5 md:mb-6 lg:mb-8">
+        <div className="flex items-center justify-center w-full px-4 sm:px-6 md:px-12 lg:px-16">
+          <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-white/40"></div>
 
-          <div className="mx-2 sm:mx-4">
+          <div className="mx-2 sm:mx-3 md:mx-4">
             <a
-              href="https://user.gnews.ma/login "
-              className="group relative"
+              href="https://user.gnews.ma/login"
+              className="group relative inline-block hover:scale-105 transition-transform duration-300"
             >
-              <div className="absolute inset-0 -skew-x-12 bg-white"></div>
-              <span className="relative flex items-center px-4 py-2 sm:px-6 sm:py-3 md:px-8">
+              <div className="absolute inset-0 -skew-x-12 bg-white group-hover:bg-primary transition-colors duration-300"></div>
+              <span className="relative flex items-center px-4 py-2 xs:px-5 xs:py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 lg:px-8 lg:py-3 xl:px-10 xl:py-3.5">
                 <div className="absolute inset-0 -skew-x-12 border border-white"></div>
                 <span
-                  className={`relative special-font z-10 text-sm sm:text-md md:text-xl text-black uppercase`}
+                  className={`relative special-font z-10 text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-black uppercase font-bold tracking-wide group-hover:text-white transition-colors duration-300`}
                 >
                   {t("hero.playNow")}
                 </span>
@@ -233,7 +235,7 @@ const Hero = () => {
             </a>
           </div>
 
-          <div className="h-px flex-1 bg-gradient-to-r from-primary/30 to-primary"></div>
+          <div className="h-px flex-1 bg-gradient-to-r from-white/40 to-primary/50"></div>
         </div>
       </div>
     </div>

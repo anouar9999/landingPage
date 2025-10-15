@@ -273,12 +273,12 @@ const resources = {
               a: "Not at all. Our interface is designed to be simple and intuitive."
             },
             paid: {
-              q: "Can I organize paid tournaments?",
-              a: "Yes, with our White-label plan, you can link your own ticketing system and payment gateways."
+              q: "What's the difference between Community and White-label plans?",
+              a: "The Community plan is free and perfect for small tournaments (up to 64 participants) with standard formats. The White-label plan offers unlimited participants, custom branding, advanced analytics, and dedicated support for professional operations."
             },
             payment: {
-              q: "What payment methods do you accept for the plan?",
-              a: "We accept all major credit cards, PayPal, and cryptocurrency payments for custom plans."
+              q: "Can I upgrade from Community to White-label plan?",
+              a: "Absolutely! You can upgrade anytime to unlock advanced features. Contact our sales team to discuss your needs and get a custom quote tailored to your event scale and requirements."
             }
           }
         },
@@ -766,7 +766,7 @@ const resources = {
             description: "Solutions personnalisées pour les opérations à grande échelle",
             price: "Sur mesure",
             priceDetail: "Adapté à vos besoins",
-            cta: "Contacter nous",
+            cta: "Contactez-nous",
             everythingPlus: "Tout ce qui est dans Communauté, plus:",
             features: {
               participants: "Participants illimités",
@@ -867,7 +867,7 @@ const resources = {
           whiteLabel: "Marque blanche",
           free: "Gratuit",
           custom: "Sur mesure",
-          contactUs: "Nous contacter",
+          contactUs: "Contactez-nous",
           premium: "PREMIUM",
           rows: {
             maxParticipants: "Participants maximum",
@@ -916,12 +916,12 @@ const resources = {
               a: "Pas du tout. Notre interface est conçue pour être simple et intuitive."
             },
             paid: {
-              q: "Puis-je organiser des tournois payants?",
-              a: "Oui, avec notre plan Marque blanche, vous pouvez lier votre propre système de billetterie et passerelles de paiement."
+              q: "Quelle est la différence entre les plans Communauté et Marque blanche?",
+              a: "Le plan Communauté est gratuit et parfait pour les petits tournois (jusqu'à 64 participants) avec des formats standards. Le plan Marque blanche offre des participants illimités, un branding personnalisé, des analyses avancées et un support dédié pour les opérations professionnelles."
             },
             payment: {
-              q: "Quels moyens de paiement acceptez-vous pour le plan?",
-              a: "Nous acceptons toutes les principales cartes bancaires, PayPal et les paiements en cryptomonnaie pour les plans personnalisés."
+              q: "Puis-je passer du plan Communauté au plan Marque blanche?",
+              a: "Absolument ! Vous pouvez upgrader à tout moment pour débloquer des fonctionnalités avancées. Contactez notre équipe commerciale pour discuter de vos besoins et obtenir un devis personnalisé adapté à l'échelle et aux exigences de votre événement."
             }
           }
         },
@@ -1553,12 +1553,12 @@ const resources = {
               a: "ليس على الإطلاق. واجهتنا مصممة لتكون بسيطة وبديهية."
             },
             paid: {
-              q: "هل يمكنني تنظيم بطولات مدفوعة؟",
-              a: "نعم، مع خطة العلامة البيضاء، يمكنك ربط نظام التذاكر وبوابات الدفع الخاصة بك."
+              q: "ما الفرق بين خطة المجتمع وخطة العلامة البيضاء؟",
+              a: "خطة المجتمع مجانية ومثالية للبطولات الصغيرة (حتى 64 مشاركًا) مع تنسيقات قياسية. خطة العلامة البيضاء توفر مشاركين غير محدودين، علامة تجارية مخصصة، تحليلات متقدمة ودعم مخصص للعمليات الاحترافية."
             },
             payment: {
-              q: "ما طرق الدفع التي تقبلونها للخطة؟",
-              a: "نقبل جميع بطاقات الائتمان الرئيسية وPayPal ومدفوعات العملات المشفرة للخطط المخصصة."
+              q: "هل يمكنني الترقية من خطة المجتمع إلى خطة العلامة البيضاء؟",
+              a: "بالتأكيد! يمكنك الترقية في أي وقت لفتح الميزات المتقدمة. اتصل بفريق المبيعات لدينا لمناقشة احتياجاتك والحصول على عرض سعر مخصص يتناسب مع حجم ومتطلبات حدثك."
             }
           }
         },

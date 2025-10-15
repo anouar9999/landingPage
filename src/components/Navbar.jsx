@@ -312,61 +312,55 @@ const NavBar = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
-      <div
+      {/* Compact navbar with glassmorphism */}
+      <nav
         ref={navContainerRef}
-        className={`bg-gradient-to-b from-black via-black/80 to-transparent transition-all duration-300 ${
+        className={`backdrop-blur-lg bg-black/70 border-b border-white/10 transition-all duration-300 ${
           isNavVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="w-full mx-auto px-2 sm:px-4 lg:px-6 relative z-10">
-          <div
-            className={`flex items-center justify-between gap-2 sm:gap-3 lg:gap-4 ${isHeaderCompact ? "py-1" : "py-2"} transition-all duration-300`}
-          >
-            {/* Mobile menu button and Logo */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              {/* Mobile menu button - Left side */}
+        <div className="max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-14">
+            {/* Left section: Logo + Mobile menu */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Mobile menu button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="rounded-md text-white transition-colors lg:hidden flex-shrink-0" // Only show on mobile/tablet
+                className="lg:hidden text-white hover:text-primary transition-colors p-1.5 hover:bg-white/10 rounded-md"
                 aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
-                aria-expanded={isMenuOpen}
               >
-                {isMenuOpen ? (
-                  <X size={screenSize.isMobile ? 20 : 24} />
-                ) : (
-                  <Menu size={screenSize.isMobile ? 20 : 24} />
-                )}
+                {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
-              {/* Logo left */}
-              <div className="flex items-center flex-shrink-0">
-                <Link to="/" className="flex items-center flex-shrink-0">
-                  <img
-                    src="img/logo-gamius-white.png"
-                    alt="GAMIUS Logo"
-                    className={`transition-all duration-300 flex-shrink-0 ${isHeaderCompact ? "h-8 md:h-10 lg:h-12" : "h-9 md:h-11 lg:h-13"}`}
-                  />
-                </Link>
-              </div>
+
+              {/* Logo - compact size */}
+              <Link to="/" className="flex items-center flex-shrink-0">
+                <img
+                  src="img/logo-gamius-white.png"
+                  alt="GAMIUS Logo"
+                  className="h-7 sm:h-8 lg:h-9 transition-all duration-300"
+                />
+              </Link>
             </div>
-            {/* Central navigation - Desktop only */}
-            <div className="hidden lg:flex items-center gap-3 xl:gap-6 justify-center flex-grow">
-              {/* Discover button - simple link to hero */}
+
+            {/* Center section: Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+              {/* Discover link */}
               <a
                 href={discoverNavItem.link}
                 onClick={(e) => handleLinkClick(e, discoverNavItem.link)}
-                className={`${navLinkClass} p-2 rounded-md ${getTextClass()}`}
+                className={`px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-md transition-all ${getTextClass()}`}
               >
                 {discoverNavItem.name}
               </a>
 
-              {/* Regular nav links */}
+              {/* Main nav items */}
               {mainNavItems.map((item) =>
-                item.link.startsWith("#") || (item.link.startsWith("/") && item.link.includes("#")) ? (
+                item.link.startsWith("#") || item.link.includes("/#") ? (
                   <a
                     key={item.name}
                     href={item.link}
                     onClick={(e) => handleLinkClick(e, item.link)}
-                    className={`${navLinkClass} p-2 rounded-md ${getTextClass()}`}
+                    className={`px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-md transition-all ${getTextClass()}`}
                   >
                     {item.name}
                   </a>
@@ -374,102 +368,105 @@ const NavBar = () => {
                   <Link
                     key={item.name}
                     to={item.link}
-                    className={`${navLinkClass} p-2 rounded-md flex items-center gap-1 ${getTextClass()}`}
+                    className={`px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/5 rounded-md transition-all flex items-center gap-1 ${getTextClass()}`}
                   >
                     {item.name}
-                    <ArrowUpRight
-                      size={14}
-                      className="opacity-70 group-hover:opacity-100"
-                    />
+                    <ArrowUpRight size={12} className="opacity-60" />
                   </Link>
                 )
               )}
             </div>
 
-            {/* Right side - Auth buttons, Language selector */}
-            <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
-              {/* Social networks on desktop */}
-
-              <div className="hidden xl:flex items-center gap-2 mr-2">
+            {/* Right section: Social + Language + Auth */}
+            <div className="flex items-center gap-1 sm:gap-2">
+              {/* Social links - desktop only, compact */}
+              <div className="hidden xl:flex items-center gap-1 mr-1">
                 {socialLinks.map(({ Icon, link }, index) => (
                   <a
                     key={index}
                     href={link}
-                    className="text-white/80 hover:text-white transition-all p-1.5 hover:scale-110 hover:bg-white/10 rounded-full"
+                    className="text-white/60 hover:text-white transition-colors p-1.5 hover:bg-white/10 rounded-md"
                     aria-label={`Visit our ${Icon.name || "social media"}`}
                   >
-                    <Icon size={18} />
+                    <Icon size={16} />
                   </a>
                 ))}
               </div>
 
-              {/* Language selector (desktop & tablet only) */}
+              {/* Language selector - compact */}
               <div
                 ref={languageSelectorRef}
-                className="hidden sm:flex relative z-20 items-center transform-gpu flex-shrink-0"
+                className="hidden sm:block"
               >
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-full blur-md group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                  <div className="rounded-full p-0.5 lg:p-1 hover:bg-black/50 transition-all duration-200 relative">
-                    <LanguageSelector />
-                  </div>
+                <div className="hover:bg-white/5 rounded-md transition-colors">
+                  <LanguageSelector />
                 </div>
               </div>
-              {/* {loading ? (
-                <div className="flex items-center gap-2 text-white">
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span className="text-sm">Loading...</span>
+
+              {/* Auth section - compact */}
+              {loading ? (
+                <div className="flex items-center gap-1.5 px-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 </div>
               ) : isAuthenticated && user ? (
                 <div className="relative" ref={dropdownRef}>
                   <button
+                    className="flex items-center gap-1.5 hover:bg-white/5 px-2 py-1.5 rounded-md transition-all"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center gap-2 sm:gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors"
                   >
+                    {/* Avatar - compact */}
                     <img
                       src={
                         user.avatar
-                          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || 'http://localhost'}${user.avatar}`
-                          : "/img/default-avatar.jpg"
+                          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
+                          : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.username || "User") + "&background=e10000&color=fff&size=128"
                       }
-                      alt={user.username || 'User'}
-                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-green-400"
+                      alt={user.username || "User"}
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-white/20 bg-gray-800"
                       onError={(e) => {
-                        e.target.src = "/img/default-avatar.jpg";
+                        e.target.onerror = null;
+                        e.target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(e.target.alt || "User") + "&background=e10000&color=fff&size=128";
                       }}
                     />
-                    <span className="text-sm sm:text-base text-white font-medium">
-                      {user.username || 'User'}
+                    {/* Username - desktop only */}
+                    <span className="hidden md:block text-sm font-medium text-white max-w-[140px] lg:max-w-[180px] truncate" title={user.username}>
+                      {user.username}
                     </span>
                     <ChevronDown
-                      size={16}
-                      className={`text-white transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                      size={14}
+                      className={`hidden md:block text-white/60 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
                     />
                   </button>
 
+                  {/* Dropdown - compact */}
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-64 shadow-lg bg-black/90 backdrop-blur-md z-50 rounded-lg border border-white/10">
-                      <div className="p-4 space-y-4">
-                        <div className="text-center border-b border-white/10 pb-3">
-                          <p className="text-white font-medium">{user.username}</p>
-                          <p className="text-gray-400 text-sm">{user.email}</p>
-                          <p className="text-gray-400 text-xs">Points: {user.points || 0}</p>
-                        </div>
-                        
+                    <div className="absolute right-0 mt-2 w-56 bg-black/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50">
+                      {/* User info */}
+                      <div className="p-3 border-b border-white/10">
+                        <p className="text-white font-semibold text-sm break-words">{user.username}</p>
+                        <p className="text-white/60 text-xs truncate">{user.email}</p>
+                        {user.points !== undefined && (
+                          <div className="mt-2 inline-flex items-center gap-1 bg-primary/10 border border-primary/30 px-2 py-1 rounded">
+                            <span className="text-primary text-xs font-bold">{user.points} Points</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="p-2 space-y-1">
                         <a
-                          href={`${import.meta.env.VITE_PUBLIC_URL}:3000/tournaments`}
-                          className="flex items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                          href={`${import.meta.env.VITE_PUBLIC_URL}/tournaments`}
+                          className="flex items-center gap-2 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
                         >
-                          <TbDoorEnter className="h-4 w-4 text-green-400" />
-                          <span>Access Dashboard</span>
+                          <TbDoorEnter size={16} className="text-green-400" />
+                          <span>Dashboard</span>
                         </a>
-                        
                         <button
                           onClick={handleLogout}
-                          className="flex w-full items-center justify-between px-2 py-2 text-sm text-gray-400 hover:text-white rounded-md transition-colors"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
                         >
+                          <LogOut size={16} className="text-red-400" />
                           <span>Sign Out</span>
-                          <LogOut className="h-4 w-4 text-red-400" />
                         </button>
                       </div>
                     </div>
@@ -478,266 +475,70 @@ const NavBar = () => {
               ) : (
                 <a
                   href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
-                  className="bg-[#e10000] hover:bg-[#c00] text-white text-lg px-5 py-2.5 rounded-md uppercase transition-all duration-300 font-bold"
+                  className="bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-all whitespace-nowrap flex items-center gap-1"
                 >
-                  <div className="flex items-center gap-2 special-font">
-                    {t("nav.login")}
-                    <ArrowUpRight size={16} />
-                  </div>
+                  <span className="hidden sm:inline">{t("nav.login")}</span>
+                  <span className="sm:hidden">Login</span>
+                  <ArrowUpRight size={14} />
                 </a>
-              ) */}
-
-              {/* Auth section */}
-              {loading ? (
-                <div className="flex items-center gap-2 text-white">
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span className="text-sm">Loading...</span>
-                </div>
-              ) : isAuthenticated && user ? (
-                // keep your dropdown avatar for desktop
-                <div className="relative" ref={dropdownRef}>
-                 <button
-  className="group relative flex items-center transition-all duration-300"
-  onClick={() => setDropdownOpen(!dropdownOpen)}
-  aria-expanded={dropdownOpen}
-  aria-haspopup="true"
->
-  {/* Mobile: Just rounded avatar */}
-  <div className="md:hidden w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden flex-shrink-0 shadow-lg hover:border-primary hover:scale-105 transition-all duration-300">
-    <img
-      src={
-        user.avatar
-          ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
-          : "/img/default-avatar.jpg"
-      }
-      alt={user.username || "User"}
-      className="w-full h-full object-cover"
-      onError={(e) => {
-        e.target.src = "/img/default-avatar.jpg";
-      }}
-    />
-  </div>
-
-  {/* Desktop: Full profile button */}
-  <div className="hidden md:flex items-center space-x-2 py-2 px-3 max-w-[180px] lg:max-w-[200px] xl:max-w-[220px]">
-    {/* Background with angular styling */}
-    <div className="absolute inset-0 group-hover:border-primary/30 transition-all duration-300 overflow-hidden">
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,61,8,0.02)_2px,rgba(255,61,8,0.02)_4px)] opacity-50" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    </div>
-
-    {/* Content */}
-    <div className="relative z-10 flex items-center space-x-2 w-full">
-      {/* Avatar with skewed container */}
-      <div className="relative w-8 h-8 lg:w-9 lg:h-9 flex-shrink-0 transform -skew-x-6 overflow-hidden bg-black/40">
-        <div className="transform skew-x-6 w-full h-full">
-          <img
-            src={
-              user.avatar
-                ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
-                : "https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
-            }
-            alt={user.username || "User"}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.target.src = "/img/default-avatar.jpg";
-            }}
-          />
-        </div>
-      </div>
-
-      {/* User info */}
-      <div className="flex-1 min-w-0 text-left overflow-hidden">
-        <p className="text-xs lg:text-sm font-bold text-white truncate uppercase tracking-wide">
-          {user.username || "User"}
-        </p>
-        {user.user_type && (
-          <p className="text-[10px] lg:text-xs font-semibold text-primary truncate capitalize">
-            {user.user_type}
-          </p>
-        )}
-      </div>
-
-      {/* Chevron */}
-      <div className="flex-shrink-0 w-4 h-4 lg:w-5 lg:h-5 bg-primary/20 border border-primary/40 flex items-center justify-center transform -skew-x-6 group-hover:bg-primary/30 transition-all duration-300">
-        <ChevronDown
-          className={`w-2.5 h-2.5 lg:w-3 lg:h-3 text-primary transition-transform duration-300 transform skew-x-6 ${
-            dropdownOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </div>
-    </div>
-  </div>
-</button>
-
-                  {dropdownOpen && (
-  <div className="absolute right-0 mt-2 w-96 z-50">
-    {/* Corner accents */}
-    <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary z-10" />
-    <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary z-10" />
-    
-    <div className="relative bg-black/90 backdrop-blur-md border border-white/10 overflow-hidden">
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,61,8,0.02)_2px,rgba(255,61,8,0.02)_4px)] opacity-50 pointer-events-none" />
-      
-      <div className="relative z-10 p-4 space-y-4" role="menu">
-        {/* User Info Section */}
-        <div className="text-center border-b border-white/10 pb-4">
-          <p className="text-white font-bold uppercase tracking-wider mb-1">
-            {user.username}
-          </p>
-          <p className="text-gray-400 text-xs mb-2">{user.email}</p>
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 px-3 py-1">
-            <span className="text-primary text-xs font-bold uppercase tracking-wider">
-              {user.points || 0} Points
-            </span>
-          </div>
-        </div>
-
-        {/* Access Dashboard Link */}
-        <a
-          href={`${import.meta.env.VITE_PUBLIC_URL}/tournaments`}
-          className="group/item relative flex items-center justify-between px-3 py-2 text-sm transition-all duration-300 overflow-hidden"
-          role="menuitem"
-        >
-          <div className="absolute inset-0 bg-white/0 group-hover/item:bg-white/5 border-l-2 border-transparent group-hover/item:border-green-500/50 transition-all duration-300" />
-          
-          <div className="relative z-10 flex items-center gap-2">
-            <div className="w-6 h-6 bg-green-500/20 border border-green-500/40 flex items-center justify-center transform -skew-x-6 group-hover/item:bg-green-500/30 transition-all duration-300">
-              <TbDoorEnter className="h-3 w-3 text-green-400 transform skew-x-6" />
-            </div>
-            <span className="text-gray-300 group-hover/item:text-white font-bold uppercase text-xs tracking-wider">
-              Access Dashboard
-            </span>
-          </div>
-        </a>
-        
-        {/* Sign Out Button */}
-        <button
-          className="group/item relative flex w-full items-center justify-between px-3 py-2 text-sm transition-all duration-300 overflow-hidden"
-          onClick={handleLogout}
-          role="menuitem"
-        >
-          <div className="absolute inset-0 bg-white/0 group-hover/item:bg-red-500/10 border-l-2 border-transparent group-hover/item:border-red-500/50 transition-all duration-300" />
-          
-          <div className="relative z-10 flex items-center justify-between w-full">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-red-500/20 border border-red-500/40 flex items-center justify-center transform -skew-x-6 group-hover/item:bg-red-500/30 transition-all duration-300">
-                <LogOut className="h-3 w-3 text-red-400 transform skew-x-6" />
-              </div>
-              <span className="text-gray-300 group-hover/item:text-white font-bold uppercase text-xs tracking-wider">
-                Sign Out
-              </span>
-            </div>
-          </div>
-        </button>
-      </div>
-
-      <div className="h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-    </div>
-  </div>
-)}
-                </div>
-              ) : (
-                <>
-                  {/* Desktop login button */}
-                  <a
-                    href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
-                    className="hidden sm:flex bg-[#e10000] hover:bg-[#c00] text-white text-sm lg:text-base px-3 lg:px-5 py-2 lg:py-2.5 rounded-md uppercase transition-all duration-300 font-bold whitespace-nowrap flex-shrink-0"
-                  >
-                    <div className="flex items-center gap-1 lg:gap-2 special-font">
-                      {t("nav.login")}
-                      <ArrowUpRight size={14} className="lg:w-4 lg:h-4" />
-                    </div>
-                  </a>
-
-                  {/* Mobile login button */}
-                  <a
-                    href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
-                    className="sm:hidden flex items-center justify-center special-font px-3 py-1.5 bg-[#e10000] hover:bg-[#c00] text-white rounded-md text-xs font-semibold whitespace-nowrap flex-shrink-0"
-                  >
-                    {t("nav.login")}
-                    <ArrowUpRight size={14} />
-                  </a>
-                </>
               )}
-              {/* Mobile menu button */}
-              {/* <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="rounded-md text-white transition-colors lg:hidden" // Only show on mobile/tablet
-              aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? (
-                <X size={screenSize.isMobile ? 20 : 24} />
-              ) : (
-                <Menu size={screenSize.isMobile ? 20 : 24} />
-              )}
-            </button> */}
             </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu - FIXED VERSION */}
+      {/* Mobile menu - Modern fullscreen overlay */}
       <div
         ref={menuRef}
-        className="fixed inset-0 bg-gradient-to-br from-[#16161a] via-[#1a1a1f] to-[#16161a] z-[999999] lg:hidden"
+        className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[999] lg:hidden"
         style={{ display: "none" }}
       >
-        {/* Background overlay with subtle pattern */}
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-
-        <div className="relative z-10 h-full flex flex-col">
-          {/* Mobile header */}
-          <div className="flex items-center justify-between p-6 border-b border-white/10 mobile-nav-item">
-            <img
-              src="img/logo-gamius-white.png"
-              alt="GAMIUS Logo"
-              className="h-10"
-            />
+        <div className="relative h-full flex flex-col">
+          {/* Mobile header - compact */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              <img
+                src="img/logo-gamius-white.png"
+                alt="GAMIUS Logo"
+                className="h-7"
+              />
+            </Link>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="text-white hover:text-primary p-2 hover:bg-white/5 rounded-lg transition-all duration-200"
+              className="text-white hover:text-primary p-2 hover:bg-white/5 rounded-md transition-colors"
             >
               <X size={24} />
             </button>
           </div>
 
-          {/* Mobile navigation content */}
-          <div className="flex-1 overflow-y-auto">
-            <nav className="p-6 space-y-2 flex flex-col items-center">
-              {/* Discover button - simple link to hero */}
-              <div className="mobile-nav-item w-full flex flex-col items-center">
-                <a
-                  href={discoverNavItem.link}
-                  onClick={(e) => handleLinkClick(e, discoverNavItem.link)}
-                  className="w-full flex justify-center items-center special-font py-4 text-white hover:bg-white/5 rounded-xl transition-all duration-200"
-                >
-                  {language === "fr" ? (
-                    <FrenchTitle
-                      textKey="nav.discover"
-                      className="text-2xl font-medium !flex !items-center"
-                      as="span"
-                    />
-                  ) : (
-                    <span className="text-2xl font-medium">
-                      {t("nav.discover")}
-                    </span>
-                  )}
-                </a>
-              </div>
+          {/* Mobile navigation - scrollable */}
+          <div className="flex-1 overflow-y-auto py-6 px-4">
+            <nav className="space-y-1">
+              {/* Discover link */}
+              <a
+                href={discoverNavItem.link}
+                onClick={(e) => handleLinkClick(e, discoverNavItem.link)}
+                className="mobile-nav-item block px-4 py-3 text-base font-medium text-white hover:bg-white/5 rounded-lg transition-all"
+              >
+                {language === "fr" ? (
+                  <FrenchTitle
+                    textKey="nav.discover"
+                    className="!flex !items-center"
+                    as="span"
+                  />
+                ) : (
+                  <span>{t("nav.discover")}</span>
+                )}
+              </a>
 
-              {/* Main navigation items */}
-              {mainNavItems.map((item, index) => (
-                <div
-                  key={item.name}
-                  className="w-full flex flex-col items-center"
-                >
-                  {item.link.startsWith("#") || (item.link.startsWith("/") && item.link.includes("#")) ? (
+              {/* Main nav items */}
+              {mainNavItems.map((item) => (
+                <div key={item.name} className="mobile-nav-item">
+                  {item.link.startsWith("#") || item.link.includes("/#") ? (
                     <a
                       href={item.link}
                       onClick={(e) => handleLinkClick(e, item.link)}
-                      className="py-4 text-white special-font flex flex-col justify-center items-center transition-all duration-200 text-2xl font-medium"
+                      className="block px-4 py-3 text-base font-medium text-white hover:bg-white/5 rounded-lg transition-all"
                     >
                       {item.name}
                     </a>
@@ -745,26 +546,56 @@ const NavBar = () => {
                     <Link
                       to={item.link}
                       onClick={() => setIsMenuOpen(false)}
-                      className="py-4 text-white special-font flex flex-col justify-center items-center transition-all duration-200 text-2xl font-medium"
+                      className="flex items-center justify-between px-4 py-3 text-base font-medium text-white hover:bg-white/5 rounded-lg transition-all"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="mr-4">{item.name}</div>
-                        <ArrowUpRight size={18} className="text-primary" />
-                      </div>
+                      <span>{item.name}</span>
+                      <ArrowUpRight size={16} className="text-primary" />
                     </Link>
                   )}
                 </div>
               ))}
+            </nav>
 
-              {/* Language selector for mobile */}
-              <div className="w-full flex justify-center mt-4 mobile-nav-item">
-                <div className="rounded-full p-1 bg-black/50">
+            {/* Bottom section - Language & Social */}
+            <div className="mt-8 pt-6 border-t border-white/10 space-y-4">
+              {/* Language selector */}
+              <div className="mobile-nav-item">
+                <p className="text-xs text-white/60 mb-2 px-4">Language</p>
+                <div className="px-4">
                   <LanguageSelector />
                 </div>
               </div>
-            </nav>
 
-            {/* Auth section for mobile */}
+              {/* Social links */}
+              <div className="mobile-nav-item">
+                <p className="text-xs text-white/60 mb-2 px-4">Follow Us</p>
+                <div className="flex items-center gap-2 px-4">
+                  {socialLinks.map(({ Icon, link }, index) => (
+                    <a
+                      key={index}
+                      href={link}
+                      className="text-white/60 hover:text-white p-2 hover:bg-white/10 rounded-md transition-colors"
+                      aria-label={`Visit our ${Icon.name || "social media"}`}
+                    >
+                      <Icon size={20} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile auth section */}
+              {!loading && !isAuthenticated && (
+                <div className="mobile-nav-item px-4 pt-2">
+                  <a
+                    href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
+                    className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-3 rounded-lg transition-all"
+                  >
+                    <span>{t("nav.login")}</span>
+                    <ArrowUpRight size={16} />
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

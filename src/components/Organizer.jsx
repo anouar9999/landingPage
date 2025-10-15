@@ -117,18 +117,18 @@ export default function OrganizerPage() {
         <NavBar />
 
         {/* Hero Section */}
-         <section className="pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 font-circular-web relative z-10">
+         <section className="pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 font-circular-web relative z-10">
            <div className="max-w-5xl mx-auto text-center" ref={heroRef}>
-             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/30">
+             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4 border border-primary/30">
                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                <span>{t('organizer.hero.badge')}</span>
              </div>
-             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 !font-zentry special-font bg-gradient-to-r from-white via-gray-200 to-primary bg-clip-text text-transparent drop-shadow-2xl px-2">
+             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-3 sm:mb-4 !font-zentry special-font bg-gradient-to-r from-white via-gray-200 to-primary bg-clip-text text-transparent drop-shadow-2xl px-2">
                {t('organizer.hero.title1')}<br />
             <span className='bg-gradient-to-r from-primary via-primary/90 to-primary/80 bg-clip-text text-transparent'>{t('organizer.hero.title2')}</span>    <br />
                {t('organizer.hero.title3')}
              </h1>
-             <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+             <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto leading-relaxed">
                {t('organizer.hero.subtitle')}
              </p>
             
