@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, X, ChevronDown, Check, Sparkles, Trophy, Target, Zap } from 'lucide-react';
+import { Menu, X, ChevronDown, Check, Sparkles, Trophy, Target, Zap, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import NavBar from './Navbar';
 import AnimatedTitle from './AnimatedTitle';
+import RequestAccessForm from './RequestAccessForm';
 import { useTranslation } from '../hooks/useTranslation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function OrganizerPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+  const [showAccessForm, setShowAccessForm] = useState(false);
   const { t } = useTranslation();
   
   const heroRef = useRef(null);
@@ -20,6 +22,21 @@ export default function OrganizerPage() {
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const handleFormSubmit = async (formData) => {
+    // Here you would send the data to your backend API
+    console.log('Form submitted:', formData);
+    
+    // Example: Send to your API endpoint
+    // const response = await fetch('/api/access-requests', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(formData)
+    // });
+    
+    // For now, just log it
+    return Promise.resolve();
   };
 
   useEffect(() => {
@@ -116,7 +133,7 @@ export default function OrganizerPage() {
              </p>
             
            {/* Pricing Cards Preview */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12" ref={cardsRef}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12" ref={cardsRef}>
               {/* Community Plan */}
               <div className="relative angular-cut p-6 sm:p-8 text-left overflow-hidden h-full flex flex-col group hover:-translate-y-2 transition-all duration-500 cursor-pointer">
                 {/* Background Image with Overlay */}
@@ -170,13 +187,19 @@ export default function OrganizerPage() {
                       <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.community.features.support')}</span>
                     </div>
                   </div>
-                   <a href='https://user.gnews.ma/login' className="group relative w-full mt-6 sm:mt-8 overflow-hidden">
+                   <button 
+                    onClick={() => setShowAccessForm(true)}
+                    className="group relative w-full mt-6 sm:mt-8 overflow-hidden"
+                  >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-gray-700/20 rounded-xl group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300"></div>
-                    <div className="relative flex items-center justify-center gap-2 border border-gray-600/50 text-white rounded-xl py-3 sm:py-3.5 text-xs sm:text-sm font-semibold hover:border-primary transition-all backdrop-blur-sm">
-                      <span>{t('organizer.plans.community.cta')}</span>
-                      <Zap className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="relative flex flex-col items-center justify-center gap-1 border border-gray-600/50 text-white rounded-xl py-3 sm:py-3.5 text-xs sm:text-sm font-semibold hover:border-primary transition-all backdrop-blur-sm">
+                      <div className="flex items-center gap-2">
+                        <span>{t('organizer.plans.community.cta')}</span>
+                        <Zap className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                      <span className="text-[10px] opacity-80">{t('organizer.plans.community.ctaSubtext')}</span>
                     </div>
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -255,6 +278,102 @@ export default function OrganizerPage() {
                       <Trophy className="w-3 h-3 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" />
                     </div>
                   </a>
+                </div>
+              </div>
+
+              {/* Esport Events Plan */}
+              <div className="relative angular-cut p-6 sm:p-8 text-left overflow-hidden h-full flex flex-col group hover:-translate-y-2 transition-all duration-500 cursor-pointer border-2 border-yellow-600/40">
+                {/* Background Image with Overlay */}
+                <div className="absolute inset-0 z-0">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2065')] bg-cover bg-center"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-gray-900/85 to-black/90"></div>
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-500/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
+                  {/* Corner glow */}
+                  <div className="absolute top-0 right-0 w-16 sm:w-24 h-16 sm:h-24 bg-yellow-600/20 rounded-full blur-3xl"></div>
+                </div>
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="mb-6">
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-black rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-yellow-600/50 border border-gray-600">
+                      <Lightbulb className="w-6 h-6 sm:w-7 sm:h-7 text-yellow-500 relative z-10" />
+                      {/* Pulse ring */}
+                      <div className="absolute inset-0 rounded-2xl bg-yellow-600/30 animate-ping"></div>
+                      {/* Star badge for premium */}
+                      <div className="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-yellow-600 rounded-full flex items-center justify-center shadow-lg">
+                        <Sparkles className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-zentry mb-2 text-white">{t('organizer.plans.esportEvents.name')}</h3>
+                    <p className="text-xs sm:text-sm text-yellow-400 font-semibold mb-2">{t('organizer.plans.esportEvents.subtitle')}</p>
+                    <p className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.description')}</p>
+                  </div>
+                  
+                  <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-yellow-600/30">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl sm:text-5xl md:text-6xl font-zentry bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-600 bg-clip-text text-transparent">{t('organizer.plans.esportEvents.price')}</span>
+                      <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500 animate-pulse" />
+                    </div>
+                    <p className="text-xs sm:text-sm text-gray-400 mt-2">{t('organizer.plans.esportEvents.priceDetail')}</p>
+                  </div>
+
+                  <div className="space-y-3 sm:space-y-4 flex-grow">
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.projectManagement')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.scenography')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.lanSetup')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.liveProduction')}</span>
+                    </div>
+                     <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.formats')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.sponsorActivations')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.ticketing')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.security')}</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-gray-300">{t('organizer.plans.esportEvents.features.postEvent')}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 sm:mt-8 space-y-3">
+                    <div className="p-3 bg-yellow-900/20 border border-yellow-600/30 rounded-lg">
+                      <p className="text-xs text-yellow-400 font-semibold mb-1">{t('organizer.plans.esportEvents.idealFor')}</p>
+                      <p className="text-xs text-gray-300">{t('organizer.plans.esportEvents.idealForText')}</p>
+                    </div>
+                    
+                    <a href='https://gamiusgroup.com/' target='_blank' rel='noopener noreferrer' className="group relative w-full overflow-hidden block">
+                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 rounded-xl animate-gradient-x"></div>
+                      <div className="relative flex flex-col items-center justify-center gap-1 text-white rounded-xl py-3 sm:py-3.5 text-xs sm:text-sm font-semibold shadow-lg shadow-yellow-600/30 group-hover:shadow-yellow-600/50 transition-all">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-180 transition-transform duration-500" />
+                          <span>{t('organizer.plans.esportEvents.cta')}</span>
+                          <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" />
+                        </div>
+                        <span className="text-[10px] opacity-80">{t('organizer.plans.esportEvents.ctaSubtext')}</span>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>          
@@ -665,7 +784,14 @@ export default function OrganizerPage() {
           animation: gradient-x 3s ease infinite;
         }
       `}</style>
+
+      {/* Request Access Form Modal */}
+      {showAccessForm && (
+        <RequestAccessForm
+          onClose={() => setShowAccessForm(false)}
+          onSubmit={handleFormSubmit}
+        />
+      )}
     </div>
   );
 }
-

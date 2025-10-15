@@ -105,9 +105,11 @@ const resources = {
           community: {
             name: "Community",
             description: "Perfect for small local tournaments and getting started",
-            price: "Free",
-            priceDetail: "No credit card required",
-            cta: "Get Started",
+            price: "FREE",
+            priceDetail: "Free access: manage your community tournaments — request access and earn compensation for each tournament created and completed.",
+            priceDetailShort: "Free access — request access and earn a reward for each completed tournament.",
+            cta: "Request Access",
+            ctaSubtext: "Response within 24 business hours.",
             features: {
               participants: "Up to 64 participants",
               formats: "Standard tournament formats",
@@ -131,7 +133,87 @@ const resources = {
               manager: "Dedicated account manager",
               support: "24/7 premium support"
             }
+          },
+          esportEvents: {
+            name: "Esport Events",
+            subtitle: "Design, Production & Management",
+            description: "Turnkey solution for LAN, online, or hybrid shows.",
+            price: "Custom",
+            priceDetail: "Your event, our expertise: from concept to final show. We handle the stage, technical setup, and operations so you can focus on the experience.",
+            cta: "Learn More",
+            ctaSubtext: "Response within 24 business hours.",
+            idealFor: "Ideal for",
+            idealForText: "National finals, student leagues, brand roadshows, showmatches, trade shows & conferences.",
+            features: {
+              projectManagement: "Project management & global planning",
+              scenography: "Scenography & brand design (sets, LED, signage)",
+              lanSetup: "Hardware & LAN network setup (PC/console) + anti-cheat",
+              liveProduction: "Live production & streaming (broadcast, overlays, casters)",
+              formats: "Formats, rulebook, refereeing & on-site staff",
+              sponsorActivations: "Sponsor activations & partner booths",
+              ticketing: "Ticketing & public reception",
+              security: "Security, insurance & compliance",
+              postEvent: "Stats, highlights & post-event reporting"
+            }
           }
+        },
+        requestAccessForm: {
+          title: "Request Access",
+          subtitle: "Fill out the form below to join our community",
+          pseudo: {
+            label: "Username",
+            placeholder: "Ex. MrWire",
+            required: "Username is required"
+          },
+          contact: {
+            label: "Contact",
+            subtitle: "At least one is required",
+            email: {
+              label: "Email",
+              placeholder: "example@domain.com"
+            },
+            whatsapp: {
+              label: "WhatsApp",
+              placeholder: "+212 6 …"
+            },
+            required: "Email or WhatsApp is required"
+          },
+          socialNetworks: {
+            label: "Social Networks",
+            subtitle: "Select at least one and provide the link",
+            platforms: {
+              twitch: "Twitch",
+              youtube: "YouTube",
+              kick: "Kick",
+              tiktok: "TikTok Live",
+              facebook: "Facebook Gaming",
+              instagram: "Instagram",
+              twitter: "X / Twitter",
+              discord: "Discord",
+              linktree: "Linktree / Beacons"
+            },
+            placeholders: {
+              twitch: "https://twitch.tv/yourchannel",
+              youtube: "https://youtube.com/@yourusername",
+              kick: "https://kick.com/yourusername",
+              tiktok: "https://tiktok.com/@yourusername",
+              facebook: "https://www.facebook.com/gaming/yourusername",
+              instagram: "https://instagram.com/yourusername",
+              twitter: "https://twitter.com/yourusername",
+              discord: "https://discord.gg/XXXXXX",
+              linktree: "https://linktr.ee/yourusername"
+            },
+            required: "At least one social network with a valid URL is required",
+            invalidUrl: "Invalid link — paste the complete URL"
+          },
+          consent: {
+            label: "I agree to be contacted regarding my request",
+            required: "You must accept to be contacted"
+          },
+          submit: "Submit Request",
+          submitSubtext: "Response within 24 business hours.",
+          success: "Your request has been submitted successfully!",
+          error: "An error occurred. Please try again."
         },
         comparison: {
           title: "Compare Plans",
@@ -283,33 +365,43 @@ const resources = {
       },
       // Documentation Center
       documentationCenter: {
-        title: "THE RULEBOOK",
+        title: "OFFICIAL DOCUMENTATION",
         description:
-          "Everything you need to master the competition is right here. Prepare your strategy and secure your victory.",
+          "Access comprehensive tournament information, regulations, and resources to prepare for GAMIUS competitions.",
+        onlineDocTitle: "ONLINE DOCUMENTATION",
+        onlineDocSubtitle: "View our online documentation to access comprehensive competition information",
+        backHome: "Back to Home",
         cards: {
           regulations: "Regulations",
-          strategyGuides: "Strategy Guides",
-          mediaKit: "Media Kit",
+          regulationsDesc: "Download official regulations for our competitions",
+          strategyGuides: "Guides",
+          guidesDesc: "View our practical guides to prepare yourself",
+          mediaKit: "Resources",
+          resourcesDesc: "Access media resources and official templates",
         },
         strategyHub: {
-          title: "THE STRATEGY HUB",
+          title: "INTERACTIVE DOCUMENTATION",
           description:
-            "All the knowledge you need, instantly accessible. Explore, learn, and prepare for your next victory.",
+            "Complete tournament information platform with tutorials, FAQs, and official resources for participant preparation.",
           subtitle:
-            "Your Interactive Game Guide - Easily navigate our tutorials, find answers to your questions, and never miss an important GAMIUS circuit update.",
+            "Our online documentation platform provides comprehensive information, tutorials, and resources to help you participate in GAMIUS competitions.",
           features: {
-            tutorials: "Tutorials to master every aspect of the game",
-            faq: "FAQ for immediate answers",
-            updates: "Real-time updates",
+            tutorials: "Interactive tutorials",
+            faq: "Detailed FAQ",
+            updates: "Regular updates",
           },
         },
         downloadZone: {
-          title: "DOWNLOAD ZONE",
-          subtitle: "Download the regulations, guides and resources to prepare your participation in GAMIUS tournaments",
+          title: "DOWNLOAD CENTER",
+          subtitle: "Download official regulations, guides, and resources to prepare for GAMIUS tournaments",
           description:
-            "Ready to get prepared? Download all the official regulations, strategy guides, and resources for the GAMIUS tournaments right here.",
+            "Access and download official tournament regulations, practical guides, and all necessary resources to prepare for your participation.",
           new: "NEW",
           downloadButton: "Download",
+          accessButton: "Access Documentation",
+          viewDocuments: "View Documents",
+          viewGuides: "View Guides",
+          viewResources: "View Resources",
           searchPlaceholder: "Search...",
           noResults: "No resources match your search",
           tryAnother: "Try another term or category",
@@ -656,9 +748,11 @@ const resources = {
           community: {
             name: "Communaute",
             description: "Parfait pour les petits tournois locaux et pour débuter",
-            price: "Gratuit",
-            priceDetail: "Aucune carte bancaire requise",
-            cta: "Commencer",
+            price: "GRATUIT",
+            priceDetail: "Accès gratuit : gérez vos tournois communautaires — demandez votre accès et gagnez une rémunération pour chaque tournoi créé et finalisé.",
+            priceDetailShort: "Accès gratuit — demandez votre accès et touchez une prime pour chaque tournoi finalisé.",
+            cta: "Demander un accès",
+            ctaSubtext: "Réponse sous 24 h ouvrées.",
             features: {
               participants: "Jusqu'à 64 participants",
               formats: "Formats de tournoi standards",
@@ -682,7 +776,87 @@ const resources = {
               manager: "Gestionnaire de compte dédié",
               support: "Support premium 24/7"
             }
+          },
+          esportEvents: {
+            name: "Evenements Esport",
+            subtitle: "Conception, Production & Gestion",
+            description: "Clé en main, pour des shows LAN, online ou hybrides.",
+            price: "Sur mesure",
+            priceDetail: "Votre événement, notre expertise : de l'idée au show final. Nous pilotons la scène, la technique et les opérations pour que vous restiez focalisé sur l'expérience.",
+            cta: "En savoir plus",
+            ctaSubtext: "Réponse sous 24 h ouvrées.",
+            idealFor: "Idéal pour",
+            idealForText: "Finales nationales, ligues étudiantes, roadshows de marque, showmatches, salons & conférences.",
+            features: {
+              projectManagement: "Direction de projet & planning global",
+              scenography: "Scénographie & habillage de marque (décors, LED, signalétique)",
+              lanSetup: "Setup matériel & réseau LAN (PC/console) + anti-cheat",
+              liveProduction: "Production live & streaming (régie, overlays, casters)",
+              formats: "Formats, règlebook, arbitrage & staff terrain",
+              sponsorActivations: "Activations sponsors & stands partenaires",
+              ticketing: "Billetterie & accueil public",
+              security: "Sécurité, assurance & conformité",
+              postEvent: "Stats, highlights & reporting post-event"
+            }
           }
+        },
+        requestAccessForm: {
+          title: "Demander un acces",
+          subtitle: "Remplissez le formulaire ci-dessous pour rejoindre notre communauté",
+          pseudo: {
+            label: "Pseudo",
+            placeholder: "Ex. MrWire",
+            required: "Le pseudo est obligatoire"
+          },
+          contact: {
+            label: "Contact",
+            subtitle: "Au moins un des deux est requis",
+            email: {
+              label: "Email",
+              placeholder: "exemple@domaine.com"
+            },
+            whatsapp: {
+              label: "WhatsApp",
+              placeholder: "+212 6 …"
+            },
+            required: "Email ou WhatsApp est obligatoire"
+          },
+          socialNetworks: {
+            label: "Réseaux sociaux",
+            subtitle: "Sélectionnez au moins un réseau et fournissez le lien",
+            platforms: {
+              twitch: "Twitch",
+              youtube: "YouTube",
+              kick: "Kick",
+              tiktok: "TikTok Live",
+              facebook: "Facebook Gaming",
+              instagram: "Instagram",
+              twitter: "X / Twitter",
+              discord: "Discord",
+              linktree: "Linktree / Beacons"
+            },
+            placeholders: {
+              twitch: "https://twitch.tv/votrechaîne",
+              youtube: "https://youtube.com/@votrepseudo",
+              kick: "https://kick.com/votrepseudo",
+              tiktok: "https://tiktok.com/@votrepseudo",
+              facebook: "https://www.facebook.com/gaming/votrepseudo",
+              instagram: "https://instagram.com/votrepseudo",
+              twitter: "https://twitter.com/votrepseudo",
+              discord: "https://discord.gg/XXXXXX",
+              linktree: "https://linktr.ee/votrepseudo"
+            },
+            required: "Au moins un réseau social avec une URL valide est requis",
+            invalidUrl: "Lien invalide — collez l'URL complète"
+          },
+          consent: {
+            label: "J'accepte d'être contacté(e) au sujet de ma demande",
+            required: "Vous devez accepter d'être contacté"
+          },
+          submit: "Envoyer la demande",
+          submitSubtext: "Réponse sous 24 h ouvrées.",
+          success: "Votre demande a été envoyée avec succès !",
+          error: "Une erreur s'est produite. Veuillez réessayer."
         },
         comparison: {
           title: "Comparer les Plans",
@@ -835,33 +1009,43 @@ const resources = {
       },
       // Documentation Center
       documentationCenter: {
-        title: "LES ReGLES DU JEU",
+        title: "DOCUMENTATION OFFICIELLE",
         description:
-          "Tout ce qu'il te faut pour maîtriser la competition est ici. Prepare ta strategie et assure ta victoire.",
+          "Accedez aux informations completes sur les tournois, reglements et ressources pour preparer votre participation aux competitions GAMIUS.",
+        onlineDocTitle: "DOCUMENTATION EN LIGNE",
+        onlineDocSubtitle: "Consultez notre documentation en ligne pour acceder a l'ensemble des informations sur les competitions",
+        backHome: "Retour a l'accueil",
         cards: {
           regulations: "Reglements",
-          strategyGuides: "Guides Strategiques",
-          mediaKit: "Kit Media",
+          regulationsDesc: "Telechargez les reglements officiels de nos competitions",
+          strategyGuides: "Guides",
+          guidesDesc: "Consultez nos guides pratiques pour bien vous preparer",
+          mediaKit: "Ressources",
+          resourcesDesc: "Accedez aux ressources medias et modeles officiels",
         },
         strategyHub: {
-          title: "LE HUB STRATeGIQUE",
+          title: "DOCUMENTATION INTERACTIVE",
           description:
-            "Toutes les connaissances dont tu as besoin, accessibles instantanement. Explore, apprends et prepare ta prochaine victoire.",
+            "Plateforme d'information complete sur les tournois avec tutoriels, FAQ et ressources officielles pour la preparation des participants.",
           subtitle:
-            "Ton guide de jeu interactif - Navigue facilement dans nos tutos, trouve les reponses a tes questions et ne manque aucune mise a jour importante du circuit GAMIUS.",
+            "Notre plateforme de documentation en ligne contient l'ensemble des informations, tutoriels et ressources pour vous aider a participer aux competitions GAMIUS.",
           features: {
-            tutorials: "Tutoriels pour maîtriser chaque aspect du jeu",
-            faq: "FAQ pour des reponses immediates",
-            updates: "Mises a jour en temps reel",
+            tutorials: "Tutoriels interactifs",
+            faq: "FAQ detaillee",
+            updates: "Mises a jour regulieres",
           },
         },
         downloadZone: {
-          title: "ZONE DE TELECHARGEMENT",
-          subtitle: "Téléchargez les règlements, guides et ressources pour préparer votre participation aux tournois GAMIUS",
+          title: "CENTRE DE TELECHARGEMENT",
+          subtitle: "Telechargez les reglements, guides et ressources officiels pour preparer votre participation aux tournois GAMIUS",
           description:
-            "Prêt a te preparer ? Telecharge ici tous les reglements, guides strategiques et ressources officielles des tournois GAMIUS.",
+            "Consultez et telechargez les reglements officiels des tournois, les guides pratiques et toutes les ressources necessaires pour preparer votre participation.",
           new: "NOUVEAU",
           downloadButton: "Télécharger",
+          accessButton: "Acceder a la documentation",
+          viewDocuments: "Voir les documents",
+          viewGuides: "Voir les guides",
+          viewResources: "Voir les ressources",
           searchPlaceholder: "Rechercher...",
           noResults: "Aucune ressource ne correspond à votre recherche",
           tryAnother: "Essayez un autre terme ou catégorie",
@@ -1202,8 +1386,10 @@ const resources = {
             name: "المجتمع",
             description: "مثالي للبطولات المحلية الصغيرة وللبدء",
             price: "مجاني",
-            priceDetail: "لا حاجة لبطاقة ائتمان",
-            cta: "ابدأ الآن",
+            priceDetail: "وصول مجاني: أدِر بطولاتك المجتمعية — اطلب الوصول واحصل على تعويض عن كل بطولة تنشئها وتكملها.",
+            priceDetailShort: "وصول مجاني — اطلب الوصول واحصل على مكافأة عن كل بطولة مكتملة.",
+            cta: "طلب الوصول",
+            ctaSubtext: "الرد خلال 24 ساعة عمل.",
             features: {
               participants: "حتى 64 مشاركاً",
               formats: "تنسيقات بطولات قياسية",
@@ -1227,7 +1413,87 @@ const resources = {
               manager: "مدير حساب مخصص",
               support: "دعم متميز 24/7"
             }
+          },
+          esportEvents: {
+            name: "فعاليات الرياضات الإلكترونية",
+            subtitle: "التصميم، الإنتاج والإدارة",
+            description: "حل شامل لعروض LAN أو عبر الإنترنت أو هجينة.",
+            price: "مخصص",
+            priceDetail: "حدثك، خبرتنا: من الفكرة إلى العرض النهائي. نحن ندير المسرح والإعداد الفني والعمليات حتى تتمكن من التركيز على التجربة.",
+            cta: "معرفة المزيد",
+            ctaSubtext: "الرد خلال 24 ساعة عمل.",
+            idealFor: "مثالي لـ",
+            idealForText: "النهائيات الوطنية، دوريات الطلاب، عروض العلامات التجارية، المباريات الاستعراضية، المعارض والمؤتمرات.",
+            features: {
+              projectManagement: "إدارة المشاريع والتخطيط الشامل",
+              scenography: "التصميم المشهدي وهوية العلامة التجارية (الديكور، LED، اللافتات)",
+              lanSetup: "إعداد الأجهزة وشبكة LAN (PC/console) + مكافحة الغش",
+              liveProduction: "الإنتاج المباشر والبث (البث، التراكبات، المعلقين)",
+              formats: "الصيغ، كتاب القواعد، التحكيم والموظفين في الموقع",
+              sponsorActivations: "تفعيلات الرعاة وأجنحة الشركاء",
+              ticketing: "التذاكر واستقبال الجمهور",
+              security: "الأمن والتأمين والامتثال",
+              postEvent: "الإحصائيات، أبرز الأحداث وتقارير ما بعد الحدث"
+            }
           }
+        },
+        requestAccessForm: {
+          title: "طلب الوصول",
+          subtitle: "املأ النموذج أدناه للانضمام إلى مجتمعنا",
+          pseudo: {
+            label: "اسم المستخدم",
+            placeholder: "مثال: MrWire",
+            required: "اسم المستخدم مطلوب"
+          },
+          contact: {
+            label: "جهة الاتصال",
+            subtitle: "واحد على الأقل مطلوب",
+            email: {
+              label: "البريد الإلكتروني",
+              placeholder: "example@domain.com"
+            },
+            whatsapp: {
+              label: "واتساب",
+              placeholder: "6 … 212+"
+            },
+            required: "البريد الإلكتروني أو واتساب مطلوب"
+          },
+          socialNetworks: {
+            label: "الشبكات الاجتماعية",
+            subtitle: "اختر شبكة واحدة على الأقل وقدم الرابط",
+            platforms: {
+              twitch: "Twitch",
+              youtube: "YouTube",
+              kick: "Kick",
+              tiktok: "TikTok Live",
+              facebook: "Facebook Gaming",
+              instagram: "Instagram",
+              twitter: "X / Twitter",
+              discord: "Discord",
+              linktree: "Linktree / Beacons"
+            },
+            placeholders: {
+              twitch: "https://twitch.tv/yourchannel",
+              youtube: "https://youtube.com/@yourusername",
+              kick: "https://kick.com/yourusername",
+              tiktok: "https://tiktok.com/@yourusername",
+              facebook: "https://www.facebook.com/gaming/yourusername",
+              instagram: "https://instagram.com/yourusername",
+              twitter: "https://twitter.com/yourusername",
+              discord: "https://discord.gg/XXXXXX",
+              linktree: "https://linktr.ee/yourusername"
+            },
+            required: "شبكة اجتماعية واحدة على الأقل مع عنوان URL صالح مطلوب",
+            invalidUrl: "رابط غير صالح — الصق عنوان URL الكامل"
+          },
+          consent: {
+            label: "أوافق على الاتصال بي بشأن طلبي",
+            required: "يجب عليك الموافقة على الاتصال بك"
+          },
+          submit: "إرسال الطلب",
+          submitSubtext: "الرد خلال 24 ساعة عمل.",
+          success: "تم إرسال طلبك بنجاح!",
+          error: "حدث خطأ. يرجى المحاولة مرة أخرى."
         },
         comparison: {
           title: "قارن الخطط",
@@ -1373,33 +1639,43 @@ const resources = {
       },
       // Documentation Center
       documentationCenter: {
-        title: "قوانين اللعبة",
+        title: "الوثائق الرسمية",
         description:
-          "كل ما تحتاجه لإتقان المنافسة موجود هنا. حضِّر استراتيجيتك واضمن انتصارك.",
+          "الوصول إلى معلومات شاملة حول البطولات واللوائح والموارد للتحضير للمشاركة في منافسات GAMIUS.",
+        onlineDocTitle: "التوثيق عبر الإنترنت",
+        onlineDocSubtitle: "اطلع على وثائقنا عبر الإنترنت للوصول إلى معلومات شاملة حول المنافسات",
+        backHome: "العودة إلى الصفحة الرئيسية",
         cards: {
-          regulations: "القوانين",
-          strategyGuides: "أدلة الاستراتيجيات",
-          mediaKit: "الملف الإعلامي",
+          regulations: "اللوائح",
+          regulationsDesc: "قم بتنزيل اللوائح الرسمية لمسابقاتنا",
+          strategyGuides: "الأدلة",
+          guidesDesc: "اطلع على أدلتنا العملية للتحضير بشكل جيد",
+          mediaKit: "الموارد",
+          resourcesDesc: "الوصول إلى موارد الوسائط والنماذج الرسمية",
         },
         strategyHub: {
-          title: "مركز الاستراتيجيات",
+          title: "التوثيق التفاعلي",
           description:
-            "كل المعرفة التي تحتاجها، في متناول يدك فوراً. اكتشف، تعلم واستعد للانتصار القادم.",
+            "منصة معلومات متكاملة حول البطولات مع دروس تعليمية وأسئلة شائعة وموارد رسمية لإعداد المشاركين.",
           subtitle:
-            "دليلك التفاعلي للعبة - تصفح بسهولة دروسنا، اعثر على إجابات لأسئلتك ولا تفوت أي تحديث مهم في بطولة GAMIUS.",
+            "توفر منصة التوثيق الإلكترونية الخاصة بنا مجموعة شاملة من المعلومات والدروس التعليمية والموارد لمساعدتك على المشاركة في منافسات GAMIUS.",
           features: {
-            tutorials: "دروس لإتقان كل جانب من اللعبة",
-            faq: "أسئلة مجابة للحصول على إجابات فورية",
-            updates: "تحديثات في الوقت الفعلي",
+            tutorials: "دروس تفاعلية",
+            faq: "أسئلة شائعة مفصلة",
+            updates: "تحديثات منتظمة",
           },
         },
         downloadZone: {
-          title: "منطقة التحميل",
-          subtitle: "قم بتنزيل اللوائح والأدلة والموارد للتحضير لمشاركتك في بطولات GAMIUS",
+          title: "مركز التحميل",
+          subtitle: "قم بتنزيل اللوائح والأدلة والموارد الرسمية للتحضير لمشاركتك في بطولات GAMIUS",
           description:
-            "مستعد للتجهيز؟ حمِّل من هنا كل القوانين، الأدلة الاستراتيجية والموارد الرسمية لبطولات GAMIUS.",
+            "استعرض وقم بتنزيل اللوائح الرسمية للبطولات والأدلة العملية وجميع الموارد اللازمة للتحضير لمشاركتك.",
           new: "جديد",
           downloadButton: "تحميل",
+          accessButton: "الوصول إلى الوثائق",
+          viewDocuments: "عرض المستندات",
+          viewGuides: "عرض الأدلة",
+          viewResources: "عرض الموارد",
           searchPlaceholder: "بحث...",
           noResults: "لا توجد موارد تطابق بحثك",
           tryAnother: "جرب مصطلح أو فئة أخرى",

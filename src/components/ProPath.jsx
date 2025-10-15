@@ -383,15 +383,15 @@ const ProPath = () => {
           </h2> */}
           
           <p className={`pro-path-description text-gray-200 font-circular-web text-lg xl:text-xl max-w-3xl mx-auto mb-16 leading-relaxed text-center ${getTextClass()}  `}>
-            {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurÃ©e vers le professionnalisme pour les talents esport marocains. Progressez des qualifications rÃ©gionales jusqu'aux finales LAN nationales.")}
+            {t('proPath.description', "Le Morocco Gaming Expo ouvre une voie structurÃ©e vers le professionnalisme pour les talents esport marocains. Progressez des qualifications rÃgionales jusqu'aux finales LAN nationales.")}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <a 
-              href="https://user.gnews.ma/login "
+              href={localStorage.getItem('token') ? "https://user.gnews.ma/tournaments" : "https://user.gnews.ma/login"}
               className="inline-flex items-center bg-[#e10000] hover:bg-[#c00] font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 "
             >
-              <span className={getTextClass()}>{t('proPath.cta', "DÃ©buter votre parcours pro")}</span>
+              <span className={getTextClass()}>{t('proPath.cta', "DÃbuter votre parcours pro")}</span>
               <ArrowUpRight className="ml-2" size={18} />
             </a>
             

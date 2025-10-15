@@ -318,16 +318,16 @@ const NavBar = () => {
           isNavVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full mx-auto px-2 sm:px-4 lg:px-6 relative z-10">
           <div
-            className={`flex items-center justify-between ${isHeaderCompact ? "py-1" : "py-2"} transition-all duration-300`}
+            className={`flex items-center justify-between gap-2 sm:gap-3 lg:gap-4 ${isHeaderCompact ? "py-1" : "py-2"} transition-all duration-300`}
           >
             {/* Mobile menu button and Logo */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               {/* Mobile menu button - Left side */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="rounded-md text-white transition-colors lg:hidden" // Only show on mobile/tablet
+                className="rounded-md text-white transition-colors lg:hidden flex-shrink-0" // Only show on mobile/tablet
                 aria-label={isMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
                 aria-expanded={isMenuOpen}
               >
@@ -338,18 +338,18 @@ const NavBar = () => {
                 )}
               </button>
               {/* Logo left */}
-              <div className="flex items-center">
-                <Link to="/" className="flex items-center">
+              <div className="flex items-center flex-shrink-0">
+                <Link to="/" className="flex items-center flex-shrink-0">
                   <img
                     src="img/logo-gamius-white.png"
                     alt="GAMIUS Logo"
-                    className={`transition-all duration-300 ${isHeaderCompact ? "h-10 md:h-12" : "h-10 md:h-14"}`}
+                    className={`transition-all duration-300 flex-shrink-0 ${isHeaderCompact ? "h-8 md:h-10 lg:h-12" : "h-9 md:h-11 lg:h-13"}`}
                   />
                 </Link>
               </div>
             </div>
             {/* Central navigation - Desktop only */}
-            <div className="hidden lg:flex items-center space-x-8 justify-center flex-grow">
+            <div className="hidden lg:flex items-center gap-3 xl:gap-6 justify-center flex-grow">
               {/* Discover button - simple link to hero */}
               <a
                 href={discoverNavItem.link}
@@ -387,10 +387,10 @@ const NavBar = () => {
             </div>
 
             {/* Right side - Auth buttons, Language selector */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
               {/* Social networks on desktop */}
 
-              <div className="hidden lg:flex items-center space-x-3 mr-4">
+              <div className="hidden xl:flex items-center gap-2 mr-2">
                 {socialLinks.map(({ Icon, link }, index) => (
                   <a
                     key={index}
@@ -406,11 +406,11 @@ const NavBar = () => {
               {/* Language selector (desktop & tablet only) */}
               <div
                 ref={languageSelectorRef}
-                className="hidden sm:flex relative z-20 items-center transform-gpu"
+                className="hidden sm:flex relative z-20 items-center transform-gpu flex-shrink-0"
               >
                 <div className="relative group">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-full blur-md group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                  <div className="rounded-full p-1 hover:bg-black/50 transition-all duration-200 relative">
+                  <div className="rounded-full p-0.5 lg:p-1 hover:bg-black/50 transition-all duration-200 relative">
                     <LanguageSelector />
                   </div>
                 </div>
@@ -519,7 +519,7 @@ const NavBar = () => {
   </div>
 
   {/* Desktop: Full profile button */}
-  <div className="hidden md:flex items-center space-x-3 py-2.5 px-4 min-w-[200px] lg:min-w-[220px]">
+  <div className="hidden md:flex items-center space-x-2 py-2 px-3 max-w-[180px] lg:max-w-[200px] xl:max-w-[220px]">
     {/* Background with angular styling */}
     <div className="absolute inset-0 group-hover:border-primary/30 transition-all duration-300 overflow-hidden">
       <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,61,8,0.02)_2px,rgba(255,61,8,0.02)_4px)] opacity-50" />
@@ -527,9 +527,9 @@ const NavBar = () => {
     </div>
 
     {/* Content */}
-    <div className="relative z-10 flex items-center space-x-3 w-full">
+    <div className="relative z-10 flex items-center space-x-2 w-full">
       {/* Avatar with skewed container */}
-      <div className="relative w-9 h-9 flex-shrink-0 transform -skew-x-6 b overflow-hidden bg-black/40">
+      <div className="relative w-8 h-8 lg:w-9 lg:h-9 flex-shrink-0 transform -skew-x-6 overflow-hidden bg-black/40">
         <div className="transform skew-x-6 w-full h-full">
           <img
             src={
@@ -547,21 +547,21 @@ const NavBar = () => {
       </div>
 
       {/* User info */}
-      <div className="flex-1 min-w-0 text-left">
-        <p className="text-sm font-bold text-white truncate uppercase tracking-wide">
+      <div className="flex-1 min-w-0 text-left overflow-hidden">
+        <p className="text-xs lg:text-sm font-bold text-white truncate uppercase tracking-wide">
           {user.username || "User"}
         </p>
         {user.user_type && (
-          <p className="text-xs font-semibold text-primary truncate text-center capitalize">
+          <p className="text-[10px] lg:text-xs font-semibold text-primary truncate capitalize">
             {user.user_type}
           </p>
         )}
       </div>
 
       {/* Chevron */}
-      <div className="flex-shrink-0 w-5 h-5 bg-primary/20 border border-primary/40 flex items-center justify-center transform -skew-x-6 group-hover:bg-primary/30 transition-all duration-300">
+      <div className="flex-shrink-0 w-4 h-4 lg:w-5 lg:h-5 bg-primary/20 border border-primary/40 flex items-center justify-center transform -skew-x-6 group-hover:bg-primary/30 transition-all duration-300">
         <ChevronDown
-          className={`w-3 h-3 text-primary transition-transform duration-300 transform skew-x-6 ${
+          className={`w-2.5 h-2.5 lg:w-3 lg:h-3 text-primary transition-transform duration-300 transform skew-x-6 ${
             dropdownOpen ? 'rotate-180' : ''
           }`}
         />
@@ -642,21 +642,21 @@ const NavBar = () => {
                   {/* Desktop login button */}
                   <a
                     href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
-                    className="hidden sm:flex bg-[#e10000] hover:bg-[#c00] text-white text-lg px-5 py-2.5 rounded-md uppercase transition-all duration-300 font-bold"
+                    className="hidden sm:flex bg-[#e10000] hover:bg-[#c00] text-white text-sm lg:text-base px-3 lg:px-5 py-2 lg:py-2.5 rounded-md uppercase transition-all duration-300 font-bold whitespace-nowrap flex-shrink-0"
                   >
-                    <div className="flex items-center gap-2 special-font">
+                    <div className="flex items-center gap-1 lg:gap-2 special-font">
                       {t("nav.login")}
-                      <ArrowUpRight size={16} />
+                      <ArrowUpRight size={14} className="lg:w-4 lg:h-4" />
                     </div>
                   </a>
 
                   {/* Mobile login button */}
                   <a
                     href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
-                    className="sm:hidden flex items-center justify-center special-font px-4 py-1.5 bg-[#e10000] hover:bg-[#c00] text-white rounded-md text-sm font-semibold"
+                    className="sm:hidden flex items-center justify-center special-font px-3 py-1.5 bg-[#e10000] hover:bg-[#c00] text-white rounded-md text-xs font-semibold whitespace-nowrap flex-shrink-0"
                   >
                     {t("nav.login")}
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={14} />
                   </a>
                 </>
               )}

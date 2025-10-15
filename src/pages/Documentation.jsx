@@ -86,7 +86,7 @@ const Documentation = () => {
               className="flex items-center gap-1 text-white/60 hover:text-white mb-8 transition-colors"
             >
               <ArrowLeft size={16} />
-              <span className={getTextClass()}>Retour à l'accueil</span>
+              <span className={getTextClass()}>{t('documentationCenter.backHome')}</span>
             </Link>
             
             <h1 className={`hero-title text-4xl md:text-5xl lg:text-6xl font-nightWarrior text-primary mb-6 ${isTamazight ? 'tamazight-text' : ''}`}>
@@ -100,39 +100,39 @@ const Documentation = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
               <div className="hero-card bg-gradient-to-br from-[#111122] to-[#0c0c18] p-6 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300 flex flex-col items-center text-center">
                 <Book size={36} className="text-primary mb-4" />
-                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>Règlements</h3>
-                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>Téléchargez les règlements officiels de nos compétitions</p>
+                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>{t('documentationCenter.cards.regulations')}</h3>
+                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>{t('documentationCenter.cards.regulationsDesc')}</p>
                 <a 
                   href="#reglements" 
                   className="mt-auto inline-flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
                 >
-                  <span className={getTextClass()}>Voir les documents</span>
+                  <span className={getTextClass()}>{t('documentationCenter.downloadZone.viewDocuments')}</span>
                   <Download size={16} />
                 </a>
               </div>
               
               <div className="hero-card bg-gradient-to-br from-[#111122] to-[#0c0c18] p-6 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300 flex flex-col items-center text-center">
                 <FileText size={36} className="text-primary mb-4" />
-                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>Guides</h3>
-                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>Consultez nos guides pratiques pour bien vous préparer</p>
+                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>{t('documentationCenter.cards.strategyGuides')}</h3>
+                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>{t('documentationCenter.cards.guidesDesc')}</p>
                 <a 
                   href="#guides" 
                   className="mt-auto inline-flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
                 >
-                  <span className={getTextClass()}>Voir les guides</span>
+                  <span className={getTextClass()}>{t('documentationCenter.downloadZone.viewGuides')}</span>
                   <Download size={16} />
                 </a>
               </div>
               
               <div className="hero-card bg-gradient-to-br from-[#111122] to-[#0c0c18] p-6 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300 flex flex-col items-center text-center">
                 <File size={36} className="text-primary mb-4" />
-                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>Ressources</h3>
-                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>Accédez aux ressources médias et modèles officiels</p>
+                <h3 className={`text-white text-xl font-bold mb-2 ${getTextClass()}`}>{t('documentationCenter.cards.mediaKit')}</h3>
+                <p className={`text-white/60 text-sm mb-4 ${getTextClass()}`}>{t('documentationCenter.cards.resourcesDesc')}</p>
                 <a 
                   href="#ressources" 
                   className="mt-auto inline-flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
                 >
-                  <span className={getTextClass()}>Voir les ressources</span>
+                  <span className={getTextClass()}>{t('documentationCenter.downloadZone.viewResources')}</span>
                   <Download size={16} />
                 </a>
               </div>
@@ -146,56 +146,42 @@ const Documentation = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className={`text-3xl font-nightWarrior text-primary mb-3 ${isTamazight ? 'tamazight-text' : ''}`}>
-              Documentation en ligne
+              {t('documentationCenter.onlineDocTitle')}
             </h2>
             <p className={`text-white/80 max-w-2xl mx-auto ${getTextClass()}`}>
-              Consultez notre documentation en ligne pour accéder à l'ensemble des informations sur les compétitions
+              {t('documentationCenter.onlineDocSubtitle')}
             </p>
           </div>
           
           <div className="bg-black/30 border border-primary/20 rounded-lg p-8 mb-16">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h3 className={`text-2xl font-bold text-white mb-3 ${getTextClass()}`}>Documentation interactive</h3>
-                <p className={`text-white/70 max-w-xl mb-4 ${getTextClass()}`}>
-                  Notre plateforme de documentation en ligne contient l'ensemble des informations, tutoriels et ressources pour vous aider à participer aux compétitions GAMIUS.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                    <span className={`text-white/80 ${getTextClass()}`}>Tutoriels interactifs</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                    <span className={`text-white/80 ${getTextClass()}`}>FAQ détaillée</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                    <span className={`text-white/80 ${getTextClass()}`}>Mises à jour régulières</span>
-                  </div>
+            <div className="flex flex-col items-center text-center">
+              <h3 className={`text-2xl font-bold text-white mb-3 ${getTextClass()}`}>{t('documentationCenter.strategyHub.title')}</h3>
+              <p className={`text-white/70 max-w-xl mb-4 ${getTextClass()}`}>
+                {t('documentationCenter.strategyHub.subtitle')}
+              </p>
+              <div className="space-y-2 mb-6">
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                  <span className={`text-white/80 ${getTextClass()}`}>{t('documentationCenter.strategyHub.features.tutorials')}</span>
                 </div>
-                <a
-                  href="https://docs.gamiusgroup.ma"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-black py-2.5 px-5 rounded-lg transition-all duration-300"
-                >
-                  <span className={`font-bold ${getTextClass()}`}>Accéder à la documentation</span>
-                  <ExternalLink size={16} />
-                </a>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                  <span className={`text-white/80 ${getTextClass()}`}>{t('documentationCenter.strategyHub.features.faq')}</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                  <span className={`text-white/80 ${getTextClass()}`}>{t('documentationCenter.strategyHub.features.updates')}</span>
+                </div>
               </div>
-              
-              <div className="w-full md:w-auto flex items-center justify-center">
-                <img 
-                  src="/img/documentation-preview.jpg" 
-                  alt="Documentation Preview" 
-                  className="max-w-sm rounded-lg shadow-lg"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='300' viewBox='0 0 500 300'%3E%3Crect width='500' height='300' fill='%23111122'/%3E%3Ctext x='50%25' y='50%25' font-size='24' text-anchor='middle' fill='%23d7c6af' dominant-baseline='middle'%3EDocumentation%3C/text%3E%3C/svg%3E`;
-                  }}
-                />
-              </div>
+              <a
+                href="https://docs.gamiusgroup.ma"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-black py-2.5 px-5 rounded-lg transition-all duration-300"
+              >
+                <span className={`font-bold ${getTextClass()}`}>{t('documentationCenter.downloadZone.accessButton')}</span>
+                <ExternalLink size={16} />
+              </a>
             </div>
           </div>
         </div>
