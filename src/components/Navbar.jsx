@@ -438,38 +438,62 @@ const NavBar = () => {
                     />
                   </button>
 
-                  {/* Dropdown - compact */}
+                  {/* Dropdown - responsive */}
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-black/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50">
-                      {/* User info */}
-                      <div className="p-3 border-b border-white/10">
-                        <p className="text-white font-semibold text-sm break-words">{user.username}</p>
-                        <p className="text-white/60 text-xs truncate">{user.email}</p>
-                        {user.points !== undefined && (
-                          <div className="mt-2 inline-flex items-center gap-1 bg-primary/10 border border-primary/30 px-2 py-1 rounded">
-                            <span className="text-primary text-xs font-bold">{user.points} Points</span>
+                    <>
+                      {/* Mobile backdrop */}
+                      <div className="fixed inset-0 bg-black/50 z-[60] sm:hidden" onClick={() => setDropdownOpen(false)}></div>
+                      
+                      {/* Dropdown menu */}
+                      <div className="fixed sm:absolute left-4 right-4 sm:left-auto sm:right-0 top-16 sm:top-auto sm:mt-2 w-auto sm:w-56 bg-black/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden z-[70]">
+                        {/* User info */}
+                        <div className="p-3 sm:p-3 border-b border-white/10">
+                          <div className="flex items-center gap-3 sm:block">
+                            <img
+                              src={
+                                user.avatar
+                                  ? `${import.meta.env.VITE_PUBLIC_BACKEND_URL || "http://localhost"}${user.avatar}`
+                                  : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.username || "User") + "&background=e10000&color=fff&size=128"
+                              }
+                              alt={user.username || "User"}
+                              className="w-12 h-12 sm:hidden rounded-full object-cover border-2 border-white/20 bg-gray-800"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(e.target.alt || "User") + "&background=e10000&color=fff&size=128";
+                              }}
+                            />
+                            <div className="flex-1">
+                              <p className="text-white font-semibold text-sm sm:text-sm break-words">{user.username}</p>
+                              <p className="text-white/60 text-xs truncate">{user.email}</p>
+                              {user.points !== undefined && (
+                                <div className="mt-2 inline-flex items-center gap-1 bg-primary/10 border border-primary/30 px-2 py-1 rounded">
+                                  <span className="text-primary text-xs font-bold">{user.points} Points</span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
-                      </div>
+                        </div>
 
-                      {/* Actions */}
-                      <div className="p-2 space-y-1">
-                        <a
-                          href={`${import.meta.env.VITE_PUBLIC_URL}/tournaments`}
-                          className="flex items-center gap-2 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
-                        >
-                          <TbDoorEnter size={16} className="text-green-400" />
-                          <span>Dashboard</span>
-                        </a>
-                        <button
-                          onClick={handleLogout}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
-                        >
-                          <LogOut size={16} className="text-red-400" />
-                          <span>Sign Out</span>
-                        </button>
+                        {/* Actions */}
+                        <div className="p-2 space-y-1">
+                          <a
+                            href={`${import.meta.env.VITE_PUBLIC_URL}/tournaments`}
+                            className="flex items-center gap-2 px-3 py-2.5 sm:py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+                            onClick={() => setDropdownOpen(false)}
+                          >
+                            <TbDoorEnter size={18} className="text-green-400" />
+                            <span>Dashboard</span>
+                          </a>
+                          <button
+                            onClick={handleLogout}
+                            className="flex w-full items-center gap-2 px-3 py-2.5 sm:py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+                          >
+                            <LogOut size={18} className="text-red-400" />
+                            <span>Sign Out</span>
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               ) : (

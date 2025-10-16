@@ -97,7 +97,7 @@ const Hero = () => {
     <div
       id="hero"
       className="relative w-full overflow-hidden bg-black"
-      style={{ height: "calc(100vh - 4rem)", marginTop: "4rem" }}
+      style={{ height: "100vh", paddingTop: "3.5rem" }}
       dir={isRtl ? "rtl" : "ltr"}
       ref={heroSectionRef}
     >
