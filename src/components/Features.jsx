@@ -241,33 +241,6 @@ const Features = () => {
             </Link>
           </BentoTilt>
 
-          {/* Row 1 - Strategy Hub */}
-          <BentoTilt innerRef={el => cardsRef.current[1] = el} className="h-40 sm:h-48 md:h-56 lg:h-64 xl:h-72 2xl:h-80 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
-            <Link to="/downloads?filter=guides" className="block h-full w-full">
-              <BentoCard
-                src="videos/feature-4.mp4"
-                icon={Lightbulb}
-                title={
-                  <>
-                    {language === "fr" ? (
-                      <FrenchTitle
-                        textKey="documentationCenter.strategyHub.title"
-                        className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
-                        as="div"
-                      />
-                    ) : (
-                      <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
-                        {t("documentationCenter.strategyHub.title")}
-                      </span>
-                    )}
-                  </>
-                }
-                description="A cross-world AI Agent - elevating your gameplay to be more fun and productive."
-                isComingSoon
-              />
-            </Link>
-          </BentoTilt>
-
           {/* Row 2 - Calendar */}
           <BentoTilt innerRef={el => cardsRef.current[2] = el} className="h-40 sm:h-48 md:h-56 lg:h-64 xl:h-72 2xl:h-80 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
             <Link to="/downloads?filter=calendar" className="block h-full w-full">

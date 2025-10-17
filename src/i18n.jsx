@@ -313,6 +313,12 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "GAMIUS PASS",
+        cardTitle: "Pass Gamius",
+        cardSubtitle: "Official • Morocco 2025",
+        cardMemberStatus: "Active Member",
+        cardMemberId: "Member ID",
+        cardStatus: "Status",
+        cardActive: "Active",
         subtitle:
           "Your VIP access to the GAMIUS universe. Join the club of privileged players and unlock: Early access to tournaments, Unique rewards, Offers from our partner brands 🚀",
         officialInitiative: "100% FREE & EXCLUSIVE",
@@ -326,6 +332,7 @@ const resources = {
         step3: "Enjoy",
         step3Desc:
           "Explore your benefits and get ready for the next competition.",
+        advantages: "Pass Benefits",
         selectPlan: "Select your plan",
         monthlyPlan: "Monthly",
         quarterlyPlan: "Quarterly",
@@ -361,15 +368,23 @@ const resources = {
             description:
               "Display a unique badge on your profile and get recognized by the entire community.",
           },
+          tournaments: {
+            title: "Competitions",
+            description:
+              "Participation in regional and national tournaments",
+          },
         },
+        ctaButton: "Join us now",
+        noFees: "No fees • Instant",
+        statsActiveMembers: "Active members",
+        statsProcessing: "Processing",
+        statsFree: "Free",
       },
       // Documentation Center
       documentationCenter: {
         title: "OFFICIAL DOCUMENTATION",
         description:
           "Access comprehensive tournament information, regulations, and resources to prepare for GAMIUS competitions.",
-        onlineDocTitle: "ONLINE DOCUMENTATION",
-        onlineDocSubtitle: "View our online documentation to access comprehensive competition information",
         backHome: "Back to Home",
         cards: {
           regulations: "Regulations",
@@ -378,18 +393,6 @@ const resources = {
           guidesDesc: "View our practical guides to prepare yourself",
           mediaKit: "Resources",
           resourcesDesc: "Access media resources and official templates",
-        },
-        strategyHub: {
-          title: "INTERACTIVE DOCUMENTATION",
-          description:
-            "Complete tournament information platform with tutorials, FAQs, and official resources for participant preparation.",
-          subtitle:
-            "Our online documentation platform provides comprehensive information, tutorials, and resources to help you participate in GAMIUS competitions.",
-          features: {
-            tutorials: "Interactive tutorials",
-            faq: "Detailed FAQ",
-            updates: "Regular updates",
-          },
         },
         downloadZone: {
           title: "DOWNLOAD CENTER",
@@ -638,6 +641,249 @@ const resources = {
             },
           },
         },
+      },
+      // Guides
+      guides: {
+        title: "Tournament Guides",
+        description: "Step-by-step guides to help you navigate registration, team creation, and tournament participation on the GAMIUS platform.",
+        backToDocumentation: "Back to Documentation",
+        downloadPDF: "Download as PDF",
+        needHelp: {
+          title: "Need More Help?",
+          description: "If you have any questions or encounter issues, our support team is here to help you. Contact us at",
+          faq: "View FAQ"
+        },
+        register: {
+          title: "How to Register",
+          step1: {
+            title: "Visit the Website",
+            desc: "Navigate to the GAMIUS official website and click on the \"Sign Up\" or \"Register\" button in the top navigation bar.",
+          },
+          step2: {
+            title: "Fill in Your Information",
+            desc: "Enter your personal details including your full name, email address, phone number, and create a secure password.",
+            note: "Make sure to use a valid email address as you will need to verify it."
+          },
+          step3: {
+            title: "Verify Your Email",
+            desc: "Check your email inbox for a verification link sent by GAMIUS. Click the link to activate your account."
+          },
+          step4: {
+            title: "Complete Your Profile",
+            desc: "Once verified, log in and complete your profile by adding additional information such as your gaming IDs, preferred games, and bio."
+          }
+        },
+        login: {
+          title: "How to Login",
+          step1: {
+            title: "Go to Login Page",
+            desc: "Click on the \"Login\" or \"Sign In\" button on the homepage navigation bar."
+          },
+          step2: {
+            title: "Enter Your Credentials",
+            desc: "Type in the email address and password you used during registration.",
+            note: "If you forgot your password, click \"Forgot Password\" to reset it via email."
+          },
+          step3: {
+            title: "Access Your Dashboard",
+            desc: "After successful login, you will be redirected to your personal dashboard where you can manage your profile, teams, and tournament registrations."
+          }
+        },
+        createTeam: {
+          title: "How to Create a Team",
+          step1: {
+            title: "Navigate to Teams Section",
+            desc: "From your dashboard, click on \"Teams\" in the navigation menu, then select \"Create New Team\"."
+          },
+          step2: {
+            title: "Set Team Details",
+            desc: "Enter your team name, tag (abbreviation), and upload a team logo. Choose the game your team will compete in.",
+            note: "Team names must be unique and follow GAMIUS naming guidelines. No offensive language is allowed."
+          },
+          step3: {
+            title: "Invite Team Members",
+            desc: "Add team members by entering their email addresses or GAMIUS usernames. They will receive an invitation to join your team."
+          },
+          step4: {
+            title: "Complete Team Roster",
+            desc: "Ensure your team has the minimum required number of players for the tournament. Each member must accept the invitation and complete their profile."
+          },
+          step5: {
+            title: "Verify Team Status",
+            desc: "Once all members have joined and the team meets tournament requirements, your team status will show as \"Ready\". You can now register for tournaments."
+          }
+        },
+        joinTeam: {
+          title: "How to Join a Team",
+          step1: {
+            title: "Receive Team Invitation",
+            desc: "You will receive an email notification and in-app notification when a team captain invites you to join their team."
+          },
+          step2: {
+            title: "Review Team Information",
+            desc: "Click on the invitation to view team details including team name, members, game, and upcoming tournaments."
+          },
+          step3: {
+            title: "Accept or Decline",
+            desc: "If you want to join, click \"Accept Invitation\". If not interested, you can decline politely. You can only be part of one team per game at a time.",
+            note: "Make sure you are committed to participate before accepting, as leaving teams frequently may affect your reputation."
+          },
+          step4: {
+            title: "Complete Team Requirements",
+            desc: "Ensure your profile has all required information and your game IDs are up to date. Some teams may require additional verification."
+          }
+        },
+        joinTournament: {
+          title: "How to Join Tournaments",
+          step1: {
+            title: "Browse Tournaments",
+            desc: "Go to the \"Tournaments\" section from the main menu. Browse available tournaments by game, date, or prize pool."
+          },
+          step2: {
+            title: "Check Requirements",
+            desc: "Click on a tournament to view details including format, rules, schedule, and eligibility requirements. Make sure you meet all criteria.",
+            note: "Some tournaments require team registration while others allow solo players. Check the format before registering."
+          },
+          step3: {
+            title: "Register Your Team",
+            desc: "For team tournaments, select your team from the dropdown and click \"Register Team\". All team members will be notified of the registration."
+          },
+          step4: {
+            title: "Pay Registration Fee (If Required)",
+            desc: "Some tournaments may have entry fees. Follow the payment instructions if applicable. Free tournaments will confirm your registration immediately."
+          },
+          step5: {
+            title: "Confirm Registration",
+            desc: "After payment confirmation (if required), your team will appear in the registered participants list. You will receive tournament bracket details and schedule via email."
+          },
+          step6: {
+            title: "Prepare for Competition",
+            desc: "Check the tournament schedule, read the rules carefully, and make sure all team members are available for match times. Join the official tournament Discord/communication channel if provided."
+          }
+        }
+      },
+      // Privacy Policy
+      privacyPolicy: {
+        title: "Privacy Policy",
+        backHome: "Back to Home",
+        lastUpdated: "Last Updated",
+        intro: {
+          title: "Introduction",
+          content: "GAMIUS GROUP is committed to protecting your personal data and respecting your privacy. This privacy policy explains how we collect, use, and protect your personal information in accordance with applicable laws.",
+          moroccanLaw: "This policy complies with Moroccan Law No. 09-08 on the protection of individuals with regard to the processing of personal data and the regulations of the National Commission for the Control of Personal Data Protection (CNDP)."
+        },
+        dataCollection: {
+          title: "Data Collection",
+          intro: "We collect the following types of information:",
+          items: {
+            personal: "Personal information (name, date of birth, gender)",
+            contact: "Contact information (email, phone number)",
+            gaming: "Gaming profile data (username, game statistics, tournament history)",
+            technical: "Technical data (IP address, browser type, device information)"
+          }
+        },
+        dataUsage: {
+          title: "Use of Data",
+          intro: "We use your data for the following purposes:",
+          items: {
+            tournaments: "Managing your participation in tournaments and competitions",
+            communication: "Sending notifications about events and updates",
+            improvement: "Improving our services and user experience",
+            security: "Ensuring platform security and preventing fraud"
+          }
+        },
+        dataProtection: {
+          title: "Data Protection",
+          content: "We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. Your data is stored securely and only accessible to authorized personnel."
+        },
+        userRights: {
+          title: "Your Rights",
+          intro: "In accordance with Moroccan Law No. 09-08 and CNDP regulations, you have the following rights:",
+          items: {
+            access: "Right to access your personal data",
+            correction: "Right to correct inaccurate or incomplete data",
+            deletion: "Right to request deletion of your data",
+            objection: "Right to object to data processing",
+            portability: "Right to data portability"
+          },
+          contact: "To exercise these rights, please contact us at the address provided below."
+        },
+        cookies: {
+          title: "Cookies",
+          content: "We use cookies to enhance your browsing experience and analyze site traffic. You can disable cookies in your browser settings, but this may affect certain features of our platform."
+        },
+        dataSharing: {
+          title: "Data Sharing",
+          content: "We do not sell or rent your personal data to third parties. We may share your information with trusted partners only when necessary to provide our services or comply with legal obligations."
+        },
+        contact: {
+          title: "Contact",
+          content: "For any questions regarding this privacy policy or to exercise your rights:",
+          cndp: "You may also file a complaint with the National Commission for the Control of Personal Data Protection (CNDP) - www.cndp.ma"
+        }
+      },
+      // Terms of Service
+      termsOfService: {
+        title: "Terms of Service",
+        backHome: "Back to Home",
+        lastUpdated: "Last Updated",
+        acceptance: {
+          title: "Acceptance of Terms",
+          content: "By accessing and using the GAMIUS platform, you accept and agree to be bound by these terms and conditions. If you do not agree with any part of these terms, you should not use our services."
+        },
+        services: {
+          title: "Description of Services",
+          content: "GAMIUS provides an online platform for esports competitions and tournaments. We offer tournament management tools, player profiles, leaderboards, and community features for gamers in Morocco."
+        },
+        userAccount: {
+          title: "User Account",
+          intro: "To participate in tournaments, you must create an account. You agree to:",
+          items: {
+            accurate: "Provide accurate and complete information",
+            confidential: "Keep your password confidential",
+            responsible: "Be responsible for all activities under your account",
+            notify: "Notify us immediately of any unauthorized access"
+          }
+        },
+        conduct: {
+          title: "Code of Conduct",
+          intro: "You agree not to:",
+          items: {
+            cheating: "Use cheating software, hacks, or exploits",
+            harassment: "Engage in harassment, hate speech, or toxic behavior",
+            impersonation: "Impersonate other users or organizations",
+            illegal: "Post illegal or harmful content",
+            spam: "Send spam or unsolicited messages"
+          }
+        },
+        tournaments: {
+          title: "Tournament Rules",
+          content: "All tournament participants must comply with the specific rules and regulations of each competition. Violations may result in disqualification and account suspension."
+        },
+        intellectualProperty: {
+          title: "Intellectual Property",
+          content: "All content on the GAMIUS platform, including logos, graphics, and text, is the property of GAMIUS GROUP and protected by Moroccan and international intellectual property laws."
+        },
+        liability: {
+          title: "Limitation of Liability",
+          content: "GAMIUS GROUP is not liable for any indirect, incidental, or consequential damages arising from your use of the platform. We do not guarantee uninterrupted or error-free service."
+        },
+        termination: {
+          title: "Termination",
+          content: "We reserve the right to suspend or terminate your account at any time for violations of these terms or for any other reason at our sole discretion."
+        },
+        applicableLaw: {
+          title: "Applicable Law",
+          content: "These terms are governed by Moroccan law. Any disputes will be subject to the exclusive jurisdiction of Moroccan courts."
+        },
+        modifications: {
+          title: "Modifications",
+          content: "We reserve the right to modify these terms at any time. Changes will be effective upon posting to the platform. Continued use of our services constitutes acceptance of the modified terms."
+        },
+        contact: {
+          title: "Contact",
+          content: "For any questions regarding these terms of service:"
+        }
       },
     },
   },
@@ -956,6 +1202,12 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "PASS GAMIUS",
+        cardTitle: "Pass Gamius",
+        cardSubtitle: "Officiel • Maroc 2025",
+        cardMemberStatus: "Membre Actif",
+        cardMemberId: "ID Membre",
+        cardStatus: "Statut",
+        cardActive: "Actif",
         subtitle:
           "Ton acces VIP a l'univers GAMIUS. Rejoins le club des joueurs privilegies et debloque : Acces anticipe aux tournois, Recompenses uniques, Offres de nos marques partenaires 🚀",
         officialInitiative: "100% GRATUIT & EXCLUSIF",
@@ -1005,15 +1257,23 @@ const resources = {
             description:
               "Affiche un badge unique sur ton profil et sois reconnu par toute la communaute.",
           },
+          tournaments: {
+            title: "Competitions",
+            description:
+              "Participation aux tournois regionaux et nationaux",
+          },
         },
+        ctaButton: "Rejoins-nous maintenant",
+        noFees: "Aucun frais • Instantane",
+        statsActiveMembers: "Membres actifs",
+        statsProcessing: "Traitement",
+        statsFree: "Gratuit",
       },
       // Documentation Center
       documentationCenter: {
         title: "DOCUMENTATION OFFICIELLE",
         description:
           "Accedez aux informations completes sur les tournois, reglements et ressources pour preparer votre participation aux competitions GAMIUS.",
-        onlineDocTitle: "DOCUMENTATION EN LIGNE",
-        onlineDocSubtitle: "Consultez notre documentation en ligne pour acceder a l'ensemble des informations sur les competitions",
         backHome: "Retour a l'accueil",
         cards: {
           regulations: "Reglements",
@@ -1022,18 +1282,6 @@ const resources = {
           guidesDesc: "Consultez nos guides pratiques pour bien vous preparer",
           mediaKit: "Ressources",
           resourcesDesc: "Accedez aux ressources medias et modeles officiels",
-        },
-        strategyHub: {
-          title: "DOCUMENTATION INTERACTIVE",
-          description:
-            "Plateforme d'information complete sur les tournois avec tutoriels, FAQ et ressources officielles pour la preparation des participants.",
-          subtitle:
-            "Notre plateforme de documentation en ligne contient l'ensemble des informations, tutoriels et ressources pour vous aider a participer aux competitions GAMIUS.",
-          features: {
-            tutorials: "Tutoriels interactifs",
-            faq: "FAQ detaillee",
-            updates: "Mises a jour regulieres",
-          },
         },
         downloadZone: {
           title: "CENTRE DE TELECHARGEMENT",
@@ -1280,6 +1528,249 @@ const resources = {
             },
           },
         },
+      },
+      // Guides
+      guides: {
+        title: "Guides des Tournois",
+        description: "Guides etape par etape pour vous aider a naviguer l'inscription, la creation d'equipes et la participation aux tournois sur la plateforme GAMIUS.",
+        backToDocumentation: "Retour a la Documentation",
+        downloadPDF: "Telecharger en PDF",
+        needHelp: {
+          title: "Besoin d'aide supplementaire ?",
+          description: "Si vous avez des questions ou rencontrez des problemes, notre equipe d'assistance est la pour vous aider. Contactez-nous a",
+          faq: "Voir la FAQ"
+        },
+        register: {
+          title: "Comment s'inscrire",
+          step1: {
+            title: "Visitez le site Web",
+            desc: "Accedez au site officiel GAMIUS et cliquez sur le bouton \"S'inscrire\" ou \"Creer un compte\" dans la barre de navigation superieure.",
+          },
+          step2: {
+            title: "Remplissez vos informations",
+            desc: "Entrez vos donnees personnelles, y compris votre nom complet, votre adresse e-mail, votre numero de telephone et creez un mot de passe securise.",
+            note: "Assurez-vous d'utiliser une adresse e-mail valide car vous devrez la verifier."
+          },
+          step3: {
+            title: "Verifiez votre e-mail",
+            desc: "Consultez votre boîte de reception pour un lien de verification envoye par GAMIUS. Cliquez sur le lien pour activer votre compte."
+          },
+          step4: {
+            title: "Completez votre profil",
+            desc: "Une fois verifie, connectez-vous et completez votre profil en ajoutant des informations supplementaires telles que vos identifiants de jeu, vos jeux preferes et votre biographie."
+          }
+        },
+        login: {
+          title: "Comment se connecter",
+          step1: {
+            title: "Accedez a la page de connexion",
+            desc: "Cliquez sur le bouton \"Connexion\" ou \"Se connecter\" dans la barre de navigation de la page d'accueil."
+          },
+          step2: {
+            title: "Entrez vos identifiants",
+            desc: "Saisissez l'adresse e-mail et le mot de passe que vous avez utilises lors de l'inscription.",
+            note: "Si vous avez oublie votre mot de passe, cliquez sur \"Mot de passe oublie\" pour le reinitialiser par e-mail."
+          },
+          step3: {
+            title: "Accedez a votre tableau de bord",
+            desc: "Apres une connexion reussie, vous serez redirige vers votre tableau de bord personnel où vous pourrez gerer votre profil, vos equipes et vos inscriptions aux tournois."
+          }
+        },
+        createTeam: {
+          title: "Comment creer une equipe",
+          step1: {
+            title: "Accedez a la section Equipes",
+            desc: "Depuis votre tableau de bord, cliquez sur \"Equipes\" dans le menu de navigation, puis selectionnez \"Creer une nouvelle equipe\"."
+          },
+          step2: {
+            title: "Definissez les details de l'equipe",
+            desc: "Entrez le nom de votre equipe, le tag (abreviation) et telechargez un logo d'equipe. Choisissez le jeu dans lequel votre equipe va concourir.",
+            note: "Les noms d'equipe doivent etre uniques et suivre les directives de denomination GAMIUS. Aucun langage offensant n'est autorise."
+          },
+          step3: {
+            title: "Invitez des membres de l'equipe",
+            desc: "Ajoutez des membres de l'equipe en entrant leurs adresses e-mail ou leurs noms d'utilisateur GAMIUS. Ils recevront une invitation a rejoindre votre equipe."
+          },
+          step4: {
+            title: "Completez la liste de l'equipe",
+            desc: "Assurez-vous que votre equipe compte le nombre minimum de joueurs requis pour le tournoi. Chaque membre doit accepter l'invitation et completer son profil."
+          },
+          step5: {
+            title: "Verifiez le statut de l'equipe",
+            desc: "Une fois que tous les membres ont rejoint et que l'equipe repond aux exigences du tournoi, le statut de votre equipe s'affichera comme \"Pret\". Vous pouvez maintenant vous inscrire aux tournois."
+          }
+        },
+        joinTeam: {
+          title: "Comment rejoindre une equipe",
+          step1: {
+            title: "Recevez une invitation d'equipe",
+            desc: "Vous recevrez une notification par e-mail et dans l'application lorsqu'un capitaine d'equipe vous invite a rejoindre son equipe."
+          },
+          step2: {
+            title: "Consultez les informations de l'equipe",
+            desc: "Cliquez sur l'invitation pour afficher les details de l'equipe, y compris le nom de l'equipe, les membres, le jeu et les tournois a venir."
+          },
+          step3: {
+            title: "Accepter ou refuser",
+            desc: "Si vous souhaitez rejoindre, cliquez sur \"Accepter l'invitation\". Si vous n'etes pas interesse, vous pouvez refuser poliment. Vous ne pouvez faire partie que d'une equipe par jeu a la fois.",
+            note: "Assurez-vous d'etre engage a participer avant d'accepter, car quitter frequemment des equipes peut affecter votre reputation."
+          },
+          step4: {
+            title: "Completez les exigences de l'equipe",
+            desc: "Assurez-vous que votre profil contient toutes les informations requises et que vos identifiants de jeu sont a jour. Certaines equipes peuvent necessiter une verification supplementaire."
+          }
+        },
+        joinTournament: {
+          title: "Comment participer aux tournois",
+          step1: {
+            title: "Parcourir les tournois",
+            desc: "Accedez a la section \"Tournois\" depuis le menu principal. Parcourez les tournois disponibles par jeu, date ou cagnotte."
+          },
+          step2: {
+            title: "Verifier les exigences",
+            desc: "Cliquez sur un tournoi pour afficher les details, y compris le format, les regles, le calendrier et les conditions d'eligibilite. Assurez-vous de repondre a tous les criteres.",
+            note: "Certains tournois necessitent une inscription d'equipe tandis que d'autres autorisent les joueurs solo. Verifiez le format avant de vous inscrire."
+          },
+          step3: {
+            title: "Inscrire votre equipe",
+            desc: "Pour les tournois par equipe, selectionnez votre equipe dans la liste deroulante et cliquez sur \"Inscrire l'equipe\". Tous les membres de l'equipe seront avertis de l'inscription."
+          },
+          step4: {
+            title: "Payer les frais d'inscription (si requis)",
+            desc: "Certains tournois peuvent avoir des frais d'inscription. Suivez les instructions de paiement si applicable. Les tournois gratuits confirmeront votre inscription immediatement."
+          },
+          step5: {
+            title: "Confirmer l'inscription",
+            desc: "Apres confirmation du paiement (si requis), votre equipe apparaîtra dans la liste des participants inscrits. Vous recevrez les details du tableau et le calendrier du tournoi par e-mail."
+          },
+          step6: {
+            title: "Preparez-vous pour la competition",
+            desc: "Verifiez le calendrier du tournoi, lisez attentivement les regles et assurez-vous que tous les membres de l'equipe sont disponibles pour les heures de match. Rejoignez le canal de communication officiel du tournoi Discord s'il est fourni."
+          }
+        }
+      },
+      // Privacy Policy
+      privacyPolicy: {
+        title: "Politique de Confidentialite",
+        backHome: "Retour a l'accueil",
+        lastUpdated: "Derniere mise a jour",
+        intro: {
+          title: "Introduction",
+          content: "GAMIUS GROUP s'engage à protéger vos données personnelles et à respecter votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles conformément aux lois en vigueur.",
+          moroccanLaw: "Cette politique est conforme à la loi marocaine n° 09-08 relative à la protection des personnes physiques à l'égard du traitement des données à caractère personnel et aux règlements de la Commission Nationale de Contrôle de la Protection des Données à Caractère Personnel (CNDP)."
+        },
+        dataCollection: {
+          title: "Collecte des Donnees",
+          intro: "Nous collectons les types d'informations suivants :",
+          items: {
+            personal: "Informations personnelles (nom, date de naissance, sexe)",
+            contact: "Coordonnées (email, numéro de téléphone)",
+            gaming: "Données de profil joueur (pseudo, statistiques de jeu, historique des tournois)",
+            technical: "Données techniques (adresse IP, type de navigateur, informations sur l'appareil)"
+          }
+        },
+        dataUsage: {
+          title: "Utilisation des Donnees",
+          intro: "Nous utilisons vos données aux fins suivantes :",
+          items: {
+            tournaments: "Gestion de votre participation aux tournois et compétitions",
+            communication: "Envoi de notifications sur les événements et mises à jour",
+            improvement: "Amélioration de nos services et de l'expérience utilisateur",
+            security: "Assurer la sécurité de la plateforme et prévenir la fraude"
+          }
+        },
+        dataProtection: {
+          title: "Protection des Donnees",
+          content: "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès, modification, divulgation ou destruction non autorisés. Vos données sont stockées de manière sécurisée et accessibles uniquement au personnel autorisé."
+        },
+        userRights: {
+          title: "Vos Droits",
+          intro: "Conformément à la loi marocaine n° 09-08 et aux règlements de la CNDP, vous disposez des droits suivants :",
+          items: {
+            access: "Droit d'accès à vos données personnelles",
+            correction: "Droit de rectification des données inexactes ou incomplètes",
+            deletion: "Droit de demander la suppression de vos données",
+            objection: "Droit d'opposition au traitement des données",
+            portability: "Droit à la portabilité des données"
+          },
+          contact: "Pour exercer ces droits, veuillez nous contacter à l'adresse indiquée ci-dessous."
+        },
+        cookies: {
+          title: "Cookies",
+          content: "Nous utilisons des cookies pour améliorer votre expérience de navigation et analyser le trafic du site. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur, mais cela peut affecter certaines fonctionnalités de notre plateforme."
+        },
+        dataSharing: {
+          title: "Partage des Donnees",
+          content: "Nous ne vendons ni ne louons vos données personnelles à des tiers. Nous pouvons partager vos informations avec des partenaires de confiance uniquement lorsque cela est nécessaire pour fournir nos services ou nous conformer aux obligations légales."
+        },
+        contact: {
+          title: "Contact",
+          content: "Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits :",
+          cndp: "Vous pouvez également déposer une plainte auprès de la Commission Nationale de Contrôle de la Protection des Données à Caractère Personnel (CNDP) - www.cndp.ma"
+        }
+      },
+      // Terms of Service
+      termsOfService: {
+        title: "Conditions d'Utilisation",
+        backHome: "Retour a l'accueil",
+        lastUpdated: "Derniere mise a jour",
+        acceptance: {
+          title: "Acceptation des Conditions",
+          content: "En accédant et en utilisant la plateforme GAMIUS, vous acceptez et vous engagez à respecter ces termes et conditions. Si vous n'acceptez pas une partie de ces conditions, vous ne devez pas utiliser nos services."
+        },
+        services: {
+          title: "Description des Services",
+          content: "GAMIUS fournit une plateforme en ligne pour les compétitions et tournois d'esports. Nous offrons des outils de gestion de tournois, des profils de joueurs, des classements et des fonctionnalités communautaires pour les joueurs au Maroc."
+        },
+        userAccount: {
+          title: "Compte Utilisateur",
+          intro: "Pour participer aux tournois, vous devez créer un compte. Vous vous engagez à :",
+          items: {
+            accurate: "Fournir des informations exactes et complètes",
+            confidential: "Garder votre mot de passe confidentiel",
+            responsible: "Être responsable de toutes les activités sous votre compte",
+            notify: "Nous informer immédiatement de tout accès non autorisé"
+          }
+        },
+        conduct: {
+          title: "Code de Conduite",
+          intro: "Vous vous engagez à ne pas :",
+          items: {
+            cheating: "Utiliser des logiciels de triche, hacks ou exploits",
+            harassment: "Vous engager dans le harcèlement, les discours de haine ou les comportements toxiques",
+            impersonation: "Usurper l'identité d'autres utilisateurs ou organisations",
+            illegal: "Publier du contenu illégal ou nuisible",
+            spam: "Envoyer du spam ou des messages non sollicités"
+          }
+        },
+        tournaments: {
+          title: "Regles des Tournois",
+          content: "Tous les participants aux tournois doivent se conformer aux règles et règlements spécifiques de chaque compétition. Les violations peuvent entraîner une disqualification et une suspension du compte."
+        },
+        intellectualProperty: {
+          title: "Propriete Intellectuelle",
+          content: "Tout le contenu de la plateforme GAMIUS, y compris les logos, graphiques et textes, est la propriété de GAMIUS GROUP et protégé par les lois marocaines et internationales sur la propriété intellectuelle."
+        },
+        liability: {
+          title: "Limitation de Responsabilite",
+          content: "GAMIUS GROUP n'est pas responsable des dommages indirects, accessoires ou consécutifs résultant de votre utilisation de la plateforme. Nous ne garantissons pas un service ininterrompu ou sans erreur."
+        },
+        termination: {
+          title: "Resiliation",
+          content: "Nous nous réservons le droit de suspendre ou de résilier votre compte à tout moment pour violation de ces conditions ou pour toute autre raison à notre seule discrétion."
+        },
+        applicableLaw: {
+          title: "Loi Applicable",
+          content: "Ces conditions sont régies par la loi marocaine. Tout litige sera soumis à la compétence exclusive des tribunaux marocains."
+        },
+        modifications: {
+          title: "Modifications",
+          content: "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications entreront en vigueur dès leur publication sur la plateforme. L'utilisation continue de nos services constitue l'acceptation des conditions modifiées."
+        },
+        contact: {
+          title: "Contact",
+          content: "Pour toute question concernant ces conditions d'utilisation :"
+        }
       },
     },
   },
@@ -1593,6 +2084,12 @@ const resources = {
       // PassGamers
       passGamers: {
         title: "GAMIUS PASS",
+        cardTitle: "باس غاميوس",
+        cardSubtitle: "رسمي • المغرب 2025",
+        cardMemberStatus: "عضو نشط",
+        cardMemberId: "رقم العضوية",
+        cardStatus: "الحالة",
+        cardActive: "نشط",
         subtitle:
           "بوابتك الخاصة لعالم GAMIUS. انضم إلى نادي اللاعبين المميزين واحصل على: وصول مبكر للبطولات، مكافآت حصرية، عروض من شركائنا 🚀",
         officialInitiative: "100% مجاني وحصري",
@@ -1603,6 +2100,7 @@ const resources = {
         step2Desc: "فعِّل بطاقتك مجاناً من لوحة التحكم الخاصة بك. الأمر فوري!",
         step3: "الاستمتاع",
         step3Desc: "اكتشف مزاياك واستعد للمنافسة القادمة.",
+        advantages: "مزايا الباس",
         selectPlan: "اختر خطتك",
         monthlyPlan: "شهري",
         quarterlyPlan: "ربع سنوي",
@@ -1635,15 +2133,23 @@ const resources = {
             description:
               "أظهر شارة فريدة في ملفك الشخصي واحصل على تقدير المجتمع بأكمله.",
           },
+          tournaments: {
+            title: "المسابقات",
+            description:
+              "المشاركة في البطولات الإقليمية والوطنية",
+          },
         },
+        ctaButton: "انضم إلينا الآن",
+        noFees: "بدون رسوم • فوري",
+        statsActiveMembers: "أعضاء نشطون",
+        statsProcessing: "المعالجة",
+        statsFree: "مجاني",
       },
       // Documentation Center
       documentationCenter: {
         title: "الوثائق الرسمية",
         description:
           "الوصول إلى معلومات شاملة حول البطولات واللوائح والموارد للتحضير للمشاركة في منافسات GAMIUS.",
-        onlineDocTitle: "التوثيق عبر الإنترنت",
-        onlineDocSubtitle: "اطلع على وثائقنا عبر الإنترنت للوصول إلى معلومات شاملة حول المنافسات",
         backHome: "العودة إلى الصفحة الرئيسية",
         cards: {
           regulations: "اللوائح",
@@ -1652,18 +2158,6 @@ const resources = {
           guidesDesc: "اطلع على أدلتنا العملية للتحضير بشكل جيد",
           mediaKit: "الموارد",
           resourcesDesc: "الوصول إلى موارد الوسائط والنماذج الرسمية",
-        },
-        strategyHub: {
-          title: "التوثيق التفاعلي",
-          description:
-            "منصة معلومات متكاملة حول البطولات مع دروس تعليمية وأسئلة شائعة وموارد رسمية لإعداد المشاركين.",
-          subtitle:
-            "توفر منصة التوثيق الإلكترونية الخاصة بنا مجموعة شاملة من المعلومات والدروس التعليمية والموارد لمساعدتك على المشاركة في منافسات GAMIUS.",
-          features: {
-            tutorials: "دروس تفاعلية",
-            faq: "أسئلة شائعة مفصلة",
-            updates: "تحديثات منتظمة",
-          },
         },
         downloadZone: {
           title: "مركز التحميل",
@@ -1909,6 +2403,249 @@ const resources = {
           download: "تحميل الموارد 📄",
           viewOnline: "تصفح أونلاين ↗",
         },
+      },
+      // Guides
+      guides: {
+        title: "أدلة البطولات",
+        description: "أدلة خطوة بخطوة لمساعدتك في التسجيل، إنشاء الفرق، والمشاركة في البطولات على منصة GAMIUS.",
+        backToDocumentation: "العودة إلى التوثيق",
+        downloadPDF: "تحميل كملف PDF",
+        needHelp: {
+          title: "هل تحتاج مساعدة إضافية؟",
+          description: "إذا كان لديك أي أسئلة أو واجهت مشاكل، فريق الدعم لدينا هنا لمساعدتك. تواصل معنا على",
+          faq: "عرض الأسئلة الشائعة"
+        },
+        register: {
+          title: "كيفية التسجيل",
+          step1: {
+            title: "زيارة الموقع",
+            desc: "انتقل إلى موقع GAMIUS الرسمي وانقر على زر \"التسجيل\" أو \"إنشاء حساب\" في شريط التنقل العلوي.",
+          },
+          step2: {
+            title: "أدخل معلوماتك",
+            desc: "أدخل بياناتك الشخصية بما في ذلك اسمك الكامل وعنوان بريدك الإلكتروني ورقم هاتفك وأنشئ كلمة مرور آمنة.",
+            note: "تأكد من استخدام عنوان بريد إلكتروني صالح لأنك ستحتاج إلى التحقق منه."
+          },
+          step3: {
+            title: "تحقق من بريدك الإلكتروني",
+            desc: "تحقق من صندوق الوارد الخاص بك للحصول على رابط التحقق المرسل من GAMIUS. انقر على الرابط لتفعيل حسابك."
+          },
+          step4: {
+            title: "أكمل ملفك الشخصي",
+            desc: "بمجرد التحقق، قم بتسجيل الدخول وأكمل ملفك الشخصي بإضافة معلومات إضافية مثل معرفات الألعاب الخاصة بك والألعاب المفضلة والسيرة الذاتية."
+          }
+        },
+        login: {
+          title: "كيفية تسجيل الدخول",
+          step1: {
+            title: "انتقل إلى صفحة تسجيل الدخول",
+            desc: "انقر على زر \"تسجيل الدخول\" في شريط التنقل بالصفحة الرئيسية."
+          },
+          step2: {
+            title: "أدخل بيانات الاعتماد",
+            desc: "اكتب عنوان البريد الإلكتروني وكلمة المرور التي استخدمتها أثناء التسجيل.",
+            note: "إذا نسيت كلمة المرور، انقر على \"نسيت كلمة المرور\" لإعادة تعيينها عبر البريد الإلكتروني."
+          },
+          step3: {
+            title: "الوصول إلى لوحة التحكم",
+            desc: "بعد تسجيل الدخول بنجاح، سيتم توجيهك إلى لوحة التحكم الشخصية حيث يمكنك إدارة ملفك الشخصي والفرق وتسجيلات البطولات."
+          }
+        },
+        createTeam: {
+          title: "كيفية إنشاء فريق",
+          step1: {
+            title: "انتقل إلى قسم الفرق",
+            desc: "من لوحة التحكم، انقر على \"الفرق\" في قائمة التنقل، ثم حدد \"إنشاء فريق جديد\"."
+          },
+          step2: {
+            title: "حدد تفاصيل الفريق",
+            desc: "أدخل اسم فريقك، الاختصار، وقم بتحميل شعار الفريق. اختر اللعبة التي سيتنافس فيها فريقك.",
+            note: "يجب أن تكون أسماء الفرق فريدة وتتبع إرشادات تسمية GAMIUS. لا يُسمح باللغة المسيئة."
+          },
+          step3: {
+            title: "دعوة أعضاء الفريق",
+            desc: "أضف أعضاء الفريق بإدخال عناوين بريدهم الإلكتروني أو أسماء مستخدمي GAMIUS. سيتلقون دعوة للانضمام إلى فريقك."
+          },
+          step4: {
+            title: "أكمل قائمة الفريق",
+            desc: "تأكد من أن فريقك لديه الحد الأدنى المطلوب من اللاعبين للبطولة. يجب على كل عضو قبول الدعوة وإكمال ملفه الشخصي."
+          },
+          step5: {
+            title: "تحقق من حالة الفريق",
+            desc: "بمجرد انضمام جميع الأعضاء واستيفاء الفريق لمتطلبات البطولة، ستظهر حالة فريقك كـ \"جاهز\". يمكنك الآن التسجيل في البطولات."
+          }
+        },
+        joinTeam: {
+          title: "كيفية الانضمام إلى فريق",
+          step1: {
+            title: "استلام دعوة الفريق",
+            desc: "ستتلقى إشعارًا عبر البريد الإلكتروني وفي التطبيق عندما يدعوك قائد الفريق للانضمام إلى فريقه."
+          },
+          step2: {
+            title: "مراجعة معلومات الفريق",
+            desc: "انقر على الدعوة لعرض تفاصيل الفريق بما في ذلك اسم الفريق والأعضاء واللعبة والبطولات القادمة."
+          },
+          step3: {
+            title: "قبول أو رفض",
+            desc: "إذا كنت تريد الانضمام، انقر على \"قبول الدعوة\". إذا لم تكن مهتمًا، يمكنك الرفض بأدب. يمكنك أن تكون جزءًا من فريق واحد لكل لعبة في وقت واحد.",
+            note: "تأكد من التزامك بالمشاركة قبل القبول، لأن مغادرة الفرق بشكل متكرر قد يؤثر على سمعتك."
+          },
+          step4: {
+            title: "أكمل متطلبات الفريق",
+            desc: "تأكد من أن ملفك الشخصي يحتوي على جميع المعلومات المطلوبة وأن معرفات الألعاب الخاصة بك محدثة. قد تتطلب بعض الفرق التحقق الإضافي."
+          }
+        },
+        joinTournament: {
+          title: "كيفية الانضمام إلى البطولات",
+          step1: {
+            title: "تصفح البطولات",
+            desc: "انتقل إلى قسم \"البطولات\" من القائمة الرئيسية. تصفح البطولات المتاحة حسب اللعبة أو التاريخ أو الجوائز."
+          },
+          step2: {
+            title: "تحقق من المتطلبات",
+            desc: "انقر على بطولة لعرض التفاصيل بما في ذلك الصيغة والقواعد والجدول الزمني ومتطلبات الأهلية. تأكد من استيفاء جميع المعايير.",
+            note: "تتطلب بعض البطولات تسجيل الفريق بينما تسمح أخرى للاعبين الفرديين. تحقق من الصيغة قبل التسجيل."
+          },
+          step3: {
+            title: "سجل فريقك",
+            desc: "بالنسبة لبطولات الفرق، حدد فريقك من القائمة المنسدلة وانقر على \"تسجيل الفريق\". سيتم إخطار جميع أعضاء الفريق بالتسجيل."
+          },
+          step4: {
+            title: "دفع رسوم التسجيل (إن وجدت)",
+            desc: "قد يكون لبعض البطولات رسوم دخول. اتبع تعليمات الدفع إذا كان ذلك ممكنًا. ستؤكد البطولات المجانية تسجيلك فورًا."
+          },
+          step5: {
+            title: "تأكيد التسجيل",
+            desc: "بعد تأكيد الدفع (إذا لزم الأمر)، سيظهر فريقك في قائمة المشاركين المسجلين. ستتلقى تفاصيل الجدول والجدول الزمني للبطولة عبر البريد الإلكتروني."
+          },
+          step6: {
+            title: "استعد للمنافسة",
+            desc: "تحقق من جدول البطولة، اقرأ القواعد بعناية، وتأكد من أن جميع أعضاء الفريق متاحون لأوقات المباراة. انضم إلى قناة الاتصال الرسمية للبطولة Discord إذا تم توفيرها."
+          }
+        }
+      },
+      // Privacy Policy
+      privacyPolicy: {
+        title: "سياسة الخصوصية",
+        backHome: "العودة للصفحة الرئيسية",
+        lastUpdated: "آخر تحديث",
+        intro: {
+          title: "مقدمة",
+          content: "تلتزم GAMIUS GROUP بحماية بياناتك الشخصية واحترام خصوصيتك. توضح سياسة الخصوصية هذه كيفية جمع معلوماتك الشخصية واستخدامها وحمايتها وفقاً للقوانين المعمول بها.",
+          moroccanLaw: "تتوافق هذه السياسة مع القانون المغربي رقم 09-08 المتعلق بحماية الأشخاص الطبيعيين تجاه معالجة البيانات ذات الطابع الشخصي ولوائح اللجنة الوطنية لمراقبة حماية البيانات ذات الطابع الشخصي (CNDP)."
+        },
+        dataCollection: {
+          title: "جمع البيانات",
+          intro: "نقوم بجمع الأنواع التالية من المعلومات:",
+          items: {
+            personal: "المعلومات الشخصية (الاسم، تاريخ الميلاد، الجنس)",
+            contact: "معلومات الاتصال (البريد الإلكتروني، رقم الهاتف)",
+            gaming: "بيانات ملف اللاعب (اسم المستخدم، إحصائيات اللعبة، تاريخ البطولات)",
+            technical: "البيانات التقنية (عنوان IP، نوع المتصفح، معلومات الجهاز)"
+          }
+        },
+        dataUsage: {
+          title: "استخدام البيانات",
+          intro: "نستخدم بياناتك للأغراض التالية:",
+          items: {
+            tournaments: "إدارة مشاركتك في البطولات والمنافسات",
+            communication: "إرسال إشعارات حول الفعاليات والتحديثات",
+            improvement: "تحسين خدماتنا وتجربة المستخدم",
+            security: "ضمان أمن المنصة ومنع الاحتيال"
+          }
+        },
+        dataProtection: {
+          title: "حماية البيانات",
+          content: "نطبق تدابير تقنية وتنظيمية مناسبة لحماية بياناتك الشخصية ضد الوصول غير المصرح به أو التعديل أو الكشف أو التدمير. يتم تخزين بياناتك بشكل آمن ولا يمكن الوصول إليها إلا من قبل الموظفين المصرح لهم."
+        },
+        userRights: {
+          title: "حقوقك",
+          intro: "وفقاً للقانون المغربي رقم 09-08 ولوائح CNDP، لديك الحقوق التالية:",
+          items: {
+            access: "الحق في الوصول إلى بياناتك الشخصية",
+            correction: "الحق في تصحيح البيانات غير الدقيقة أو غير الكاملة",
+            deletion: "الحق في طلب حذف بياناتك",
+            objection: "الحق في الاعتراض على معالجة البيانات",
+            portability: "الحق في نقل البيانات"
+          },
+          contact: "لممارسة هذه الحقوق، يرجى الاتصال بنا على العنوان المذكور أدناه."
+        },
+        cookies: {
+          title: "ملفات تعريف الارتباط",
+          content: "نستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربة التصفح الخاصة بك وتحليل حركة المرور على الموقع. يمكنك تعطيل ملفات تعريف الارتباط في إعدادات المتصفح الخاص بك، ولكن قد يؤثر ذلك على بعض ميزات منصتنا."
+        },
+        dataSharing: {
+          title: "مشاركة البيانات",
+          content: "نحن لا نبيع أو نؤجر بياناتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك مع شركاء موثوقين فقط عند الضرورة لتقديم خدماتنا أو الامتثال للالتزامات القانونية."
+        },
+        contact: {
+          title: "اتصل بنا",
+          content: "لأي أسئلة بخصوص سياسة الخصوصية هذه أو لممارسة حقوقك:",
+          cndp: "يمكنك أيضاً تقديم شكوى إلى اللجنة الوطنية لمراقبة حماية البيانات ذات الطابع الشخصي (CNDP) - www.cndp.ma"
+        }
+      },
+      // Terms of Service
+      termsOfService: {
+        title: "شروط الخدمة",
+        backHome: "العودة للصفحة الرئيسية",
+        lastUpdated: "آخر تحديث",
+        acceptance: {
+          title: "قبول الشروط",
+          content: "من خلال الوصول إلى منصة GAMIUS واستخدامها، فإنك توافق وتلتزم بهذه الشروط والأحكام. إذا كنت لا توافق على أي جزء من هذه الشروط، فلا يجب عليك استخدام خدماتنا."
+        },
+        services: {
+          title: "وصف الخدمات",
+          content: "تقدم GAMIUS منصة عبر الإنترنت لمنافسات وبطولات الرياضات الإلكترونية. نحن نقدم أدوات إدارة البطولات، ملفات اللاعبين، الجداول، وميزات المجتمع للاعبين في المغرب."
+        },
+        userAccount: {
+          title: "حساب المستخدم",
+          intro: "للمشاركة في البطولات، يجب عليك إنشاء حساب. أنت توافق على:",
+          items: {
+            accurate: "تقديم معلومات دقيقة وكاملة",
+            confidential: "الحفاظ على سرية كلمة المرور الخاصة بك",
+            responsible: "أن تكون مسؤولاً عن جميع الأنشطة تحت حسابك",
+            notify: "إخطارنا فوراً بأي وصول غير مصرح به"
+          }
+        },
+        conduct: {
+          title: "قواعد السلوك",
+          intro: "أنت توافق على عدم:",
+          items: {
+            cheating: "استخدام برامج الغش أو الاختراقات أو الثغرات",
+            harassment: "الانخراط في المضايقة أو خطاب الكراهية أو السلوك السام",
+            impersonation: "انتحال شخصية مستخدمين أو منظمات أخرى",
+            illegal: "نشر محتوى غير قانوني أو ضار",
+            spam: "إرسال رسائل غير مرغوب فيها أو رسائل مزعجة"
+          }
+        },
+        tournaments: {
+          title: "قواعد البطولات",
+          content: "يجب على جميع المشاركين في البطولة الالتزام بالقواعد واللوائح المحددة لكل منافسة. قد تؤدي الانتهاكات إلى الاستبعاد وتعليق الحساب."
+        },
+        intellectualProperty: {
+          title: "الملكية الفكرية",
+          content: "جميع المحتويات على منصة GAMIUS، بما في ذلك الشعارات والرسومات والنصوص، هي ملك لـ GAMIUS GROUP ومحمية بموجب قوانين الملكية الفكرية المغربية والدولية."
+        },
+        liability: {
+          title: "تحديد المسؤولية",
+          content: "GAMIUS GROUP ليست مسؤولة عن أي أضرار غير مباشرة أو عرضية أو تبعية ناتجة عن استخدامك للمنصة. نحن لا نضمن خدمة غير منقطعة أو خالية من الأخطاء."
+        },
+        termination: {
+          title: "الإنهاء",
+          content: "نحتفظ بالحق في تعليق أو إنهاء حسابك في أي وقت بسبب انتهاك هذه الشروط أو لأي سبب آخر وفق تقديرنا الخاص."
+        },
+        applicableLaw: {
+          title: "القانون المطبق",
+          content: "تخضع هذه الشروط للقانون المغربي. أي نزاعات ستخضع للاختصاص الحصري للمحاكم المغربية."
+        },
+        modifications: {
+          title: "التعديلات",
+          content: "نحتفظ بالحق في تعديل هذه الشروط في أي وقت. ستكون التغييرات سارية المفعول عند نشرها على المنصة. استمرارك في استخدام خدماتنا يشكل قبولاً للشروط المعدلة."
+        },
+        contact: {
+          title: "اتصل بنا",
+          content: "لأي أسئلة بخصوص شروط الخدمة هذه:"
+        }
       },
     },
   },

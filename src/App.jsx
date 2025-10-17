@@ -14,8 +14,11 @@ import Footer from "./components/Footer";
 import GameAd from "./components/GameAd";
 import AdController from "./components/AdController";
 import Documentation from "./pages/Documentation";
+import Guides from "./pages/Guides";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import adLoader from './utils/adLoader';
 import Features from "./components/Features";
@@ -490,10 +493,13 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/downloads" element={<Documentation />} />
+            <Route path="/documentation" element={<Documentation />} />
+            <Route path="/guides" element={<Guides />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
-                        <Route path="/organizer" element={<OrganizerPage />} />
-
+            <Route path="/organizer" element={<OrganizerPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-use" element={<TermsOfService />} />
           </Routes>
         </AppInitializer>
       </LanguageProvider>

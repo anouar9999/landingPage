@@ -31,7 +31,6 @@ const GamingFooter = () => {
     { name: t('nav.passGamers'), path: '#PassGamers' },
     { name: t('nav.documentation'), path: '/downloads' },
     { name: t('nav.faq'), path: '#faq' },
-    { name: t('footer.dashboard'), path: 'https://user.gamiusgroup.ma' },
   ];
   const legalLinks = [
     { name: t('footer.legal.privacy'), path: '/privacy-policy' },
