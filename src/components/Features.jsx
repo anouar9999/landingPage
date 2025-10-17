@@ -209,11 +209,10 @@ const Features = () => {
           </p>
         </div>
 
-        {/* Fixed 2-Column Grid for All Screen Sizes Including Laptops */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 2xl:gap-7">
-          {/* Row 1 - Regulations */}
-          <BentoTilt innerRef={el => cardsRef.current[0] = el} className="h-32 sm:h-40 md:h-48 lg:h-56 xl:h-60 2xl:h-72 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
-            <Link to="/downloads?filter=rules" className="block h-full w-full">
+        {/* Single Column for Guides Card */}
+        <div className="flex justify-center">
+          <BentoTilt innerRef={el => cardsRef.current[0] = el} className="w-full max-w-4xl h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
+            <Link to="/documentation" className="block h-full w-full">
               <BentoCard
                 src="videos/feature-3.mp4"
                 icon={Book}
@@ -221,50 +220,22 @@ const Features = () => {
                   <>
                     {language === "fr" ? (
                       <FrenchTitle
-                        textKey="documentationCenter.cards.regulations"
+                        textKey="documentationCenter.cards.strategyGuides"
                         className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
                         as="div"
                       />
                     ) : (
                       <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
-                        {t("documentationCenter.cards.regulations")}
+                        {t("documentationCenter.cards.strategyGuides")}
                       </span>
                     )}
                   </>
                 }
                 description={t(
-                  "documentationCenter.description",
-                  "Find the official rules and regulations for all GAMIUS events and activities."
+                  "documentationCenter.cards.guidesDesc",
+                  "View our practical guides to prepare yourself"
                 )}
-                isComingSoon
-              />
-            </Link>
-          </BentoTilt>
-
-          {/* Row 2 - Calendar */}
-          <BentoTilt innerRef={el => cardsRef.current[2] = el} className="h-40 sm:h-48 md:h-56 lg:h-64 xl:h-72 2xl:h-80 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
-            <Link to="/downloads?filter=calendar" className="block h-full w-full">
-              <BentoCard
-                src="videos/feature-4.mp4"
-                icon={Calendar}
-                title={
-                  language === "fr" ? (
-                    <FrenchTitle
-                      textKey="documentationCenter.downloadZone.title"
-                      className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
-                      as="div"
-                    />
-                  ) : (
-                    <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
-                      {t("documentationCenter.downloadZone.title")}
-                    </span>
-                  )
-                }
-                description={t(
-                  "documentationCenter.description",
-                  "Access the official GAMIUS event calendar to stay updated on all upcoming activities and deadlines."
-                )}
-                isComingSoon
+                isComingSoon={false}
               />
             </Link>
           </BentoTilt>
