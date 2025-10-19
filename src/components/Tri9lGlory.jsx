@@ -136,27 +136,25 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
   // Game step images
   const stepImages = {
-    step1: "/img/gallery-1.webp", // BEGINNER
-    step2: "/img/gallery-2.webp", // CHALLENGER
-    step3: "/img/gallery-3.webp", // CHAMPION
+    step1: "/img/Symbole d'ajout lumineux sur fond sombre.png", // BEGINNER
+    step2: "/img/Flèches lumineuses en dégradé orange.png", // CHALLENGER
+    step3: "/img/gradi.png", // CHAMPION
   };
 
   const StepImage = ({ src, alt, className }) => {
     return (
-      <div className={`relative overflow-hidden rounded-xl ${className}`}>
+      <div className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-900/20 to-black/30 backdrop-blur-sm p-6 flex items-center justify-center ${className}`}>
         <img
           src={src}
           alt={alt}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-full h-full object-contain transition-all duration-500 group-hover:scale-110 drop-shadow-2xl"
+          style={{ 
+            objectFit: 'contain', 
+            objectPosition: 'center',
+            filter: 'brightness(1.2) drop-shadow(0 0 30px rgba(251, 191, 36, 0.8)) drop-shadow(0 0 10px rgba(251, 146, 60, 0.6))'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-        {/* Floating gaming elements overlay */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-4 right-4 w-3 h-3 bg-yellow-400 rounded-full opacity-80 animate-pulse"></div>
-          <div className="absolute bottom-4 left-4 w-2 h-2 bg-red-500 rounded-full opacity-60 animate-bounce"></div>
-          <div className="absolute top-1/2 left-1/2 w-1 h-8 bg-gradient-to-b from-transparent via-white to-transparent opacity-30 transform -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
       </div>
     );
   };
@@ -249,14 +247,13 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Step 1 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg   rounded-2xl overflow-hidden hover:border-red-500 transition-all duration-300">
-                <div className="relative h-64 mb-6">
+              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
+                <div className="relative aspect-square mb-6">
                   <StepImage 
                     src={stepImages.step1} 
                     alt="Beginner step"
                     className="w-full h-full"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="text-white text-3xl font-zentry mb-4 flex items-center justify-evenly"><div className=" z-10">
@@ -272,14 +269,13 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
             {/* Step 2 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg rounded-2xl overflow-hidden hover:border-red-500  transition-all duration-300">
-                <div className="relative h-64 mb-6">
+              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
+                <div className="relative aspect-square mb-6">
                   <StepImage 
                     src={stepImages.step2} 
                     alt="Challenger step"
                     className="w-full h-full"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className=" z-10">
@@ -295,14 +291,13 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
             {/* Step 3 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lgrounded-2xl overflow-hidden hover:border-red-500  transition-all duration-300">
-                <div className="relative h-64 mb-6">
+              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
+                <div className="relative aspect-square mb-6">
                   <StepImage 
                     src={stepImages.step3} 
                     alt="Champion step"
                     className="w-full h-full"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 </div>
                 <div className="p-6 text-center ">
                   <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className="z-10">
