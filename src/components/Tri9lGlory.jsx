@@ -134,30 +134,32 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
     });
   };
 
-  // Game step images - Replace these URLs with your actual images
+  // Game step images
   const stepImages = {
-    step1: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/669ab245885641d086a7e3c7_hunt-1%20v2-p-800.png", // Gaming characters
-    step2: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/669ab25004a941d461ff9089_hunt-2%20v2-p-800.png", // Gaming action/battle
-    step3: "https://cdn.prod.website-files.com/64a7c7b9164c44de404d6e4a/64a7c90179edf8c8c14d7750_IMG%20(5)-p-800.webp", // Rewards/treasure
+    step1: "/img/gallery-1.webp", // BEGINNER
+    step2: "/img/gallery-2.webp", // CHALLENGER
+    step3: "/img/gallery-3.webp", // CHAMPION
   };
 
-  const StepImage = ({ src, alt, className }) => (
-    <div className={`relative overflow-hidden rounded-xl ${className}`}>
-      <img 
-        src={src} 
-        alt={alt}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-        loading="lazy"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-      {/* Floating gaming elements overlay */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-4 right-4 w-3 h-3 bg-yellow-400 rounded-full opacity-80 animate-pulse"></div>
-        <div className="absolute bottom-4 left-4 w-2 h-2 bg-red-500 rounded-full opacity-60 animate-bounce"></div>
-        <div className="absolute top-1/2 left-1/2 w-1 h-8 bg-gradient-to-b from-transparent via-white to-transparent opacity-30 transform -translate-x-1/2 -translate-y-1/2"></div>
+  const StepImage = ({ src, alt, className }) => {
+    return (
+      <div className={`relative overflow-hidden rounded-xl ${className}`}>
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        {/* Floating gaming elements overlay */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-4 right-4 w-3 h-3 bg-yellow-400 rounded-full opacity-80 animate-pulse"></div>
+          <div className="absolute bottom-4 left-4 w-2 h-2 bg-red-500 rounded-full opacity-60 animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/2 w-1 h-8 bg-gradient-to-b from-transparent via-white to-transparent opacity-30 transform -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div 
@@ -251,7 +253,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                 <div className="relative h-64 mb-6">
                   <StepImage 
                     src={stepImages.step1} 
-                    alt="Gaming characters choosing stakes"
+                    alt="Beginner step"
                     className="w-full h-full"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -274,7 +276,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                 <div className="relative h-64 mb-6">
                   <StepImage 
                     src={stepImages.step2} 
-                    alt="Gaming battle and skill demonstration"
+                    alt="Challenger step"
                     className="w-full h-full"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -297,7 +299,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                 <div className="relative h-64 mb-6">
                   <StepImage 
                     src={stepImages.step3} 
-                    alt="Gaming rewards and treasure"
+                    alt="Champion step"
                     className="w-full h-full"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>

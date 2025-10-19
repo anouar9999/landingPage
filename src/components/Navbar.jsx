@@ -128,7 +128,7 @@ const NavBar = () => {
   };
 
   const mainNavItems = [
-    { name: t("nav.passGamers"), link: "/#PassGamers" },
+    { name: t("nav.passGamers"), link: "/pass-gamers" },
     { name: t("nav.documentation"), link: "/downloads" },
     { name: t("nav.organizer"), link: "/organizer" },
     { name: t("nav.faq"), link: "/#faq" },

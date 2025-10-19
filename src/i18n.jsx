@@ -380,6 +380,27 @@ const resources = {
         statsProcessing: "Processing",
         statsFree: "Free",
       },
+      // Arena
+      arena: {
+        badge: "Arena",
+        title: "ELEVATE YOUR BRAND IN THE GAMING ARENA",
+        description: "Transform your presence in the esports ecosystem. Connect with passionate audiences and create lasting impressions through dynamic brand experiences.",
+        features: {
+          visibility: {
+            title: "Maximum Visibility",
+            description: "Showcase your brand presence where it matters most, reaching the right audience.",
+          },
+          engagement: {
+            title: "Deep Engagement",
+            description: "Create meaningful connections with your community through immersive experiences.",
+          },
+          customization: {
+            title: "Complete Customization",
+            description: "Tailor every aspect to reflect your unique identity and vision.",
+          },
+        },
+        cta: "Explore Opportunities",
+      },
       // Documentation Center
       documentationCenter: {
         title: "OFFICIAL DOCUMENTATION",
@@ -1269,6 +1290,27 @@ const resources = {
         statsProcessing: "Traitement",
         statsFree: "Gratuit",
       },
+      // Arena
+      arena: {
+        badge: "Arena",
+        title: "ELEVEZ VOTRE MARQUE DANS L'ARENE GAMING",
+        description: "Transformez votre presence dans l'ecosysteme esports. Connectez-vous avec des audiences passionnees et creez des impressions durables grace a des experiences de marque dynamiques.",
+        features: {
+          visibility: {
+            title: "Visibilite Maximale",
+            description: "Mettez en valeur votre marque la ou cela compte le plus, en touchant le bon public.",
+          },
+          engagement: {
+            title: "Engagement Profond",
+            description: "Creez des connexions significatives avec votre communaute a travers des experiences immersives.",
+          },
+          customization: {
+            title: "Personnalisation Complete",
+            description: "Adaptez chaque aspect pour refleter votre identite et vision uniques.",
+          },
+        },
+        cta: "Explorer les Opportunites",
+      },
       // Documentation Center
       documentationCenter: {
         title: "DOCUMENTATION OFFICIELLE",
@@ -2144,6 +2186,27 @@ const resources = {
         statsActiveMembers: "أعضاء نشطون",
         statsProcessing: "المعالجة",
         statsFree: "مجاني",
+      },
+      // Arena
+      arena: {
+        badge: "الساحة",
+        title: "ارفع علامتك التجارية في ساحة الألعاب",
+        description: "حوّل تواجدك في نظام الرياضات الإلكترونية. تواصل مع جماهير شغوفة واترك انطباعات دائمة من خلال تجارب علامة تجارية ديناميكية.",
+        features: {
+          visibility: {
+            title: "أقصى ظهور",
+            description: "اعرض حضور علامتك التجارية حيث يهم أكثر، للوصول إلى الجمهور المناسب.",
+          },
+          engagement: {
+            title: "تفاعل عميق",
+            description: "أنشئ روابط ذات مغزى مع مجتمعك من خلال تجارب غامرة.",
+          },
+          customization: {
+            title: "تخصيص كامل",
+            description: "صمم كل جانب ليعكس هويتك ورؤيتك الفريدة.",
+          },
+        },
+        cta: "استكشف الفرص",
       },
       // Documentation Center
       documentationCenter: {

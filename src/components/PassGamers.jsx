@@ -184,7 +184,7 @@ const PassGamers = () => {
     <section
       id="pass-gamers-section"
       ref={sectionRef}
-      className="relative w-full bg-gradient-to-br from-slate-900 via-slate-800 to-black py-8 overflow-hidden"
+      className="relative w-full bg-gradient-to-br from-slate-900 via-slate-800 to-black pt-20 pb-8 overflow-hidden"
       dir={isRtl ? "rtl" : "ltr"}
     >
       {/* Enhanced Background Effects */}
@@ -271,41 +271,6 @@ const PassGamers = () => {
                   </div>
                 </div>
               </a>
-              
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
-                <Shield size={20} className="text-green-400" />
-                <span className="text-xs font-semibold text-white/90 font-circular-web">
-                  {t("passGamers.noFees", "Aucun frais • Instantané")}
-                </span>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
-              <div className="text-center group hover:scale-105 transition-transform duration-300">
-                <div className="text-2xl font-black text-yellow-400 font-zentry mb-0.5 group-hover:text-yellow-300 transition-colors">
-                  50K+
-                </div>
-                <div className="text-xs text-white/70 font-circular-web uppercase tracking-wide">
-                  {t("passGamers.statsActiveMembers", "Membres actifs")}
-                </div>
-              </div>
-              <div className="text-center group hover:scale-105 transition-transform duration-300">
-                <div className="text-2xl font-black text-green-400 font-zentry mb-0.5 group-hover:text-green-300 transition-colors">
-                  24h
-                </div>
-                <div className="text-xs text-white/70 font-circular-web uppercase tracking-wide">
-                  {t("passGamers.statsProcessing", "Traitement")}
-                </div>
-              </div>
-              <div className="text-center group hover:scale-105 transition-transform duration-300">
-                <div className="text-2xl font-black text-cyan-400 font-zentry mb-0.5 group-hover:text-cyan-300 transition-colors">
-                  100%
-                </div>
-                <div className="text-xs text-white/70 font-circular-web uppercase tracking-wide">
-                  {t("passGamers.statsFree", "Gratuit")}
-                </div>
-              </div>
             </div>
 
             {/* Enhanced Steps */}

@@ -186,59 +186,65 @@ const Features = () => {
     <section ref={sectionRef} className="bg-black mb-2  sm:mb-3 md:mb-4 lg:mb-5 xl:mb-6 2xl:mb-7">
       <div className="container mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
         <div className="px-2 xs:px-3 sm:px-4 md:px-5 py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 xl:py-32">
-          <h1 ref={titleRef} className="special-font tracking-wide text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 leading-tight">
-            {language === "fr" ? (
-              <FrenchTitle
-                textKey="documentationCenter.title"
-                className="!text-xl !xs:text-2xl !sm:text-3xl !md:text-4xl !lg:text-5xl !xl:text-6xl !2xl:text-7xl font-black text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 leading-tight"
-                as="h1"
-              />
-            ) : (
-              
+          {/* Flex container for text and card side by side */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8 xl:gap-12">
+            {/* Text Content */}
+            <div className="lg:w-1/2 mb-8 lg:mb-0">
+              <h1 ref={titleRef} className="special-font tracking-wide text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 leading-tight">
+                {language === "fr" ? (
+                  <FrenchTitle
+                    textKey="documentationCenter.title"
+                    className="!text-xl !xs:text-2xl !sm:text-3xl !md:text-4xl !lg:text-5xl !xl:text-6xl !2xl:text-7xl font-black text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 leading-tight"
+                    as="h1"
+                  />
+                ) : (
+                  
 <h1 className="special-font font-9xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent drop-shadow-2xl">
-                {t("documentationCenter.title")}
-                  </h1>
-            )}
-          </h1>
-
-          <p ref={descriptionRef} className="max-w-full xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl font-circular-web text-xs xs:text-sm sm:text-base md:text-lg text-blue-50 opacity-50 leading-relaxed">
-            {t(
-              "documentationCenter.description",
-              "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme GAMIUS."
-            )}
-          </p>
-        </div>
-
-        {/* Single Column for Guides Card */}
-        <div className="flex justify-center">
-          <BentoTilt innerRef={el => cardsRef.current[0] = el} className="w-full max-w-4xl h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
-            <Link to="/documentation" className="block h-full w-full">
-              <BentoCard
-                src="videos/feature-3.mp4"
-                icon={Book}
-                title={
-                  <>
-                    {language === "fr" ? (
-                      <FrenchTitle
-                        textKey="documentationCenter.cards.strategyGuides"
-                        className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
-                        as="div"
-                      />
-                    ) : (
-                      <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
-                        {t("documentationCenter.cards.strategyGuides")}
-                      </span>
-                    )}
-                  </>
-                }
-                description={t(
-                  "documentationCenter.cards.guidesDesc",
-                  "View our practical guides to prepare yourself"
+                    {t("documentationCenter.title")}
+                      </h1>
                 )}
-                isComingSoon={false}
-              />
-            </Link>
-          </BentoTilt>
+              </h1>
+
+              <p ref={descriptionRef} className="max-w-full font-circular-web text-xs xs:text-sm sm:text-base md:text-lg text-blue-50 opacity-50 leading-relaxed">
+                {t(
+                  "documentationCenter.description",
+                  "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme GAMIUS."
+                )}
+              </p>
+            </div>
+
+            {/* Guides Card */}
+            <div className="lg:w-1/2">
+              <BentoTilt innerRef={el => cardsRef.current[0] = el} className="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
+                <Link to="/documentation" className="block h-full w-full">
+                  <BentoCard
+                    src="videos/feature-3.mp4"
+                    icon={Book}
+                    title={
+                      <>
+                        {language === "fr" ? (
+                          <FrenchTitle
+                            textKey="documentationCenter.cards.strategyGuides"
+                            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
+                            as="div"
+                          />
+                        ) : (
+                          <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
+                            {t("documentationCenter.cards.strategyGuides")}
+                          </span>
+                        )}
+                      </>
+                    }
+                    description={t(
+                      "documentationCenter.cards.guidesDesc",
+                      "View our practical guides to prepare yourself"
+                    )}
+                    isComingSoon={false}
+                  />
+                </Link>
+              </BentoTilt>
+            </div>
+          </div>
         </div>
       </div>
     </section>

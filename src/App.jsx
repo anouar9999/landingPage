@@ -7,7 +7,6 @@ import About from "./components/About";
 import Tri9lGlory from "./components/Tri9lGlory";
 import PrizePool from "./components/PrizePool";
 import ProPath from "./components/ProPath";
-import PassGamers from "./components/PassGamers";
 import FAQ from "./components/FAQ";
 import FooterAd from "./components/FooterAd";
 import Footer from "./components/Footer";
@@ -17,11 +16,13 @@ import Documentation from "./pages/Documentation";
 import Guides from "./pages/Guides";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import PassGamersPage from "./pages/PassGamersPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import adLoader from './utils/adLoader';
 import Features from "./components/Features";
+import Arena from "./components/Arena";
 
 // Importation des nouveaux composants publicitaires
 import SmallBannerAd from './components/SmallBannerAd';
@@ -333,15 +334,14 @@ function MainPage() {
       </div>
             <Features />
 
+      {/* Arena Section */}
+      <Arena />
+
       {/* Publicité en ligne entre les sections */}
       {/* <div className="container mx-auto px-4">
         <InlineAd />
       </div> */}
 
-      {/* Section Pass Gamers */}
-      <div id="PassGamers">
-        <PassGamers />
-      </div>
       {/* <OrganizerBanner/> */}
       {/* Section FAQ */}
       <div id="faq">
@@ -498,6 +498,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/organizer" element={<OrganizerPage />} />
+            <Route path="/pass-gamers" element={<PassGamersPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-use" element={<TermsOfService />} />
           </Routes>

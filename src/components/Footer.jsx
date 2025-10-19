@@ -28,7 +28,7 @@ const GamingFooter = () => {
   const resources = [
     { name: t('nav.discover'), path: '#about' },
     { name: t('nav.proPath'), path: '#pro-path' },
-    { name: t('nav.passGamers'), path: '#PassGamers' },
+    { name: t('nav.passGamers'), path: '/pass-gamers' },
     { name: t('nav.documentation'), path: '/downloads' },
     { name: t('nav.faq'), path: '#faq' },
   ];
