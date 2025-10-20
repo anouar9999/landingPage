@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import NavBar from './Navbar';
 import AnimatedTitle from './AnimatedTitle';
 import RequestAccessForm from './RequestAccessForm';
+import Footer from './Footer';
 import { useTranslation } from '../hooks/useTranslation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -662,25 +663,9 @@ export default function OrganizerPage() {
             </div>
           </div>
         </section>
-        <footer className="relative py-10 sm:py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800/50 bg-gradient-to-b from-transparent to-black/50">
-          {/* Footer glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none"></div>
-          
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-center pt-6 sm:pt-8 gap-4">
-              <div className="flex items-center mb-2 md:mb-0">
-                <Link to="/" className="flex items-center group">
-                  <img
-                    src="img/logo-gamius-white.png"
-                    alt="GAMIUS Logo"
-                    className="h-8 sm:h-10 transition-transform group-hover:scale-110 duration-300"
-                  />
-                </Link>
-              </div>
-              <p className="text-xs sm:text-sm text-gray-400 text-center">© 2025 Gamius. <span className="text-primary">All rights reserved.</span></p>
-            </div>
-          </div>
-        </footer>
+        
+        {/* Footer */}
+        <Footer />
       </div>
 
       {/* Enhanced Styles */}

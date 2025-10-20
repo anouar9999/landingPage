@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 
@@ -22,14 +22,30 @@ const XIcon = (props) => (
 
 const GamingFooter = () => {
   const { t, isRtl } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const currentYear = 2025;
   
+  // Fonction pour gérer le clic sur Discover
+  const handleDiscoverClick = (e) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // Liens et ressources mis à jour pour correspondre à la structure de la page
   const resources = [
-    { name: t('nav.discover'), path: '#about' },
+    { name: t('nav.discover'), path: '/', isDiscover: true },
     { name: t('nav.proPath'), path: '#pro-path' },
     { name: t('nav.passGamers'), path: '/pass-gamers' },
     { name: t('nav.documentation'), path: '/downloads' },
+    { name: t('nav.organizer'), path: '/organizer' },
     { name: t('nav.faq'), path: '#faq' },
   ];
   const legalLinks = [
@@ -69,7 +85,15 @@ const GamingFooter = () => {
               <ul className="space-y-2.5">
                 {resources.map((link, index) => (
                   <li key={index}>
-                    {link.path.startsWith('#') ? (
+                    {link.isDiscover ? (
+                      <a 
+                        href={link.path}
+                        onClick={handleDiscoverClick}
+                        className="text-gray-400 hover:text-primary transition-colors text-sm font-circular-web cursor-pointer"
+                      >
+                        {link.name}
+                      </a>
+                    ) : link.path.startsWith('#') ? (
                       <a 
                         href={link.path} 
                         className="text-gray-400 hover:text-primary transition-colors text-sm font-circular-web"
@@ -125,7 +149,7 @@ const GamingFooter = () => {
         {/* Copyright et liens légaux */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-xs text-center md:text-left font-circular-web">
-            {t('footer.copyright', { year: currentYear })}
+            {t('footer.copyright').replace('{year}', currentYear)}
           </p>
           
           <div className="flex gap-6">

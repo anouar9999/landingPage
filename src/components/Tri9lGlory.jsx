@@ -143,18 +143,58 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
   const StepImage = ({ src, alt, className }) => {
     return (
-      <div className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-900/20 to-black/30 backdrop-blur-sm p-6 flex items-center justify-center ${className}`}>
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          className="w-full h-full object-contain transition-all duration-500 group-hover:scale-110 drop-shadow-2xl"
-          style={{ 
-            objectFit: 'contain', 
-            objectPosition: 'center',
-            filter: 'brightness(1.2) drop-shadow(0 0 30px rgba(251, 191, 36, 0.8)) drop-shadow(0 0 10px rgba(251, 146, 60, 0.6))'
+      <div className={`relative w-64 h-64 flex items-center justify-center ${className}`}>
+        {/* Outer glow - large diffused */}
+        <div 
+          className="absolute inset-0 opacity-40 blur-3xl scale-110"
+          style={{
+            background: 'radial-gradient(circle, rgba(251, 146, 60, 0.3) 0%, rgba(251, 191, 36, 0.15) 40%, transparent 70%)'
           }}
         />
+        
+        {/* Mid glow ring */}
+        <div 
+          className="absolute w-56 h-56 rounded-full opacity-50"
+          style={{
+            background: 'radial-gradient(circle, transparent 65%, rgba(251, 146, 60, 0.4) 70%, rgba(251, 191, 36, 0.2) 80%, transparent 90%)',
+            filter: 'blur(8px)'
+          }}
+        />
+        
+        {/* Sharp highlight ring */}
+        <div 
+          className="absolute w-52 h-52 rounded-full animate-pulse"
+          style={{
+            background: 'radial-gradient(circle, transparent 70%, rgba(251, 146, 60, 0.6) 72%, transparent 74%)',
+            animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }}
+        />
+        
+        {/* Image container with backdrop */}
+        <div className="relative w-48 h-48 rounded-full overflow-hidden">
+          {/* Glassmorphism backdrop */}
+          <div 
+            className="absolute inset-0 backdrop-blur-sm rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%)',
+              border: '1px solid rgba(251, 146, 60, 0.2)'
+            }}
+          />
+          
+          <img
+            src={src}
+            alt={alt}
+            loading="lazy"
+            className="relative w-full h-full object-contain transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 z-10"
+            style={{ 
+              objectFit: 'contain', 
+              objectPosition: 'center',
+              filter: 'brightness(1.1) contrast(1.1) drop-shadow(0 0 25px rgba(251, 191, 36, 0.5))',
+              maskImage: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0.95) 45%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.2) 82%, rgba(0, 0, 0, 0) 95%)',
+              WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0.95) 45%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.2) 82%, rgba(0, 0, 0, 0) 95%)'
+            }}
+          />
+        </div>
       </div>
     );
   };
@@ -247,67 +287,64 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Step 1 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
-                <div className="relative aspect-square mb-6">
+              <div className="group relative flex flex-col items-center">
+                <div className="mb-6">
                   <StepImage 
                     src={stepImages.step1} 
                     alt="Beginner step"
-                    className="w-full h-full"
                   />
                 </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-white text-3xl font-zentry mb-4 flex items-center justify-evenly"><div className=" z-10">
-                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">01</span>
-                </div> {t("tri9lGlory.steps.step1Title")}</h3>
-                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
-                  {t("tri9lGlory.steps.step1")}
+                <div className="text-center">
+                  <h3 className="text-white text-3xl font-zentry mb-4 flex items-center justify-center gap-3">
+                    <span className="text-3xl font-black text-red-500">01</span>
+                    {t("tri9lGlory.steps.step1Title")}
+                  </h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed px-4">
+                    {t("tri9lGlory.steps.step1")}
                   </p>
                 </div>
-                
               </div>
             </BentoTilt>
 
             {/* Step 2 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
-                <div className="relative aspect-square mb-6">
+              <div className="group relative flex flex-col items-center">
+                <div className="mb-6">
                   <StepImage 
                     src={stepImages.step2} 
                     alt="Challenger step"
-                    className="w-full h-full"
                   />
                 </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className=" z-10">
-                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">02</span>
-                </div>{t("tri9lGlory.steps.step2Title")}</h3>
-                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
-                  {t("tri9lGlory.steps.step2")}
-                    </p>
+                <div className="text-center">
+                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-center gap-3">
+                    <span className="text-3xl font-black text-red-500">02</span>
+                    {t("tri9lGlory.steps.step2Title")}
+                  </h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed px-4">
+                    {t("tri9lGlory.steps.step2")}
+                  </p>
                 </div>
-                
               </div>
             </BentoTilt>
 
             {/* Step 3 */}
             <BentoTilt className="transform-gpu transition-transform duration-300 interactive-element">
-              <div className="group relative backdrop-blur-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl overflow-hidden transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-red-500/20">
-                <div className="relative aspect-square mb-6">
+              <div className="group relative flex flex-col items-center">
+                <div className="mb-6">
                   <StepImage 
                     src={stepImages.step3} 
                     alt="Champion step"
-                    className="w-full h-full"
                   />
                 </div>
-                <div className="p-6 text-center ">
-                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-evenly"> <div className="z-10">
-                  <span className="block text-3xl font-black text-red-500  rounded-lg px-3 py-1">03</span>
-                </div>{t("tri9lGlory.steps.step3Title")}</h3>
-                  <p className="text-gray-300 text-base font-circular-web leading-relaxed">
-                  {t("tri9lGlory.steps.step3")}
+                <div className="text-center">
+                  <h3 className="text-white text-3xl tracking-wide font-zentry mb-4 flex items-center justify-center gap-3">
+                    <span className="text-3xl font-black text-red-500">03</span>
+                    {t("tri9lGlory.steps.step3Title")}
+                  </h3>
+                  <p className="text-gray-300 text-base font-circular-web leading-relaxed px-4">
+                    {t("tri9lGlory.steps.step3")}
                   </p>
                 </div>
-                
               </div>
             </BentoTilt>
           </div>
