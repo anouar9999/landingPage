@@ -416,23 +416,23 @@ const ProPath = () => {
             ></div>
           </div>
           
-          {/* Ã‰tapes alternÃ©es avec amÃ©lioration visuelle */}
+          {/* Ãtapes alternÃes avec amÃlioration visuelle */}
           <div className="space-y-20 md:space-y-32 relative">
             {steps.map((step, index) => (
               <div 
                 key={step.id}
                 ref={el => stepsRef.current[index] = el}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8 relative`}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center md:justify-between gap-8 relative`}
               >
                 {/* Point sur la timeline (visible seulement sur desktop) */}
-                <div className="absolute left-1/2 top-20 transform -translate-x-1/2 hidden md:block">
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden md:block">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center z-10 relative border-2 border-[#0a0a14] shadow-lg shadow-primary/20">
                     <span className="text-black font-bold text-sm">{index + 1}</span>
                   </div>
                 </div>
                 
                 {/* Image */}
-                <div className="w-full md:w-5/12 step-image">
+                <div className="w-full md:w-[38%] step-image">
                   <div className="relative rounded-lg overflow-hidden aspect-video  group shadow-xl shadow-primary/10 transform transition-transform duration-500 hover:scale-[1.02]">
                     <img 
                       src={step.image } 
@@ -440,12 +440,12 @@ const ProPath = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
                         e.target.onerror = null;
-                        // Utiliser l'image de remplacement gÃ©nÃ©rÃ©e dynamiquement
+                        // Utiliser l'image de remplacement gÃnÃrÃe dynamiquement
                         e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
                       }}
                     />
                     
-                    {/* Ã‰tiquette de l'Ã©tape */}
+                    {/* Ãtiquette de l'Ãtape */}
                     <div className="absolute top-0 left-0 bg-primary/90  text-black py-1 px-3 flex items-center gap-1.5 rounded-br-lg">
                       <div className="step-icon">{step.icon}</div>
                       <span className={` uppercase font-zentry text-sm tracking-wider ${getTextClass()}`}>
@@ -456,31 +456,31 @@ const ProPath = () => {
                     {/* Overlay avec effet de gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                     
-                    {/* NumÃ©ro de l'Ã©tape visible sur mobile */}
+                    {/* NumÃro de l'Ãtape visible sur mobile */}
                     <div className="absolute top-3 right-3 md:hidden w-8 h-8 rounded-full bg-primary flex items-center justify-center text-black font-bold text-sm">{index + 1}</div>
                   </div>
                 </div>
                 
-                {/* Contenu de l'Ã©tape */}
-                <div className="w-full md:w-7/12 bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-primary/20 shadow-lg">
-                  <h3 className={`step-title text-2xl font-zentry text-primary mb-3 ${language === 'tz' ? 'tamazight-text' : ''}`}>
+                {/* Contenu de l'Ãtape */}
+                <div className="w-full md:w-[38%] bg-black/30 backdrop-blur-sm px-6 py-4 rounded-xl border border-primary/20 shadow-lg">
+                  <h3 className={`step-title text-xl md:text-2xl font-zentry text-primary mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>
                     {t(`proPath.steps.${step.id}.title`, step.title)}
                   </h3>
                   
-                  <p className={`step-description font-circular-web tracking-tighter text-white/80 mb-5`}>
+                  <p className={`step-description font-circular-web tracking-tighter text-white/80 mb-2 text-sm md:text-base`}>
                     {t(`proPath.steps.${step.id}.description`, step.description)}
                   </p>
                   
-                  {/* CaractÃ©ristiques du format de compÃ©tition */}
-                  <div className="mt-4 space-y-2.5">
-                    <h4 className={`text-white text-sm uppercase tracking-wider font-bold ${getTextClass()}`}>
-                      {t('proPath.formatFeatures', "Format de compÃ©tition")}
+                  {/* CaractÃristiques du format de compÃtition */}
+                  <div className="mt-2 space-y-1.5">
+                    <h4 className={`text-white text-xs uppercase tracking-wider font-bold ${getTextClass()}`}>
+                      {t('proPath.formatFeatures', "Format de compÃtition")}
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                    <div className="grid grid-cols-1 gap-1.5 mt-1.5">
                       {step.features.map((feature, idx) => (
-                        <div key={idx} className="feature-item flex items-center gap-2 ">
-                          <Star size={15} className="text-primary flex-shrink-0" />
-                          <span className={`text-white/90 text-sm ${getTextClass()}`}>
+                        <div key={idx} className="feature-item flex items-center gap-1.5 ">
+                          <Star size={13} className="text-primary flex-shrink-0" />
+                          <span className={`text-white/90 text-xs md:text-sm ${getTextClass()}`}>
                             {t(`proPath.steps.${step.id}.features.${idx}`, feature)}
                           </span>
                         </div>
@@ -489,15 +489,15 @@ const ProPath = () => {
                   </div>
                   
                   {/* Bouton d'en savoir plus */}
-                  <div className="mt-6">
+                  <div className="mt-3">
                     <a 
                       href={`${step.link}`}
-                      className="inline-flex items-center gap-1.5 text-primary hover:text-primary/80 text-sm font-semibold transition-colors"
+                      className="inline-flex items-center gap-1 text-primary hover:text-primary/80 text-xs md:text-sm font-semibold transition-colors"
                     >
                       <span className={getTextClass()}>
                         {t('proPath.learnMore', "En savoir plus")}
                       </span>
-                      <ArrowUpRight size={14} />
+                      <ArrowUpRight size={12} />
                     </a>
                   </div>
                 </div>

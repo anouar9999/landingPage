@@ -76,7 +76,7 @@ export const BentoCard = ({ src, title, description, isComingSoon, icon: Icon })
         loop
         muted
         autoPlay
-        className="absolute left-0 top-0 size-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+        className="absolute left-0 top-0 size-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
       />
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-[1]"></div>
@@ -97,7 +97,7 @@ export const BentoCard = ({ src, title, description, isComingSoon, icon: Icon })
         </div>
         
         {/* Hover action */}
-        <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-4">
+        <div className="flex items-center justify-center gap-2 bg-white text-black hover:bg-primary hover:text-white px-4 py-2 rounded-lg transition-all duration-300 mt-4 w-fit">
           <span className="text-sm font-semibold">Explorer</span>
           <ArrowRight className="w-4 h-4" />
         </div>
@@ -235,10 +235,6 @@ const Features = () => {
                         )}
                       </>
                     }
-                    description={t(
-                      "documentationCenter.cards.guidesDesc",
-                      "View our practical guides to prepare yourself"
-                    )}
                     isComingSoon={false}
                   />
                 </Link>
