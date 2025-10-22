@@ -7,14 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 const FLAGS = {
   fr: "/img/flags/fr.svg",
   en: "/img/flags/en.svg",
-  ar: "/img/flags/ar.svg",
 };
 
 // Noms des langues
 const LANGUAGES = {
   fr: "Français",
   en: "English",
-  ar: "العربية",
 };
 
 const LanguageSelector = () => {
