@@ -496,7 +496,7 @@ function App() {
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/organizer" element={<OrganizerPage />} />
             <Route path="/pass-gamers" element={<PassGamersPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
