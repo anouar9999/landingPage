@@ -172,7 +172,7 @@ class AuthService {
     this.notifyListeners('logout');
     
     // Redirect to login
-    window.location.href = 'http://localhost:3000/login';
+    window.location.href = 'https://user.gamius.ma/login';
   }
 
   // Observer pattern for auth changes

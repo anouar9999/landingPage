@@ -474,6 +474,19 @@ html[lang="tz"] [class*=" lucide-"] {
   100% { opacity: 0.1; }
 }
 
+/* Floating animation for cat images */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 /* Header overlay styles */
 .header-overlay {
   position: absolute;

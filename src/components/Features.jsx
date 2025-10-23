@@ -81,8 +81,8 @@ export const BentoCard = ({ src, title, description, isComingSoon, icon: Icon })
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-[1]"></div>
       
-      <div className="relative z-10 flex size-full flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 text-blue-50">
-        <div>
+      <div className="relative z-10 flex size-full flex-col justify-center items-center p-3 sm:p-4 md:p-5 lg:p-6 text-blue-50">
+        <div className="text-center">
           {/* Icon */}
           {Icon && (
             <div className="mb-3 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 group-hover:bg-primary/30 transition-all duration-300">
@@ -90,16 +90,9 @@ export const BentoCard = ({ src, title, description, isComingSoon, icon: Icon })
             </div>
           )}
           
-          <h1 className="bento-title special-font text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300">{title}</h1>
           {description && (
             <p className="mt-2 sm:mt-3 max-w-full sm:max-w-64 text-xs sm:text-sm md:text-base leading-relaxed text-white/80">{description}</p>
           )}
-        </div>
-        
-        {/* Hover action */}
-        <div className="flex items-center justify-center gap-2 bg-white text-black hover:bg-primary hover:text-white px-4 py-2 rounded-lg transition-all duration-300 mt-4 w-fit">
-          <span className="text-sm font-semibold">Explorer</span>
-          <ArrowRight className="w-4 h-4" />
         </div>
       </div>
       
@@ -205,36 +198,28 @@ const Features = () => {
                 )}
               </h1>
 
-              <p ref={descriptionRef} className="max-w-full font-circular-web text-xs xs:text-sm sm:text-base md:text-lg text-blue-50 opacity-50 leading-relaxed">
+              <p ref={descriptionRef} className="max-w-full font-circular-web text-xs xs:text-sm sm:text-base md:text-lg text-blue-50 opacity-50 leading-relaxed mb-6">
                 {t(
                   "documentationCenter.description",
                   "Consultez notre centre de documentation pour télécharger les règlements, guides de participation et ressources officielles du programme GAMIUS."
                 )}
               </p>
+              
+              {/* Explorer Button */}
+              <Link to="/documentation" className="inline-block">
+                <div className="flex items-center justify-center gap-2 bg-white text-black hover:bg-primary hover:text-white px-6 py-3 rounded-lg transition-all duration-300 w-fit">
+                  <span className="text-sm font-semibold">Explorer</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
             </div>
 
             {/* Guides Card */}
             <div className="lg:w-1/2">
-              <BentoTilt innerRef={el => cardsRef.current[0] = el} className="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]">
+              <BentoTilt innerRef={el => cardsRef.current[0] = el} className="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02] border-2 border-primary/40">
                 <Link to="/documentation" className="block h-full w-full">
                   <BentoCard
                     src="videos/feature-3.mp4"
-                    icon={Book}
-                    title={
-                      <>
-                        {language === "fr" ? (
-                          <FrenchTitle
-                            textKey="documentationCenter.cards.strategyGuides"
-                            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white mb-1 sm:mb-2 lg:mb-3 tracking-tight leading-tight"
-                            as="div"
-                          />
-                        ) : (
-                          <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-black text-white tracking-tight leading-tight">
-                            {t("documentationCenter.cards.strategyGuides")}
-                          </span>
-                        )}
-                      </>
-                    }
                     isComingSoon={false}
                   />
                 </Link>

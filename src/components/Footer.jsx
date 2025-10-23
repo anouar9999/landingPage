@@ -68,7 +68,7 @@ const GamingFooter = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-8">
           <div className="max-w-md">
             <img 
-              src="/img/logo-gamius-white.png" 
+              src="/img/logo-gamius-white (1).png" 
               alt="GAMIUS GROUP Logo" 
               className="h-14 mb-4"
             />

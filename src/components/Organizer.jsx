@@ -650,7 +650,7 @@ export default function OrganizerPage() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                  <a href='https://user.gnews.ma/login' className="relative inline-block">
+                  <a href='https://user.gamius.ma/login' className="relative inline-block">
                     <div className="absolute inset-0 -skew-x-12 bg-primary"></div>
                     <span className="relative flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-sm sm:text-base">
                       <div className="absolute inset-0 -skew-x-12 border-2 border-primary/50"></div>

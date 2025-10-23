@@ -58,11 +58,11 @@ const ProPath = () => {
   const steps = [
     {
       id: 'Players',
-      link : 'https://user.gnews.ma/login',
+      link : 'https://user.gamius.ma/login',
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
-      image: "/img/WhatsApp Image 2025-09-25 à 14.03.34_d922dd2a.jpg", // Cette image sera générée dynamiquement si elle n'existe pas
+      image: "/img/cat.png", // Orange cat posing
       features: [
         t("proPath.regionalQualifiers.keyFeatures.format"),
         t("proPath.regionalQualifiers.keyFeatures.groups"),
@@ -75,7 +75,7 @@ const ProPath = () => {
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
-      image: "/img/WhatsApp Image 2025-09-25 à 14.03.33_2a03a0d6.jpg",
+      image: "/img/grey-cat.png", // Grey cat posing
       features: [
         t("proPath.nationalChampionships.keyFeatures.format"),
         t("proPath.nationalChampionships.keyFeatures.points"),
@@ -84,11 +84,11 @@ const ProPath = () => {
     },
     {
       id: 'ecosysteme',
-        link : 'https://user.gnews.ma/login ',
+        link : 'https://user.gamius.ma/login',
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
-      image: "/img/WhatsApp Image 2025-09-25 à 14.03.33_63e1c92b.jpg",
+      image: "/img/black-cat.png", // Black cat posing
       features: [
         t("proPath.eliteLeague.keyFeatures.training"),
         t("proPath.eliteLeague.keyFeatures.coverage"),
@@ -388,7 +388,7 @@ const ProPath = () => {
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <a 
-              href={localStorage.getItem('token') ? "https://user.gnews.ma/tournaments" : "https://user.gnews.ma/login"}
+              href={localStorage.getItem('token') ? "https://user.gamius.ma/tournaments" : "https://user.gamius.ma/login"}
               className="inline-flex items-center bg-[#e10000] hover:bg-[#c00] font-zentry text-white text-md tracking-wider px-8 py-2.5 rounded-md uppercase transition-all duration-300 "
             >
               <span className={getTextClass()}>{t('proPath.cta', "DÃbuter votre parcours pro")}</span>
@@ -432,36 +432,24 @@ const ProPath = () => {
                 </div>
                 
                 {/* Image */}
-                <div className="w-full md:w-[38%] step-image">
-                  <div className="relative rounded-lg overflow-hidden aspect-video  group shadow-xl shadow-primary/10 transform transition-transform duration-500 hover:scale-[1.02]">
-                    <img 
-                      src={step.image } 
-                      alt={t(`proPath.steps.${step.id}.title`, step.title)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        // Utiliser l'image de remplacement gÃnÃrÃe dynamiquement
-                        e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
-                      }}
-                    />
-                    
-                    {/* Ãtiquette de l'Ãtape */}
-                    <div className="absolute top-0 left-0 bg-primary/90  text-black py-1 px-3 flex items-center gap-1.5 rounded-br-lg">
-                      <div className="step-icon">{step.icon}</div>
-                      <span className={` uppercase font-zentry text-sm tracking-wider ${getTextClass()}`}>
-                        {t(`proPath.steps.${step.id}.label`, step.id)}
-                      </span>
-                    </div>
-                    
-                    {/* Overlay avec effet de gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                    
-                    {/* NumÃro de l'Ãtape visible sur mobile */}
-                    <div className="absolute top-3 right-3 md:hidden w-8 h-8 rounded-full bg-primary flex items-center justify-center text-black font-bold text-sm">{index + 1}</div>
-                  </div>
+                <div className="w-full md:w-[45%] step-image flex items-center justify-center">
+                  <img 
+                    src={step.image } 
+                    alt={t(`proPath.steps.${step.id}.title`, step.title)}
+                    className="w-1/3 md:w-2/5 h-auto object-contain transition-transform duration-500 ease-out animate-float"
+                    style={{
+                      animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                      animationDelay: `${index * 0.2}s`
+                    }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      // Utiliser l'image de remplacement générée dynamiquement
+                      e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
+                    }}
+                  />
                 </div>
                 
-                {/* Contenu de l'Ãtape */}
+                {/* Contenu de l'étape */}
                 <div className="w-full md:w-[38%] bg-black/30 backdrop-blur-sm px-6 py-4 rounded-xl border border-primary/20 shadow-lg">
                   <h3 className={`step-title text-xl md:text-2xl font-zentry text-primary mb-2 ${language === 'tz' ? 'tamazight-text' : ''}`}>
                     {t(`proPath.steps.${step.id}.title`, step.title)}
@@ -600,7 +588,7 @@ const ProPath = () => {
             <div className="relative hidden md:block">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img
-                  src="/img/logo-gamius-white.png"
+                  src="/img/logo-gamius-white (1).png"
                   alt="GAMIUS GROUP 2025"
                   className="w-4/5 h-4/5 object-contain opacity-10"
                 />

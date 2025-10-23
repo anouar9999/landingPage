@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Gradients for 3D effect -->
+    <radialGradient id="whiteBodyGradient" cx="30%" cy="30%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </radialGradient>
+    
+    <radialGradient id="orangePatchGradient" cx="30%" cy="30%">
+      <stop offset="0%" style="stop-color:#ffb347;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#ff8c42;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6b1a;stop-opacity:1" />
+    </radialGradient>
+    
+    <radialGradient id="blackPatchGradient" cx="30%" cy="30%">
+      <stop offset="0%" style="stop-color:#3a3a3a;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </radialGradient>
+    
+    <radialGradient id="greenEyeGradient" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#7dd956;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#4a7c59;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d5a3d;stop-opacity:1" />
+    </radialGradient>
+    
+    <filter id="calicoShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Animations -->
+    <style>
+      @keyframes floatCalico {
+        0%, 100% { transform: translateY(0px) rotate(-1deg); }
+        50% { transform: translateY(-14px) rotate(1deg); }
+      }
+      
+      @keyframes breatheCalico {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.06); }
+      }
+      
+      @keyframes tailCurl {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-6deg); }
+        75% { transform: rotate(8deg); }
+      }
+      
+      @keyframes blinkCalico {
+        0%, 94%, 100% { transform: scaleY(1); }
+        97% { transform: scaleY(0.08); }
+      }
+      
+      @keyframes eyeWander {
+        0%, 100% { transform: translate(0, 0); }
+        15% { transform: translate(-2px, -1px); }
+        35% { transform: translate(2px, -1px); }
+        55% { transform: translate(1px, 2px); }
+        75% { transform: translate(-1px, 1px); }
+      }
+      
+      @keyframes pupilShrink {
+        0%, 100% { rx: 2.5; ry: 7; }
+        50% { rx: 3.5; ry: 5; }
+      }
+      
+      @keyframes whiskerMove {
+        0%, 100% { transform: rotate(0deg); }
+        30% { transform: rotate(4deg); }
+        70% { transform: rotate(-2deg); }
+      }
+      
+      @keyframes earWiggle {
+        0%, 94%, 100% { transform: rotate(0deg); }
+        97% { transform: rotate(-10deg); }
+      }
+      
+      @keyframes patchShimmer {
+        0%, 100% { opacity: 0.9; }
+        50% { opacity: 0.75; }
+      }
+      
+      .calico-cat-body { animation: floatCalico 4.2s ease-in-out infinite; }
+      .calico-body-part { animation: breatheCalico 3.2s ease-in-out infinite; }
+      .calico-tail { 
+        transform-origin: -70px 50px; 
+        animation: tailCurl 2.8s ease-in-out infinite; 
+      }
+      .calico-eye-lid { animation: blinkCalico 5.5s ease-in-out infinite; }
+      .calico-pupil { 
+        animation: eyeWander 6.5s ease-in-out infinite;
+      }
+      .calico-pupil ellipse { animation: pupilShrink 3.8s ease-in-out infinite; }
+      .calico-whisker { 
+        transform-origin: center; 
+        animation: whiskerMove 3.3s ease-in-out infinite; 
+      }
+      .calico-ear { 
+        transform-origin: center bottom; 
+        animation: earWiggle 4.5s ease-in-out infinite; 
+      }
+      .color-patch { animation: patchShimmer 5s ease-in-out infinite; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="transparent"/>
+  
+  <!-- Calico Cat -->
+  <g class="calico-cat-body" transform="translate(400, 225)" filter="url(#calicoShadow)">
+    <!-- Shadow -->
+    <ellipse cx="0" cy="105" rx="95" ry="20" fill="#000000" opacity="0.35"/>
+    
+    <!-- Tail with patches -->
+    <g class="calico-tail">
+      <path d="M -70,50 Q -120,30 -130,0 T -110,-30" 
+            stroke="url(#orangePatchGradient)" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <path d="M -90,35 Q -110,25 -115,10" 
+            stroke="url(#blackPatchGradient)" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <path d="M -75,48 Q -118,28 -125,-2" 
+            stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </g>
+    
+    <!-- Cat body (white base) -->
+    <ellipse class="calico-body-part" cx="0" cy="40" rx="80" ry="60" fill="url(#whiteBodyGradient)" stroke="#cccccc" stroke-width="2"/>
+    <ellipse cx="-15" cy="30" rx="25" ry="20" fill="#ffffff" opacity="0.6"/>
+    
+    <!-- Orange patches on body -->
+    <ellipse class="color-patch" cx="-35" cy="35" rx="25" ry="30" fill="url(#orangePatchGradient)"/>
+    <ellipse class="color-patch" cx="40" cy="50" rx="30" ry="25" fill="url(#orangePatchGradient)" style="animation-delay: 0.5s;"/>
+    
+    <!-- Black patches on body -->
+    <ellipse class="color-patch" cx="15" cy="30" rx="20" ry="25" fill="url(#blackPatchGradient)" style="animation-delay: 1s;"/>
+    <ellipse class="color-patch" cx="-20" cy="60" rx="15" ry="20" fill="url(#blackPatchGradient)" style="animation-delay: 1.5s;"/>
+    
+    <!-- Paws with 3D effect -->
+    <ellipse cx="-30" cy="90" rx="15" ry="20" fill="url(#whiteBodyGradient)" stroke="#cccccc" stroke-width="2"/>
+    <ellipse cx="30" cy="90" rx="15" ry="20" fill="url(#whiteBodyGradient)" stroke="#cccccc" stroke-width="2"/>
+    <ellipse cx="-30" cy="85" rx="12" ry="15" fill="url(#orangePatchGradient)" opacity="0.8"/>
+    <ellipse cx="-30" cy="88" rx="8" ry="10" fill="#ffffff" opacity="0.4"/>
+    <ellipse cx="30" cy="88" rx="8" ry="10" fill="#ffffff" opacity="0.4"/>
+    
+    <!-- Cat head (white base) -->
+    <circle class="calico-body-part" cx="0" cy="-10" r="55" fill="url(#whiteBodyGradient)" stroke="#cccccc" stroke-width="2"/>
+    <circle cx="-12" cy="-20" r="18" fill="#ffffff" opacity="0.6"/>
+    
+    <!-- Orange patch on head -->
+    <path class="color-patch" d="M -40,-10 Q -50,-30 -30,-40 Q -15,-45 -10,-35 Q -20,-15 -40,-10 Z" 
+          fill="url(#orangePatchGradient)" style="animation-delay: 2s;"/>
+    
+    <!-- Black patch on head -->
+    <path class="color-patch" d="M 25,-5 Q 35,-20 45,-25 Q 50,-15 45,-5 Q 35,0 25,-5 Z" 
+          fill="url(#blackPatchGradient)" style="animation-delay: 2.5s;"/>
+    
+    <!-- Left ear (orange) -->
+    <g class="calico-ear">
+      <path d="M -45,-40 L -65,-80 L -25,-50 Z" fill="url(#orangePatchGradient)" stroke="#ff6b1a" stroke-width="2"/>
+      <path d="M -45,-45 L -55,-70 L -35,-52 Z" fill="#ffb347"/>
+    </g>
+    
+    <!-- Right ear (black) -->
+    <g class="calico-ear" style="animation-delay: 0.6s;">
+      <path d="M 45,-40 L 65,-80 L 25,-50 Z" fill="url(#blackPatchGradient)" stroke="#000000" stroke-width="2"/>
+      <path d="M 45,-45 L 55,-70 L 35,-52 Z" fill="#2a2a2a"/>
+    </g>
+    
+    <!-- Eyes with animation -->
+    <g class="calico-eye-lid">
+      <!-- Eye whites -->
+      <ellipse cx="-18" cy="-15" rx="10" ry="13" fill="#ffffff"/>
+      <ellipse cx="18" cy="-15" rx="10" ry="13" fill="#ffffff"/>
+      
+      <!-- Irises -->
+      <ellipse cx="-18" cy="-15" rx="8" ry="12" fill="url(#greenEyeGradient)"/>
+      <ellipse cx="18" cy="-15" rx="8" ry="12" fill="url(#greenEyeGradient)"/>
+      
+      <!-- Pupils with movement -->
+      <g class="calico-pupil">
+        <ellipse cx="-18" cy="-15" rx="2.5" ry="7" fill="#000000"/>
+        <ellipse cx="18" cy="-15" rx="2.5" ry="7" fill="#000000"/>
+      </g>
+      
+      <!-- Eye highlights -->
+      <circle cx="-16" cy="-18" r="3" fill="#ffffff" opacity="0.95"/>
+      <circle cx="20" cy="-18" r="3" fill="#ffffff" opacity="0.95"/>
+      <circle cx="-19" cy="-13" r="1.5" fill="#7dd956" opacity="0.7"/>
+      <circle cx="17" cy="-13" r="1.5" fill="#7dd956" opacity="0.7"/>
+    </g>
+    
+    <!-- Nose (pink) with 3D effect -->
+    <path d="M 0,-2 L -5,5 L 5,5 Z" fill="#ffb6c1"/>
+    <ellipse cx="0" cy="2" rx="3" ry="2" fill="#ffd4e0" opacity="0.7"/>
+    
+    <!-- Mouth -->
+    <path d="M 0,5 Q -8,12 -15,10 M 0,5 Q 8,12 15,10" stroke="#999999" stroke-width="2" fill="none"/>
+    
+    <!-- Whiskers with animation -->
+    <g class="calico-whisker">
+      <line x1="-30" y1="0" x2="-70" y2="-5" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+      <line x1="-30" y1="5" x2="-70" y2="5" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+      <line x1="-30" y1="10" x2="-70" y2="15" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+      
+      <line x1="30" y1="0" x2="70" y2="-5" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+      <line x1="30" y1="5" x2="70" y2="5" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+      <line x1="30" y1="10" x2="70" y2="15" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+    </g>
+  </g>
+</svg>

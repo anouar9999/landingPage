@@ -335,9 +335,9 @@ const NavBar = () => {
               {/* Logo - compact size */}
               <Link to="/" className="flex items-center flex-shrink-0">
                 <img
-                  src="img/logo-gamius-white.png"
+                  src="img/logo-gamius-white (1).png"
                   alt="GAMIUS Logo"
-                  className="h-7 sm:h-8 lg:h-9 transition-all duration-300"
+                  className="h-10 sm:h-12 lg:h-14 transition-all duration-300"
                 />
               </Link>
             </div>
@@ -498,7 +498,7 @@ const NavBar = () => {
                 </div>
               ) : (
                 <a
-                  href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
+                  href="https://user.gamius.ma/login"
                   className="bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-all whitespace-nowrap flex items-center gap-1"
                 >
                   <span className="hidden sm:inline">{t("nav.login")}</span>
@@ -522,9 +522,9 @@ const NavBar = () => {
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <img
-                src="img/logo-gamius-white.png"
+                src="img/logo-gamius-white (1).png"
                 alt="GAMIUS Logo"
-                className="h-7"
+                className="h-10"
               />
             </Link>
             <button
@@ -611,7 +611,7 @@ const NavBar = () => {
               {!loading && !isAuthenticated && (
                 <div className="mobile-nav-item px-4 pt-2">
                   <a
-                    href={`${import.meta.env.VITE_PUBLIC_URL}:3000/login`}
+                    href="https://user.gamius.ma/login"
                     className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-3 rounded-lg transition-all"
                   >
                     <span>{t("nav.login")}</span>

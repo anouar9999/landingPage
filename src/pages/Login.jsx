@@ -308,8 +308,8 @@ function Login() {
           <div className="absolute top-2 text-center">
             <Link to="/">
               <img 
-                src="/img/Logo-MGE-2025-white.svg" 
-                alt="MGE Logo" 
+                src="/img/logo-gamius-white (1).png" 
+                alt="GAMIUS Logo" 
                 className="h-24 mx-auto mb-8"
               />
             </Link>

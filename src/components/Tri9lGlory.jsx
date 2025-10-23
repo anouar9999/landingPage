@@ -136,65 +136,43 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
 
   // Game step images
   const stepImages = {
-    step1: "/img/Symbole d'ajout lumineux sur fond sombre.png", // BEGINNER
-    step2: "/img/Flèches lumineuses en dégradé orange.png", // CHALLENGER
-    step3: "/img/gradi.png", // CHAMPION
+    step1: "/img/sleeping-cat-and-laptop.png", // BEGINNER
+    step2: "/img/cat-and-laptop.png", // CHALLENGER
+    step3: "/img/dracula-cat.png", // CHAMPION
   };
 
-  const StepImage = ({ src, alt, className }) => {
+  const StepImage = ({ src, alt, className, delay = 0, size = "w-48 h-48" }) => {
     return (
-      <div className={`relative w-64 h-64 flex items-center justify-center ${className}`}>
-        {/* Outer glow - large diffused */}
-        <div 
-          className="absolute inset-0 opacity-40 blur-3xl scale-110"
-          style={{
-            background: 'radial-gradient(circle, rgba(251, 146, 60, 0.3) 0%, rgba(251, 191, 36, 0.15) 40%, transparent 70%)'
+      <div className={`relative flex items-center justify-center h-48 ${className}`}>
+        <style>{`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+              transform: translateY(-15px) rotate(2deg);
+            }
+            50% {
+              transform: translateY(-25px) rotate(0deg);
+            }
+            75% {
+              transform: translateY(-15px) rotate(-2deg);
+            }
+          }
+          .animate-float {
+            animation: float 4s ease-in-out infinite;
+          }
+        `}</style>
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className={`${size} object-contain animate-float`}
+          style={{ 
+            filter: 'drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3))',
+            animationDelay: `${delay}s`
           }}
         />
-        
-        {/* Mid glow ring */}
-        <div 
-          className="absolute w-56 h-56 rounded-full opacity-50"
-          style={{
-            background: 'radial-gradient(circle, transparent 65%, rgba(251, 146, 60, 0.4) 70%, rgba(251, 191, 36, 0.2) 80%, transparent 90%)',
-            filter: 'blur(8px)'
-          }}
-        />
-        
-        {/* Sharp highlight ring */}
-        <div 
-          className="absolute w-52 h-52 rounded-full animate-pulse"
-          style={{
-            background: 'radial-gradient(circle, transparent 70%, rgba(251, 146, 60, 0.6) 72%, transparent 74%)',
-            animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-          }}
-        />
-        
-        {/* Image container with backdrop */}
-        <div className="relative w-48 h-48 rounded-full overflow-hidden">
-          {/* Glassmorphism backdrop */}
-          <div 
-            className="absolute inset-0 backdrop-blur-sm rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%)',
-              border: '1px solid rgba(251, 146, 60, 0.2)'
-            }}
-          />
-          
-          <img
-            src={src}
-            alt={alt}
-            loading="lazy"
-            className="relative w-full h-full object-contain transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 z-10"
-            style={{ 
-              objectFit: 'contain', 
-              objectPosition: 'center',
-              filter: 'brightness(1.1) contrast(1.1) drop-shadow(0 0 25px rgba(251, 191, 36, 0.5))',
-              maskImage: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0.95) 45%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.2) 82%, rgba(0, 0, 0, 0) 95%)',
-              WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0.95) 45%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.2) 82%, rgba(0, 0, 0, 0) 95%)'
-            }}
-          />
-        </div>
       </div>
     );
   };
@@ -292,6 +270,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                   <StepImage 
                     src={stepImages.step1} 
                     alt="Beginner step"
+                    delay={0}
                   />
                 </div>
                 <div className="text-center">
@@ -313,6 +292,7 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                   <StepImage 
                     src={stepImages.step2} 
                     alt="Challenger step"
+                    delay={0.7}
                   />
                 </div>
                 <div className="text-center">
@@ -334,6 +314,8 @@ const { t, isRtl, language, forceTifinaghFont, getTextClass, isTamazight } =
                   <StepImage 
                     src={stepImages.step3} 
                     alt="Champion step"
+                    delay={1.4}
+                    size="w-32 h-32"
                   />
                 </div>
                 <div className="text-center">

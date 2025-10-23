@@ -248,7 +248,7 @@ const PassGamers = () => {
             {/* Enhanced CTA */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start items-center mt-4">
               <a
-                href="https://user.gnews.ma/login"
+                href="https://user.gamius.ma/login"
                 className="group relative inline-block"
               >
                 {/* Glow effect */}

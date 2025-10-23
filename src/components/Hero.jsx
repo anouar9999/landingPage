@@ -220,7 +220,7 @@ const Hero = () => {
 
           <div className="mx-2 sm:mx-3 md:mx-4">
             <a
-              href="https://user.gnews.ma/login"
+              href="https://user.gamius.ma/login"
               className="group relative inline-block hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 -skew-x-12 bg-white group-hover:bg-primary transition-colors duration-300"></div>
