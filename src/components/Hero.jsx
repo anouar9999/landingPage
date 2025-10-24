@@ -125,12 +125,14 @@ const Hero = () => {
 
           {/* Single Background Video */}
           <video
-            src="videos/hero-1.mp4"
+            src="/videos/hero-1.mp4"
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="absolute left-0 top-0 h-full w-full object-cover z-10"
+            style={{ willChange: 'transform' }}
             onLoadedData={handleVideoLoad}
             onError={(e) => {
               console.error("Video failed to load:", e);

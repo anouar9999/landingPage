@@ -18,41 +18,49 @@ const Arena = () => {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Animate content from left
-    if (contentRef.current) {
-      gsap.fromTo(
-        contentRef.current,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
+    const ctx = gsap.context(() => {
+      // Animate content from left - optimized
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current,
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            force3D: true,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              once: true,
+            }
           }
-        }
-      );
-    }
+        );
+      }
 
-    // Animate video from right
-    if (videoRef.current) {
-      gsap.fromTo(
-        videoRef.current,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
+      // Animate video from right - optimized
+      if (videoRef.current) {
+        gsap.fromTo(
+          videoRef.current,
+          { opacity: 0, x: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            force3D: true,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              once: true,
+            }
           }
-        }
-      );
-    }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -102,12 +110,14 @@ const Arena = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-300 border-2 border-gray-200 group">
               {/* Video */}
               <video
-                src="videos/arena-video.mp4"
+                src="/videos/arena-video.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                style={{ willChange: 'transform' }}
               />
               
               {/* Overlay gradient */}

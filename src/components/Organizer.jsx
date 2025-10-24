@@ -531,12 +531,14 @@ export default function OrganizerPage() {
               <div className="relative angular-cut bg-gradient-to-br from-slate-900 via-slate-800 to-black p-6 sm:p-8 h-72 sm:h-96 flex items-center justify-center overflow-hidden group">
                 {/* Animated background video/image */}
                 <video
-                  src="videos/feature-1.mp4"
+                  src="/videos/feature-1.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
+                  preload="metadata"
                   className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                  style={{ willChange: 'transform, opacity' }}
                 />
                 
                 {/* Overlay gradient */}

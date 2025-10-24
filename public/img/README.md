@@ -1,6 +1,6 @@
-# Images pour Morocco Gaming Expo
+# Images pour Gamius
 
-Ce dossier contient les images utilisées par l'application MGE.
+Ce dossier contient les images utilisées par l'application Gamius.
 
 ## Images manquantes
 

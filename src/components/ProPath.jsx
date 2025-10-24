@@ -54,7 +54,7 @@ const ProPath = () => {
   
  
   
-  // DonnÃ©es des Ã©tapes du programme - Version actualisÃ©e pour le MinistÃ¨re
+  // DonnÃes des Ãtapes du programme - Version actualisÃe pour le MinistÃ¨re
   const steps = [
     {
       id: 'Players',
@@ -62,7 +62,10 @@ const ProPath = () => {
       icon: <Target size={24} className="text-black" />,
       title: t("proPath.regionalQualifiers.title"),
       description: t("proPath.regionalQualifiers.description"),
-      image: "/img/cat.png", // Orange cat posing
+      media: "/videos/Orange_Cat_Video_Generation (1).mp4",
+      mediaType: "video",
+      labelEn: "Players",
+      labelFr: "Joueurs",
       features: [
         t("proPath.regionalQualifiers.keyFeatures.format"),
         t("proPath.regionalQualifiers.keyFeatures.groups"),
@@ -75,7 +78,10 @@ const ProPath = () => {
       icon: <TrendingUp size={24} className="text-black" />,
       title: t("proPath.nationalChampionships.title"),
       description: t("proPath.nationalChampionships.description"),
-      image: "/img/grey-cat.png", // Grey cat posing
+      media: "/videos/Cat_Playing_Computer_Video_Generation (1).mp4",
+      mediaType: "video",
+      labelEn: "Organizers",
+      labelFr: "Organisateurs",
       features: [
         t("proPath.nationalChampionships.keyFeatures.format"),
         t("proPath.nationalChampionships.keyFeatures.points"),
@@ -88,7 +94,10 @@ const ProPath = () => {
       icon: <Trophy size={24} className="text-black" />,
       title: t("proPath.eliteLeague.title"),
       description: t("proPath.eliteLeague.description"),
-      image: "/img/black-cat.png", // Black cat posing
+      media: "/videos/Orange_Cat_Video_Generation (1).mp4",
+      mediaType: "video",
+      labelEn: "Ecosystem",
+      labelFr: "Écosystème",
       features: [
         t("proPath.eliteLeague.keyFeatures.training"),
         t("proPath.eliteLeague.keyFeatures.coverage"),
@@ -171,20 +180,21 @@ const ProPath = () => {
         );
       }
       
-      // Animation des Ã©tapes
+      // Animation des Ã©tapes - optimisée
       stepsRef.current.forEach((step, index) => {
         if (step) {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: step,
               start: "top 85%",
+              once: true,
             }
           });
           
           tl.fromTo(
             step,
-            { opacity: 0, x: index % 2 === 0 ? -30 : 30 },
-            { opacity: 1, x: 0, duration: 0.7, ease: "power2.out" }
+            { opacity: 0, x: index % 2 === 0 ? -20 : 20 },
+            { opacity: 1, x: 0, duration: 0.5, ease: "power2.out", force3D: true }
           );
           
           // Animation de l'image dans l'Ã©tape
@@ -252,24 +262,22 @@ const ProPath = () => {
         );
       }
       
-      // Animation de la barre de progression
+      // Animation de la barre de progression - optimisée
       if (progressBarRef.current) {
         gsap.fromTo(
           progressBarRef.current,
           { scaleY: 0, transformOrigin: "top" },
           {
             scaleY: 1,
-            duration: 1.5,
-            ease: "power2.inOut",
+            duration: 0.8,
+            ease: "power2.out",
+            force3D: true,
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 75%",
               end: "bottom 10%",
-              scrub: 0.3,
-              onUpdate: (self) => {
-                // Cela garantit que la barre s'anime proportionnellement au dÃ©filement
-                progressBarRef.current.style.transform = `scaleY(${self.progress})`;
-              }
+              scrub: 0.5,
+              once: true,
             }
           }
         );
@@ -431,22 +439,40 @@ const ProPath = () => {
                   </div>
                 </div>
                 
-                {/* Image */}
+                {/* Media (Image or Video) */}
                 <div className="w-full md:w-[45%] step-image flex items-center justify-center">
-                  <img 
-                    src={step.image } 
-                    alt={t(`proPath.steps.${step.id}.title`, step.title)}
-                    className="w-1/3 md:w-2/5 h-auto object-contain transition-transform duration-500 ease-out animate-float"
-                    style={{
-                      animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
-                      animationDelay: `${index * 0.2}s`
-                    }}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      // Utiliser l'image de remplacement générée dynamiquement
-                      e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
-                    }}
-                  />
+                  {step.mediaType === 'video' ? (
+                    <div className="relative w-full md:w-4/5">
+                      <video 
+                        src={step.media}
+                        alt={t(`proPath.steps.${step.id}.title`, step.title)}
+                        className="w-full h-auto object-contain rounded-lg shadow-lg"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        style={{ 
+                          willChange: 'transform',
+                          clipPath: 'polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%)'
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <img 
+                      src={step.media} 
+                      alt={t(`proPath.steps.${step.id}.title`, step.title)}
+                      className="w-1/3 md:w-2/5 h-auto object-contain transition-transform duration-500 ease-out animate-float"
+                      style={{
+                        animation: `float ${3 + index * 0.5}s ease-in-out infinite`,
+                        animationDelay: `${index * 0.2}s`
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = generatePlaceholderSVG(step.id, t(`proPath.steps.${step.id}.title`, step.title));
+                      }}
+                    />
+                  )}
                 </div>
                 
                 {/* Contenu de l'étape */}

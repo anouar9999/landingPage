@@ -69,19 +69,19 @@ function MainPage() {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     
-    // Configuration de Lenis pour le smooth scroll
+    // Configuration de Lenis pour le smooth scroll - ultra optimisée pour réactivité maximale
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.5, // Réduit à 0.5 pour défilement beaucoup plus rapide
+      easing: (t) => t, // Linéaire pour réponse immédiate
       direction: "vertical", 
       smooth: true,
       smoothTouch: false,
-      touchMultiplier: 2,
-      // Options ajoutées pour mieux gérer les changements de langue
+      touchMultiplier: 2, // Augmenté pour meilleur contrôle tactile
       gestureOrientation: "vertical",
       infinite: false,
       orientation: "vertical",
-      wheelMultiplier: 1,
+      wheelMultiplier: 1.8, // Augmenté significativement pour défilement très rapide
+      lerp: 0.15, // Augmenté pour interpolation plus rapide
     });
 
     lenisRef.current = lenis;

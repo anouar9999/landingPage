@@ -16,6 +16,10 @@ body {
   font-family: "General Sans", sans-serif;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 @layer base {
@@ -1862,4 +1866,114 @@ h1, h2, h3, h4, h5, h6 {
   100% {
     transform: rotate(180deg);
   }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS FOR SMOOTH SCROLLING
+   ============================================ */
+
+/* Global performance improvements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for animated elements */
+video,
+img,
+.group:hover,
+[class*="transition"],
+[class*="animate"],
+[class*="transform"] {
+  transform: translateZ(0);
+  will-change: auto;
+  backface-visibility: hidden;
+}
+
+/* Optimize video rendering */
+video {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Optimize images for performance */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+}
+
+/* Reduce paint on scroll - optimized for maximum performance */
+section {
+  will-change: auto;
+  contain: layout style paint;
+  content-visibility: auto; /* Only render visible sections */
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Force hardware acceleration on hover states */
+.group:hover > * {
+  transform: translateZ(0);
+}
+
+/* Optimize scroll containers */
+.overflow-hidden,
+.overflow-auto,
+.overflow-scroll {
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+}
+
+/* Optimize fixed elements */
+.fixed,
+[class*="fixed"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Optimize absolute positioned elements */
+.absolute {
+  will-change: auto;
+}
+
+/* Debounce expensive reflows */
+.container {
+  contain: layout;
+}
+
+/* Optimize GSAP animated elements */
+[data-gsap],
+[class*="gsap"] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Remove will-change after animations complete */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize heavy CSS properties that slow down scrolling */
+.backdrop-blur-sm,
+.backdrop-blur-md,
+.backdrop-blur-lg,
+[class*="backdrop-blur"] {
+  backdrop-filter: none !important; /* Remove expensive backdrop blur on scroll */
+}
+
+/* Simplify shadows for better performance */
+.shadow-2xl,
+.shadow-xl {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
 }

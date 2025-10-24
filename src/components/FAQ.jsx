@@ -10,6 +10,7 @@ const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [expandedCategories, setExpandedCategories] = useState([0]); // First category expanded by default
   const accordionRefs = useRef([]);
   const sectionRef = useRef(null);
   const faqRef = useRef(null);
@@ -266,6 +267,17 @@ const FAQ = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
   
+  // Gérer l'expansion/réduction des catégories
+  const toggleCategory = (categoryIndex) => {
+    setExpandedCategories(prev => {
+      if (prev.includes(categoryIndex)) {
+        return prev.filter(idx => idx !== categoryIndex);
+      } else {
+        return [...prev, categoryIndex];
+      }
+    });
+  };
+  
   // Animation de l'accordéon - simplified since we use conditional rendering
   useEffect(() => {
     // Animations handled via CSS transitions
@@ -299,64 +311,82 @@ const FAQ = () => {
         
         <div className="space-y-10 px-2">
           {/* Affichage par catégories */}
-          {faqData.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="space-y-4">
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
-                  <span className="text-primary">{category.icon}</span>
-                </div>
-                <h3 className={`text-white font-semibold text-xl uppercase tracking-wide ${getTextClass()}`}>{category.category}</h3>
-              </div>
-              
-              {category.questions.map((item, questionIndex) => {
-                const globalIndex = categoryIndex * 10 + questionIndex;
-                const isActive = activeIndex === globalIndex;
-                return (
-                  <div 
-                    key={questionIndex}
-                    className="relative group"
-                  >
-                    {/* Skewed background */}
-                    <div className={`absolute inset-0 -skew-x-6 bg-[#0A0A0A] border-2 transition-all duration-300 ${
-                      isActive ? 'border-primary/60' : 'border-gray-800 group-hover:border-primary/40'
-                    }`}></div>
-                    
-                    {/* Subtle gradient on hover/active */}
-                    <div className={`absolute inset-0 -skew-x-6 bg-gradient-to-r from-primary/5 to-transparent transition-opacity duration-300 ${
-                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                    }`}></div>
-                    
-                    <button
-                      className="relative w-full p-5 sm:p-6 text-left flex justify-between items-center z-10"
-                      onClick={() => toggleAccordion(globalIndex)}
-                    >
-                      <span className={`font-semibold text-sm sm:text-base text-white pr-8 ${getTextClass()}`}>
-                        {item.question}
-                      </span>
-                      <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${
-                        isActive ? 'rotate-180 bg-primary/20' : ''
-                      }`}>
-                        <ChevronDown 
-                          className="text-primary transition-transform"
-                          size={18}
-                        />
-                      </div>
-                    </button>
-                    
-                    {isActive && (
-                      <div
-                        ref={(el) => (accordionRefs.current[globalIndex] = el)}
-                        className="relative z-10 px-5 sm:px-6 pb-5 sm:pb-6 text-white/80 border-t border-gray-700 pt-4 animate-fadeIn"
-                      >
-                        <p className={`leading-relaxed ${getTextClass()}`}>{item.answer}</p>
-                      </div>
-                    )}
+          {faqData.map((category, categoryIndex) => {
+            const isCategoryExpanded = expandedCategories.includes(categoryIndex);
+            return (
+              <div key={categoryIndex} className="space-y-4">
+                {/* Category Header - Clickable */}
+                <button
+                  onClick={() => toggleCategory(categoryIndex)}
+                  className="w-full flex items-center gap-3 mb-6 group cursor-pointer hover:opacity-80 transition-opacity"
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-300 ${
+                    isCategoryExpanded 
+                      ? 'bg-primary/20 border-primary/40' 
+                      : 'bg-primary/10 border-primary/20 group-hover:bg-primary/15'
+                  }`}>
+                    <span className="text-primary">{category.icon}</span>
                   </div>
-                );
-              })}
-            </div>
-          ))}
+                  <h3 className={`text-white font-semibold text-xl uppercase tracking-wide flex-1 text-left ${getTextClass()}`}>
+                    {category.category}
+                  </h3>
+                  <div className={`w-8 h-8 flex items-center justify-center transition-transform duration-300 ${
+                    isCategoryExpanded ? 'rotate-180' : ''
+                  }`}>
+                    <ChevronDown className="text-primary" size={20} />
+                  </div>
+                </button>
+                
+                {/* Questions - Only show when category is expanded */}
+                {isCategoryExpanded && category.questions.map((item, questionIndex) => {
+                  const globalIndex = categoryIndex * 10 + questionIndex;
+                  const isActive = activeIndex === globalIndex;
+                  return (
+                    <div 
+                      key={questionIndex}
+                      className="relative group"
+                    >
+                      {/* Skewed background */}
+                      <div className={`absolute inset-0 -skew-x-6 bg-[#0A0A0A] border-2 transition-all duration-300 ${
+                        isActive ? 'border-primary/60' : 'border-gray-800 group-hover:border-primary/40'
+                      }`}></div>
+                      
+                      {/* Subtle gradient on hover/active */}
+                      <div className={`absolute inset-0 -skew-x-6 bg-gradient-to-r from-primary/5 to-transparent transition-opacity duration-300 ${
+                        isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`}></div>
+                      
+                      <button
+                        className="relative w-full p-5 sm:p-6 text-left flex justify-between items-center z-10"
+                        onClick={() => toggleAccordion(globalIndex)}
+                      >
+                        <span className={`font-semibold text-sm sm:text-base text-white pr-8 ${getTextClass()}`}>
+                          {item.question}
+                        </span>
+                        <div className={`flex-shrink-0 ml-2 sm:ml-4 w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all ${
+                          isActive ? 'rotate-180 bg-primary/20' : ''
+                        }`}>
+                          <ChevronDown 
+                            className="text-primary transition-transform"
+                            size={18}
+                          />
+                        </div>
+                      </button>
+                      
+                      {isActive && (
+                        <div
+                          ref={(el) => (accordionRefs.current[globalIndex] = el)}
+                          className="relative z-10 px-5 sm:px-6 pb-5 sm:pb-6 text-white/80 border-t border-gray-700 pt-4 animate-fadeIn"
+                        >
+                          <p className={`leading-relaxed ${getTextClass()}`}>{item.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
         
         {/* Appel à l'action */}

@@ -76,7 +76,10 @@ export const BentoCard = ({ src, title, description, isComingSoon, icon: Icon })
         loop
         muted
         autoPlay
+        playsInline
+        preload="metadata"
         className="absolute left-0 top-0 size-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+        style={{ willChange: 'transform' }}
       />
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-[1]"></div>
