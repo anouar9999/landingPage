@@ -262,25 +262,27 @@ const ProPath = () => {
         );
       }
       
-      // Animation de la barre de progression - optimisée
-      if (progressBarRef.current) {
-        gsap.fromTo(
-          progressBarRef.current,
-          { scaleY: 0, transformOrigin: "top" },
-          {
-            scaleY: 1,
-            duration: 0.8,
-            ease: "power2.out",
-            force3D: true,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-              end: "bottom 10%",
-              scrub: 0.5,
-              once: true,
-            }
+      // Animation de la barre de progression - interactive avec le scroll
+      if (progressBarRef.current && timelineRef.current) {
+        // Set initial state
+        gsap.set(progressBarRef.current, { 
+          scaleY: 0, 
+          transformOrigin: "top" 
+        });
+        
+        // Animate based on scroll
+        gsap.to(progressBarRef.current, {
+          scaleY: 1,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: {
+            trigger: timelineRef.current,
+            start: "top center",
+            end: "bottom center",
+            scrub: 0.5,
+            invalidateOnRefresh: true,
           }
-        );
+        });
       }
     }
   }, []);
@@ -420,7 +422,7 @@ const ProPath = () => {
             <div 
               ref={progressBarRef}
               className="absolute top-0 w-full bg-gradient-to-b from-primary to-primary/70"
-              style={{ height: '100%', transformOrigin: 'top', transform: 'scaleY(0)' }}
+              style={{ height: '100%' }}
             ></div>
           </div>
           

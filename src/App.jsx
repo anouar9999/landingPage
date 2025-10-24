@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 import { AdProvider } from "./contexts/AdContext";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -58,50 +62,71 @@ function MainPage() {
     // Nettoyer l'instance précédente si elle existe
     if (lenisRef.current) {
       lenisRef.current.destroy();
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
     }
-    
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
     
     // Débloquer explicitement le défilement avant d'initialiser Lenis
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     
-    // Configuration de Lenis pour le smooth scroll - ultra optimisée pour réactivité maximale
+    // Configuration de Lenis - Optimized for responsive, smooth scrolling
     const lenis = new Lenis({
-      duration: 0.5, // Réduit à 0.5 pour défilement beaucoup plus rapide
-      easing: (t) => t, // Linéaire pour réponse immédiate
+      duration: 1.2,  // Smooth animation duration
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),  // Smooth easing
       direction: "vertical", 
+      gestureDirection: "vertical",
       smooth: true,
+      mouseMultiplier: 1,  // Standard mouse wheel responsiveness
       smoothTouch: false,
-      touchMultiplier: 2, // Augmenté pour meilleur contrôle tactile
-      gestureOrientation: "vertical",
+      touchMultiplier: 2,
       infinite: false,
-      orientation: "vertical",
-      wheelMultiplier: 1.8, // Augmenté significativement pour défilement très rapide
-      lerp: 0.15, // Augmenté pour interpolation plus rapide
+      autoResize: true,
+      wrapper: window,
+      content: document.documentElement,
+      lerp: 0.1,  // Balanced smoothing - responsive but smooth
     });
 
     lenisRef.current = lenis;
 
-    // Fonction d'animation modifiée pour être nettoyable
-    const animate = (time) => {
+    // Intégrer Lenis avec GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    
+    // CRITICAL: Configure ScrollTrigger for better performance
+    ScrollTrigger.defaults({
+      markers: false,
+    });
+    
+    ScrollTrigger.config({
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
+    });
+    
+    gsap.ticker.lagSmoothing(1000, 16);
+    
+    // Refresh ScrollTrigger after Lenis is ready
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+    
+    // Animation loop pour Lenis
+    function raf(time) {
       lenis.raf(time);
-      rafIdRef.current = requestAnimationFrame(animate);
-    };
-
-    rafIdRef.current = requestAnimationFrame(animate);
+      rafIdRef.current = requestAnimationFrame(raf);
+    }
+    
+    rafIdRef.current = requestAnimationFrame(raf);
   };
   
   // Initialiser Lenis au montage du composant
   useEffect(() => {
-    initLenis();
+    // DISABLED: Using native scroll for instant responsiveness like Organizer page
+    // initLenis();
     
     // Ajouter un écouteur pour l'événement LenisReset
     const handleLenisReset = () => {
-      initLenis();
+      // initLenis();
     };
     
     window.addEventListener('LenisReset', handleLenisReset);
@@ -110,9 +135,11 @@ function MainPage() {
     return () => {
       if (lenisRef.current) {
         lenisRef.current.destroy();
+        lenisRef.current = null;
       }
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
       }
       window.removeEventListener('LenisReset', handleLenisReset);
     };
@@ -132,11 +159,12 @@ function MainPage() {
       
       // Attendre que les changements de DOM soient appliqués avant de réinitialiser
       setTimeout(() => {
-        initLenis();
+        // DISABLED: Using native scroll
+        // initLenis();
         
-        // Forcer une mise à jour du défilement
-        window.dispatchEvent(new Event('resize'));
-      }, 300);
+        // Forcer une mise à jour de ScrollTrigger
+        ScrollTrigger.refresh();
+      }, 100);
     }
   }, [language]);
   
@@ -265,7 +293,7 @@ function MainPage() {
   };
 
   return (
-    <main className="relative min-h-screen w-screen bg-black" style={{ overflow: 'visible' }}>
+    <main className="relative min-h-screen w-screen bg-black">
       {/* Notification de changement de domaine */}
       {/* {showDomainNotice && (
         <div className="fixed top-0 left-0 w-full bg-primary text-black z-[1001] shadow-md">

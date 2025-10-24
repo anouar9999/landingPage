@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenis Scroll Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+        .section:nth-child(1) { background: #ff6b6b; color: white; }
+        .section:nth-child(2) { background: #4ecdc4; color: white; }
+        .section:nth-child(3) { background: #45b7d1; color: white; }
+        .section:nth-child(4) { background: #96ceb4; color: white; }
+        .section:nth-child(5) { background: #ffeaa7; color: #2d3436; }
+        
+        .info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: normal;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status.working {
+            background: #27ae60;
+        }
+        
+        .status.not-working {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h3>Lenis Scroll Test</h3>
+        <p>Try scrolling with:</p>
+        <ul>
+            <li>Mouse wheel</li>
+            <li>Scrollbar</li>
+            <li>Trackpad</li>
+        </ul>
+        <div id="status" class="status">Testing...</div>
+        <p id="scroll-info">Scroll: 0</p>
+    </div>
+
+    <div class="section">Section 1<br><small style="font-size: 1rem;">Scroll down with mouse wheel</small></div>
+    <div class="section">Section 2<br><small style="font-size: 1rem;">Smooth scrolling?</small></div>
+    <div class="section">Section 3<br><small style="font-size: 1rem;">Keep scrolling</small></div>
+    <div class="section">Section 4<br><small style="font-size: 1rem;">Almost there</small></div>
+    <div class="section">Section 5<br><small style="font-size: 1rem;">End of test</small></div>
+
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis with the same config as your app
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: "vertical",
+            gestureDirection: "vertical",
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+            autoResize: true,
+            wrapper: window,
+            content: document.documentElement,
+        });
+
+        // Test if Lenis is capturing scroll events
+        let scrollEventCount = 0;
+        let wheelEventCount = 0;
+        let lastScrollTime = Date.now();
+
+        lenis.on('scroll', (e) => {
+            scrollEventCount++;
+            lastScrollTime = Date.now();
+            document.getElementById('scroll-info').textContent = 
+                `Scroll: ${Math.round(e.scroll)} | Velocity: ${e.velocity.toFixed(2)}`;
+            
+            // Update status
+            if (scrollEventCount > 0) {
+                document.getElementById('status').textContent = '✅ Lenis Working!';
+                document.getElementById('status').className = 'status working';
+            }
+        });
+
+        // Listen for wheel events
+        window.addEventListener('wheel', () => {
+            wheelEventCount++;
+        });
+
+        // RAF loop
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Check after 3 seconds
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            if (scrollEventCount === 0) {
+                status.textContent = '❌ Not capturing scroll events';
+                status.className = 'status not-working';
+                console.error('Lenis not working. Wheel events:', wheelEventCount);
+            } else {
+                console.log('Lenis working! Scroll events:', scrollEventCount);
+            }
+        }, 3000);
+
+        // Debug info
+        console.log('Lenis instance:', lenis);
+        console.log('Test: Scroll with mouse wheel. You should see smooth scrolling.');
+    </script>
+</body>
+</html>

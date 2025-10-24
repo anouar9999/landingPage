@@ -14,12 +14,8 @@ body {
   overflow-x: hidden;
   background-color: #000000;
   font-family: "General Sans", sans-serif;
-  scroll-behavior: smooth;
+  /* Lenis handles smooth scrolling - don't use CSS scroll-behavior */
   -webkit-overflow-scrolling: touch;
-  /* Performance optimizations */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 @layer base {
@@ -974,7 +970,7 @@ body.has-top-ad {
 /* Améliorations générales du responsive design */
 html, body {
   overflow-x: hidden;
-  scroll-behavior: smooth;
+  /* Lenis handles smooth scrolling */
   -webkit-overflow-scrolling: touch;
 }
 

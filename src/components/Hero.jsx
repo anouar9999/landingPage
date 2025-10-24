@@ -86,7 +86,8 @@ const Hero = () => {
           trigger: "#video-frame",
           start: "center center",
           end: "bottom center",
-          scrub: true,
+          scrub: 0.5,
+          invalidateOnRefresh: true,
         },
       });
     }
@@ -132,7 +133,13 @@ const Hero = () => {
             playsInline
             preload="auto"
             className="absolute left-0 top-0 h-full w-full object-cover z-10"
-            style={{ willChange: 'transform' }}
+            style={{ 
+              transform: 'translate3d(0, 0, 0)',
+              backfaceVisibility: 'hidden',
+              perspective: 1000,
+              WebkitBackfaceVisibility: 'hidden',
+              WebkitPerspective: 1000
+            }}
             onLoadedData={handleVideoLoad}
             onError={(e) => {
               console.error("Video failed to load:", e);
