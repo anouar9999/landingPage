@@ -27,6 +27,8 @@ import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import adLoader from './utils/adLoader';
 import Features from "./components/Features";
 import Arena from "./components/Arena";
+import MaintenancePage from "./components/MaintenancePage";
+import { useMaintenance } from "./hooks/useMaintenance";
 
 // Importation des nouveaux composants publicitaires
 import SmallBannerAd from './components/SmallBannerAd';
@@ -56,6 +58,9 @@ function MainPage() {
   // const [performanceScore, setPerformanceScore] = useState(0);
   // const [adBlocked, setAdBlocked] = useState(false);
   const [adControllerExpanded, setAdControllerExpanded] = useState(false); // État pour contrôler l'expansion du panneau de contrôle
+  
+  // Hook pour gérer le mode maintenance
+  const { isMaintenanceMode, isLoading: maintenanceLoading } = useMaintenance();
   
   // Fonction pour initialiser ou réinitialiser Lenis
   const initLenis = () => {
@@ -291,6 +296,24 @@ function MainPage() {
     setShowFloatingAd(false);
     setAdVisible(false);
   };
+
+  // Afficher la page de maintenance si activée
+  if (isMaintenanceMode) {
+    return <MaintenancePage />;
+  }
+
+  // Afficher un loader pendant la vérification
+  if (maintenanceLoading) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-black">
+        <div className="three-body">
+          <div className="three-body__dot"></div>
+          <div className="three-body__dot"></div>
+          <div className="three-body__dot"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="relative min-h-screen w-screen bg-black">

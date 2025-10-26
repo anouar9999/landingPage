@@ -288,6 +288,26 @@ const translations = {
       yourScore: "Votre score",
       playAgain: "REJOUER",
       viewOffer: "VOIR L'OFFRE"
+    },
+    // Maintenance
+    maintenance: {
+      title: "EN MAINTENANCE",
+      subtitle: "Nous améliorons votre expérience de jeu",
+      message: "Notre plateforme sera bientôt de retour avec des fonctionnalités extraordinaires",
+      cards: {
+        performance: {
+          title: "Performances Améliorées",
+          description: "Optimisation complète du système"
+        },
+        features: {
+          title: "Nouvelles Fonctionnalités",
+          description: "Expérience de jeu révolutionnaire"
+        },
+        comingSoon: {
+          title: "Retour Imminent",
+          description: "Merci de votre patience"
+        }
+      }
     }
   },
   
@@ -643,6 +663,26 @@ const translations = {
       yourScore: "Your score",
       playAgain: "PLAY AGAIN",
       viewOffer: "VIEW OFFER"
+    },
+    // Maintenance
+    maintenance: {
+      title: "UNDER MAINTENANCE",
+      subtitle: "We're upgrading your gaming experience",
+      message: "Our platform will be back soon with extraordinary features",
+      cards: {
+        performance: {
+          title: "Enhanced Performance",
+          description: "Complete system optimization"
+        },
+        features: {
+          title: "New Features",
+          description: "Revolutionary gaming experience"
+        },
+        comingSoon: {
+          title: "Coming Soon",
+          description: "Thank you for your patience"
+        }
+      }
     }
   },
   
@@ -804,6 +844,26 @@ const translations = {
       yourScore: "نتيجتك",
       playAgain: "العب مرة أخرى",
       viewOffer: "عرض العرض"
+    },
+    // Maintenance
+    maintenance: {
+      title: "قيد الصيانة",
+      subtitle: "نحن نحسن تجربة اللعب الخاصة بك",
+      message: "ستعود منصتنا قريبًا مع ميزات استثنائية",
+      cards: {
+        performance: {
+          title: "أداء محسّن",
+          description: "تحسين كامل للنظام"
+        },
+        features: {
+          title: "ميزات جديدة",
+          description: "تجربة لعب ثورية"
+        },
+        comingSoon: {
+          title: "عودة وشيكة",
+          description: "شكرا لصبرك"
+        }
+      }
     }
   },
   
@@ -967,6 +1027,26 @@ const translations = {
       yourScore: "ⵜⵉⵏⵇⵉⴹⵉⵏ ⵏⵏⴻⴽ",
       playAgain: "ⵓⵔⴰⵔ ⴷⴰⵖ",
       viewOffer: "ⵥⵔ ⴰⵙⵜⴰⵢ"
+    },
+    // Maintenance
+    maintenance: {
+      title: "ⴷⴳ ⵓⵙⵎⴰⵜⵜⴰⵢ",
+      subtitle: "ⵏⵙⵙⴼⵔⵓ ⵜⵉⵔⵎⵉⵜ ⵏⵏⴽ ⵏ ⵓⵔⴰⵔ",
+      message: "ⴰⴷ ⴷ-ⵜⵓⵖⴰⵍ ⵜⵎⴰⴳⴳⴰⵔⵜ ⵏⵏⵖ ⴰⵙⴰⴽⵓⴷ ⵙ ⵜⵎⵀⵍⴰ ⵜⵓⵙⵍⵉⴳⵉⵏ",
+      cards: {
+        performance: {
+          title: "ⴰⵙⵙⴼⵔⵓ ⵏ ⵜⵡⵓⵔⵉⵡⵉⵏ",
+          description: "ⴰⵙⵙⴼⵔⵓ ⴰⵎⵥⵥⴰⵏ ⵏ ⵓⵏⴰⴳⵔⴰⵡ"
+        },
+        features: {
+          title: "ⵜⵉⵎⵀⵍⴰ ⵜⵉⵎⴰⵢⵏⵓⵜⵉⵏ",
+          description: "ⵜⵉⵔⵎⵉⵜ ⵏ ⵓⵔⴰⵔ ⵜⴰⵎⴰⵢⵏⵓⵜ"
+        },
+        comingSoon: {
+          title: "ⴰⵖⵓⵍ ⴰⵙⴰⴽⵓⴷ",
+          description: "ⵜⴰⵏⵎⵎⵉⵔⵜ ⵅⴼ ⵓⵙⴱⴷⴰⴷ"
+        }
+      }
     }
   },
   
